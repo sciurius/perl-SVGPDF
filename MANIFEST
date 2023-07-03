@@ -1,0 +1,6 @@
+Changes
+MANIFEST
+Makefile.PL
+README.md
+lib/PDF/SVG.pm
+t/00-load.t
