@@ -11,7 +11,7 @@ use ExtUtils::MakeMaker 7.24;	# comes with 5.26
 my @bins; # = qw( prog );
 
 my @pdfapi = ( 'PDF::API2' => 2.043 ); # default
-if ( my $a = $ENV{CHORDPRO_PDF_API} ) {
+if ( my $a = $ENV{PDF_SVG_API} ) {
     if ( $a =~ /PDF::Builder/ ) {
 	@pdfapi = ( 'PDF::Builder' => 3.025 );
     }
@@ -38,15 +38,15 @@ WriteMakefile(
                            },
     ),
 
- PREREQ_PM      => {
-		    @pdfapi,
-		    'File::LoadLines'		  => 1.021,
-		    'Object::Pad'                 => 0.78,
-		   },
+    PREREQ_PM      => {
+			@pdfapi,
+			'File::LoadLines'	=> 1.021,
+			'Object::Pad'           => 0.78,
+		      },
 
- CONFIGURE_REQUIRES => {
-		    'ExtUtils::MakeMaker'	  => 7.24,
-		    },
+    CONFIGURE_REQUIRES => {
+			'ExtUtils::MakeMaker'	=> 7.24,
+		       },
 
     META_MERGE => {
       resources    => {

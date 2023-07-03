@@ -1,5 +1,9 @@
 Revision history for PDF::SVG
 
+0.02
+
+	Added subroutine signatures.
+
 0.01    2022-04-03
         First version, released on an unsuspecting world.
 

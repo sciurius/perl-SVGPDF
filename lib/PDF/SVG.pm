@@ -17,6 +17,8 @@ my $trace = 0;
 
 our $indent = "";
 
+use PDF::SVG::PAST;
+
 ################ General methods ################
 
 sub new ( $pkg, $ps, %atts ) {
@@ -24,17 +26,22 @@ sub new ( $pkg, $ps, %atts ) {
     $debug = $atts{debug};
     $debug_styles = $atts{debug_styles};
     $trace = $atts{trace};
+    $indent = "";
     $self;
 }
 
-sub _dbg ( $fmt, @args ) {
-    return unless $trace;
+sub xdbg ( $fmt, @args ) {
     if ( $fmt =~ /\%/ ) {
 	warn( $indent, sprintf( $fmt, @args), "\n" );
     }
     else {
 	warn( $indent, join( "", $fmt, @args ), "\n" );
     }
+}
+
+sub _dbg ( $fmt, @args ) {
+    return unless $trace;
+    xdbg( $fmt, @args );
 }
 
 sub process_file ( $self, $file ) {
@@ -47,7 +54,7 @@ sub process_file ( $self, $file ) {
 #    use DDumper;DDumper($svg);exit;
 
     my $ret = $self->search($svg);
-    PAST::finish() if $debug;
+    PDF::SVG::PAST->finish() if $debug;
     return $ret;
 }
 
@@ -81,11 +88,11 @@ sub handle_svg ( $self, $e ) {
 
     my $xo =
       $debug
-      ? PAST->new( $self->{ps}->{pr}->{pdf} )
+      ? PDF::SVG::PAST->new( pdf => $self->{ps}->{pr}->{pdf} )
       : $self->{ps}->{pr}->{pdf}->xo_form;
 
     # Turn the <svg> element into an SVG:Element.
-    $e = SVG::Element->wrap( $e, $self );
+    $e = SVG::Element->new( $e, $self );
 
     my $width  = $e->getAttribute("width") || 595;
     my $height = $e->getAttribute("height") || 842;
@@ -155,7 +162,7 @@ our @ISA = qw ( XML::Tiny::_Element );
 
 *_dbg = \&PDF::SVG::_dbg;
 
-sub wrap ( $pkg, $e, $parent = undef, $svg = undef ) {
+sub new ( $pkg, $e, $parent = undef, $svg = undef ) {
     $parent //= $pkg;
     $pkg = ref($pkg) || $pkg;
     $svg //= $parent->{svg} // $parent;
@@ -188,10 +195,10 @@ sub getChildren ( $self ) {
     my @res;
     for ( @{ $self->{content} } ) {
 	if ( $_->{type} eq 'e' ) {
-	    push( @res, $self->wrap($_) );
+	    push( @res, $self->new($_) );
 	}
 	elsif ( $_->{type} eq 't' ) {
-	    push( @res, SVG::Text->wrap( $_, $self ) );
+	    push( @res, SVG::Text->new( $_, $self ) );
 	}
 	else {
 	    die("Unhandled node type ", $_->{type});
@@ -265,7 +272,9 @@ sub getAttrStyle ( $self, $tag = undef ) {
 	    }
 	}
 
-	# 3. Styles from elements.
+	# 3. Styles from IDs.
+
+	# 4. Styles from elements.
 	%s = %{ $self->getElementStyle // {} };
 	foreach ( keys %s ) {
 	    next if defined( $style{$_} );
@@ -273,7 +282,7 @@ sub getAttrStyle ( $self, $tag = undef ) {
 	    $style{_origin}{$_} = "element";
 	}
 
-	# 4. Styles from class.
+	# 5. Styles from class.
 	%s = %{ $self->getClassStyle // {} };
 	foreach ( keys %s ) {
 	    next if defined( $style{$_} );
@@ -281,7 +290,7 @@ sub getAttrStyle ( $self, $tag = undef ) {
 	    $style{_origin}{$_} = "class";
 	}
 
-	# 5. Inherits.
+	# 6. Inherits.
 	if ( my $gs = $self->{parent}->can("getStyle") ) {
 	    %s = %{ $gs->( $self->{parent} ) // {} };
 	    foreach ( keys %s ) {
@@ -1006,182 +1015,6 @@ sub makefont ( $self, $style ) {
     wantarray ? ( $font, $style->{'font-size'}, $fn ) : $font;
 }
 
-################ Development and Debugging ################
-
-# Use this package as an intermediate to trace the actual operations.
-
-package PAST;
-
-use Carp;
-
-sub xdbg ( $fmt, @args ) {
-    if ( $fmt =~ /\%/ ) {
-	warn( $indent, sprintf( $fmt, @args), "\n" );
-    }
-    else {
-	warn( $indent, join( "", $fmt, @args ), "\n" );
-    }
-}
-
-
-sub new ( $pkg, $pdf ) {
-    local($indent) = "";
-    xdbg( 'use PDF::API2;' );
-    xdbg( 'my $pdf  = PDF::API2->new;' );
-    xdbg( 'my $page = $pdf->page;' );
-    xdbg( 'my $xo   = $page->gfx;' );
-    xdbg( 'my $font = $pdf->font("Times-Roman");' );
-    xdbg( '' );
-    bless { xo => $pdf->xo_form } => $pkg;
-}
-
-#### Coordinates
-
-sub bbox ( $self, @args ) {
-    xdbg( "\$page->bbox( ", join(", ", @args ), " );" );
-    $self->{xo}->bbox( @args );
-}
-
-sub transform ( $self, %args ) {
-    my $tag = "\$xo->transform(";
-    while ( my ($k,$v) = each %args ) {
-	$tag .= " $k => ";
-	if ( ref($v) eq 'ARRAY' ) {
-	    $tag .= "[ " . join(", ", @$v) . " ]";
-	}
-	else {
-	    $tag .= "\"$v\"";
-	}
-	$tag .= ", ";
-    }
-    substr( $tag, -2, 2, " );" );
-    xdbg($tag);
-    $self->{xo}->transform( %args );
-}
-
-#### Graphics.
-
-sub fill_color ( $self, @args ) {
-    Carp::confess("currentColor") if $args[0] eq 'currentColor';
-    xdbg( "\$xo->fill_color( @args );" );
-    $self->{xo}->fill_color( @args );
-}
-
-sub stroke_color ( $self, @args ) {
-    xdbg( "\$xo->stroke_color( @args );" );
-    $self->{xo}->stroke_color( @args );
-}
-
-sub fill ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->fill();" );
-    $self->{xo}->fill( @args );
-}
-
-sub stroke ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->stroke();" );
-    $self->{xo}->stroke( @args );
-}
-
-sub line_width ( $self, @args ) {
-    xdbg( "\$xo->line_width( ", join(", ", @args ), " );" );
-    $self->{xo}->line_width( @args );
-}
-
-sub line_dash_pattern ( $self, @args ) {
-    xdbg( "\$xo->line_dash_pattern( ", join(", ", @args ), " );" );
-    $self->{xo}->line_dash_pattern( @args );
-}
-
-sub paint ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->paint();" );
-    $self->{xo}->paint( @args );
-}
-
-sub save ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->save();" );
-    $self->{xo}->save( @args );
-}
-
-sub restore ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->restore();" );
-    $self->{xo}->restore( @args );
-}
-
-#### Texts,
-
-sub textstart ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->textstart();" );
-    $self->{xo}->textstart( @args );
-}
-
-sub textend ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->textend();" );
-    $self->{xo}->textend( @args );
-}
-
-sub font ( $self, $font, $size, $name ) {
-    xdbg( "\$xo->font( \$font, $size );\t# $name" );
-    $self->{xo}->font( $font, $size );
-}
-
-sub text ( $self, $text, %opts ) {
-    xdbg( "\$xo->text( \"$text\", ",
-	  join( ", ", map { "$_ => \"$opts{$_}\"" } keys %opts ),
-	  " );" );
-    $self->{xo}->text( $text, %opts );
-}
-
-#### Paths.
-
-sub move ( $self, @args ) {
-    xdbg( "\$xo->move( ", join(", ",@args), " );" );
-    $self->{xo}->move( @args );
-}
-
-sub hline ( $self, @args ) {
-    xdbg( "\$xo->hline( @args );" );
-    $self->{xo}->hline( @args );
-}
-
-sub vline ( $self, @args ) {
-    xdbg( "\$xo->vline( @args );" );
-    $self->{xo}->vline( @args );
-}
-
-sub line ( $self, @args ) {
-    xdbg( "\$xo->line( ", join(", ",@args), " );" );
-    $self->{xo}->line( @args );
-}
-
-sub curve ( $self, @args ) {
-    xdbg( "\$xo->curve( ", join(", ",@args), " );" );
-    $self->{xo}->curve( @args );
-}
-
-sub rect ( $self, @args ) {
-    xdbg( "\$xo->rect( ", join(", ",@args), " );" );
-    $self->{xo}->rect( @args );
-}
-
-sub close ( $self, @args ) {
-    die if @args;
-    xdbg( "\$xo->close();" );
-    $self->{xo}->close( @args );
-}
-
-#### Misc.
-
-sub finish () {
-    xdbg( "\$pdf->save(\"z.pdf\");" );
-}
-
 ################ Test program ################
 
 package SVG::Parser;
@@ -1243,7 +1076,7 @@ unless ( caller ) {
     PDF::API2->add_to_font_path($ENV{HOME}."/.fonts");
 
     my $p = PDF::SVG->new
-      ( { pr => { pdf => $pdf } }, debug => 1 );
+      ( { pr => { pdf => $pdf } }, debug => 1, trace => 1 );
     my $o = $p->process_file( shift);
     warn("PDF: SVG objects: ", 0+@$o, "\n");
     my $page = $pdf->page;
@@ -1271,8 +1104,8 @@ unless ( caller ) {
     my $i = 0;
     foreach my $xo ( @$o ) {
 	$i++;
-	if ( ref($xo->{xo}) eq "PAST" ) {
-	    $xo->{xo} = $xo->{xo}->{xo};
+	if ( ref($xo->{xo}) eq "PDF::SVG::PAST" ) {
+	    $xo->{xo} = $xo->{xo}->xo;
 	}
 	my $w = $xo->{width};
 	my $h = $xo->{height};
