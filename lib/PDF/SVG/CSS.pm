@@ -9,15 +9,29 @@ class PDF::SVG::CSS;
 
 field $css    :accessor;
 field $errstr :accessor;
+field $base   :mutator;
+field $ctx    :accessor;
 field @stack;
 
 BUILD {
     $css = {};
+    $base =
+	{ 'font-family'		    => 'serif',
+	  'font-size'		    => '10',
+	  'color'		    => 'black',
+	  'background-color'	    => 'white',
+	  'fill'		    => 'currentColor',
+	  'stroke'		    => 'none',
+	  'line-width'		    => 1,
+	};
+    $ctx = {};
     $self->push( @_ ) if @_;
 }
 
 # Parse a string with one or more styles. Augments.
 method read_string ( $string ) {
+
+    $css->{'*'} //= $base;
 
     # Flatten whitespace and remove /* comment */ style comments.
     $string =~ s/\s+/ /g;
@@ -48,8 +62,55 @@ method read_string ( $string ) {
 		$errstr = "Invalid or unexpected property '$_' in style '$style'";
 		return;
 	    }
-	    foreach ( @styles ) {
-		$css->{$_}->{lc $1} = $2;
+
+	    my $s = lc($1);
+	    my %s = ( $s => $2 );
+
+	    # Split font shorthand.
+	    if ( $s eq "font" ) {
+		use Text::ParseWords qw(shellwords);
+		my @spec = shellwords($s{$s});
+
+		foreach my $spec ( @spec ) {
+		    $spec =~ s/;$//;
+		    if ( $spec =~ /^([.\d]+)px/ ) {
+			$s{'font-size'} = $1;
+		    }
+		    elsif ( $spec eq "bold" ) {
+			$s{'font-weight'} = "bold";
+		    }
+		    elsif ( $spec eq "italic" ) {
+			$s{'font-style'} = "italic";
+		    }
+		    elsif ( $spec eq "bolditalic" ) {
+			$s{'font-weight'} = "bold";
+			$s{'font-style'} = "italic";
+		    }
+		    elsif ( $spec =~ /^(?:text,)?serif$/i ) {
+			$s{'font-family'} = "serif";
+		    }
+		    elsif ( $spec =~ /^(?:text,)?sans(?:-serif)?$/i ) {
+			$s{'font-family'} = "sans";
+		    }
+
+		    # These are for ABC SVG processing.
+		    elsif ( $spec =~ /^abc2svg(?:\.ttf)?$/i
+			    || $spec eq "music" ) {
+			$s{'font-family'} = "abc2svg";
+		    }
+		    elsif ( lc($spec) =~ /^musejazz\s*text$/i ) {
+			$s{'font-family'} = "musejazztext";
+		    }
+		}
+
+		# Remove the shorthand if we found something.
+		delete($s{$s}) if keys(%s) > 1;
+	    }
+
+	    foreach my $k ( keys %s ) {
+		foreach ( @styles ) {
+		    $css->{$_}->{$k} = $s{$k};
+		}
 	    }
 	}
     }
@@ -57,8 +118,8 @@ method read_string ( $string ) {
     my @keys = keys( %$css );
     for my $k ( @keys ) {
 	next unless $k =~ /^(\S+)\s+(\S+)$/;
-	$css->{$1}->{$2} //= {};
-	$self->merge( $css->{$1}->{$2}, $css->{$k} );
+	$css->{$1}->{" $2"} //= {};
+	$self->merge( $css->{$1}->{" $2"}, $css->{$k} );
 	delete ( $css->{$k} );
     }
 
@@ -84,39 +145,57 @@ method merge ( $left, $right ) {
     croak("Cannot merge " . ref($left) . " and " . ref($right));
 }
 
-method push ( %args ) {
-    my $ret = $css->{_} // {};
-    if ( $args{element} && exists( $css->{$args{element}} ) ) {
-	$self->merge( $ret, $css->{$args{element}} );
+method find ( $arg ) {
+    $css->{'*'} //= $base;
+    my $ret = { %{$css->{'*'}} };
+    if ( exists( $css->{_} ) ) {
+	$self->merge( $ret, $css->{_} );
     }
-    if ( $args{class} ) {
-	for ( split( ' ', $args{class} ) ) {
+    $ctx = $ret;
+    $ret->{$arg};
+}
+
+method push ( $args ) {
+    $css->{'*'} //= $base;
+    my $ret = { %{$css->{'*'}} };
+    if ( exists( $css->{_} ) ) {
+	$self->merge( $ret, $css->{_} );
+    }
+    if ( $args->{element} && exists( $css->{$args->{element}} ) ) {
+	$self->merge( $ret, $css->{$args->{element}} );
+    }
+    if ( $args->{class} ) {
+	for ( split( ' ', $args->{class} ) ) {
 	    next unless exists( $css->{".$_"} );
 	    $self->merge( $ret, $css->{".$_"} );
 	}
     }
-    if ( $args{style} ) {
-	$self->read_string( "_ {" . $args{style} . "}" )
+    if ( $args->{style} ) {
+	$self->read_string( "_ {" . $args->{style} . "}" )
 	  or croak($errstr);
 	$self->merge( $ret, delete $css->{_} );
     }
-    if ( $args{id} && exists( $css->{ "#" . $args{id} } ) ) {
-	$self->merge( $ret, $css->{ "#" . $args{id} } );
+    if ( $args->{id} && exists( $css->{ "#" . $args->{id} } ) ) {
+	$self->merge( $ret, $css->{ "#" . $args->{id} } );
     }
 
-    for ( keys %args ) {
+    for ( keys %$args ) {
 	next if /^element|class|style|id$/;
-	$ret->{$_} = $args{$_};
+	$ret->{$_} = $args->{$_};
     }
 
-    push( @stack, {%$css} );
+    push( @stack, { %{$css->{_}//{}} } );
     $self->merge( $css, { _ => $ret } );
-    $ret;
+    $ctx = $ret;
 }
 
 method pop () {
     Carp::croak("CSS stack underflow") unless @stack;
-    $css = pop(@stack);
+    $ctx = $css->{_} = pop(@stack);
+}
+
+method level () {
+    0+@stack;
 }
 
 1;

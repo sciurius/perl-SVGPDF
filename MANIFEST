@@ -3,4 +3,9 @@ MANIFEST
 Makefile.PL
 README.md
 lib/PDF/SVG.pm
-t/00-load.t
+lib/PDF/SVG/CSS.pm
+lib/PDF/SVG/PAST.pm
+t/001_load.t
+t/002_load.t
+t/100_css.t
+t/101_css.t

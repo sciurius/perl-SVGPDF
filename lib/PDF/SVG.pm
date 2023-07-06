@@ -46,6 +46,20 @@ sub _dbg ( $fmt, @args ) {
     xdbg( $fmt, @args );
 }
 
+# This is (currently) ugly --
+#
+# <svg ...>
+#  <style>...</style>
+#  <def>....</def>
+#  ...
+#  </svg>
+# <svg ...>
+#  ... the styles and defs persist!
+#  </svg>
+
+my $css;
+my $defs;
+
 sub process_file ( $self, $file ) {
     open( my $fd, '<:utf8', $file )
       or die(" $file: $!\n" );
@@ -53,6 +67,7 @@ sub process_file ( $self, $file ) {
     close($fd);
     return unless $svg;
 
+    $css //= PDF::SVG::CSS->new;
     my $ret = $self->search($svg);
     PDF::SVG::PAST->finish() if $debug;
     return $ret;
@@ -92,9 +107,7 @@ sub handle_svg ( $self, $e ) {
       : $self->{ps}->{pr}->{pdf}->xo_form;
 
     # Turn the <svg> element into an SVG:Element.
-    $e = SVG::Element->new( $e, $self, undef, {} );
-
-    my $css = PDF::SVG::CSS->new;
+    $e = SVG::Element->new( $e, $self, undef, $css );
 
     # If there are <style> elements, these must be processed first.
     my $cdata = "";
@@ -105,16 +118,18 @@ sub handle_svg ( $self, $e ) {
 	}
     }
     if ( $cdata =~ /\S/ ) {
-	warn( "STYLE: ", $cdata =~ s/\s+/ /gr, "\n" );
 	$css->read_string($cdata);
     }
     $e->{css} = $self->{css} = $css;
 
-    my $style = $e->css_push($self);
-
-    my $width  = $e->getAttribute("width") || 595;
-    my $height = $e->getAttribute("height") || 842;
+    my $atts = $e->getAttributes;
+    my $width  = delete( $atts->{width} ) || 595;
+    my $height = delete( $atts->{height}) || 842;
     s/px$// for $width, $height;
+    my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
+
+    delete $atts->{$_} for qw( xmlns:xlink xmlns );
+    my $style = $e->css_push($atts);
 
     # Set up result forms.
     # Currently we rely on the <svg> to supply the correct viewBox.
@@ -123,41 +138,23 @@ sub handle_svg ( $self, $e ) {
 	    width  => $width,
 	    height => $height } );
 
-    my @bb;
-    if ( $e->getAttribute("viewBox") ) {
-	@bb = split( ' ', $e->getAttribute("viewBox") );
-    }
-    else {
-	@bb = ( 0, 0, $width, $height );
-    }
+    my @bb = split( ' ', $vbox );
     _dbg( "bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
     # <svg> coordinates are topleft down, so translate.
     $xo->transform( translate => [ $bb[0], $bb[3] ] );
 
-#    $xo->rectxy(@bb);
-#    $xo->fill_color("#00ff00");
-#    $xo->fill;
-#    $xo->fill_color("black");
-
-    # Defaults.
-    $style->{'font-family'} //= "Times-Roman";
-    $style->{'font-size'} //= 10;
-    $style->{stroke} //= 'none';
-    $style->{fill}   //= $style->{color} // 'black';
-
-    $self->{attrstyle} = $style;
-
     # Establish currentColor.
-    $xo->fill_color($style->{fill})
-      unless $style->{fill}   eq 'none'
-      or     $style->{fill}   eq 'currentColor';
-    $xo->stroke_color($style->{stroke})
-      unless $style->{stroke} eq 'none'
-      or     $style->{stroke} eq 'currentColor';
-
-
-#    use DDumper; DDumper $e;
+    for ( $css->find("fill") ) {
+	$xo->fill_color($_)
+	  unless $_   eq 'none'
+	  or     $_   eq 'currentColor';
+    }
+    for ( $css->find("stroke") ) {
+	$xo->stroke_color($_)
+	  unless $_ eq 'none'
+	  or     $_ eq 'currentColor';
+    }
 
     for ( $e->getChildren ) {
 	$_->traverse;
@@ -173,6 +170,8 @@ package SVG::Text;
 our @ISA = qw ( SVG::Element );
 
 package SVG::Element;
+
+use DDumper;
 
 our @ISA = qw ( XML::Tiny::_Element );
 
@@ -200,7 +199,6 @@ sub traverse ( $self ) {
 	$self->$p;
     }
     else {
-#	_dbg( "$en ", atts($e) );
 	_dbg( "traverse $en " );
 	for ( $self->getChildren ) {
 	    next if $_->{type} eq 't';
@@ -226,17 +224,14 @@ sub getChildren ( $self ) {
 }
 
 sub getAttributes ( $self ) {
-    $self->{attrib} // {};
+    \%{ $self->{attrib} // {} };
 }
 
-sub css_push_exclude ( $self, @excl ) {
-    my $ret;
-    my %a = %{ $self->getAttributes };
-    delete $a{$_} for @excl;
+sub css_push ( $self, $atts ) {
     Carp::confess unless $self->{css};
-    $ret = $self->{css}->push(%a);
+    my $ret = $self->{css}->push($atts);
     if ( $debug_styles ) {
-	warn( "CSS: ",
+	warn( "CSS[", $self->{css}->level, "]: ",
 	      $self->can("getElementName")
 	      ? ( $self->getElementName . " " )
 	      : (),
@@ -245,35 +240,8 @@ sub css_push_exclude ( $self, @excl ) {
     $ret;
 }
 
-sub css_push ( $self, $from = undef ) {
-    $from //= $self;
-    my $ret;
-    Carp::confess unless $from->{css};
-    $ret = $from->{css}->push( %{ $self->getAttributes } );
-    if ( $debug_styles ) {
-	warn( "CSS: ",
-	      $from->can("getElementName")
-	      ? ( $from->getElementName . " " )
-	      : (),
-	      DDumper($ret) );
-    }
-    $ret;
-}
-
 sub css_pop ( $self ) {
     $self->{css}->pop;
-}
-
-sub getAttribute ( $self, $att ) {
-    if ( $debug_styles ) {
-	if ( defined $self->{attrib}->{$att} ) {
-	    warn("ATTR: $att = ", $self->{attrib}->{$att}, " (from attr)\n");
-	}
-	elsif ( defined $self->{css}->css->{_}->{$att} ) {
-	    warn("ATTR: $att = ", $self->{css}->css->{_}->{$att}, " (from CSS)\n");
-	}
-    }
-    $self->{attrib}->{$att} // $self->{css}->css->{_}->{$att};
 }
 
 sub getCDATA ( $self ) {
@@ -287,26 +255,28 @@ sub getCDATA ( $self ) {
 ################ Texts and Paths ################
 
 sub process_text ( $self ) {
-    my $style = $self->css_push;
+    my $atts = $self->getAttributes;
+    my %atts = %$atts;		# debug
+    my $x  = delete($atts->{x}) || 0;
+    my $y  = delete($atts->{y}) || 0;
+    my $tf = delete($atts->{transform}) || "";
+
+    my $style = $self->css_push($atts);
     _dbg( $self->getElementName, " ====" );
     local $indent = $indent . "  ";
 
     my $text = "";
-
-    my $x = $self->getAttribute("x") || 0;
-    my $y = $self->getAttribute("y") || 0;
-    my $tf = $self->getAttribute("transform") || "";
 
     my $color = $style->{color};
     my $anchor = $style->{'text-anchor'} || "left";
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
 
     _dbg( $self->getElementName, " ",
-	  defined($self->getAttribute("x")) ? ( " x=$x" ) : (),
-	  defined($self->getAttribute("y")) ? ( " y=$y" ) : (),
-	  defined($self->getAttribute("text-anchor"))
+	  defined($atts{x}) ? ( " x=$x" ) : (),
+	  defined($atts{y}) ? ( " y=$y" ) : (),
+	  defined($style->{"text-anchor"})
 	  ? ( " anchor=\"$anchor\"" ) : (),
-	  defined($self->getAttribute("transform"))
+	  defined($style->{"transform"})
 	  ? ( " transform=\"$tf\"" ) : (),
 	  "\n" );
 
@@ -371,7 +341,7 @@ sub process_text ( $self ) {
 	  ? "right"
 	  : $anchor eq "middle" ? "center" : "left";
 	$xo->textstart;
-	$xo->font( $self->makefont( $self->text_style($style->{font})) );
+	$xo->font( $self->makefont($style));
 	$xo->text( shift(@$text), %o );
 	$xo->textend;
 	$xo->restore;
@@ -404,7 +374,7 @@ sub process_text ( $self ) {
 
 	    if ( $c->{type} eq 't' ) {
 		$xo->textstart;
-		$xo->font( $self->makefont( $self->text_style($style->{font})) );
+		$xo->font( $self->makefont($style));
 
 		$x += $xo->text( $c->{content}, %o );
 		$xo->textend;
@@ -424,30 +394,33 @@ sub process_text ( $self ) {
 
 sub process_tspan {
     my ( $self ) = @_;
-    my $style = $self->css_push;
+    my $atts = $self->getAttributes;
+    my %atts = %$atts;		# debug
+    my $x  = delete($atts->{x}) || 0;
+    my $y  = delete($atts->{y}) || 0;
+    my $dx = delete($atts->{dx}) || 0;
+    my $dy = delete($atts->{dy}) || 0;
+
+    my $style = $self->css_push($atts);
     _dbg( $self->getElementName, " ====" );
     local $indent = $indent . "  ";
 
     my $text = "";
 
-    my $x  = $self->getAttribute("x")  || 0;
-    my $y  = $self->getAttribute("y")  || 0;
-    my $dx = $self->getAttribute("dx") || 0;
-    my $dy = $self->getAttribute("dy") || 0;
-
+    $style->{'font-size'} =~ s/px$//;
     $dx = $1 * $style->{'font-size'} if $dx =~ /^([.\d]+)em$/;
     $dy = $1 * $style->{'font-size'} if $dy =~ /^([.\d]+)em$/;
-    
+ 
     my $color = $style->{color};
     my $anchor = $style->{'text-anchor'} || "left";
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
 
     _dbg( $self->getElementName, " ",
-	  defined($self->getAttribute("x")) ? ( " x=$x" ) : (),
-	  defined($self->getAttribute("y")) ? ( " y=$y" ) : (),
-	  defined($self->getAttribute("dx")) ? ( " dx=$dx" ) : (),
-	  defined($self->getAttribute("dy")) ? ( " dy=$dy" ) : (),
-	  defined($self->getAttribute("text-anchor"))
+	  defined($atts{x})  ? ( " x=$x" ) : (),
+	  defined($atts{y})  ? ( " y=$y" ) : (),
+	  defined($atts{dx}) ? ( " dx=$dx" ) : (),
+	  defined($atts{dy}) ? ( " dy=$dy" ) : (),
+	  defined($style->{"text-anchor"})
 	  ? ( " anchor=\"$anchor\"" ) : (),
 	  "\n" );
 
@@ -479,7 +452,7 @@ sub process_tspan {
 	    $xo->transform( translate => [ $x, $y ] );
 	    if ( $c->{type} eq 't' ) {
 		$xo->textstart;
-		$xo->font( $self->makefont( $self->text_style($style->{font})) );
+		$xo->font( $self->makefont($style));
 		$x += $xo->text( $c->{content}, %o );
 		$xo->textend;
 	    }
@@ -497,10 +470,12 @@ sub process_tspan {
 
 sub process_path ( $self ) {
 
-    my $style = $self->css_push;
-    my $d = $self->getAttribute("d");
-    return unless $d;
+    my $atts = $self->getAttributes;
+    my $d  = delete($atts->{d});
+    return unless $d;		# noop
 
+    my $style = $self->css_push($atts);
+    $atts->{d} = $d;
     my $x = 0;
     my $y = 0;
     _dbg( $self->getElementName, " x=$x y=$y" );
@@ -654,13 +629,15 @@ sub process_path ( $self ) {
 
 sub process_rect ( $self ) {
 
-    my $style = $self->css_push;
+    my $atts = $self->getAttributes;
+    my $x  = delete($atts->{x}) || 0;
+    my $y  = delete($atts->{y}) || 0;
+    my $w  = delete($atts->{w}) || 0;
+    my $h  = delete($atts->{h}) || 0;
+
+    my $style = $self->css_push($atts);
 
     my $sda = $style->{'stroke-dasharray'};
-    my $x = $self->getAttribute("x");
-    my $y = $self->getAttribute("y");
-    my $w = $self->getAttribute("w");
-    my $h = $self->getAttribute("h");
     _dbg( $self->getElementName, " x=$x y=$y w=$w h=$h" );
     local $indent = $indent . "  ";
 
@@ -695,17 +672,19 @@ sub process_rect ( $self ) {
 ################ Graphics context ################
 
 sub process_g ( $self ) {
+    my $atts = $self->getAttributes;
+    my $t  = delete($atts->{transform});
+    my $style = $self->css_push($atts);
+
     _dbg( $self->getElementName, " ====" );
     local $indent = $indent . "  ";
-
-    $self->css_push_exclude( qw( transform ) );
 
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     my $x;
     my $y;
     my $scale;
 
-    if ( my $t = $self->getAttribute("transform") ) {
+    if ( $t ) {
 	if ( $t =~ /translate\(([.\d]+),\s*([.\d]+)\)/ ) {
 	    $x = $1;
 	    $y = $2;
@@ -794,19 +773,24 @@ sub process_defs ( $self ) {
     _dbg( $self->getElementName, " ====" );
     local $indent = $indent . "  ";
     for ( $self->getChildren ) {
-	$self->{svg}->{defs}->{ "#" . $_->getAttribute("id") } = $_;
+	$defs->{ "#" . $_->getAttributes->{id} } = $_;
     }
 }
 
 sub process_use ( $self ) {
-    my $x = + $self->getAttribute("x");
-    my $y = - $self->getAttribute("y");
+    my $atts = $self->getAttributes;
+    my $x  = delete($atts->{x}) || 0;
+    my $y  = delete($atts->{y}) || 0;
+    my $xr = delete($atts->{"xlink:href"});
+    my $style = $self->css_push($atts);
+
+    $y = -$y;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
-    _dbg( $self->getElementName, " x=$x, y=$y" );
+    _dbg( $self->getElementName, " ref=", $xr//"<undef>", " x=$x, y=$y" );
     local $indent = $indent . "  ";
 
-    my $r = $self->{svg}->{defs}->{ $self->getAttribute("xlink:href") };
-    die("missing def ", $self->getAttribute("xlink:href")) unless $r;
+    my $r = $defs->{$xr};
+    die("missing def for $xr") unless $r;
 
     $xo->save;
     $xo->transform( translate => [ $x, $y ] );
@@ -815,58 +799,6 @@ sub process_use ( $self ) {
 }
 
 ################ Styles and Fonts ################
-
-use Text::ParseWords qw( shellwords );
-
-sub text_style ( $self, $defs ) {
-    my %s;
-    my @spec = shellwords($defs);
-
-    foreach my $spec ( @spec ) {
-	if ( $spec =~ /^([.\d]+)px/ ) {
-	    $s{'font-size'} = $1;
-	}
-	elsif ( $spec eq "bold" ) {
-	    $s{'font-weight'} = "bold";
-	}
-	elsif ( $spec eq "italic" ) {
-	    $s{'font-style'} = "italic";
-	}
-	elsif ( $spec eq "bolditalic" ) {
-	    $s{'font-weight'} = "bold";
-	    $s{'font-style'} = "italic";
-	}
-	elsif ( $spec =~ /^text,serif/ ) {
-	    $s{'font-family'} = "Times-Roman";
-	}
-	elsif ( $spec =~ /^text,sans-serif/ ) {
-	    $s{'font-family'} = "Helvetica";
-	}
-	elsif ( $spec =~ /^abc2svg(?:\.ttf)?;?/ ) {
-	    $s{'font-family'} = "abc2svg";
-	}
-	elsif ( $spec eq "music" ) {
-	    $s{'font-family'} = "abc2svg";
-	}
-	elsif ( $spec eq "MuseJazz Text" ) {
-	    $s{'font-family'} = "MuseJazzText.otf";
-	}
-	else {
-	    $s{'font-family'} = "Times-Roman";
-	}
-    }
-use DDumper;    warn("\"$defs\" => ", DDumper(\%s));
-    \%s
-}
-
-sub trim {
-    for ( @_ ) {
-	s/^\s+//s;
-	s/\s+$//s;
-	s/[\r\n]+/ /g
-    }
-    $_[0];
-}
 
 sub makefont ( $self, $style ) {
     local $indent = $indent . "  ";
@@ -881,18 +813,15 @@ sub makefont ( $self, $style ) {
     $bd = $style->{'font-weight'}
       && $style->{'font-weight'} =~ /^(bold|black)$/;
 
-    if ( $fn =~ /^(helvetica|text,sans-serif)$/i ) {
+    if ( $fn =~ /^(sans|helvetica|(?:text,)?sans-serif)$/i ) {
 	$fn = $bd
 	  ? $em ? "Helvetica-BoldOblique" : "Helvetica-Bold"
 	  : $em ? "Helvetica-Oblique" : "Helvetica";
     }
-    elsif ( $fn =~ /^abc2svg(?:\.ttf)?;?/ ) {
+    elsif ( $fn =~ /^abc2svg(?:\.ttf)?/ or $fn eq "music" ) {
 	$fn = "abc2svg.ttf";
     }
-    elsif ( $fn eq "music" ) {
-	$fn = "abc2svg.ttf";
-    }
-    elsif ( $fn eq "MuseJazz Text" ) {
+    elsif ( $fn =~ /^musejazz\s*text$/ ) {
 	$fn = "MuseJazzText.otf";
     }
     else {
@@ -903,7 +832,7 @@ sub makefont ( $self, $style ) {
     my $font = $self->{svg}->{ps}->{pr}->{pdf}->{__fontcache__}->{$fn} //= do {
 	$self->{svg}->{ps}->{pr}->{pdf}->font($fn);
     };
-    wantarray ? ( $font, $style->{'font-size'}, $fn ) : $font;
+    ( $font, $style->{'font-size'}, $fn );
 }
 
 ################ Test program ################
