@@ -2,8 +2,8 @@
 
 **WARNING** This is a work in progress and probably not useful yet.
 
-This module implements a substantial subset of SVG, sufficient to
-produce PDF XObjects from (most) SVG data.
+This module implements a subset of SVG, sufficient to
+produce PDF XObjects from some SVG data.
 
 # INSTALLATION
 
