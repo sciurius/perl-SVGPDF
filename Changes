@@ -1,9 +1,14 @@
 Revision history for PDF::SVG
 
-0.02
+0.02	2023-07-07
 
-	Added subroutine signatures.
+	- Moved repo to Github.
+	- Added subroutine signatures.
+	- Almost everything is working again.
+	- (CSS) Handle selector el.class.
+	- Fixed css mixups and whitespace elements.
 
 0.01    2022-04-03
-        First version, released on an unsuspecting world.
+
+	- First version, released on an unsuspecting world.
 

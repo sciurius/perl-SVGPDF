@@ -1,5 +1,7 @@
 # PDF::SVG
 
+**WARNING** This is a work in progress and probably not useful yet.
+
 This module implements a substantial subset of SVG, sufficient to
 produce PDF XObjects from (most) SVG data.
 
