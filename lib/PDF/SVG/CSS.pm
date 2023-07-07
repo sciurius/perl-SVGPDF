@@ -21,7 +21,7 @@ BUILD {
 	  'color'		    => 'black',
 	  'background-color'	    => 'white',
 	  'fill'		    => 'currentColor',
-	  'stroke'		    => 'none',
+	  'stroke'		    => 'currentColor',
 	  'line-width'		    => 1,
 	};
     $ctx = {};
@@ -155,7 +155,8 @@ method find ( $arg ) {
     $ret->{$arg};
 }
 
-method push ( $args ) {
+method push ( @args ) {
+    my $args = ref($args[0]) eq 'HASH' ? $args[0] : { @args };
     $css->{'*'} //= $base;
     my $ret = { %{$css->{'*'}} };
     if ( exists( $css->{_} ) ) {
@@ -163,6 +164,9 @@ method push ( $args ) {
     }
     if ( $args->{element} && exists( $css->{$args->{element}} ) ) {
 	$self->merge( $ret, $css->{$args->{element}} );
+    }
+    if ( $args->{element} && exists( $css->{_}->{" ".$args->{element}} ) ) {
+	$self->merge( $ret, $css->{_}->{" ".$args->{element}} );
     }
     if ( $args->{class} ) {
 	for ( split( ' ', $args->{class} ) ) {
