@@ -175,9 +175,9 @@ method push ( @args ) {
 	}
     }
     if ( $args->{style} ) {
-	$self->read_string( "_ {" . $args->{style} . "}" )
+	$self->read_string( "__ {" . $args->{style} . "}" )
 	  or croak($errstr);
-	$self->merge( $ret, delete $css->{_} );
+	$self->merge( $ret, delete $css->{__} );
     }
     if ( $args->{id} && exists( $css->{ "#" . $args->{id} } ) ) {
 	$self->merge( $ret, $css->{ "#" . $args->{id} } );

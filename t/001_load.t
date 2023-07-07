@@ -21,3 +21,4 @@ if ( my $a = $ENV{PDF_SVG_API} ) {
 }
 
 diag( "Using $pdfapi[0] version $pdfapi[1]" );
+diag( "Using XML::Tiny version $XML::Tiny::VERSION" );

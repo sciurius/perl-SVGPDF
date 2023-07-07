@@ -58,7 +58,6 @@ sub _dbg ( $fmt, @args ) {
 #  </svg>
 
 my $css;
-my $defs;
 
 sub process_file ( $self, $file ) {
     open( my $fd, '<:utf8', $file )
@@ -67,7 +66,7 @@ sub process_file ( $self, $file ) {
     close($fd);
     return unless $svg;
 
-    $css //= PDF::SVG::CSS->new;
+    $css = PDF::SVG::CSS->new;
     my $ret = $self->search($svg);
     PDF::SVG::PAST->finish() if $debug;
     return $ret;
@@ -81,6 +80,7 @@ sub search ( $self, $e ) {
 
     my $en = $e->getElementName;
     if ( $en eq "svg" ) {
+	$indent = "";
 	$self->handle_svg($e);
 	# Adds results to $self->{xoforms}.
     }
@@ -128,7 +128,7 @@ sub handle_svg ( $self, $e ) {
     s/px$// for $width, $height;
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
-    delete $atts->{$_} for qw( xmlns:xlink xmlns );
+    delete $atts->{$_} for qw( xmlns:xlink xmlns version );
     my $style = $e->css_push($atts);
 
     # Set up result forms.
@@ -256,6 +256,8 @@ sub getCDATA ( $self ) {
 
 sub process_text ( $self ) {
     my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
     my %atts = %$atts;		# debug
     my $x  = delete($atts->{x}) || 0;
     my $y  = delete($atts->{y}) || 0;
@@ -284,6 +286,7 @@ sub process_text ( $self ) {
     # argument.
 
     my @c = $self->getChildren;
+
     if ( $x =~ /,/ ) {
 	if ( @c > 1 || ref($c[0]) !~ /::Text$/ ) {
 	    die("text: Cannot combine coordinate list with multiple elements\n");
@@ -392,9 +395,11 @@ sub process_text ( $self ) {
     $self->css_pop;
 }
 
-sub process_tspan {
-    my ( $self ) = @_;
+sub process_tspan ( $self ) {
+
     my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
     my %atts = %$atts;		# debug
     my $x  = delete($atts->{x}) || 0;
     my $y  = delete($atts->{y}) || 0;
@@ -471,6 +476,8 @@ sub process_tspan {
 sub process_path ( $self ) {
 
     my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
     my $d  = delete($atts->{d});
     return unless $d;		# noop
 
@@ -630,6 +637,8 @@ sub process_path ( $self ) {
 sub process_rect ( $self ) {
 
     my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
     my $x  = delete($atts->{x}) || 0;
     my $y  = delete($atts->{y}) || 0;
     my $w  = delete($atts->{w}) || 0;
@@ -672,7 +681,10 @@ sub process_rect ( $self ) {
 ################ Graphics context ################
 
 sub process_g ( $self ) {
+
     my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
     my $t  = delete($atts->{transform});
     my $style = $self->css_push($atts);
 
@@ -773,12 +785,15 @@ sub process_defs ( $self ) {
     _dbg( $self->getElementName, " ====" );
     local $indent = $indent . "  ";
     for ( $self->getChildren ) {
-	$defs->{ "#" . $_->getAttributes->{id} } = $_;
+	$self->{svg}->{defs}->{ "#" . $_->getAttributes->{id} } = $_;
     }
 }
 
 sub process_use ( $self ) {
+
     my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
     my $x  = delete($atts->{x}) || 0;
     my $y  = delete($atts->{y}) || 0;
     my $xr = delete($atts->{"xlink:href"});
@@ -789,7 +804,7 @@ sub process_use ( $self ) {
     _dbg( $self->getElementName, " ref=", $xr//"<undef>", " x=$x, y=$y" );
     local $indent = $indent . "  ";
 
-    my $r = $defs->{$xr};
+    my $r = $self->{svg}->{defs}->{$xr};
     die("missing def for $xr") unless $r;
 
     $xo->save;

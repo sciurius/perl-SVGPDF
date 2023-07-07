@@ -125,7 +125,11 @@ method font ( $font, $size, $name ) {
 }
 
 method text ( $text, %opts ) {
-    xdbg( "\$xo->text( \"$text\", ",
+    my $t = $text;
+    if ( length($t) == 1 && ord($t) > 255 ) {
+	$t = sprintf("\\x{%04x}", ord($t));
+    }
+    xdbg( "\$xo->text( \"$t\", ",
 	  join( ", ", map { "$_ => \"$opts{$_}\"" } keys %opts ),
 	  " );" );
     $xo->text( $text, %opts );
