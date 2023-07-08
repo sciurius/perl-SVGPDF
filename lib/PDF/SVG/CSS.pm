@@ -107,6 +107,28 @@ method read_string ( $string ) {
 		delete($s{$s}) if keys(%s) > 1;
 	    }
 
+	    # Split outline shorthand.
+	    elsif ( $s eq "outline" ) {
+		use Text::ParseWords qw(shellwords);
+		my @spec = shellwords($s{$s});
+
+		foreach my $spec ( @spec ) {
+		    $spec =~ s/;$//;
+		    if ( $spec =~ /^([.\d]+)px/ ) {
+			$s{'outline-width'} = $1;
+		    }
+		    elsif ( $spec =~ /^(dotted|dashed|solid|double|groove|ridge|inset|outset)$/i ) {
+			$s{'outline-style'} = $1;
+		    }
+		    else {
+			$s{'outline-color'} = $spec;
+		    }
+		}
+
+		# Remove the shorthand if we found something.
+		delete($s{$s}) if keys(%s) > 1;
+	    }
+
 	    foreach my $k ( keys %s ) {
 		foreach ( @styles ) {
 		    $css->{$_}->{$k} = $s{$k};

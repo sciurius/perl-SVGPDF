@@ -125,10 +125,10 @@ sub handle_svg ( $self, $e ) {
     my $atts = $e->getAttributes;
     my $width  = delete( $atts->{width} ) || 595;
     my $height = delete( $atts->{height}) || 842;
-    s/px$// for $width, $height;
+    s/p[tx]$// for $width, $height;
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
-    delete $atts->{$_} for qw( xmlns:xlink xmlns version );
+    delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $e->css_push($atts);
 
     # Set up result forms.
@@ -200,6 +200,7 @@ sub traverse ( $self ) {
     }
     else {
 	_dbg( "traverse $en " );
+	warn("SVG: Not implemented: $en\n") unless $en eq "style";
 	for ( $self->getChildren ) {
 	    next if $_->{type} eq 't';
 	    $self->new($_)->traverse;
@@ -304,6 +305,9 @@ sub process_text ( $self ) {
 
     _dbg( "xo save" );
     $xo->save;
+    my $ix = $x->[0];
+    my $iy = $y->[0];
+    my ( $ex, $ey );
 
     my ( $dx, $dy, $scale ) = ( 0, 0, 1 );
     if ( $tf ) {
@@ -330,7 +334,7 @@ sub process_text ( $self ) {
 	}
 	my $x = $dx + $_;
 	my $y = - $dy - shift(@$y);
-	_dbg( "txt translate( %.2f, %.2f )%s %x",
+	_dbg( "txt* translate( %.2f, %.2f )%s %x",
 	      $x, $y,
 	      $scale != 1 ? sprintf(" scale( %.1f )", $scale) : "",
 	      ord($text->[0]));
@@ -381,6 +385,17 @@ sub process_text ( $self ) {
 
 		$x += $xo->text( $c->{content}, %o );
 		$xo->textend;
+		if ( $style->{'outline-style'} ) {
+		    my ($fn,$sz) = @{[$self->makefont($style)]};
+		    $xo->line_width( $style->{'outline-width'} || 1 );
+		    $xo->stroke_color( $style->{'outline-color'} || 'black' );
+		    my $d = $style->{'outline-offset'} || 1;
+		    $xo->rectangle( -$d,
+				    -$d+$sz*$fn->descender/1000,
+				    $x-$ix+2*$d,
+				    2*$d+$sz*$fn->ascender/1000 );
+		    $xo->stroke;
+		}
 	    }
 	    elsif ( $c->{type} eq 'e' && $c->{name} eq 'tspan' ) {
 		my ( $x0, $y0 ) = $c->process_tspan;
@@ -388,10 +403,12 @@ sub process_text ( $self ) {
 		_dbg("tspan moved to $x, $y");
 	    }
 	    $xo->restore;
+	    $ex = $x; $ey = $y;
 	}
     }
     _dbg( "xo restore" );
     $xo->restore;
+    
     $self->css_pop;
 }
 
@@ -499,7 +516,9 @@ sub process_path ( $self ) {
     $d =~ s/([a-z])([a-z])/$1 $2/gi;
     $d =~ s/([a-z])([-\d])/$1 $2/gi;
     $d =~ s/([-\d])([a-z])/$1 $2/gi;
+    $d =~ s/,/ /g;
     my @d = split( ' ', $d );
+
     my $open;
 
     my $paint = sub {
@@ -596,17 +615,17 @@ sub process_path ( $self ) {
 	# Arcs.
 	if ( $op eq "a" ) {
 	    my $new = 1;
-	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
+	    while ( @d > 6 && $d[0] =~ /^-?[.\d]+$/ ) {
+		my $sx = shift(@d);
+		my $sy = shift(@d);
+		my $rot = shift(@d);
+		my $large = shift(@d);
+		my $sweep = shift(@d);
+		my $ex = shift(@d);
+		my $ey = shift(@d);
 		$ix = $x, $iy = $y unless $open++;
-		my @c = ( $x + $d[0], $y - $d[1],
-			  $d[2], $d[3],
-			  $d[4], $d[5] );
-		_dbg( "xo arc(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
-		...;
-		$xo->arc( @c, $new );
-		$new = 0;
-		splice( @d, 0, 5 );
-		# $x = ...; $y = ...;
+		_dbg( "xo arc(%.2f,%.2f %.2f %d %d %.2f,%.2f)",
+		      $sx, $sy, $rot, $large, $sweep, $ex, $ey );
 	    }
 	    next;
 	}
@@ -641,8 +660,10 @@ sub process_rect ( $self ) {
 
     my $x  = delete($atts->{x}) || 0;
     my $y  = delete($atts->{y}) || 0;
-    my $w  = delete($atts->{w}) || 0;
-    my $h  = delete($atts->{h}) || 0;
+    my $w  = delete($atts->{width}) || 0;
+    my $h  = delete($atts->{height}) || 0;
+
+    s/p[tx]$// for $x, $y, $w, $h;
 
     my $style = $self->css_push($atts);
 
@@ -650,7 +671,7 @@ sub process_rect ( $self ) {
     _dbg( $self->getElementName, " x=$x y=$y w=$w h=$h" );
     local $indent = $indent . "  ";
 
-    my $xo = $self->{xoforms}->[-1]->{xo};
+    my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
 
@@ -670,7 +691,7 @@ sub process_rect ( $self ) {
 	}
     };
 
-    $xo->rect( $x, $y, $w, $h );
+    $xo->rectangle( $x, -$y, $x+$w, -$y-$h );
     $paint->();
 
     _dbg( "xo restore" );
@@ -847,7 +868,7 @@ sub makefont ( $self, $style ) {
     my $font = $self->{svg}->{ps}->{pr}->{pdf}->{__fontcache__}->{$fn} //= do {
 	$self->{svg}->{ps}->{pr}->{pdf}->font($fn);
     };
-    ( $font, $style->{'font-size'}, $fn );
+    ( $font, $sz, $fn );
 }
 
 ################ Test program ################

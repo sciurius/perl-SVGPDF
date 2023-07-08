@@ -167,6 +167,11 @@ method rect ( @args ) {
     $xo->rect( @args );
 }
 
+method rectangle ( @args ) {
+    xdbg( "\$xo->rectangle( ", join(", ",@args), " );" );
+    $xo->rectangle( @args );
+}
+
 method close ( @args ) {
     die if @args;
     xdbg( "\$xo->close();" );
