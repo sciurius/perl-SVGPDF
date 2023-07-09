@@ -172,6 +172,16 @@ method rectangle ( @args ) {
     $xo->rectangle( @args );
 }
 
+method circle ( @args ) {
+    xdbg( "\$xo->circle( ", join(", ",@args), " );" );
+    $xo->circle( @args );
+}
+
+method polyline ( @args ) {
+    xdbg( "\$xo->polyline( ", join(", ",@args), " );" );
+    $xo->polyline( @args );
+}
+
 method close ( @args ) {
     die if @args;
     xdbg( "\$xo->close();" );

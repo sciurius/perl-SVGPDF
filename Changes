@@ -3,7 +3,10 @@ Revision history for PDF::SVG
 0.00
 
 	- Add single-style outline for simple <text>.
+	- Add circle.
+	- Add polyline.
 	- (CSS) Handle outline shorthand.
+	- (CSS) Fix priorities.
 	- Elegantly skip unimplemented arcs.
 	- Fix rectangle bug.
 	- Fix fontsize bug in makefont.

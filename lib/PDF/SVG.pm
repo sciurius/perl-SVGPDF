@@ -699,6 +699,103 @@ sub process_rect ( $self ) {
     $self->css_pop;
 }
 
+sub process_polyline ( $self ) {
+
+    my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
+    my $points  = delete($atts->{points}) || "";
+
+    my @d;
+    for ( split( ' ', $points ) ) {
+	my ( $x, $y ) = split( ',', $_ );
+	s/p[tx]$// for $x, $y;
+	push( @d, $x, -$y );
+    }
+
+    my $style = $self->css_push($atts);
+
+    my $sda = $style->{'stroke-dasharray'};
+    _dbg( $self->getElementName, " points=$points" );
+    local $indent = $indent . "  ";
+
+    my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
+    _dbg( "xo save" );
+    $xo->save;
+
+    $self->set_graphics($style);
+
+    my $paint = sub {
+	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
+	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
+		$xo->paint;
+	    }
+	    else {
+		$xo->stroke;
+	    }
+	}
+	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
+	    $xo->fill;
+	}
+    };
+
+    my $op = "move";
+    if ( @d ) {
+	$xo->move( $d[0], $d[1] );
+	$xo->polyline( @d[2 .. $#d] );
+	$paint->();
+    }
+
+    _dbg( "xo restore" );
+    $xo->restore;
+    $self->css_pop;
+}
+
+sub process_circle ( $self ) {
+
+    my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
+    my $cx  = delete($atts->{cx}) || 0;
+    my $cy  = delete($atts->{cy}) || 0;
+    my $r  = delete($atts->{r}) || 0;
+
+    s/p[tx]$// for $cx, $cy, $r;
+
+    my $style = $self->css_push($atts);
+
+    my $sda = $style->{'stroke-dasharray'};
+    _dbg( $self->getElementName, " cx=$cx cy=$cy r=$r" );
+    local $indent = $indent . "  ";
+
+    my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
+    _dbg( "xo save" );
+    $xo->save;
+
+    $self->set_graphics($style);
+
+    my $paint = sub {
+	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
+	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
+		$xo->paint;
+	    }
+	    else {
+		$xo->stroke;
+	    }
+	}
+	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
+	    $xo->fill;
+	}
+    };
+
+    $xo->circle( $cx, -$cy, $r );
+    $paint->();
+
+    _dbg( "xo restore" );
+    $xo->restore;
+    $self->css_pop;
+}
+
 ################ Graphics context ################
 
 sub process_g ( $self ) {
