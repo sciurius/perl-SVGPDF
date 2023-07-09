@@ -807,12 +807,8 @@ sub process_polyline ( $self, $close = 0 ) {
     if ( @d ) {
 	$xo->move( $d[0], $d[1] );
 	$xo->polyline( @d[2 .. $#d] );
-	if ( $close ) {
-	    $xo->close;
-	}
-	else {
-	    $paint->();
-	}
+	$xo->close if $close;
+	$paint->();
     }
 
     _dbg( "xo restore" );
@@ -956,6 +952,10 @@ sub set_graphics ( $self, $style ) {
 	# Nothing. Use current.
     }
     elsif ( lc($fill) ne "none" ) {
+	$fill =~ s/\s+//g;
+	if ( $fill =~ /rgb\((\d+),(\d+),(\d+)\)/ ) {
+	    $fill = sprintf("#%02X%02X%02X", $1, $2, $3);
+	}
 	$xo->fill_color($fill);
 	_dbg( $self->getElementName, " fill=", $fill );
     }
