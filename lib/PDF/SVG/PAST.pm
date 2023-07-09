@@ -194,4 +194,8 @@ method finish :common () {
     PDF::SVG::xdbg->( "\$pdf->save(\"z.pdf\");" );
 }
 
+DESTROY {
+    finish();
+}
+
 1;
