@@ -60,15 +60,21 @@ sub _dbg ( $fmt, @args ) {
 my $css;
 
 sub process_file ( $self, $file ) {
+
+    # Load the SVG file.
     open( my $fd, '<:utf8', $file )
       or die(" $file: $!\n" );
     my $svg = SVG::Parser->new->parsefile($fd);
     close($fd);
     return unless $svg;
 
+    # CSS persists over svgs, but not over files.
     $css = PDF::SVG::CSS->new;
+
+    # Search for svg elements and process them.
     my $ret = $self->search($svg);
-    PDF::SVG::PAST->finish() if $debug;
+
+    # Return (hopefully a stack of XObjects).
     return $ret;
 }
 
@@ -126,6 +132,7 @@ sub handle_svg ( $self, $e ) {
     my $width  = delete( $atts->{width} ) || 595;
     my $height = delete( $atts->{height}) || 842;
     s/p[tx]$// for $width, $height;
+    s;([\d.]+)mm;sprintf("%.2f",$1*72/25.4);ge for $width, $height;
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
@@ -198,18 +205,24 @@ sub traverse ( $self ) {
 	_dbg("handling $en");
 	$self->$p;
     }
-    else {
-	_dbg( "traverse $en " );
+    elsif ( ref($self->{content}) eq 'ARRAY' ) {
+	_dbg( "traverse $en" );
 	warn("SVG: Not implemented: $en\n") unless $en eq "style";
 	for ( $self->getChildren ) {
 	    next if $_->{type} eq 't';
 	    $self->new($_)->traverse;
 	}
     }
+    else {
+	_dbg( "skip '$en'" );
+    }
 }
 
 sub getChildren ( $self ) {
     my @res;
+    unless ( ref($self->{content}) eq 'ARRAY' ) {
+	Carp::confess("ARRAY");
+    }
     for ( @{ $self->{content} } ) {
 	if ( $_->{type} eq 'e' ) {
 	    push( @res, $self->new($_) );
@@ -408,7 +421,7 @@ sub process_text ( $self ) {
     }
     _dbg( "xo restore" );
     $xo->restore;
-    
+
     $self->css_pop;
 }
 
@@ -432,7 +445,7 @@ sub process_tspan ( $self ) {
     $style->{'font-size'} =~ s/px$//;
     $dx = $1 * $style->{'font-size'} if $dx =~ /^([.\d]+)em$/;
     $dy = $1 * $style->{'font-size'} if $dy =~ /^([.\d]+)em$/;
- 
+
     my $color = $style->{color};
     my $anchor = $style->{'text-anchor'} || "left";
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
@@ -699,7 +712,58 @@ sub process_rect ( $self ) {
     $self->css_pop;
 }
 
-sub process_polyline ( $self ) {
+sub process_line ( $self ) {
+
+    my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
+    my $x1  = delete($atts->{x1}) || 0;
+    my $y1  = delete($atts->{y1}) || 0;
+    my $x2  = delete($atts->{x2}) || 0;
+    my $y2  = delete($atts->{y2}) || 0;
+
+    s/p[tx]$// for $x1, $y1, $x1, $y2;
+
+    my $style = $self->css_push($atts);
+
+    my $sda = $style->{'stroke-dasharray'};
+    _dbg( $self->getElementName, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
+    local $indent = $indent . "  ";
+
+    my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
+    _dbg( "xo save" );
+    $xo->save;
+
+    $self->set_graphics($style);
+
+    my $paint = sub {
+	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
+	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
+		$xo->paint;
+	    }
+	    else {
+		$xo->stroke;
+	    }
+	}
+	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
+	    $xo->fill;
+	}
+    };
+
+    $xo->move( $x1, -$y1 );
+    $xo->line( $x2, -$y2 );
+    $paint->();
+
+    _dbg( "xo restore" );
+    $xo->restore;
+    $self->css_pop;
+}
+
+sub process_polygon ( $self) {
+    $self->process_polyline("close");
+}
+
+sub process_polyline ( $self, $close = 0 ) {
 
     my $atts = $self->getAttributes;
     return if $atts->{omit};	# for testing/debugging.
@@ -743,7 +807,12 @@ sub process_polyline ( $self ) {
     if ( @d ) {
 	$xo->move( $d[0], $d[1] );
 	$xo->polyline( @d[2 .. $#d] );
-	$paint->();
+	if ( $close ) {
+	    $xo->close;
+	}
+	else {
+	    $paint->();
+	}
     }
 
     _dbg( "xo restore" );
@@ -874,6 +943,10 @@ sub set_graphics ( $self, $style ) {
 	# Nothing. Use current.
     }
     elsif ( $stroke ne "none" ) {
+	$stroke =~ s/\s+//g;
+	if ( $stroke =~ /rgb\((\d+),(\d+),(\d+)\)/ ) {
+	    $stroke = sprintf("#%02X%02X%02X", $1, $2, $3);
+	}
 	$xo->stroke_color($stroke);
 	_dbg( $self->getElementName, " stroke=", $stroke );
     }
@@ -931,6 +1004,16 @@ sub process_use ( $self ) {
     $xo->restore;
 }
 
+################ Ignored ################
+
+sub process_title {
+    _dbg( "SVG: Ignored: title" );
+}
+
+sub process_desc {
+    _dbg( "SVG: Ignored: desc" );
+}
+
 ################ Styles and Fonts ################
 
 sub makefont ( $self, $style ) {
@@ -940,7 +1023,7 @@ sub makefont ( $self, $style ) {
 
     $fn = $style->{'font-family'} // "Times-Roman";
     $sz = $style->{'font-size'} || 12;
-    $sz = $1 if $sz =~ /^([.\d]+)px/; # TODO: units
+    $sz = $1 if $sz =~ /^([.\d]+)p[xt]/; # TODO: units
     $em = $style->{'font-style'}
       && $style->{'font-style'} =~ /^(italic|oblique)$/;
     $bd = $style->{'font-weight'}
