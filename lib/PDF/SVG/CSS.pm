@@ -181,33 +181,44 @@ method push ( @args ) {
     my $args = ref($args[0]) eq 'HASH' ? $args[0] : { @args };
     $css->{'*'} //= $base;
     my $ret = { %{$css->{'*'}} };
+
+    ## Parent,
     if ( exists( $css->{_} ) ) {
 	$self->merge( $ret, $css->{_} );
     }
+
+    ## Tag style.
     if ( $args->{element} && exists( $css->{$args->{element}} ) ) {
 	$self->merge( $ret, $css->{$args->{element}} );
     }
     if ( $args->{element} && exists( $css->{_}->{" ".$args->{element}} ) ) {
 	$self->merge( $ret, $css->{_}->{" ".$args->{element}} );
     }
+
+    ## Class style.
     if ( $args->{class} ) {
 	for ( split( ' ', $args->{class} ) ) {
 	    next unless exists( $css->{".$_"} );
 	    $self->merge( $ret, $css->{".$_"} );
 	}
     }
-    if ( $args->{style} ) {
-	$self->read_string( "__ {" . $args->{style} . "}" )
-	  or croak($errstr);
-	$self->merge( $ret, delete $css->{__} );
-    }
+
+    ## ID.
     if ( $args->{id} && exists( $css->{ "#" . $args->{id} } ) ) {
 	$self->merge( $ret, $css->{ "#" . $args->{id} } );
     }
 
+    ## Attributes.
     for ( keys %$args ) {
 	next if /^element|class|style|id$/;
 	$ret->{$_} = $args->{$_};
+    }
+
+    ## Style attribute.
+    if ( $args->{style} ) {
+	$self->read_string( "__ {" . $args->{style} . "}" )
+	  or croak($errstr);
+	$self->merge( $ret, delete $css->{__} );
     }
 
     push( @stack, { %{$css->{_}//{}} } );
