@@ -6,6 +6,9 @@ Revision history for PDF::SVG
 	- Add circle.
 	- Add polyline.
 	- Add image (inline, base64).
+	- Add path S, Q (qubic bezier) and T.
+	- Improve fill/stroke (handle transparency).
+	- Add grid for debugging.
 	- (CSS) Handle outline shorthand.
 	- (CSS) Fix priorities.
 	- Elegantly skip unimplemented arcs.

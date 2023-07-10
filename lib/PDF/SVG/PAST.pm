@@ -52,16 +52,21 @@ method transform ( %args ) {
     $xo->transform( %args );
 }
 
+method matrix ( @args ) {
+    xdbg( "\$xo->matrix( ", join(", ", @args ), " );" );
+    $xo->matrix(@args);
+}
+
 #### Graphics.
 
 method fill_color ( @args ) {
     Carp::confess("currentColor") if $args[0] eq 'currentColor';
-    xdbg( "\$xo->fill_color( @args );" );
+    xdbg( "\$xo->fill_color( \"@args\" );" );
     $xo->fill_color( @args );
 }
 
 method stroke_color ( @args ) {
-    xdbg( "\$xo->stroke_color( @args );" );
+    xdbg( "\$xo->stroke_color( \"@args\" );" );
     $xo->stroke_color( @args );
 }
 
@@ -96,13 +101,13 @@ method paint ( @args ) {
 method save ( @args ) {
     die if @args;
     xdbg( "\$xo->save();" );
-    $xo->save( @args );
+    $xo->save;
 }
 
 method restore ( @args ) {
     die if @args;
     xdbg( "\$xo->restore();" );
-    $xo->restore( @args );
+    $xo->restore;
 }
 
 #### Texts,
@@ -160,6 +165,11 @@ method line ( @args ) {
 method curve ( @args ) {
     xdbg( "\$xo->curve( ", join(", ",@args), " );" );
     $xo->curve( @args );
+}
+
+method spline ( @args ) {
+    xdbg( "\$xo->spline( ", join(", ",@args), " );" );
+    $xo->spline( @args );
 }
 
 method rect ( @args ) {

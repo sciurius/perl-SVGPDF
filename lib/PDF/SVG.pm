@@ -133,23 +133,26 @@ sub handle_svg ( $self, $e ) {
     my $height = delete( $atts->{height}) || 842;
     s/p[tx]$// for $width, $height;
     s;([\d.]+)mm;sprintf("%.2f",$1*72/25.4);ge for $width, $height;
+    s;([\d.]+)ex;sprintf("%.2f",$1*5);ge for $width, $height; # HACK
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $e->css_push($atts);
-
-    # Set up result forms.
-    # Currently we rely on the <svg> to supply the correct viewBox.
-    push( @{ $self->{xoforms} },
-	  { xo     => $xo,
-	    width  => $width,
-	    height => $height } );
 
     my @bb = split( ' ', $vbox );
     _dbg( "bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
     # <svg> coordinates are topleft down, so translate.
     $xo->transform( translate => [ $bb[0], $bb[3] ] );
+
+    # Set up result forms.
+    # Currently we rely on the <svg> to supply the correct viewBox.
+    push( @{ $self->{xoforms} },
+	  { xo      => $xo,
+	    vwidth  => $width,
+	    vheight => $height,
+	    width   => $bb[2] - $bb[0],
+	    height  => $bb[3] - $bb[1] } );
 
     # Establish currentColor.
     for ( $css->find("fill") ) {
@@ -162,7 +165,7 @@ sub handle_svg ( $self, $e ) {
 	  unless $_ eq 'none'
 	  or     $_ eq 'currentColor';
     }
-
+    grid( $self->{xoforms}->[-1] ) if $debug;
     for ( $e->getChildren ) {
 	$_->traverse;
     }
@@ -503,6 +506,31 @@ sub process_tspan ( $self ) {
     }
 }
 
+sub _paintsub ( $xo, $style ) {
+    sub {
+	if ( $style->{stroke}
+	     && $style->{stroke} ne 'none'
+	     && $style->{stroke} ne 'transparent'
+	   ) {
+	    if ( $style->{fill}
+		 && $style->{fill} ne 'none'
+		 && $style->{fill} ne 'transparent'
+	       ) {
+		$xo->paint;
+	    }
+	    else {
+		$xo->stroke;
+	    }
+	}
+	elsif ( $style->{fill}
+		&& $style->{fill} ne 'none'
+		&& $style->{fill} ne 'transparent'
+	      ) {
+	    $xo->fill;
+	}
+    }
+}
+
 sub process_path ( $self ) {
 
     my $atts = $self->getAttributes;
@@ -534,19 +562,7 @@ sub process_path ( $self ) {
 
     my $open;
 
-    my $paint = sub {
-	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
-	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
-		$xo->paint;
-	    }
-	    else {
-		$xo->stroke;
-	    }
-	}
-	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
-	    $xo->fill;
-	}
-    };
+    my $paint = _paintsub( $xo, $style );
 
     # Initial x,y for path. See 'z'.
     my $ix;
@@ -604,29 +620,99 @@ sub process_path ( $self ) {
 	    next;
 	}
 
-	# Curves.
+	# Cubic Bézier curves.
 	if ( $op eq "c" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		$ix = $x, $iy = $y unless $open++;
-		my @c = ( $x + $d[0], $y - $d[1],
-			  $x + $d[2], $y - $d[3],
-			  $x + $d[4], $y - $d[5] );
+		my @c = ( $x + $d[0], $y - $d[1], # control point 1
+			  $x + $d[2], $y - $d[3], # control point 2
+			  $x + $d[4], $y - $d[5]  # end point
+			);
 		_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
 		$xo->curve(@c);
-		splice( @d, 0, 6 );
+		$x = $c[4]; $y = $c[5]; # current point
+
+		# Check if followed by S-curve.
+		if ( @d > 7 && lc( my $op = $d[6] ) eq "s" ) {
+		    # Turn S-curve into C-curve.
+		    # New cp1 becomes reflection of cp2.
+		    my $rx = $x + $d[4] - $d[2];
+		    my $ry = $y - ($d[5] - $d[3]);
+		    splice( @d, 0, 7 );
+		    unshift( @d, $op eq 's' ? 'c' : 'C', $rx, -$ry );
+		}
+		else {
+		    splice( @d, 0, 6 );
+		}
+	    }
+	    next;
+	}
+
+	# Standalone shorthand Bézier curve.
+	# (When following an S-curve these will have been modified into S.)
+	if ( $op eq "s" ) {
+	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
+		$ix = $x, $iy = $y unless $open++;
+		my @c = ( $x + $d[0], $y - $d[1],
+			  $x + $d[2], $y - $d[3] );
+		nfi("standalone s-paths");
+		unshift( @c, $x, -$y );
+		_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
+		$xo->curve(@c);
+		splice( @d, 0, 4 );
 		$x = $c[4]; $y = $c[5];
 	    }
 	    next;
 	}
 
-	# TODO: S/s
-	# unshift( @d, 's', 2 * $c[4] - $c[2], 2 * $c[5] - $c[3] )
-	# TODO: Q/q (but how?)
-	# TODO: T/t (but how?)
-	# TODO: A/a
+	# Quadratic Bézier curves.
+	if ( $op eq "q" ) {
+	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
+		$ix = $x, $iy = $y unless $open++;
+		my @c = ( $x + $d[0], $y - $d[1], # control point 1
+			  $x + $d[2], $y - $d[3]  # end point
+			);
+		_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
+		$xo->spline(@c);
+		$x = $c[2]; $y = $c[3]; # current point
+
+		# Check if followed by T-curve.
+		if ( @d > 5 && lc( my $op = $d[4] ) eq "t" ) {
+		    # Turn T-curve into Q-curve.
+		    # New cp becomes reflection of current cp.
+		    my $rx = -$x + $d[1] - $d[0];
+		    my $ry = $y - ($d[3] - $d[1]);
+		    splice( @d, 0, 5 );
+		    unshift( @d, $op eq 't' ? 'q' : 'Q', -$rx, -$ry );
+		}
+		else {
+		    splice( @d, 0, 4 );
+		}
+	    }
+	    next;
+	}
+
+	# Standalone shorthand quadratic Bézier curve.
+	# (When following an S-curve these will have been modified into S.)
+	if ( $op eq "t" ) {
+	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
+		$ix = $x, $iy = $y unless $open++;
+		my @c = ( $x, $y,
+			  $x + $d[0], $y - $d[1] );
+		nfi("standalone t-paths");
+		unshift( @c, $x, -$y );
+		_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
+		$xo->spline(@c);
+		splice( @d, 0, 2 );
+		$x = $c[2]; $y = $c[3];
+	    }
+	    next;
+	}
+
 
 	# Arcs.
 	if ( $op eq "a" ) {
+	    nfi("arc paths");
 	    my $new = 1;
 	    while ( @d > 6 && $d[0] =~ /^-?[.\d]+$/ ) {
 		my $sx = shift(@d);
@@ -637,7 +723,7 @@ sub process_path ( $self ) {
 		my $ex = shift(@d);
 		my $ey = shift(@d);
 		$ix = $x, $iy = $y unless $open++;
-		_dbg( "xo arc(%.2f,%.2f %.2f %d %d %.2f,%.2f)",
+		_dbg( "xo arc(%.2f,%.2f %.2f %d,%d %.2f,%.2f)",
 		      $sx, $sy, $rot, $large, $sweep, $ex, $ey );
 	    }
 	    next;
@@ -690,19 +776,7 @@ sub process_rect ( $self ) {
 
     $self->set_graphics($style);
 
-    my $paint = sub {
-	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
-	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
-		$xo->paint;
-	    }
-	    else {
-		$xo->stroke;
-	    }
-	}
-	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
-	    $xo->fill;
-	}
-    };
+    my $paint = _paintsub( $xo, $style );
 
     $xo->rectangle( $x, -$y, $x+$w, -$y-$h );
     $paint->();
@@ -736,19 +810,7 @@ sub process_line ( $self ) {
 
     $self->set_graphics($style);
 
-    my $paint = sub {
-	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
-	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
-		$xo->paint;
-	    }
-	    else {
-		$xo->stroke;
-	    }
-	}
-	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
-	    $xo->fill;
-	}
-    };
+    my $paint = _paintsub( $xo, $style );
 
     $xo->move( $x1, -$y1 );
     $xo->line( $x2, -$y2 );
@@ -789,19 +851,7 @@ sub process_polyline ( $self, $close = 0 ) {
 
     $self->set_graphics($style);
 
-    my $paint = sub {
-	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
-	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
-		$xo->paint;
-	    }
-	    else {
-		$xo->stroke;
-	    }
-	}
-	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
-	    $xo->fill;
-	}
-    };
+    my $paint = _paintsub( $xo, $style );
 
     my $op = "move";
     if ( @d ) {
@@ -839,19 +889,7 @@ sub process_circle ( $self ) {
 
     $self->set_graphics($style);
 
-    my $paint = sub {
-	if ( $style->{stroke} && $style->{stroke} ne 'none' ) {
-	    if ( $style->{fill} && $style->{fill} ne 'none' ) {
-		$xo->paint;
-	    }
-	    else {
-		$xo->stroke;
-	    }
-	}
-	elsif ( $style->{fill} && $style->{fill} ne 'none' ) {
-	    $xo->fill;
-	}
-    };
+    my $paint = _paintsub( $xo, $style );
 
     $xo->circle( $cx, -$cy, $r );
     $paint->();
@@ -914,6 +952,54 @@ sub process_image ( $self ) {
     $self->css_pop;
 }
 
+################ Recurse ################
+
+sub process_svg ( $self ) {
+    _dbg( $self->getElementName, " ====" );
+    local $indent = $indent . "  ";
+
+    nfi("recursive svg elements");;
+    my $savexo = $self->{svg}->{xoforms}->[-1]->{xo};
+
+    my $xo =
+      $debug
+      ? PDF::SVG::PAST->new( pdf => $self->{ps}->{pr}->{pdf} )
+      : $self->{ps}->{pr}->{pdf}->xo_form;
+
+    my $atts = $self->getAttributes;
+    my $width  = delete( $atts->{width} ) || 595;
+    my $height = delete( $atts->{height}) || 842;
+    s/p[tx]$// for $width, $height;
+    s;([\d.]+)mm;sprintf("%.2f",$1*72/25.4);ge for $width, $height;
+    my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
+
+    delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
+    my $style = $self->css_push($atts);
+
+    # Set up result forms.
+    # Currently we rely on the <svg> to supply the correct viewBox.
+    push( @{ $self->{svg}->{xoforms} },
+	  { xo     => $xo,
+	    width  => $width,
+	    height => $height } );
+
+    my @bb = split( ' ', $vbox );
+    _dbg( "bb %.2f %.2f %.2f %.2f", @bb );
+    $xo->bbox(@bb);
+    # <svg> coordinates are topleft down, so translate.
+    $xo->transform( translate => [ $bb[0], $bb[3] ] );
+
+    for ( $self->getChildren ) {
+	$_->traverse;
+    }
+
+    $savexo->formimage( $xo, 0, -$height, 1 );
+
+    pop(@{ $self->{svg}->{xoforms} });
+    $self->css_pop;
+}
+
+
 ################ Graphics context ################
 
 sub process_g ( $self ) {
@@ -931,37 +1017,65 @@ sub process_g ( $self ) {
     my $x;
     my $y;
     my $scale;
+    my @m;
+    my %o;
 
     if ( $t ) {
-	if ( $t =~ /translate\(([.\d]+),\s*([.\d]+)\)/ ) {
+	if ( $t =~ m/translate \( \s*
+		     ([-.\d]+) [,\s] \s*
+		     ([-.\d]+)
+		     \s* \)/x ) {
 	    $x = $1;
 	    $y = $2;
 	    _dbg( "xo translate( %.2f, %.2f )", $x, $y );
 	}
-	if ( $t =~ /scale\(([.\d]+)\)/ ) {
+	if ( $t =~ m/scale \( \s*
+		     ([-.\d]+)
+		     \s* \)/x ) {
 	    $scale = $1;
 	    _dbg( "xo scale( %.2f )", $scale );
 	}
+	if ( @m = $t =~ m/matrix\( \s*
+		     ([-.\d]+) [,\s] \s*
+		     ([-.\d]+) [,\s] \s*
+		     ([-.\d]+) [,\s] \s*
+		     ([-.\d]+) [,\s] \s*
+		     ([-.\d]+) [,\s] \s*
+		     ([-.\d]+)
+		     \s* \)/x ) {
+	    # Translation [ 1     0     0     1      tx ty ]
+	    # Scale       [ sx    0     0     sy     0  0 ].
+	    # Rotation    [ cos θ sin θ −sin θ cos θ 0  0 ]
+	    # Skew        [ 1     tan α tan β 1      0 0 ]
+	    _dbg( "xo matrix( %.2f %.2f %.2f %.2f %.2f %.2f)", @m );
+	    @m = () if "@m" eq "1 0 0 1 0 0";
+	}
     }
 
-    my %o;
-    if ( defined($x) || defined($y) ) {
-	$o{translate} = [ $x, -$y ];
+    if ( @m ) {
+	nfi("matrix transformations");
+	# We probably have to flip some elements...
+	$xo->matrix(@m);
     }
-    if ( defined($scale) ) {
-	$o{scale} = [ $scale, $scale ];
-    }
-    if ( %o ) {
-	_dbg( "xo save" );
-	$xo->save;
-	$xo->transform( %o );
+    else {
+	if ( defined($x) || defined($y) ) {
+	    $o{translate} = [ $x, -$y ];
+	}
+	if ( defined($scale) ) {
+	    $o{scale} = [ $scale, $scale ];
+	}
+	if ( %o ) {
+	    _dbg( "xo save" );
+	    $xo->save;
+	    $xo->transform( %o );
+	}
     }
 
     for ( $self->getChildren ) {
 	$_->traverse;
     }
 
-    if ( %o ) {
+    if ( @m || %o ) {
 	$xo->restore;
 	_dbg( "xo restore" );
     }
@@ -1004,7 +1118,7 @@ sub set_graphics ( $self, $style ) {
     if ( lc($fill) eq "currentcolor" ) {
 	# Nothing. Use current.
     }
-    elsif ( lc($fill) ne "none" ) {
+    elsif ( lc($fill) ne "none" && $fill ne "transparent" ) {
 	$fill =~ s/\s+//g;
 	if ( $fill =~ /rgb\((\d+),(\d+),(\d+)\)/ ) {
 	    $fill = sprintf("#%02X%02X%02X", $1, $2, $3);
@@ -1067,6 +1181,12 @@ sub process_desc {
     _dbg( "SVG: Ignored: desc" );
 }
 
+sub nfi ( $tag ) {
+    state $aw = {};
+    warn("SVG: $tag are not fully implemented, expect strange results.")
+      unless $aw->{$tag}++;
+}
+
 ################ Styles and Fonts ################
 
 sub makefont ( $self, $style ) {
@@ -1102,6 +1222,48 @@ sub makefont ( $self, $style ) {
 	$self->{svg}->{ps}->{pr}->{pdf}->font($fn);
     };
     ( $font, $sz, $fn );
+}
+
+################ Service ################
+
+sub PDF::SVG::grid ( $xof ) {
+    my $d = 10;
+    my $c = 6;
+    my $xo = $xof->{xo};
+    my $w = $xof->{width};
+    my $h = $xof->{height};
+
+    _dbg("grid (for debugging)");
+    local $indent = $indent . "  ";
+    $xo->save;
+    $xo->stroke_color("#bbbbbb");
+    $xo->line_width(0.1);
+    for ( my $x = 0; $x <= $w; $x += $d ) {
+	if ( --$c == 0 ) {
+	    $xo->line_width(1);
+	}
+	$xo->move( $x, 0 );
+	$xo->vline(-$h);
+	$xo->stroke;
+	if ( $c == 0 ) {
+	    $xo->line_width(0.2);
+	    $c = 5;
+	}
+    }
+    $c = 6;
+    for ( my $y = 0; $y <= $h; $y += $d ) {
+	if ( --$c == 0 ) {
+	    $xo->line_width(0.5);
+	}
+	$xo->move( 0, -$y );
+	$xo->hline($w);
+	$xo->stroke;
+	if ( $c == 0 ) {
+	    $xo->line_width(0.2);
+	    $c = 5;
+	}
+    }
+    $xo->restore;
 }
 
 ################ Test program ################
