@@ -182,6 +182,12 @@ method polyline ( @args ) {
     $xo->polyline( @args );
 }
 
+method image( @args ) {
+    my $image = shift(@args);
+    xdbg( "\$xo->image(<img>, ", join(", ",@args), " );" );
+    $xo->image( $image, @args );
+}
+
 method close ( @args ) {
     die if @args;
     xdbg( "\$xo->close();" );

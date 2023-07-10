@@ -5,6 +5,7 @@ Revision history for PDF::SVG
 	- Add single-style outline for simple <text>.
 	- Add circle.
 	- Add polyline.
+	- Add image (inline, base64).
 	- (CSS) Handle outline shorthand.
 	- (CSS) Fix priorities.
 	- Elegantly skip unimplemented arcs.

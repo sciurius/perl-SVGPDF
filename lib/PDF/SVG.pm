@@ -861,6 +861,59 @@ sub process_circle ( $self ) {
     $self->css_pop;
 }
 
+sub process_image ( $self ) {
+
+    my $atts = $self->getAttributes;
+    return if $atts->{omit};	# for testing/debugging.
+
+    my $x  = delete($atts->{x}) || 0;
+    my $y  = delete($atts->{y}) || 0;
+    my $width  = delete($atts->{width})  || 0;
+    my $height = delete($atts->{height}) || 0;
+    my $link = delete($atts->{'xlink:href'});
+    s/p[tx]$// for $x, $y, $width, $height;
+
+    my $style = $self->css_push($atts);
+
+    my $par = $style->{'preserveAspectRatio'};
+    _dbg( $self->getElementName, " x=$x y=$y w=$width h=$height" );
+    local $indent = $indent . "  ";
+
+    my $img;
+    if ( $link =~ m!^data:image/(png|jpe?g);(base64),(.*)$! ) {
+	# In-line image asset.
+	require MIME::Base64;
+	require Image::Info;
+	require IO::String;
+	my $type = $1;
+	my $enc = $2;
+	my $data = MIME::Base64::decode($3);
+	unless ( $enc eq "base64" ) {
+	    warn("SVG: Unhandled encoding in image: $enc\n");
+	    $self->css_pop, return;
+	}
+
+	# Get info.
+	my $info = Image::Info::image_info(\$data);
+	if ( $info->{error} ) {
+	    warn($info->{error});
+	    $self->css_pop, return;
+	}
+
+	# Place the image.
+	$img = $self->{svg}->{ps}->{pr}->{pdf}->image(IO::String->new($data));
+    }
+
+    my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
+    _dbg( "xo save" );
+    $xo->save;
+    $xo->transform( translate => [ $x, -$y-$height ] );
+    $xo->image( $img, 0, 0, $width, $height );
+    _dbg( "xo restore" );
+    $xo->restore;
+    $self->css_pop;
+}
+
 ################ Graphics context ################
 
 sub process_g ( $self ) {
