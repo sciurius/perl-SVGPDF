@@ -9,6 +9,8 @@ Revision history for PDF::SVG
 	- Add path S, Q (qubic bezier) and T.
 	- Improve fill/stroke (handle transparency).
 	- Add grid for debugging.
+	- Add sample program.
+	- Neatify PAST to generate perl program.
 	- (CSS) Handle outline shorthand.
 	- (CSS) Fix priorities.
 	- Elegantly skip unimplemented arcs.

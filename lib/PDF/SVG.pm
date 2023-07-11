@@ -1,5 +1,10 @@
 #! perl
 
+#### TODO
+#
+# generalized units handler
+# generic split (w/s, comma, ...)
+
 use v5.26;
 use Object::Pad;
 use feature 'signatures';
@@ -12,6 +17,7 @@ package PDF::SVG;
 our $VERSION = 0.02;
 
 my $debug = 0;
+my $grid = 0;
 my $debug_styles = 0;
 my $trace = 0;
 
@@ -26,6 +32,7 @@ use DDumper;
 sub new ( $pkg, $ps, %atts ) {
     my $self = bless { ps => $ps, %atts } => $pkg;
     $debug = $atts{debug};
+    $grid= $atts{grid};
     $debug_styles = $atts{debug_styles} || $debug > 1;
     $trace = $atts{trace};
     $indent = "";
@@ -133,12 +140,14 @@ sub handle_svg ( $self, $e ) {
     my $height = delete( $atts->{height}) || 842;
     s/p[tx]$// for $width, $height;
     s;([\d.]+)mm;sprintf("%.2f",$1*72/25.4);ge for $width, $height;
+    s;([\d.]+)cm;sprintf("%.2f",$1*72/2.54);ge for $width, $height;
     s;([\d.]+)ex;sprintf("%.2f",$1*5);ge for $width, $height; # HACK
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $e->css_push($atts);
 
+    $vbox =~ s/\s*,\s*/ /g;
     my @bb = split( ' ', $vbox );
     _dbg( "bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
@@ -165,7 +174,7 @@ sub handle_svg ( $self, $e ) {
 	  unless $_ eq 'none'
 	  or     $_ eq 'currentColor';
     }
-    grid( $self->{xoforms}->[-1] ) if $debug;
+    grid( $self->{xoforms}->[-1] ) if $grid;
     for ( $e->getChildren ) {
 	$_->traverse;
     }
@@ -278,6 +287,8 @@ sub process_text ( $self ) {
     my %atts = %$atts;		# debug
     my $x  = delete($atts->{x}) || 0;
     my $y  = delete($atts->{y}) || 0;
+    my $dx = delete($atts->{dx}) || 0;
+    my $dy = delete($atts->{dy}) || 0;
     my $tf = delete($atts->{transform}) || "";
 
     my $style = $self->css_push($atts);
@@ -293,6 +304,8 @@ sub process_text ( $self ) {
     _dbg( $self->getElementName, " ",
 	  defined($atts{x}) ? ( " x=$x" ) : (),
 	  defined($atts{y}) ? ( " y=$y" ) : (),
+	  defined($atts{dx}) ? ( " dx=$dx" ) : (),
+	  defined($atts{dy}) ? ( " dy=$dy" ) : (),
 	  defined($style->{"text-anchor"})
 	  ? ( " anchor=\"$anchor\"" ) : (),
 	  defined($style->{"transform"})
@@ -325,7 +338,8 @@ sub process_text ( $self ) {
     my $iy = $y->[0];
     my ( $ex, $ey );
 
-    my ( $dx, $dy, $scale ) = ( 0, 0, 1 );
+#    my ( $dx, $dy, $scale ) = ( 0, 0, 1 );
+    my $scale = 1;
     if ( $tf ) {
 	( $dx, $dy ) = ( $1, $2 )
 	  if $tf =~ /translate\((-?[.\d]+),(-?[.\d]+)\)/;
@@ -389,13 +403,14 @@ sub process_text ( $self ) {
 	  ? "right"
 	  : $anchor eq "middle" ? "center" : "left";
 	for my $c ( @c ) {
-	    $xo->save;
-	    $xo->transform( translate => [ $x, $y ],
-			    $scale != 1 ? ( scale => [ $scale, $scale ] ) : (),
-			  );
-	    $scale = 1;		# no more scaling.
-
 	    if ( $c->{type} eq 't' ) {
+		_dbg( "xo save" );
+		$xo->save;
+		$xo->transform( translate => [ $x, $y ],
+				$scale != 1 ? ( scale => [ $scale, $scale ] ) : (),
+			      );
+		$scale = 1;		# no more scaling.
+
 		$xo->textstart;
 		$xo->font( $self->makefont($style));
 
@@ -412,14 +427,30 @@ sub process_text ( $self ) {
 				    2*$d+$sz*$fn->ascender/1000 );
 		    $xo->stroke;
 		}
+		_dbg( "xo restore" );
+		$xo->restore;
+		$ex = $x; $ey = $y;
 	    }
 	    elsif ( $c->{type} eq 'e' && $c->{name} eq 'tspan' ) {
+		_dbg( "xo save" );
+		$xo->save;
+		if ( defined($c->{attrib}->{x}) ) {
+		    $x = 0;
+		}
+		if ( defined($c->{attrib}->{y}) ) {
+		    $y = 0;
+		}
+		$xo->transform( translate => [ $x, $y ],
+				$scale != 1 ? ( scale => [ $scale, $scale ] ) : (),
+			      );
+		$scale = 1;		# no more scaling.
 		my ( $x0, $y0 ) = $c->process_tspan;
 		$x += $x0; $y += $y0;
 		_dbg("tspan moved to $x, $y");
+		_dbg( "xo restore" );
+		$xo->restore;
+		$ex = $x; $ey = $y;
 	    }
-	    $xo->restore;
-	    $ex = $x; $ey = $y;
 	}
     }
     _dbg( "xo restore" );
@@ -551,6 +582,8 @@ sub process_path ( $self ) {
     $xo->save;
 
     $self->set_graphics($style);
+
+    # Starting point of this path.
     my $x0 = $x;
     my $y0 = $y;
 
@@ -567,6 +600,9 @@ sub process_path ( $self ) {
     # Initial x,y for path. See 'z'.
     my $ix;
     my $iy;
+
+    # Current point.
+    my ( $cx, $cy ) = ( $x0, $y0 );
 
     while ( @d ) {
 	my $op = shift(@d);
@@ -588,6 +624,7 @@ sub process_path ( $self ) {
 		# Subsequent coordinate pair(s) imply lineto.
 		unshift( @d, $abs ? 'L' : 'l' );
 	    }
+	    ( $cx, $cy ) = ( $x, $y );
 	    next;
 	}
 
@@ -597,6 +634,7 @@ sub process_path ( $self ) {
 	    _dbg( "xo hline(%.2f)", $d[0] );
 	    $x += shift(@d);
 	    $xo->hline($x);
+	    ( $cx, $cy ) = ( $x, $y );
 	    next;
 	}
 
@@ -606,6 +644,7 @@ sub process_path ( $self ) {
 	    _dbg( "xo vline(%.2f)", $d[0] );
 	    $y -= shift(@d);
 	    $xo->vline($y);
+	    ( $cx, $cy ) = ( $x, $y );
 	    next;
 	}
 
@@ -617,6 +656,7 @@ sub process_path ( $self ) {
 		_dbg( "xo line(%.2f,%.2f)", $x, $y );
 		$xo->line( $x, $y );
 	    }
+	    ( $cx, $cy ) = ( $x, $y );
 	    next;
 	}
 
@@ -631,6 +671,7 @@ sub process_path ( $self ) {
 		_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
 		$xo->curve(@c);
 		$x = $c[4]; $y = $c[5]; # current point
+		( $cx, $cy ) = ( $x, $y );
 
 		# Check if followed by S-curve.
 		if ( @d > 7 && lc( my $op = $d[6] ) eq "s" ) {
@@ -661,6 +702,7 @@ sub process_path ( $self ) {
 		$xo->curve(@c);
 		splice( @d, 0, 4 );
 		$x = $c[4]; $y = $c[5];
+		( $cx, $cy ) = ( $x, $y );
 	    }
 	    next;
 	}
@@ -675,6 +717,7 @@ sub process_path ( $self ) {
 		_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
 		$xo->spline(@c);
 		$x = $c[2]; $y = $c[3]; # current point
+		( $cx, $cy ) = ( $x, $y );
 
 		# Check if followed by T-curve.
 		if ( @d > 5 && lc( my $op = $d[4] ) eq "t" ) {
@@ -712,19 +755,28 @@ sub process_path ( $self ) {
 
 	# Arcs.
 	if ( $op eq "a" ) {
-	    nfi("arc paths");
-	    my $new = 1;
 	    while ( @d > 6 && $d[0] =~ /^-?[.\d]+$/ ) {
-		my $sx = shift(@d);
-		my $sy = shift(@d);
-		my $rot = shift(@d);
-		my $large = shift(@d);
-		my $sweep = shift(@d);
-		my $ex = shift(@d);
-		my $ey = shift(@d);
-		$ix = $x, $iy = $y unless $open++;
+		my $rx    = shift(@d);		# radius 1
+		my $ry    = shift(@d);		# radius 2
+		my $rot   = shift(@d);		# rotation
+		my $large = shift(@d);		# select larger arc
+		my $sweep = shift(@d);		# clockwise
+		my $ex    = $x + shift(@d);	# end point
+		my $ey    = $y - shift(@d);
 		_dbg( "xo arc(%.2f,%.2f %.2f %d,%d %.2f,%.2f)",
-		      $sx, $sy, $rot, $large, $sweep, $ex, $ey );
+		      $rx, $ry, $rot, $large, $sweep, $ex, $ey );
+
+		# Hard... For the time being use the (obsolete) 'bogen'
+		# for circular arcs.
+		if ( $rx == $ry ) {
+		    $xo->bogen( $cx, $cy, $ex, $ey,
+				$rx, 0, $large, 1-$sweep );
+		}
+		else {
+		    nfi("elliptic arc paths");
+		}
+		$ix = $x, $iy = $y unless $open++;
+		( $cx, $cy ) = ( $ex, $ey );
 	    }
 	    next;
 	}
@@ -766,7 +818,6 @@ sub process_rect ( $self ) {
 
     my $style = $self->css_push($atts);
 
-    my $sda = $style->{'stroke-dasharray'};
     _dbg( $self->getElementName, " x=$x y=$y w=$w h=$h" );
     local $indent = $indent . "  ";
 
@@ -800,7 +851,6 @@ sub process_line ( $self ) {
 
     my $style = $self->css_push($atts);
 
-    my $sda = $style->{'stroke-dasharray'};
     _dbg( $self->getElementName, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
     local $indent = $indent . "  ";
 
@@ -841,7 +891,6 @@ sub process_polyline ( $self, $close = 0 ) {
 
     my $style = $self->css_push($atts);
 
-    my $sda = $style->{'stroke-dasharray'};
     _dbg( $self->getElementName, " points=$points" );
     local $indent = $indent . "  ";
 
@@ -879,7 +928,6 @@ sub process_circle ( $self ) {
 
     my $style = $self->css_push($atts);
 
-    my $sda = $style->{'stroke-dasharray'};
     _dbg( $self->getElementName, " cx=$cx cy=$cy r=$r" );
     local $indent = $indent . "  ";
 
@@ -1253,7 +1301,7 @@ sub PDF::SVG::grid ( $xof ) {
     $c = 6;
     for ( my $y = 0; $y <= $h; $y += $d ) {
 	if ( --$c == 0 ) {
-	    $xo->line_width(0.5);
+	    $xo->line_width(1);
 	}
 	$xo->move( 0, -$y );
 	$xo->hline($w);
@@ -1309,5 +1357,91 @@ package XML::Tiny::_Text;
 our @ISA = qw ( XML::Tiny::_Element );
 
 sub getChildren { () }
+
+package PDF::API2::Content;
+
+use Math::Trig;
+
+sub bogen {
+    my ($self, $x1,$y1, $x2,$y2, $r, $move, $larc, $spf) = @_;
+
+    my ($p0_x,$p0_y, $p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+    my ($dx,$dy, $x,$y, $alpha,$beta, $alpha_rad, $d,$z, $dir, @points);
+
+    if ($x1 == $x2 && $y1 == $y2) {
+        die "bogen requires two distinct points";
+    }
+    if ($r <= 0.0) {
+        die "bogen requires a positive radius";
+    }
+    $move = 0 if !defined $move;
+    $larc = 0 if !defined $larc;
+    $spf  = 0 if !defined $spf;
+
+    $dx = $x2 - $x1;
+    $dy = $y2 - $y1;
+    $z = sqrt($dx**2 + $dy**2);
+    $alpha_rad = asin($dy/$z); # |dy/z| guaranteed <= 1.0
+    $alpha_rad = pi - $alpha_rad if $dx < 0;
+
+    # alpha is direction of vector P1 to P2
+    $alpha = rad2deg($alpha_rad);
+    # use the complementary angle for flipped arc (arc center on other side)
+    # effectively clockwise draw from P2 to P1
+    $alpha -= 180 if $spf;
+
+    $d = 2*$r;
+    # z/d must be no greater than 1.0 (arcsine arg)
+    if ($z > $d) { 
+        $d = $z;  # SILENT error and fixup
+        $r = $d/2;
+    }
+
+    $beta = rad2deg(2*asin($z/$d));
+    # beta is the sweep P1 to P2: ~0 (r very large) to 180 degrees (min r)
+    $beta = 360-$beta if $larc;  # large arc is remainder of small arc
+    # for large arc, beta could approach 360 degrees if r is very large
+
+    # always draw CW (dir=1)
+    # note that start and end could be well out of +/-360 degree range
+    @points = arctocurve($r,$r, 90+$alpha+$beta/2,90+$alpha-$beta/2, 1);
+
+    if ($spf) {  # flip order of points for reverse arc
+        my @pts = @points;
+        @points = ();
+        while (@pts) {
+            $y = pop @pts;
+            $x = pop @pts;
+            push(@points, $x,$y);
+        }
+    }
+
+    $p0_x = shift @points;
+    $p0_y = shift @points;
+    $x = $x1 - $p0_x;
+    $y = $y1 - $p0_y;
+
+    $self->move($x1,$y1) if $move;
+
+    while (scalar @points > 0) {
+        $p1_x = $x + shift @points;
+        $p1_y = $y + shift @points;
+        $p2_x = $x + shift @points;
+        $p2_y = $y + shift @points;
+        # if we run out of data points, use the end point instead
+        if (scalar @points == 0) {
+            $p3_x = $x2;
+            $p3_y = $y2;
+        } else {
+            $p3_x = $x + shift @points;
+            $p3_y = $y + shift @points;
+        }
+        $self->curve($p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+        shift @points;
+        shift @points;
+    }
+
+    return $self;
+}
 
 1; # End of PDF::SVG

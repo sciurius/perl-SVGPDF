@@ -14,24 +14,27 @@ use Carp;
 field $pdf :param;
 field $xo  :accessor;
 
-sub xdbg ( $fmt, @args ) {
-    PDF::SVG::xdbg( $fmt, @args );
+field $indent;
+field $prog :accessor;
+
+method xdbg ( $fmt, @args ) {
+    if ( $fmt =~ /\%/ ) {
+	$prog .= $indent . sprintf( $fmt, @args) . "\n";
+    }
+    else {
+	$prog .= $indent . join( "", $fmt, @args ) . "\n";
+    }
 }
 
 BUILD {
-    xdbg( 'use PDF::API2;' );
-    xdbg( 'my $pdf  = PDF::API2->new;' );
-    xdbg( 'my $page = $pdf->page;' );
-    xdbg( 'my $xo   = $page->gfx;' );
-    xdbg( 'my $font = $pdf->font("Times-Roman");' );
-    xdbg( '' );
+    $indent = $prog = "";
     $xo = $pdf->xo_form;
 }
 
 #### Coordinates
 
 method bbox ( @args ) {
-    xdbg( "\$page->bbox( ", join(", ", @args ), " );" );
+    $self->xdbg( "\$page->bbox( ", join(", ", @args ), " );" );
     $xo->bbox( @args );
 }
 
@@ -48,12 +51,12 @@ method transform ( %args ) {
 	$tag .= ", ";
     }
     substr( $tag, -2, 2, " );" );
-    xdbg($tag);
+    $self->xdbg($tag);
     $xo->transform( %args );
 }
 
 method matrix ( @args ) {
-    xdbg( "\$xo->matrix( ", join(", ", @args ), " );" );
+    $self->xdbg( "\$xo->matrix( ", join(", ", @args ), " );" );
     $xo->matrix(@args);
 }
 
@@ -61,52 +64,54 @@ method matrix ( @args ) {
 
 method fill_color ( @args ) {
     Carp::confess("currentColor") if $args[0] eq 'currentColor';
-    xdbg( "\$xo->fill_color( \"@args\" );" );
+    $self->xdbg( "\$xo->fill_color( \"@args\" );" );
     $xo->fill_color( @args );
 }
 
 method stroke_color ( @args ) {
-    xdbg( "\$xo->stroke_color( \"@args\" );" );
+    $self->xdbg( "\$xo->stroke_color( \"@args\" );" );
     $xo->stroke_color( @args );
 }
 
 method fill ( @args ) {
     die if @args;
-    xdbg( "\$xo->fill();" );
+    $self->xdbg( "\$xo->fill();" );
     $xo->fill( @args );
 }
 
 method stroke ( @args ) {
     die if @args;
-    xdbg( "\$xo->stroke();" );
+    $self->xdbg( "\$xo->stroke();" );
     $xo->stroke( @args );
 }
 
 method line_width ( @args ) {
-    xdbg( "\$xo->line_width( ", join(", ", @args ), " );" );
+    $self->xdbg( "\$xo->line_width( ", join(", ", @args ), " );" );
     $xo->line_width( @args );
 }
 
 method line_dash_pattern ( @args ) {
-    xdbg( "\$xo->line_dash_pattern( ", join(", ", @args ), " );" );
+    $self->xdbg( "\$xo->line_dash_pattern( ", join(", ", @args ), " );" );
     $xo->line_dash_pattern( @args );
 }
 
 method paint ( @args ) {
     die if @args;
-    xdbg( "\$xo->paint();" );
+    $self->xdbg( "\$xo->paint();" );
     $xo->paint( @args );
 }
 
 method save ( @args ) {
     die if @args;
-    xdbg( "\$xo->save();" );
+    $self->xdbg( "\$xo->save();" );
+    $indent = "$indent  ";
     $xo->save;
 }
 
 method restore ( @args ) {
     die if @args;
-    xdbg( "\$xo->restore();" );
+    $indent = substr( $indent, 2 );
+    $self->xdbg( "\$xo->restore();" );
     $xo->restore;
 }
 
@@ -114,18 +119,18 @@ method restore ( @args ) {
 
 method textstart ( @args ) {
     die if @args;
-    xdbg( "\$xo->textstart();" );
+    $self->xdbg( "\$xo->textstart();" );
     $xo->textstart( @args );
 }
 
 method textend ( @args ) {
     die if @args;
-    xdbg( "\$xo->textend();" );
+    $self->xdbg( "\$xo->textend();" );
     $xo->textend( @args );
 }
 
 method font ( $font, $size, $name ) {
-    xdbg( "\$xo->font( \$font, $size );\t# $name" );
+    $self->xdbg( "\$xo->font( \$font, $size );\t# $name" );
     $xo->font( $font, $size );
 }
 
@@ -134,7 +139,10 @@ method text ( $text, %opts ) {
     if ( length($t) == 1 && ord($t) > 255 ) {
 	$t = sprintf("\\x{%04x}", ord($t));
     }
-    xdbg( "\$xo->text( \"$t\", ",
+    else {
+	$t =~ s/(["\\\x{0}-\x{1f}\x{ff}-\x{ffff}])/sprintf("\\x{%x}", ord($1))/ge;
+    }
+    $self->xdbg( "\$xo->text( \"$t\", ",
 	  join( ", ", map { "$_ => \"$opts{$_}\"" } keys %opts ),
 	  " );" );
     $xo->text( $text, %opts );
@@ -143,75 +151,75 @@ method text ( $text, %opts ) {
 #### Paths.
 
 method move ( @args ) {
-    xdbg( "\$xo->move( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->move( ", join(", ",@args), " );" );
     $xo->move( @args );
 }
 
 method hline ( @args ) {
-    xdbg( "\$xo->hline( @args );" );
+    $self->xdbg( "\$xo->hline( @args );" );
     $xo->hline( @args );
 }
 
 method vline ( @args ) {
-    xdbg( "\$xo->vline( @args );" );
+    $self->xdbg( "\$xo->vline( @args );" );
     $xo->vline( @args );
 }
 
 method line ( @args ) {
-    xdbg( "\$xo->line( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->line( ", join(", ",@args), " );" );
     $xo->line( @args );
 }
 
 method curve ( @args ) {
-    xdbg( "\$xo->curve( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->curve( ", join(", ",@args), " );" );
     $xo->curve( @args );
 }
 
 method spline ( @args ) {
-    xdbg( "\$xo->spline( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->spline( ", join(", ",@args), " );" );
     $xo->spline( @args );
 }
 
+method pie ( @args ) {
+    $self->xdbg( "\$xo->pie( ", join(", ",@args), " );" );
+    $xo->pie( @args );
+}
+
+method bogen ( @args ) {
+    $self->xdbg( "\$xo->bogen( ", join(", ",@args), " );" );
+    $xo->bogen( @args );
+}
+
 method rect ( @args ) {
-    xdbg( "\$xo->rect( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->rect( ", join(", ",@args), " );" );
     $xo->rect( @args );
 }
 
 method rectangle ( @args ) {
-    xdbg( "\$xo->rectangle( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->rectangle( ", join(", ",@args), " );" );
     $xo->rectangle( @args );
 }
 
 method circle ( @args ) {
-    xdbg( "\$xo->circle( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->circle( ", join(", ",@args), " );" );
     $xo->circle( @args );
 }
 
 method polyline ( @args ) {
-    xdbg( "\$xo->polyline( ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->polyline( ", join(", ",@args), " );" );
     $xo->polyline( @args );
 }
 
 method image( @args ) {
     my $image = shift(@args);
-    xdbg( "\$xo->image(<img>, ", join(", ",@args), " );" );
+    $self->xdbg( "\$xo->image(<img>, ", join(", ",@args), " );" );
     $xo->image( $image, @args );
 }
 
 method close ( @args ) {
     die if @args;
-    xdbg( "\$xo->close();" );
+    $self->xdbg( "\$xo->close();" );
     $xo->close( @args );
-}
-
-#### Misc.
-
-method finish :common () {
-    PDF::SVG::xdbg->( "\$pdf->save(\"z.pdf\");" );
-}
-
-DESTROY {
-    finish();
 }
 
 1;
