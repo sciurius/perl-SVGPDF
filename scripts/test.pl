@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Tue Jul 11 13:38:20 2023
-# Update Count    : 48
+# Last Modified On: Tue Jul 11 21:44:33 2023
+# Update Count    : 54
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -112,12 +112,16 @@ foreach my $file ( @ARGV ) {
 	    $y = $pgsz[1];
 	}
 
-	warn(sprintf("object %d ( %.2f, %.2f, %.2f, %.2f @%.2f )\n",
-		     $i, $x, $y-$h*$scale, $w*$scale, $h*$scale, $scale ))
+	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.2f )\n",
+		     $i, $w, $h,
+		     $xo->{vwidth}
+		     ? sprintf("=> %.2f, %.2f ", $xo->{vwidth}, $xo->{vheight})
+		     : "",
+		     $x, $y-$h*$scale, $w*$scale, $h*$scale, $scale ))
 	  if $verbose;
 
 	crosshairs( $gfx, $x, $y, "blue" );
-	$gfx->object( $xo->{xo}, $x, $y-$h*$scale, $scale );
+	$gfx->object( $xo->{xo}, $x, $y-( $h + $xo->{vbox}->[1] )*$scale, $scale );
 
 	$y -= $h * $scale;
     }

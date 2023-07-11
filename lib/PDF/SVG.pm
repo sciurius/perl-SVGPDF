@@ -53,6 +53,9 @@ sub _dbg ( $fmt, @args ) {
     xdbg( $fmt, @args );
 }
 
+*units = \&SVG::Element::units;
+*getargs = \&SVG::Element::getargs;
+
 # This is (currently) ugly --
 #
 # <svg ...>
@@ -69,10 +72,7 @@ my $css;
 sub process_file ( $self, $file ) {
 
     # Load the SVG file.
-    open( my $fd, '<:utf8', $file )
-      or die(" $file: $!\n" );
-    my $svg = SVG::Parser->new->parsefile($fd);
-    close($fd);
+    my $svg = SVG::Parser->new->parsefile($file);
     return unless $svg;
 
     # CSS persists over svgs, but not over files.
@@ -136,30 +136,27 @@ sub handle_svg ( $self, $e ) {
     $e->{css} = $self->{css} = $css;
 
     my $atts = $e->getAttributes;
-    my $width  = delete( $atts->{width} ) || 595;
-    my $height = delete( $atts->{height}) || 842;
-    s/p[tx]$// for $width, $height;
-    s;([\d.]+)mm;sprintf("%.2f",$1*72/25.4);ge for $width, $height;
-    s;([\d.]+)cm;sprintf("%.2f",$1*72/2.54);ge for $width, $height;
-    s;([\d.]+)ex;sprintf("%.2f",$1*5);ge for $width, $height; # HACK
+    my $width  = units(delete( $atts->{width} )) || 595;
+    my $height = units(delete( $atts->{height})) || 842;
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $e->css_push($atts);
 
-    $vbox =~ s/\s*,\s*/ /g;
-    my @bb = split( ' ', $vbox );
+    my @bb = getargs($vbox);
     _dbg( "bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
     # <svg> coordinates are topleft down, so translate.
-    $xo->transform( translate => [ $bb[0], $bb[3] ] );
+    # DELAY $xo->transform( translate => [ $bb[0], $bb[3] ] );
 
     # Set up result forms.
     # Currently we rely on the <svg> to supply the correct viewBox.
     push( @{ $self->{xoforms} },
 	  { xo      => $xo,
+	    itrans  => [ $bb[0], $bb[3] ],
 	    vwidth  => $width,
 	    vheight => $height,
+	    vbox    => [ @bb ],
 	    width   => $bb[2] - $bb[0],
 	    height  => $bb[3] - $bb[1] } );
 
@@ -278,6 +275,30 @@ sub getCDATA ( $self ) {
     $res;
 }
 
+sub units ( $a ) {
+    return undef unless $a =~ /^([-+]?\d+(?:\.\d+)?)(.*)$/;
+    return $1 if $2 eq "" || $2 eq "pt";
+    return $1 if $2 eq "px";	# approx
+    return $1*12 if $2 eq "em";	# approx
+    return $1*10 if $2 eq "ex";	# approx
+    return $1*72/2.54 if $2 eq "cm";
+    return $1*72/25.4 if $2 eq "mm";
+    return $1;			# will hopefully crash somewhere...
+}
+
+sub getargs ( $a ) {
+    $a =~ s/^\s+//;
+    $a =~ s/\s+$//;
+    $a =~ s/\s+/,/g;
+    map { units($_) } split( /,/, $a );
+}
+
+sub itrans ( $self ) {
+    my $tr = delete $self->{svg}->{xoforms}->[-1]->{itrans};
+    return unless $tr;
+    $self->{svg}->{xoforms}->[-1]->{xo}->transform( translate => $tr );
+}
+
 ################ Texts and Paths ################
 
 sub process_text ( $self ) {
@@ -332,6 +353,7 @@ sub process_text ( $self ) {
 	$y = [ $y ];
     }
 
+    $self->itrans;
     _dbg( "xo save" );
     $xo->save;
     my $ix = $x->[0];
@@ -339,13 +361,15 @@ sub process_text ( $self ) {
     my ( $ex, $ey );
 
 #    my ( $dx, $dy, $scale ) = ( 0, 0, 1 );
-    my $scale = 1;
+    my $scalex = 1;
+    my $scaley = 1;
     if ( $tf ) {
-	( $dx, $dy ) = ( $1, $2 )
-	  if $tf =~ /translate\((-?[.\d]+),(-?[.\d]+)\)/;
-	$scale = $1
-	  if $tf =~ /scale\((-?[.\d]+)\)/;
-	warn("TF: $dx, $dy, $scale") if $trace;
+	( $dx, $dy ) = getargs($1)
+	  if $tf =~ /translate\((.*?)\)/;
+	( $scalex, $scaley ) = getargs($1)
+	  if $tf =~ /scale\((.*?)\)/;
+	$scaley ||= $scalex;
+	warn("TF: $dx, $dy, $scalex, $scaley") if $trace;
     }
     # NOTE: rotate applies to the individual characters, not the text
     # as a whole.
@@ -366,12 +390,14 @@ sub process_text ( $self ) {
 	my $y = - $dy - shift(@$y);
 	_dbg( "txt* translate( %.2f, %.2f )%s %x",
 	      $x, $y,
-	      $scale != 1 ? sprintf(" scale( %.1f )", $scale) : "",
+	      ( $scalex != 1 && $scaley != 1 )
+	      ? sprintf(" scale( %.1f, %.1f )", $scalex, $scaley ) : "",
 	      ord($text->[0]));
 	#	$xo-> translate( $x, $y );
 	$xo->save;
 	$xo->transform( translate => [ $x, $y ],
-			$scale != 1 ? ( scale => [ $scale, $scale ] ) : (),
+			($scalex != 1 && $scaley != 1 )
+			? ( scale => [ $scalex, $scaley ] ) : (),
 		      );
 	my %o = ();
 	$o{align} = $anchor eq "end"
@@ -396,7 +422,8 @@ sub process_text ( $self ) {
 	my $y = - $dy - shift(@$y);
 	_dbg( "txt translate( %.2f, %.2f )%s",
 	      $x, $y,
-	      $scale != 1 ? sprintf(" scale( %.1f )", $scale) : "" );
+	      ($scalex != 1 && $scaley != 1 )
+	      ? ( scale => [ $scalex, $scaley ] ) : () );
 	#	$xo-> translate( $x, $y );
 	my %o = ();
 	$o{align} = $anchor eq "end"
@@ -407,9 +434,10 @@ sub process_text ( $self ) {
 		_dbg( "xo save" );
 		$xo->save;
 		$xo->transform( translate => [ $x, $y ],
-				$scale != 1 ? ( scale => [ $scale, $scale ] ) : (),
+			($scalex != 1 && $scaley != 1 )
+			? ( scale => [ $scalex, $scaley ] ) : ()
 			      );
-		$scale = 1;		# no more scaling.
+		$scalex = $scaley = 1; # no more scaling.
 
 		$xo->textstart;
 		$xo->font( $self->makefont($style));
@@ -441,9 +469,10 @@ sub process_text ( $self ) {
 		    $y = 0;
 		}
 		$xo->transform( translate => [ $x, $y ],
-				$scale != 1 ? ( scale => [ $scale, $scale ] ) : (),
+				( $scalex != 1 && $scaley != 1 )
+				? ( scale => [ $scalex, $scaley ] ) : (),
 			      );
-		$scale = 1;		# no more scaling.
+		$scalex = $scaley = 1; # no more scaling.
 		my ( $x0, $y0 ) = $c->process_tspan;
 		$x += $x0; $y += $y0;
 		_dbg("tspan moved to $x, $y");
@@ -476,7 +505,7 @@ sub process_tspan ( $self ) {
 
     my $text = "";
 
-    $style->{'font-size'} =~ s/px$//;
+    $style->{'font-size'} = units($style->{'font-size'});
     $dx = $1 * $style->{'font-size'} if $dx =~ /^([.\d]+)em$/;
     $dy = $1 * $style->{'font-size'} if $dy =~ /^([.\d]+)em$/;
 
@@ -517,6 +546,7 @@ sub process_tspan ( $self ) {
 	}
 
 	for my $c ( @c ) {
+	    $self->itrans;
 	    $xo->save;
 	    $xo->transform( translate => [ $x, $y ] );
 	    if ( $c->{type} eq 't' ) {
@@ -577,6 +607,7 @@ sub process_path ( $self ) {
     _dbg( $self->getElementName, " x=$x y=$y" );
     local $indent = $indent . "  ";
 
+    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -677,10 +708,10 @@ sub process_path ( $self ) {
 		if ( @d > 7 && lc( my $op = $d[6] ) eq "s" ) {
 		    # Turn S-curve into C-curve.
 		    # New cp1 becomes reflection of cp2.
-		    my $rx = $x + $d[4] - $d[2];
-		    my $ry = $y - ($d[5] - $d[3]);
+		    my $rx = 2*$d[4] - $d[2];
+		    my $ry = 2*$d[5] - $d[3];
 		    splice( @d, 0, 7 );
-		    unshift( @d, $op eq 's' ? 'c' : 'C', $rx, -$ry );
+		    unshift( @d, $op eq 's' ? 'c' : 'C', $rx, $ry );
 		}
 		else {
 		    splice( @d, 0, 6 );
@@ -723,10 +754,10 @@ sub process_path ( $self ) {
 		if ( @d > 5 && lc( my $op = $d[4] ) eq "t" ) {
 		    # Turn T-curve into Q-curve.
 		    # New cp becomes reflection of current cp.
-		    my $rx = -$x + $d[1] - $d[0];
-		    my $ry = $y - ($d[3] - $d[1]);
+		    my $rx = 2*$d[2] - $d[0];
+		    my $ry = 2*$d[3] - $d[1];
 		    splice( @d, 0, 5 );
-		    unshift( @d, $op eq 't' ? 'q' : 'Q', -$rx, -$ry );
+		    unshift( @d, $op eq 't' ? 'q' : 'Q', $rx, $ry );
 		}
 		else {
 		    splice( @d, 0, 4 );
@@ -821,6 +852,7 @@ sub process_rect ( $self ) {
     _dbg( $self->getElementName, " x=$x y=$y w=$w h=$h" );
     local $indent = $indent . "  ";
 
+    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -854,6 +886,7 @@ sub process_line ( $self ) {
     _dbg( $self->getElementName, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
     local $indent = $indent . "  ";
 
+    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -894,6 +927,7 @@ sub process_polyline ( $self, $close = 0 ) {
     _dbg( $self->getElementName, " points=$points" );
     local $indent = $indent . "  ";
 
+    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -931,6 +965,7 @@ sub process_circle ( $self ) {
     _dbg( $self->getElementName, " cx=$cx cy=$cy r=$r" );
     local $indent = $indent . "  ";
 
+    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -990,6 +1025,7 @@ sub process_image ( $self ) {
 	$img = $self->{svg}->{ps}->{pr}->{pdf}->image(IO::String->new($data));
     }
 
+    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -1064,7 +1100,8 @@ sub process_g ( $self ) {
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     my $x;
     my $y;
-    my $scale;
+    my $scalex;
+    my $scaley;
     my @m;
     my %o;
 
@@ -1079,9 +1116,11 @@ sub process_g ( $self ) {
 	}
 	if ( $t =~ m/scale \( \s*
 		     ([-.\d]+)
+		     \s*(?: [,\s] \s* ([-.\d]+))?
 		     \s* \)/x ) {
-	    $scale = $1;
-	    _dbg( "xo scale( %.2f )", $scale );
+	    $scalex = $1;
+	    $scaley = $2 // $scalex;
+	    _dbg( "xo scale( %.2f %.2f )", $scalex, $scaley );
 	}
 	if ( @m = $t =~ m/matrix\( \s*
 		     ([-.\d]+) [,\s] \s*
@@ -1109,8 +1148,11 @@ sub process_g ( $self ) {
 	if ( defined($x) || defined($y) ) {
 	    $o{translate} = [ $x, -$y ];
 	}
-	if ( defined($scale) ) {
-	    $o{scale} = [ $scale, $scale ];
+	if ( defined($scalex) ) {
+	    $o{scale} = [ $scalex, $scaley ];
+	    if ( $scalex == 1 && $scaley == -1 ) {
+		delete $self->{svg}->{xoforms}->[-1]->{itrans};
+	    }
 	}
 	if ( %o ) {
 	    _dbg( "xo save" );
@@ -1325,7 +1367,20 @@ sub new ( $pkg ) {
 }
 
 sub parsefile ( $self, $fname ) {
-    my $ret = XML::Tiny::parsefile( $fname );
+    my $ret;
+    if ( $debug ) {
+	my $fd;
+	open( $fd, '<:utf8', $fname )
+	  or die( "$fname: $!\n" );
+	my $data = do { local $/; <$fd> };
+	close($fd);
+	$data =~ s/^#.*//mg;
+	$data =~ s/\\[\n\r]+\s+//g;
+	$ret = XML::Tiny::parsefile( "_TINY_XML_STRING_".$data );
+    }
+    else {
+	$ret = XML::Tiny::parsefile($fname);
+    }
     die("Error parsing $fname\n") unless $ret && @$ret == 1;
     bless $ret->[0] => 'XML::Tiny::_Element';
 }
