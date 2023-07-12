@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Tue Jul 11 21:44:33 2023
-# Update Count    : 54
+# Last Modified On: Wed Jul 12 20:34:58 2023
+# Update Count    : 75
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -29,6 +29,7 @@ use Getopt::Long 2.13;
 # Command line options.
 my $output = "__new__.pdf";
 my $api = "PDF::API2";
+my $wstokens;
 my $grid;
 my $prog;
 my $verbose = 1;		# verbose processing
@@ -67,6 +68,7 @@ foreach my $file ( @ARGV ) {
       ( { pr => { pdf => $pdf } },
 	debug => $debug,
 	grid  => $grid,
+	wstokens => $wstokens,
 	trace => $trace );
 
     my $o = $p->process_file($file);
@@ -80,7 +82,7 @@ foreach my $file ( @ARGV ) {
 		open( my $fd, '>', $prog );
 		my $pdf = $prog =~ s/\.pl$/.pdf/r;
 		print $fd ( "#! perl\n",
-			    "use v5.26;",
+			    "use v5.26;\n",
 			    "use utf8;\n",
 			    "use $api;\n",
 			    "my \$pdf  = $api->new;\n",
@@ -94,8 +96,9 @@ foreach my $file ( @ARGV ) {
 	    }
 	    $xo->{xo} = $xo->{xo}->xo;
 	}
-	my $w = $xo->{width};
-	my $h = $xo->{height};
+	my @bb = @{$xo->{vbox}};
+	my $w = $bb[2] - $bb[0];
+	my $h = $bb[3] - $bb[1];
 	my $scale = 1;
 	if ( $xo->{vwidth} ) {
 	    $scale = $xo->{vwidth} / $w;
@@ -111,7 +114,6 @@ foreach my $file ( @ARGV ) {
 	    $x = 0;
 	    $y = $pgsz[1];
 	}
-
 	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.2f )\n",
 		     $i, $w, $h,
 		     $xo->{vwidth}
@@ -121,9 +123,12 @@ foreach my $file ( @ARGV ) {
 	  if $verbose;
 
 	crosshairs( $gfx, $x, $y, "blue" );
-	$gfx->object( $xo->{xo}, $x, $y-( $h + $xo->{vbox}->[1] )*$scale, $scale );
+	if ( $bb[1] ) {
+	    crosshairs( $gfx, $x, $y+$bb[1]*$scale, "red" );
+	}
+	$gfx->object( $xo->{xo}, $x, $y-( $h+$bb[1]  )*$scale, $scale );
 
-	$y -= $h * $scale;
+	$y -= ($h+$bb[1]) * $scale;
     }
     crosshairs( $gfx, $x, $y, "blue" );
 }
@@ -161,7 +166,11 @@ sub app_options {
 		     'output=s' => \$output,
 		     'program=s' => \$prog,
 		     'grid'	=> \$grid,
+		     'builder'	=> sub { $api = "PDF::Builder";
+					 push( @INC, $ENV{HOME}."/src/PDF-Builder/lib" );
+					 },
 		     'api=s'	=> \$api,
+		     'ws'	=> \$wstokens,
 		     'ident'	=> \$ident,
 		     'verbose+'	=> \$verbose,
 		     'quiet'	=> sub { $verbose = 0 },
@@ -185,6 +194,8 @@ sub app_usage {
     print STDERR <<EndOfUsage;
 Usage: $0 [options] [svg-file ...]
    --output=XXX		PDF output file name
+   --program=XXX	generates a perl program (requires --debug)
+   --api=XXX		uses PDF API (PDF::API2 or PDF::Builder)
    --ident		shows identification
    --help		shows a brief help message and exits
    --verbose		provides more verbose information

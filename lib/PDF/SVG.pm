@@ -1,10 +1,5 @@
 #! perl
 
-#### TODO
-#
-# generalized units handler
-# generic split (w/s, comma, ...)
-
 use v5.26;
 use Object::Pad;
 use feature 'signatures';
@@ -20,6 +15,7 @@ my $debug = 0;
 my $grid = 0;
 my $debug_styles = 0;
 my $trace = 0;
+my $wstokens = 0;
 
 our $indent = "";
 
@@ -35,6 +31,7 @@ sub new ( $pkg, $ps, %atts ) {
     $grid= $atts{grid};
     $debug_styles = $atts{debug_styles} || $debug > 1;
     $trace = $atts{trace};
+    $wstokens = $atts{wstokens};
     $indent = "";
     $self;
 }
@@ -72,7 +69,8 @@ my $css;
 sub process_file ( $self, $file ) {
 
     # Load the SVG file.
-    my $svg = SVG::Parser->new->parsefile($file);
+    my $svg = SVG::Parser->new->parsefile( $file,
+					   whitespace_tokens => $wstokens );
     return unless $svg;
 
     # CSS persists over svgs, but not over files.
@@ -144,16 +142,22 @@ sub handle_svg ( $self, $e ) {
     my $style = $e->css_push($atts);
 
     my @bb = getargs($vbox);
-    _dbg( "bb %.2f %.2f %.2f %.2f", @bb );
+    _dbg( "bb $vbox => %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
     # <svg> coordinates are topleft down, so translate.
-    # DELAY $xo->transform( translate => [ $bb[0], $bb[3] ] );
+    $xo->transform( translate => [ 0, $bb[1]+$bb[3] ] );
+    if ( $debug ) {		# show bb
+	$xo->save;
+	$xo->rectangle( $bb[0], -$bb[1], $bb[0]+$bb[2], -($bb[1]+$bb[3]));
+	$xo->line_width(1);
+	$xo->stroke;
+	$xo->restore;
+    }
 
     # Set up result forms.
     # Currently we rely on the <svg> to supply the correct viewBox.
     push( @{ $self->{xoforms} },
 	  { xo      => $xo,
-	    itrans  => [ $bb[0], $bb[3] ],
 	    vwidth  => $width,
 	    vheight => $height,
 	    vbox    => [ @bb ],
@@ -252,12 +256,11 @@ sub getAttributes ( $self ) {
 
 sub css_push ( $self, $atts ) {
     Carp::confess unless $self->{css};
-    my $ret = $self->{css}->push($atts);
+    my $el = $self->can("getElementName") ? $self->getElementName : "";
+    my $ret = $self->{css}->push( $el ? { element => $el, %$atts } : $atts );
     if ( $debug_styles ) {
 	warn( "CSS[", $self->{css}->level, "]: ",
-	      $self->can("getElementName")
-	      ? ( $self->getElementName . " " )
-	      : (),
+	      $el ? "$el " : "",
 	      DDumper($ret) );
     }
     $ret;
@@ -289,14 +292,7 @@ sub units ( $a ) {
 sub getargs ( $a ) {
     $a =~ s/^\s+//;
     $a =~ s/\s+$//;
-    $a =~ s/\s+/,/g;
-    map { units($_) } split( /,/, $a );
-}
-
-sub itrans ( $self ) {
-    my $tr = delete $self->{svg}->{xoforms}->[-1]->{itrans};
-    return unless $tr;
-    $self->{svg}->{xoforms}->[-1]->{xo}->transform( translate => $tr );
+    map { units($_) } split( /\s*[,\s]\s*/, $a );
 }
 
 ################ Texts and Paths ################
@@ -342,8 +338,8 @@ sub process_text ( $self ) {
 	if ( @c > 1 || ref($c[0]) !~ /::Text$/ ) {
 	    die("text: Cannot combine coordinate list with multiple elements\n");
 	}
-	$x = [ split( /,/, $x ) ];
-	$y = [ split( /,/, $y ) ];
+	$x = [ getargs($x) ];
+	$y = [ getargs($y) ];
 	$text = [ split( //, $c[0]->{content} ) ];
 	die( "\"", $self->getCDATA, "\" ", 0+@$x, " ", 0+@$y, " ", 0+@$text )
 	  unless @$x == @$y && @$y == @$text;
@@ -353,7 +349,6 @@ sub process_text ( $self ) {
 	$y = [ $y ];
     }
 
-    $self->itrans;
     _dbg( "xo save" );
     $xo->save;
     my $ix = $x->[0];
@@ -546,7 +541,6 @@ sub process_tspan ( $self ) {
 	}
 
 	for my $c ( @c ) {
-	    $self->itrans;
 	    $xo->save;
 	    $xo->transform( translate => [ $x, $y ] );
 	    if ( $c->{type} eq 't' ) {
@@ -607,7 +601,6 @@ sub process_path ( $self ) {
     _dbg( $self->getElementName, " x=$x y=$y" );
     local $indent = $indent . "  ";
 
-    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -852,7 +845,6 @@ sub process_rect ( $self ) {
     _dbg( $self->getElementName, " x=$x y=$y w=$w h=$h" );
     local $indent = $indent . "  ";
 
-    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -886,7 +878,6 @@ sub process_line ( $self ) {
     _dbg( $self->getElementName, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
     local $indent = $indent . "  ";
 
-    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -927,7 +918,6 @@ sub process_polyline ( $self, $close = 0 ) {
     _dbg( $self->getElementName, " points=$points" );
     local $indent = $indent . "  ";
 
-    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -965,7 +955,6 @@ sub process_circle ( $self ) {
     _dbg( $self->getElementName, " cx=$cx cy=$cy r=$r" );
     local $indent = $indent . "  ";
 
-    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -1025,7 +1014,6 @@ sub process_image ( $self ) {
 	$img = $self->{svg}->{ps}->{pr}->{pdf}->image(IO::String->new($data));
     }
 
-    $self->itrans;
     my $xo = $self->{svg}->{xoforms}->[-1]->{xo};
     _dbg( "xo save" );
     $xo->save;
@@ -1150,9 +1138,6 @@ sub process_g ( $self ) {
 	}
 	if ( defined($scalex) ) {
 	    $o{scale} = [ $scalex, $scaley ];
-	    if ( $scalex == 1 && $scaley == -1 ) {
-		delete $self->{svg}->{xoforms}->[-1]->{itrans};
-	    }
 	}
 	if ( %o ) {
 	    _dbg( "xo save" );
@@ -1257,6 +1242,7 @@ sub process_use ( $self ) {
 
     $xo->save;
     $xo->transform( translate => [ $x, $y ] );
+    $self->set_graphics($style);
     $r->traverse;
     $xo->restore;
 }
@@ -1366,21 +1352,19 @@ sub new ( $pkg ) {
     bless {} => $pkg
 }
 
-sub parsefile ( $self, $fname ) {
+sub parsefile ( $self, $fname, %args ) {
     my $ret;
+    my $fd;
+    open( $fd, '<:utf8', $fname )
+      or die( "$fname: $!\n" );
+    my $data = do { local $/; <$fd> };
+    close($fd);
     if ( $debug ) {
-	my $fd;
-	open( $fd, '<:utf8', $fname )
-	  or die( "$fname: $!\n" );
-	my $data = do { local $/; <$fd> };
-	close($fd);
+	# Make it easier to read/write long lines and disable parts.
 	$data =~ s/^#.*//mg;
-	$data =~ s/\\[\n\r]+\s+//g;
-	$ret = XML::Tiny::parsefile( "_TINY_XML_STRING_".$data );
+	$data =~ s/\\[\n\r]+\s*//g;
     }
-    else {
-	$ret = XML::Tiny::parsefile($fname);
-    }
+    $ret = XML::Tiny::parsefile( "_TINY_XML_STRING_".$data, %args );
     die("Error parsing $fname\n") unless $ret && @$ret == 1;
     bless $ret->[0] => 'XML::Tiny::_Element';
 }
@@ -1417,6 +1401,7 @@ package PDF::API2::Content;
 
 use Math::Trig;
 
+# Fixed version of 'bogen', extraced from PDF::Builder.
 sub bogen {
     my ($self, $x1,$y1, $x2,$y2, $r, $move, $larc, $spf) = @_;
 

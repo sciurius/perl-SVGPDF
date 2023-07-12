@@ -10,7 +10,10 @@ Revision history for PDF::SVG
 	- Improve fill/stroke (handle transparency).
 	- Add grid for debugging.
 	- Add sample program.
+	- Improve scaling.
+	- Handle argument and units.
 	- Neatify PAST to generate perl program.
+	- Always take element into account (css).
 	- (CSS) Handle outline shorthand.
 	- (CSS) Fix priorities.
 	- Elegantly skip unimplemented arcs.
