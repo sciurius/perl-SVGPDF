@@ -197,7 +197,7 @@ method push ( @args ) {
 
     ## Class style.
     if ( $args->{class} ) {
-	for ( split( ' ', $args->{class} ) ) {
+	for ( split( ' ', $args->{class} ), "svg" ) {
 	    next unless exists( $css->{".$_"} );
 	    $self->merge( $ret, $css->{".$_"} );
 	}
