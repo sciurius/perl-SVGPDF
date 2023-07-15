@@ -1,0 +1,196 @@
+#! perl
+
+use v5.26;
+use Object::Pad;
+use utf8;
+use Carp;
+
+class SVG::Text :isa(SVG::Element);
+
+method process () {
+    my $atts  = $self->atts;
+    my $xo    = $self->xo;
+    return if $atts->{omit};	# for testing/debugging.
+    my %atts = %$atts;		# debug
+
+    my $x  = $self->u(delete($atts->{x})     || 0);
+    my $y  = $self->u(delete($atts->{y})     || 0);
+    my $dx = $self->u(delete($atts->{dx})    || 0);
+    my $dy = $self->u(delete($atts->{dy})    || 0);
+    my $tf = delete($atts->{transform}) || "";
+
+    $self->css_push;
+    my $style = $self->style;
+    $self->_dbg( $self->name, " x=$x y=$y dx=$dx dy=$dy tf=$tf" );
+
+    my $text = "";
+
+    my $color = $style->{color};
+    my $anchor = $style->{'text-anchor'} || "left";
+
+    $self->_dbg( $self->name, " ",
+		 defined($atts{x}) ? ( " x=$x" ) : (),
+		 defined($atts{y}) ? ( " y=$y" ) : (),
+		 defined($atts{dx}) ? ( " dx=$dx" ) : (),
+		 defined($atts{dy}) ? ( " dy=$dy" ) : (),
+		 defined($style->{"text-anchor"})
+		 ? ( " anchor=\"$anchor\"" ) : (),
+		 defined($style->{"transform"})
+		 ? ( " transform=\"$tf\"" ) : (),
+		 "\n" );
+
+    # We assume that if there is an x/y list, there is one single text
+    # argument.
+
+    my @c = $self->get_children;
+
+    if ( $x =~ /,/ ) {
+	if ( @c > 1 || ref($c[0]) !~ /::Text$/ ) {
+	    die("text: Cannot combine coordinate list with multiple elements\n");
+	}
+	$x = [ $self->getargs($x) ];
+	$y = [ $self->getargs($y) ];
+	$text = [ split( //, $c[0]->content ) ];
+	die( "\"", $self->get_cdata, "\" ", 0+@$x, " ", 0+@$y, " ", 0+@$text )
+	  unless @$x == @$y && @$y == @$text;
+    }
+    else {
+	$x = [ $x ];
+	$y = [ $y ];
+    }
+
+    $self->_dbg( "+ xo save" );
+    $xo->save;
+    my $ix = $x->[0];
+    my $iy = $y->[0];
+    my ( $ex, $ey );
+
+#    my ( $dx, $dy, $scale ) = ( 0, 0, 1 );
+    my $scalex = 1;
+    my $scaley = 1;
+    if ( $tf ) {
+	( $dx, $dy ) = $self->getargs($1)
+	  if $tf =~ /translate\((.*?)\)/;
+	( $scalex, $scaley ) = $self->getargs($1)
+	  if $tf =~ /scale\((.*?)\)/;
+	$scaley ||= $scalex;
+	$self->_dbg("TF: $dx, $dy, $scalex, $scaley")
+    }
+    # NOTE: rotate applies to the individual characters, not the text
+    # as a whole.
+
+    if ( $color ) {
+	$xo->fill_color($color);
+    }
+
+    if ( @$x > 1 ) {
+      for ( @$x ) {
+	if ( $tf ) {
+	    $self->_dbg( "X %.2f = %.2f + %.2f",
+			 $dx + $_, $dx, $_ );
+	    $self->_dbg( "Y %.2f = - %.2f - %.2f",
+			 - $dy - $y->[0], $dy, $y->[0] );
+	}
+	my $x = $dx + $_;
+	my $y = - $dy - shift(@$y);
+	$self->_dbg( "txt* translate( %.2f, %.2f )%s %x",
+		     $x, $y,
+		     ( $scalex != 1 && $scaley != 1 )
+		     ? sprintf(" scale( %.1f, %.1f )", $scalex, $scaley ) : "",
+		     ord($text->[0]));
+	#	$xo-> translate( $x, $y );
+	$xo->save;
+	$xo->transform( translate => [ $x, $y ],
+			($scalex != 1 && $scaley != 1 )
+			? ( scale => [ $scalex, $scaley ] ) : (),
+		      );
+	my %o = ();
+	$o{align} = $anchor eq "end"
+	  ? "right"
+	  : $anchor eq "middle" ? "center" : "left";
+	$xo->textstart;
+	$xo->font( $self->makefont($style));
+	$xo->text( shift(@$text), %o );
+	$xo->textend;
+	$xo->restore;
+      }
+    }
+    else {
+	$_ = $x->[0];
+	if ( $tf ) {
+	    $self->_dbg( "X %.2f = %.2f + %.2f",
+			 $dx + $_, $dx, $_ );
+	    $self->_dbg( "Y %.2f = - %.2f - %.2f",
+			 - $dy - $y->[0], $dy, $y->[0] );
+	}
+	my $x = $dx + $_;
+	my $y = - $dy - shift(@$y);
+	$self->_dbg( "txt translate( %.2f, %.2f )%s",
+		     $x, $y,
+		     ($scalex != 1 && $scaley != 1 )
+		     ? sprintf("scale( %.2f %.2f )", $scalex, $scaley ) : "" );
+	my %o = ();
+	$o{align} = $anchor eq "end"
+	  ? "right"
+	  : $anchor eq "middle" ? "center" : "left";
+	for my $c ( @c ) {
+	    if ( ref($c) eq 'SVG::TextElement' ) {
+		$self->_dbg( "+ xo save" );
+		$xo->save;
+		$xo->transform( translate => [ $x, $y ],
+				($scalex != 1 && $scaley != 1 )
+				? ( scale => [ $scalex, $scaley ] ) : ()
+			      );
+		$scalex = $scaley = 1; # no more scaling.
+
+		$xo->textstart;
+		$xo->font( $self->makefont($style));
+
+		$x += $xo->text( $c->content, %o );
+		$xo->textend;
+		if ( $style->{'outline-style'} ) {
+		    my ($fn,$sz) = @{[$self->makefont($style)]};
+		    $xo->line_width( $style->{'outline-width'} || 1 );
+		    $xo->stroke_color( $style->{'outline-color'} || 'black' );
+		    my $d = $style->{'outline-offset'} || 1;
+		    $xo->rectangle( -$d,
+				    -$d+$sz*$fn->descender/1000,
+				    $x-$ix+2*$d,
+				    2*$d+$sz*$fn->ascender/1000 );
+		    $xo->stroke;
+		}
+		$self->_dbg( "- xo restore" );
+		$xo->restore;
+		$ex = $x; $ey = $y;
+	    }
+	    elsif ( ref($c) eq 'SVG::Tspan' ) {
+		$self->_dbg( "+ xo save" );
+		$xo->save;
+		if ( defined($c->atts->{x}) ) {
+		    $x = 0;
+		}
+		if ( defined($c->atts->{y}) ) {
+		    $y = 0;
+		}
+		$xo->transform( translate => [ $x, $y ],
+				( $scalex != 1 && $scaley != 1 )
+				? ( scale => [ $scalex, $scaley ] ) : (),
+			      );
+		$scalex = $scaley = 1; # no more scaling.
+		my ( $x0, $y0 ) = $c->process();
+		$x += $x0; $y += $y0;
+		$self->_dbg("tspan moved to $x, $y");
+		$self->_dbg( "- xo restore" );
+		$xo->restore;
+		$ex = $x; $ey = $y;
+	    }
+	}
+    }
+
+    $self->_dbg( "- xo restore" );
+    $xo->restore;
+    $self->css_pop;
+}
+
+
+1;

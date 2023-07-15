@@ -2,12 +2,14 @@ Changes
 MANIFEST
 Makefile.PL
 README.md
+lib/PDF/PAST.pm
 lib/PDF/SVG.pm
 lib/SVG/CSS.pm
-lib/SVG/Parser.pm
 lib/SVG/Element.pm
+lib/SVG/Parser.pm
 lib/SVG/Rect.pm
-lib/PDF/PAST.pm
+lib/SVG/Text.pm
+lib/SVG/Tspan.pm
 lib/XMK/Tiny.pm
 t/001_load.t
 t/002_load.t

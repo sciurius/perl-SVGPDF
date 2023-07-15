@@ -135,16 +135,16 @@ method get_children () {
 }
 
 method traverse () {
-
-    for ( $self->get_children ) {
-	next if ref($_) eq "SVG::TextElement";
-	$self->_dbg("+ start handling ", $_->name, " (", ref($_), ")");
-	$_->process;
-	$self->_dbg("- end handling ", $_->name);
+    for my $c ( $self->get_children ) {
+	next if ref($c) eq "SVG::TextElement";
+	$self->_dbg("+ start handling ", $c->name, " (", ref($c), ")");
+	$c->process;
+	$self->_dbg("- end handling ", $c->name);
     }
 }
 
 method u ( $a ) {
+    confess("Undef in units") unless defined $a;
     return undef unless $a =~ /^([-+]?\d+(?:\.\d+)?)(.*)$/;
     return $1 if $2 eq "" || $2 eq "pt";
     return $1 if $2 eq "px";	# approx
@@ -160,6 +160,50 @@ method getargs ( $a ) {
     $a =~ s/^\s+//;
     $a =~ s/\s+$//;
     map { $self->u($_) } split( /\s*[,\s]\s*/, $a );
+}
+
+method get_cdata () {
+    my $res = "";
+    for ( $self->get_children ) {
+	$res .= "\n" . $_->content if ref($_) eq "SVG::TextElement";
+    }
+    $res;
+}
+
+################ Styles and Fonts ################
+
+method makefont ( $style ) {
+
+    my ( $fn, $sz, $em, $bd ) = ("Times-Roman", 12, 0, 0 );
+
+    $fn = $style->{'font-family'} // "Times-Roman";
+    $sz = $style->{'font-size'} || 12;
+    $sz = $1 if $sz =~ /^([.\d]+)p[xt]/; # TODO: units
+    $em = $style->{'font-style'}
+      && $style->{'font-style'} =~ /^(italic|oblique)$/;
+    $bd = $style->{'font-weight'}
+      && $style->{'font-weight'} =~ /^(bold|black)$/;
+
+    if ( $fn =~ /^(sans|helvetica|(?:text,)?sans-serif)$/i ) {
+	$fn = $bd
+	  ? $em ? "Helvetica-BoldOblique" : "Helvetica-Bold"
+	  : $em ? "Helvetica-Oblique" : "Helvetica";
+    }
+    elsif ( $fn =~ /^abc2svg(?:\.ttf)?/ or $fn eq "music" ) {
+	$fn = "abc2svg.ttf";
+    }
+    elsif ( $fn =~ /^musejazz\s*text$/ ) {
+	$fn = "MuseJazzText.otf";
+    }
+    else {
+	$fn = $bd
+	  ? $em ? "Times-BoldItalic" : "Times-Bold"
+	  : $em ? "Times-Italic" : "Times-Roman";
+    }
+    my $font = $root->ps->{pr}->{pdf}->{__fontcache__}->{$fn} //= do {
+	$root->ps->{pr}->{pdf}->font($fn);
+    };
+    ( $font, $sz, $fn );
 }
 
 class SVG::TextElement;

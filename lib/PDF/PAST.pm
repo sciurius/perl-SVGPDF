@@ -7,7 +7,7 @@ use utf8;
 
 # Use this package as an intermediate to trace the actual operations.
 
-class PDF::SVG::PAST;
+class PDF::PAST;
 
 use Carp;
 

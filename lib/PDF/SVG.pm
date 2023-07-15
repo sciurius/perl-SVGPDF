@@ -30,6 +30,8 @@ our $indent = "";
 use SVG::Parser;
 use SVG::Element;
 use SVG::Rect;
+use SVG::Text;
+use SVG::Tspan;
 use SVG::CSS;
 use PDF::PAST;
 use DDumper;
@@ -197,6 +199,7 @@ method handle_svg ( $e ) {
 
 ################ Service ################
 
+no warnings 'redefine';
 sub PDF::SVG::grid ( $xof ) {
     my $d = 10;
     my $c = 6;
