@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Wed Jul 12 20:34:58 2023
-# Update Count    : 75
+# Last Modified On: Sat Jul 15 19:35:11 2023
+# Update Count    : 78
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -65,19 +65,20 @@ my $y = $pgsz[1];
 
 foreach my $file ( @ARGV ) {
     my $p = PDF::SVG->new
-      ( { pr => { pdf => $pdf } },
-	debug => $debug,
-	grid  => $grid,
-	wstokens => $wstokens,
-	trace => $trace );
+      ( ps => { pr => { pdf => $pdf } },
+	atts => { debug    => $debug,
+		  grid     => $grid,
+		  wstokens => $wstokens,
+		  trace    => $trace } );
 
-    my $o = $p->process_file($file);
+    $p->process_file($file);
+    my $o = $p->xoforms;
     warn("$file: SVG objects: ", 0+@$o, "\n") if $verbose;
 
     my $i = 0;
     foreach my $xo ( @$o ) {
 	$i++;
-	if ( ref($xo->{xo}) eq "PDF::SVG::PAST" ) {
+	if ( ref($xo->{xo}) eq "PDF::PAST" ) {
 	    if ( $prog ) {
 		open( my $fd, '>', $prog );
 		my $pdf = $prog =~ s/\.pl$/.pdf/r;

@@ -2,6 +2,7 @@ Revision history for PDF::SVG
 
 0.00
 
+	- Reworked to COR using Object::Pad (WIP).
 	- Add single-style outline for simple <text>.
 	- Add circle.
 	- Add polyline.
