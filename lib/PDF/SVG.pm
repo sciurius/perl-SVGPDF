@@ -17,6 +17,7 @@ field $css          :accessor;
 field $tree	    :accessor;
 
 field $xoforms      :accessor;
+field $defs         :accessor;
 
 # For debugging/development.
 field $debug        :accessor;
@@ -29,12 +30,24 @@ our $indent = "";
 
 use SVG::Parser;
 use SVG::Element;
-use SVG::Rect;
-use SVG::Text;
-use SVG::Tspan;
 use SVG::CSS;
 use PDF::PAST;
 use DDumper;
+
+# The SVG elements.
+use SVG::Circle;
+use SVG::Defs;
+use SVG::Image;
+use SVG::Path;
+use SVG::G;
+use SVG::Polygon;
+use SVG::Polyline;
+use SVG::Rect;
+use SVG::Svg;
+use SVG::Text;
+use SVG::Tspan;
+use SVG::Use;
+
 
 ################ General methods ################
 
@@ -46,6 +59,7 @@ BUILD {
     $wstokens     = $atts->{wstokens}     || 0;
     $indent       = "";
     $xoforms      = [];
+    $defs         = {};
     $self;
 }
 
@@ -79,14 +93,14 @@ method _dbg ( @args ) {
     }
     if ( $msg =~ /^\+\s*(.*)/ ) {
 	$indent = $indent . "  ";
-	warn( $indent, $1, "\n");
+	warn( $indent, $1, "\n") if $1;
     }
     elsif ( $msg =~ /^\-\s*(.*)/ ) {
-	warn( $indent, $1, "\n");
+	warn( $indent, $1, "\n") if $1;
 	$indent = substr( $indent, 2 );
     }
     else {
-	warn( $indent, $msg, "\n");
+	warn( $indent, $msg, "\n") if $msg;
     }
 }
 
@@ -113,7 +127,7 @@ method search ( $content ) {
 
 method handle_svg ( $e ) {
 
-    $self->_dbg( "+ ", $e->{name}, " ====" );
+    $self->_dbg( "+ ==== start ", $e->{name}, " ====" );
 
     my $xo;
     if ( $debug ) {
@@ -123,13 +137,13 @@ method handle_svg ( $e ) {
 	$xo = $ps->{pr}->{pdf}->xo_form;
     }
     push( @$xoforms, { xo => $xo } );
+    $self->_dbg("XObject #", scalar(@$xoforms) );
     my $svg = SVG::Element->new
 	( name    => $e->{name},
 	  atts    => $e->{attrib},
 	  content => $e->{content},
 	  root    => $self,
 	);
-
 
     # If there are <style> elements, these must be processed first.
     my $cdata = "";
@@ -159,6 +173,7 @@ method handle_svg ( $e ) {
     $self->_dbg( "bb $vbox => %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
     # <svg> coordinates are topleft down, so translate.
+    $self->_dbg( "translate( %.2f %.2f )", 0, $bb[1]+$bb[3] );
     $xo->transform( translate => [ 0, $bb[1]+$bb[3] ] );
     if ( $debug ) {		# show bb
 	$xo->save;
@@ -193,8 +208,7 @@ method handle_svg ( $e ) {
     $svg->traverse;
 
     $svg->css_pop;
-
-    $self->_dbg( "- ", $e->{name}, " ====" );
+    $self->_dbg( "- ==== end ", $e->{name}, " ====" );
 }
 
 ################ Service ################

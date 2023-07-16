@@ -13,15 +13,14 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
     my %atts = %$atts;		# debug
 
-    my $x  = $self->u(delete($atts->{x})     || 0);
-    my $y  = $self->u(delete($atts->{y})     || 0);
+    my $x  = delete($atts->{x}) // "";
+    my $y  = delete($atts->{y}) // "";
     my $dx = $self->u(delete($atts->{dx})    || 0);
     my $dy = $self->u(delete($atts->{dy})    || 0);
     my $tf = delete($atts->{transform}) || "";
 
     $self->css_push;
     my $style = $self->style;
-    $self->_dbg( $self->name, " x=$x y=$y dx=$dx dy=$dy tf=$tf" );
 
     my $text = "";
 
@@ -37,7 +36,7 @@ method process () {
 		 ? ( " anchor=\"$anchor\"" ) : (),
 		 defined($style->{"transform"})
 		 ? ( " transform=\"$tf\"" ) : (),
-		 "\n" );
+		 );
 
     # We assume that if there is an x/y list, there is one single text
     # argument.
@@ -45,7 +44,7 @@ method process () {
     my @c = $self->get_children;
 
     if ( $x =~ /,/ ) {
-	if ( @c > 1 || ref($c[0]) !~ /::Text$/ ) {
+	if ( @c > 1 || ref($c[0]) ne "SVG::TextElement" ) {
 	    die("text: Cannot combine coordinate list with multiple elements\n");
 	}
 	$x = [ $self->getargs($x) ];
@@ -55,8 +54,8 @@ method process () {
 	  unless @$x == @$y && @$y == @$text;
     }
     else {
-	$x = [ $x ];
-	$y = [ $y ];
+	$x = [ $self->u($x)||0 ];
+	$y = [ $self->u($y)||0 ];
     }
 
     $self->_dbg( "+ xo save" );
@@ -65,7 +64,6 @@ method process () {
     my $iy = $y->[0];
     my ( $ex, $ey );
 
-#    my ( $dx, $dy, $scale ) = ( 0, 0, 1 );
     my $scalex = 1;
     my $scaley = 1;
     if ( $tf ) {

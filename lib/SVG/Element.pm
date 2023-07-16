@@ -7,10 +7,10 @@ class SVG::Element;
 
 use Carp;
 
-field $xo       :accessor;
+field $xo       :mutator;
 field $style    :accessor;
 field $name     :param :accessor;
-field $atts     :param :accessor;
+field $atts     :param;
 field $css      :accessor;
 field $content  :param :accessor;	# array of children
 field $root     :param :accessor;	# top module
@@ -19,6 +19,11 @@ BUILD {
     $css  = $root->css;
     $xo   = $root->xoforms->[-1]->{xo};
 };
+
+method atts () {
+    my %a = %$atts;
+    return \%a;
+}
 
 method _dbg (@args) {
     $root->_dbg(@args);
@@ -34,13 +39,16 @@ method css_pop () {
 
 method set_graphics () {
 
+    my $msg = $name;
+
     my $lw = $style->{'stroke-width'} || 0.01;
     $xo->line_width($lw);
-    $self->_dbg( $name, " stroke-width=", $lw );
+    $msg .= " stroke-width=$lw";
 
     my $stroke = $style->{stroke};
     if ( lc($stroke) eq "currentcolor" ) {
 	# Nothing. Use current.
+	$msg .= " stroke=current";
     }
     elsif ( $stroke ne "none" ) {
 	$stroke =~ s/\s+//g;
@@ -48,12 +56,16 @@ method set_graphics () {
 	    $stroke = sprintf("#%02X%02X%02X", $1, $2, $3);
 	}
 	$xo->stroke_color($stroke);
-	$self->_dbg( $name, " stroke=", $stroke );
+	$msg .= " stroke=$stroke";
+    }
+    else {
+	$msg .= " stroke=none";
     }
 
     my $fill = $style->{fill};
     if ( lc($fill) eq "currentcolor" ) {
 	# Nothing. Use current.
+	$msg .= " fill=current";
     }
     elsif ( lc($fill) ne "none" && $fill ne "transparent" ) {
 	$fill =~ s/\s+//g;
@@ -61,16 +73,20 @@ method set_graphics () {
 	    $fill = sprintf("#%02X%02X%02X", $1, $2, $3);
 	}
 	$xo->fill_color($fill);
-	$self->_dbg( $name, " fill=", $fill );
+	$msg .= " fill=$fill";
+    }
+    else {
+	$msg .= " fill=none";
     }
 
     if ( my $sda = $style->{'stroke-dasharray'}  ) {
 	$sda =~ s/,/ /g;
 	my @sda = split( ' ', $sda );
-	$self->_dbg( $name, " sda=@sda" );
+	$msg .= " sda=@sda";
 	$xo->line_dash_pattern(@sda);
     }
 
+    $self->_dbg($msg);
     return $style;
 }
 
@@ -84,9 +100,11 @@ method _paintsub () {
 		 && $style->{fill} ne 'none'
 		 && $style->{fill} ne 'transparent'
 	       ) {
+		$self->_dbg("xo paint");
 		$xo->paint;
 	    }
 	    else {
+		$self->_dbg("xo stroke");
 		$xo->stroke;
 	    }
 	}
@@ -94,6 +112,7 @@ method _paintsub () {
 		&& $style->{fill} ne 'none'
 		&& $style->{fill} ne 'transparent'
 	      ) {
+	    $self->_dbg("xo fill");
 	    $xo->fill;
 	}
     }
@@ -168,6 +187,12 @@ method get_cdata () {
 	$res .= "\n" . $_->content if ref($_) eq "SVG::TextElement";
     }
     $res;
+}
+
+method nfi ( $tag ) {
+    state $aw = {};
+    warn("SVG: $tag - not fully implemented, expect strange results.")
+      unless $aw->{$tag}++;
 }
 
 ################ Styles and Fonts ################
