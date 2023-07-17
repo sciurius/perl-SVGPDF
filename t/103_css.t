@@ -1,9 +1,9 @@
 #! perl
 
 use Test::More tests => 2;
-use PDF::SVG::CSS;
+use SVG::CSS;
 
-my $css = PDF::SVG::CSS->new;
+my $css = SVG::CSS->new;
 
 $css->read_string( join("", <DATA>) );
 is_deeply( $css->css,

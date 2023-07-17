@@ -16,16 +16,9 @@ method process_polyline ( $close ) {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $points  = delete($atts->{points}) || "";
+    my ( $points ) = $self->get_params( $atts, "points:s" );
 
-    my @d;
-    for ( split( ' ', $points ) ) {
-	my ( $x, $y ) = split( ',', $_ );
-	s/p[tx]$// for $x, $y;
-	push( @d, $x, -$y );
-    }
-
-    $self->css_push;
+    my @d = $self-> getargs($points);
 
     my $t = $points;
     $t = substr($t,0,20) . "..." if length($t) > 20;
@@ -36,6 +29,10 @@ method process_polyline ( $close ) {
     $self->set_graphics;
 
     if ( @d ) {
+	# Flip y coordinates.
+	for ( my $i = 1; $i < @d; $i += 2 ) {
+	    $d[$i] = - $d[$i];
+	}
 	$xo->move( $d[0], $d[1] );
 	$xo->polyline( @d[2 .. $#d] );
 	$xo->close if $close;

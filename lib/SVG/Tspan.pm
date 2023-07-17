@@ -11,16 +11,10 @@ method process () {
     my $atts  = $self->atts;
     my $xo    = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
-    my %atts = %$atts;		# debug
 
-    my $x  = $self->u(delete($atts->{x})     || 0 );
-    my $y  = $self->u(delete($atts->{y})     || 0 );
-    my $dx = delete($atts->{dx})    || 0;
-    my $dy = delete($atts->{dy})    || 0;
-
-    $self->css_push;
+    my ( $x, $y, $dx, $dy ) =
+      $self->get_params( $atts, qw( x:U y:U dx:s dy:s ) );
     my $style = $self->style;
-    $self->_dbg( $self->name, " x=$x y=$y dx=$dx dy=$dy" );
 
     # Scale dx/dy to font size, if using em units.
     $style->{'font-size'} = $self->u($style->{'font-size'});
@@ -28,13 +22,13 @@ method process () {
 	$dx = $1 * $style->{'font-size'};
     }
     else {
-	$dx = $self->u($dx);
+	$dx = $self->u($dx||0);
     }
     if ( $dy =~ /^([.\d]+)em$/ ) {
 	$dy = $1 * $style->{'font-size'};
     }
     else {
-	$dy = $self->u($dy);
+	$dy = $self->u($dy||0);
     }
 
     my $text = "";
@@ -43,13 +37,13 @@ method process () {
     my $anchor = $style->{'text-anchor'} || "left";
 
     $self->_dbg( $self->name, " ",
-		 defined($atts{x}) ? ( " x=$x" ) : (),
-		 defined($atts{y}) ? ( " y=$y" ) : (),
-		 defined($atts{dx}) ? ( " dx=$dx" ) : (),
-		 defined($atts{dy}) ? ( " dy=$dy" ) : (),
+		 defined($atts->{x}) ? ( " x=$x" ) : (),
+		 defined($atts->{y}) ? ( " y=$y" ) : (),
+		 defined($atts->{dx}) ? ( " dx=$dx" ) : (),
+		 defined($atts->{dy}) ? ( " dy=$dy" ) : (),
 		 defined($style->{"text-anchor"})
 		 ? ( " anchor=\"$anchor\"" ) : (),
-		 "\n" );
+	       );
 
     my @c = $self->get_children;
 

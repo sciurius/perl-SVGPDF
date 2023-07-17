@@ -12,13 +12,8 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $x1  = $self->u(delete($atts->{x1}) || 0);
-    my $y1  = $self->u(delete($atts->{y1}) || 0);
-    my $x2  = $self->u(delete($atts->{x2}) || 0);
-    my $y2  = $self->u(delete($atts->{y2}) || 0);
-
-    $self->css_push;
-    my $style = $self->style;
+    my ( $x1, $y1, $x2, $y2 ) =
+      $self->get_params( $atts, qw( x1:U y1:U x2:U y2:U ) );
 
     $self->_dbg( $self->getElementName, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
     $self->_dbg( "+ xo save" );

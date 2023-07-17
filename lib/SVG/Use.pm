@@ -13,18 +13,19 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $x  = $self->u(delete($atts->{x})      || 0 );
-    my $y  = $self->u(delete($atts->{y})      || 0 );
-    my $xr = delete($atts->{"xlink:href"});
+    my ( $x, $y, $xr ) =
+      $self->get_params( $atts, qw( x:U y:U xlink:href:! ) );
 
     unless ( defined $xr ) {
 	warn("SVG: Missing ref in use (skipped)\n");
-	next;
+	$self->css_pop;
+	return;
     }
     my $r = $self->root->defs->{$xr};
     unless ( $r ) {
 	warn("SVG: Missing def for use \"$xr\" (skipped)\n");
-	next;
+	$self->css_pop;
+	return;
     }
 
     # Update its xo.

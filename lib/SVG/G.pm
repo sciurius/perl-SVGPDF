@@ -12,9 +12,7 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $t  = delete($atts->{transform}) || "";
-
-    $self->css_push;
+    my ( $t )  = $self->get_params( $atts, "transform:s" );
 
     $self->_dbg( $self->name, " ====" );
 

@@ -12,11 +12,7 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $cx  = $self->u(delete($atts->{cx})     ) || 0;
-    my $cy  = $self->u(delete($atts->{cy})     ) || 0;
-    my $r   = $self->u(delete($atts->{r}) ) || 0;
-
-    $self->css_push;
+    my ( $cx, $cy, $r ) = $self->get_params( $atts, qw( cx:U cy:U r:U ) );
 
     $self->_dbg( $self->name, " cx=$cx cy=$cy r=$r" );
     $self->_dbg( "+ xo save" );

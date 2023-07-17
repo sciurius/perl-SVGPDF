@@ -11,15 +11,9 @@ method process () {
     my $atts  = $self->atts;
     my $xo    = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
-    my %atts = %$atts;		# debug
 
-    my $x  = delete($atts->{x}) // "";
-    my $y  = delete($atts->{y}) // "";
-    my $dx = $self->u(delete($atts->{dx})    || 0);
-    my $dy = $self->u(delete($atts->{dy})    || 0);
-    my $tf = delete($atts->{transform}) || "";
-
-    $self->css_push;
+    my ( $x, $y, $dx, $dy, $tf ) =
+      $self->get_params( $atts, qw( x:s y:s dx:U dy:U transform:s ) );
     my $style = $self->style;
 
     my $text = "";
@@ -28,13 +22,13 @@ method process () {
     my $anchor = $style->{'text-anchor'} || "left";
 
     $self->_dbg( $self->name, " ",
-		 defined($atts{x}) ? ( " x=$x" ) : (),
-		 defined($atts{y}) ? ( " y=$y" ) : (),
-		 defined($atts{dx}) ? ( " dx=$dx" ) : (),
-		 defined($atts{dy}) ? ( " dy=$dy" ) : (),
+		 defined($atts->{x}) ? ( " x=$x" ) : (),
+		 defined($atts->{y}) ? ( " y=$y" ) : (),
+		 defined($atts->{dx}) ? ( " dx=$dx" ) : (),
+		 defined($atts->{dy}) ? ( " dy=$dy" ) : (),
 		 defined($style->{"text-anchor"})
 		 ? ( " anchor=\"$anchor\"" ) : (),
-		 defined($style->{"transform"})
+		 defined($style->{"transform"}) #???
 		 ? ( " transform=\"$tf\"" ) : (),
 		 );
 
@@ -54,8 +48,8 @@ method process () {
 	  unless @$x == @$y && @$y == @$text;
     }
     else {
-	$x = [ $self->u($x)||0 ];
-	$y = [ $self->u($y)||0 ];
+	$x = [ $self->u($x||0) ];
+	$y = [ $self->u($y||0) ];
     }
 
     $self->_dbg( "+ xo save" );

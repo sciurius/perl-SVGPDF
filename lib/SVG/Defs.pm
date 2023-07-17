@@ -12,7 +12,6 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-
     $self->_dbg( "+", $self->name, " ====" );
 
     for ( $self->get_children ) {

@@ -12,12 +12,8 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $x  = $self->u(delete($atts->{x})     ) || 0;
-    my $y  = $self->u(delete($atts->{y})     ) || 0;
-    my $w  = $self->u(delete($atts->{width}) ) || 0;
-    my $h  = $self->u(delete($atts->{height})) || 0;
-
-    $self->css_push;
+    my ( $x, $y, $w, $h ) =
+      $self->get_params( $atts, qw( x:U y:U width:U height:U ) );
 
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
     $self->_dbg( "+ xo save" );
@@ -32,6 +28,5 @@ method process () {
     $xo->restore;
     $self->css_pop;
 }
-
 
 1;

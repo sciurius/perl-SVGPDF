@@ -10,7 +10,7 @@ use Carp;
 field $xo       :mutator;
 field $style    :accessor;
 field $name     :param :accessor;
-field $atts     :param;
+field $atts     :param :accessor;
 field $css      :accessor;
 field $content  :param :accessor;	# array of children
 field $root     :param :accessor;	# top module
@@ -19,11 +19,6 @@ BUILD {
     $css  = $root->css;
     $xo   = $root->xoforms->[-1]->{xo};
 };
-
-method atts () {
-    my %a = %$atts;
-    return \%a;
-}
 
 method _dbg (@args) {
     $root->_dbg(@args);
@@ -179,6 +174,50 @@ method getargs ( $a ) {
     $a =~ s/^\s+//;
     $a =~ s/\s+$//;
     map { $self->u($_) } split( /\s*[,\s]\s*/, $a );
+}
+
+# Initial fiddling with entity attributes.
+method get_params ( @desc ) {
+    my $atts = shift(@desc) if ref($desc[0]) eq 'HASH';
+    my @res;
+    my %atts = %{ $atts // $self->atts }; # copy
+
+    for my $param ( @desc ) {
+
+	# Attribute may be followed by ':' and flags.
+	# 0   undef -> 0
+	# s   undef -> ""
+	# u   process units
+	# U   undef -> 0, process units
+	# !   barf if undef
+	my $flags;
+	( $param, $flags ) = $param =~ /^(.*):(.*)$/;
+
+	# Get and remove the attribute.
+	my $p = delete( $atts{$param} );
+
+	unless ( defined $p ) {
+	    if    ( $flags =~ /s/ )    { $p = ""; }
+	    elsif ( $flags =~ /[0U]/ ) { $p = 0;  }
+	    else {
+		croak("Undefined mandatory attribute: $param")
+		  if $flags =~ /\!/;
+		push( @res, $p );
+		next;
+	    }
+	}
+
+	# Convert units if 'u' flag.
+	$p = $self->u($p) if $flags =~ /u/i;
+
+	push( @res, $p );
+    }
+
+    # CSS push with updated attributes.
+    $self->css_push( \%atts );
+
+    # Return param values.
+    return @res;
 }
 
 method get_cdata () {

@@ -12,10 +12,7 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my $d  = delete($atts->{d}); # mandatory
-
-    $self->css_push;
-    my $style = $self->style;
+    my ( $d ) = $self->get_params( $atts, "d:!" );
 
     my $t = $d;
     $t = substr($t,0,20) . "..." if length($t) > 20;
