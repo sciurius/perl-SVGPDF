@@ -239,7 +239,13 @@ method nfi ( $tag ) {
 
 ################ Styles and Fonts ################
 
-method makefont ( $style ) {
+# This may be overriden by a user callback.
+method fc_setfont ( $style ) {
+
+    if ( $root->fc ) {
+	# Use user callback.
+	return $root->fc->( $root->ps->{pr}->{pdf}, $xo, $style )
+    }
 
     my ( $fn, $sz, $em, $bd ) = ("Times-Roman", 12, 0, 0 );
 
@@ -270,7 +276,7 @@ method makefont ( $style ) {
     my $font = $root->ps->{pr}->{pdf}->{__fontcache__}->{$fn} //= do {
 	$root->ps->{pr}->{pdf}->font($fn);
     };
-    ( $font, $sz, $fn );
+    $xo->font( $font, $sz );
 }
 
 class SVG::TextElement;

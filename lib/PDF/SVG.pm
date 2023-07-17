@@ -9,8 +9,11 @@ class  PDF::SVG;
 
 our $VERSION = 0.02;
 
-field $ps           :param :accessor;
-field $atts         :param :accessor;
+field $ps           :accessor :param;
+field $atts         :accessor :param;
+
+# Callback for font handling.
+field $fc           :accessor :param = undef;
 
 # If an SVG file contains more than a single SVG, the CSS applies to all.
 field $css          :accessor;
@@ -162,8 +165,8 @@ method handle_svg ( $e ) {
     }
 
     my $atts   = $svg->atts;
-    my $width  = $svg->u(delete( $atts->{width} )) || 595;
-    my $height = $svg->u(delete( $atts->{height})) || 842;
+    my $width  = $svg->u(delete( $atts->{width} ) || 595);
+    my $height = $svg->u(delete( $atts->{height}) || 842);
     my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );

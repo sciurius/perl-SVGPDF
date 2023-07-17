@@ -101,7 +101,7 @@ method process () {
 	  ? "right"
 	  : $anchor eq "middle" ? "center" : "left";
 	$xo->textstart;
-	$xo->font( $self->makefont($style));
+	$self->fc_setfont($style);
 	$xo->text( shift(@$text), %o );
 	$xo->textend;
 	$xo->restore;
@@ -136,12 +136,13 @@ method process () {
 		$scalex = $scaley = 1; # no more scaling.
 
 		$xo->textstart;
-		$xo->font( $self->makefont($style));
-
+		$self->fc_setfont($style);
 		$x += $xo->text( $c->content, %o );
 		$xo->textend;
 		if ( $style->{'outline-style'} ) {
-		    my ($fn,$sz) = @{[$self->makefont($style)]};
+		    # BEEP BEEP TRICKERY.
+		    my $fn = $xo->{" font"};
+		    my $sz = $xo->{" fontsize"};
 		    $xo->line_width( $style->{'outline-width'} || 1 );
 		    $xo->stroke_color( $style->{'outline-color'} || 'black' );
 		    my $d = $style->{'outline-offset'} || 1;
@@ -183,6 +184,5 @@ method process () {
     $xo->restore;
     $self->css_pop;
 }
-
 
 1;

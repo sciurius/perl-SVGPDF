@@ -74,7 +74,7 @@ method process () {
 	    $xo->transform( translate => [ $x, $y ] );
 	    if ( ref($c) eq 'SVG::TextElement' ) {
 		$xo->textstart;
-		$xo->font( $self->makefont($style));
+		$self->fc_setfont($style);
 		$x += $xo->text( $c->content, %o );
 		$xo->textend;
 	    }

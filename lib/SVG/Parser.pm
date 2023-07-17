@@ -26,6 +26,8 @@ method parse_string ( $data, %args ) {
 	$data =~ s/^#.*//mg;
 	$data =~ s/\\[\n\r]+\s*//g;
     }
+    $data =~ s/^\s+//;
+    $data =~ s/\s+$//;
     XML::Tiny::parsefile( "_TINY_XML_STRING_".$data, %args );
 }
 
