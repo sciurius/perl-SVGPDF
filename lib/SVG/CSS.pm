@@ -21,7 +21,7 @@ BUILD {
 	  'color'		    => 'black',
 	  'background-color'	    => 'white',
 	  'fill'		    => 'currentColor',
-	  'stroke'		    => 'currentColor',
+	  'stroke'		    => 'none',
 	  'line-width'		    => 1,
 	};
     $ctx = {};

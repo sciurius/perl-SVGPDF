@@ -95,11 +95,13 @@ method _paintsub () {
 		 && $style->{fill} ne 'none'
 		 && $style->{fill} ne 'transparent'
 	       ) {
-		$self->_dbg("xo paint");
+		$self->_dbg("xo paint (",
+			    join(" ", $style->{stroke}, $style->{fill} ), ")");
 		$xo->paint;
 	    }
 	    else {
-		$self->_dbg("xo stroke");
+		$self->_dbg("xo stroke (",
+			    join(" ", $style->{stroke}, $style->{fill} ), ")");
 		$xo->stroke;
 	    }
 	}
@@ -107,7 +109,8 @@ method _paintsub () {
 		&& $style->{fill} ne 'none'
 		&& $style->{fill} ne 'transparent'
 	      ) {
-	    $self->_dbg("xo fill");
+	    $self->_dbg("xo fill (",
+			join(" ", $style->{stroke}, $style->{fill} ), ")");
 	    $xo->fill;
 	}
     }
