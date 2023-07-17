@@ -15,6 +15,7 @@ method process () {
     $self->_dbg( "+", $self->name, " ====" );
 
     for ( $self->get_children ) {
+	next if ref($_) eq 'SVG::TextElement';
 	my $id  = $_->atts->{id};
 	unless ( defined($id) ) {
 	    warn("SVG: Missing id in defs (skipped)\n");

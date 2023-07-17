@@ -283,6 +283,15 @@ sub parsefile {
         }
     }
     die("Not well-formed (Duplicated parent)\n") if(exists($elem->{parent}));
+    if ( $whitespace_tokens ) {
+	if ( $#{$elem->{content}} > 0
+	     && $elem->{content}->[0]->{type} eq 't'
+	     && $elem->{content}->[0]->{content} !~ /\S/
+	   )
+	  {
+	      shift( @{$elem->{content}} );
+	}
+    }
     die("Junk after end of document\n") if($#{$elem->{content}} > 0);
     die("No elements\n") if(
         $#{$elem->{content}} == -1 || $elem->{content}->[0]->{type} ne 'e'
