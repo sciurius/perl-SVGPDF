@@ -32,6 +32,53 @@ method css_pop () {
     $css->pop;
 }
 
+method set_transform ( $tf ) {
+    return unless $tf;
+
+    # The parts of the transform need to be executed in order.
+    while ( $tf =~ /\S/ ) {
+	if ( $tf =~ /^\s*translate\s*\((.*?)\)(.*)/ ) {
+	    $tf = $2;
+	    my ( $x, $y ) = $self->getargs($1);
+	    $y ||= 0;
+	    if ( $x || $y ) {
+		$xo->transform( translate => [ $x, -$y ] );
+		$self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
+	    }
+	}
+	elsif ( $tf =~ /^\s*rotate\s*\((.*?)\)(.*)/ ) {
+	    $tf = $2;
+	    my ( $r, $x, $y ) = $self->getargs($1);
+	    if ( $r ) {
+		if ( $x || $y ) {
+		    $xo->transform( translate => [ $x, -$y ] );
+		    $self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
+		}
+		$self->_dbg( "transform rotate(%.2f)", $r );
+		$xo->transform( rotate => -$r );
+		if ( $x || $y ) {
+		    $xo->transform( translate => [ -$x, $y ] );
+		    $self->_dbg( "transform translate(%.2f,%.2f)", -$x, $y );
+		}
+	    }
+	}
+	elsif ( $tf =~ /^\s*scale\s*\((.*?)\)(.*)/ ) {
+	    $tf = $2;
+	    my ( $x, $y ) = $self->getargs($1);
+	    $y ||= $x;
+	    if ( $x != 1 && $y != 1 ) {
+		$self->_dbg( "transform scale(%.2f,%.2f)", $x, $y );
+		$xo->transform( scale => [ $x, $y ] );
+	    }
+	}
+	else {
+	    warn("Ignoring transform: $tf");
+	    $self->_dbg("Ignoring transform: \"$tf\"");
+	    $tf = "";
+	}
+    }
+}
+
 method set_graphics () {
 
     my $msg = $name;
@@ -276,7 +323,7 @@ method fc_setfont ( $style ) {
     my $font = $root->ps->{pr}->{pdf}->{__fontcache__}->{$fn} //= do {
 	$root->ps->{pr}->{pdf}->font($fn);
     };
-    $xo->font( $font, $sz );
+    $xo->font( $font, $sz, $fn );
 }
 
 class SVG::TextElement;
