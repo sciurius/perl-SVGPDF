@@ -20,7 +20,6 @@ lib/SVG/Svg
 lib/SVG/Text
 lib/SVG/Tspan
 lib/SVG/Use
-lib/XML/Tiny.pm
 t/001_load.t
 t/002_load.t
 t/100_css.t
@@ -29,3 +28,4 @@ t/102_css.t
 t/103_css.t
 t/201_xml.t
 t/202_xml.t
+t/203_xml.t

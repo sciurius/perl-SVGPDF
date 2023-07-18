@@ -7,7 +7,7 @@ use utf8;
 
 class  PDF::SVG;
 
-our $VERSION = 0.02;
+our $VERSION = 0.03;
 
 field $ps           :accessor :param;
 field $atts         :accessor :param;

@@ -1,8 +1,9 @@
 Revision history for PDF::SVG
 
-0.00
+0.03
 
 	- Reworked to COR using Object::Pad (WIP).
+	- Steal and enhance parser from XML::Tiny.
 	- Add single-style outline for simple <text>.
 	- Add circle.
 	- Add polyline.
