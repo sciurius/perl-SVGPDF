@@ -129,7 +129,7 @@ method textend ( @args ) {
     $xo->textend( @args );
 }
 
-method font ( $font, $size, $name ) {
+method font ( $font, $size, $name = "default" ) {
     $self->xdbg( "\$xo->font( \$font, $size );\t# $name" );
     $xo->font( $font, $size );
 }
