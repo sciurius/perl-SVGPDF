@@ -13,7 +13,7 @@ is_deeply( $css->base,
 	    'font-family'	=> 'serif',
 	    'font-size'		=> 10,
 	    'line-width'	=> 1,
-	    stroke		=> 'currentColor',
+	    stroke		=> 'none',
 	   },
 	   "base" );
 
