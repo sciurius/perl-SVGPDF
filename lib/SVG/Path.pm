@@ -12,18 +12,19 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $d ) = $self->get_params( $atts, "d:!" );
+    my ( $d, $tf ) = $self->get_params( $atts, "d:!", "transform:s" );
 
     my $t = $d;
     $t = substr($t,0,20) . "..." if length($t) > 20;
-    $self->_dbg( $self->name, " d=\"$t\"" );
+    $self->_dbg( $self->name, " d=\"$t\"", $tf ? " tf=\"$tf\"" : "" );
     $self->_dbg( "+ xo save" );
     $xo->save;
 
-    $self->set_graphics;
-
     my $x = 0;
     my $y = 0;
+
+    $self->set_transform($tf);
+    $self->set_graphics;
 
     # Starting point of this path.
     my $x0 = $x;
@@ -73,21 +74,21 @@ method process () {
 
 	# Horizontal LineTo.
 	if ( $op eq "h" ) {
-	    $ix = $x, $iy = $y unless $open++;
+	    $ix = $cx, $iy = $cy unless $open++;
 	    $self->_dbg( "xo hline(%.2f)", $d[0] );
 	    $x += shift(@d);
 	    $xo->hline($x);
-	    ( $cx, $cy ) = ( $x, $y );
+	    ( $cx, $cy ) = ( $x, $cy );
 	    next;
 	}
 
 	# Vertical LineTo.
 	if ( $op eq "v" ) {
-	    $ix = $x, $iy = $y unless $open++;
+	    $ix = $cx, $iy = $cy unless $open++;
 	    $self->_dbg( "xo vline(%.2f)", $d[0] );
 	    $y -= shift(@d);
 	    $xo->vline($y);
-	    ( $cx, $cy ) = ( $x, $y );
+	    ( $cx, $cy ) = ( $cx, $y );
 	    next;
 	}
 
@@ -136,7 +137,7 @@ method process () {
 	# (When following an S-curve these will have been modified into S.)
 	if ( $op eq "s" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		$ix = $x, $iy = $y unless $open++;
+		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $x + $d[0], $y - $d[1],
 			  $x + $d[2], $y - $d[3] );
 		nfi("standalone s-paths");
@@ -153,7 +154,7 @@ method process () {
 	# Quadratic Bézier curves.
 	if ( $op eq "q" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		$ix = $x, $iy = $y unless $open++;
+		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $x + $d[0], $y - $d[1], # control point 1
 			  $x + $d[2], $y - $d[3]  # end point
 			);
@@ -182,7 +183,7 @@ method process () {
 	# (When following an S-curve these will have been modified into S.)
 	if ( $op eq "t" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		$ix = $x, $iy = $y unless $open++;
+		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $x, $y,
 			  $x + $d[0], $y - $d[1] );
 		nfi("standalone t-paths");
@@ -212,13 +213,15 @@ method process () {
 		# Hard... For the time being use the (obsolete) 'bogen'
 		# for circular arcs.
 		if ( $rx == $ry ) {
+		    $self->_dbg( "xo bogen(%.2f,%.2f %.2f,%.2f %.2f %d %d %d)",
+				 $cx, $cy, $ex, $ey, $rx, 0, $large, 1-$sweep );
 		    $xo->bogen( $cx, $cy, $ex, $ey,
 				$rx, 0, $large, 1-$sweep );
 		}
 		else {
 		    nfi("elliptic arc paths");
 		}
-		$ix = $x, $iy = $y unless $open++;
+		$ix = $cx, $iy = $cy unless $open++;
 		( $cx, $cy ) = ( $ex, $ey );
 	    }
 	    next;
