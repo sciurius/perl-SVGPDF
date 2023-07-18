@@ -15,7 +15,7 @@ method process () {
     my ( $x1, $y1, $x2, $y2 ) =
       $self->get_params( $atts, qw( x1:U y1:U x2:U y2:U ) );
 
-    $self->_dbg( $self->getElementName, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
+    $self->_dbg( $self->name, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
     $self->_dbg( "+ xo save" );
     $xo->save;
 
