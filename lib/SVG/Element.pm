@@ -93,9 +93,38 @@ method set_graphics () {
 
     my $msg = $name;
 
-    my $lw = $style->{'stroke-width'} || 0.01;
-    $xo->line_width($lw);
-    $msg .= " stroke-width=$lw";
+    if ( my $lw = $style->{'stroke-width'} || 0.01 ) {
+	#if ( !defined($xo->{' linewidth'}) or $lw != $xo->{' linewidth'} ) {
+	    $msg .= " stroke-width=$lw";
+	    $xo->line_width($lw);
+	#}
+    }
+
+    if ( defined( my $linecap = $style->{'stroke-linecap'} ) ) {
+	$linecap = lc($linecap);
+	if    ( $linecap eq "round"  ) { $linecap = 1 }
+	elsif ( $linecap eq "r"      ) { $linecap = 1 }
+	elsif ( $linecap eq "square" ) { $linecap = 2 }
+	elsif ( $linecap eq "s"      ) { $linecap = 2 }
+	else                           { $linecap = 0 } # b butt
+	#if ( !defined($xo->{' linecap'}) or $linecap != $xo->{' linecap'} ) {
+	    $msg .= " linecap=$linecap";
+	    $xo->line_cap($linecap);
+	#}
+    }
+
+    if ( defined( my $linejoin = $style->{'stroke-linejoin'} ) ) {
+	$linejoin = lc($linejoin);
+	if    ( $linejoin eq "round" ) { $linejoin = 1 }
+	elsif ( $linejoin eq "r"     ) { $linejoin = 1 }
+	elsif ( $linejoin eq "bevel" ) { $linejoin = 2 }
+	elsif ( $linejoin eq "b"     ) { $linejoin = 2 }
+	else                           { $linejoin = 0 } # m miter
+	#if ( !defined($xo->{' linejoin'}) or $linejoin != $xo->{' linejoin'} ) {
+	    $msg .= " linejoin=$linejoin";
+	    $xo->line_join($linejoin);
+	#}
+    }
 
     my $stroke = $style->{stroke};
     if ( lc($stroke) eq "currentcolor" ) {
