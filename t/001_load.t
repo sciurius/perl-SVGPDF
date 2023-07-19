@@ -1,6 +1,6 @@
 #! perl
 
-use Test::More tests => 17;
+use Test::More tests => 18;
 
 BEGIN {
     # Load the elements first.
@@ -8,6 +8,7 @@ BEGIN {
     use_ok("SVG::CSS");
     use_ok("SVG::Defs");
     use_ok("SVG::Element");
+    use_ok("SVG::Ellipse");
     use_ok("SVG::G");
     use_ok("SVG::Image");
     use_ok("SVG::Line");

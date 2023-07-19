@@ -1,6 +1,6 @@
 #! perl
 
-use v5.36;
+use v5.26;
 use Object::Pad;
 use utf8;
 use Carp;

@@ -3,10 +3,10 @@
 # Test if the XML parser delivers whitespace elements.
 
 use Test::More tests => 2;
-use XML::Tiny;
+use SVG::Parser;
 
-my $res = XML::Tiny::parsefile( <<EOD, whitespace_tokens => 1 );
-_TINY_XML_STRING_<x><y>aaa</y> <y>bbb</y> <y>ccc</y>dddd</x>
+my $res = SVG::Parser->new->parse( <<EOD, whitespace_tokens => 1 );
+<x><y>aaa</y> <y>bbb</y> <y>ccc</y>dddd</x>
 EOD
 
 is_deeply( $res,
@@ -51,8 +51,8 @@ is_deeply( $res,
 	   ]
 	   , "result" );
 
-my $res = XML::Tiny::parsefile( <<EOD );
-_TINY_XML_STRING_<x><y>aaa</y> <y>bbb</y> <y>ccc</y>dddd</x>
+my $res = SVG::Parser->new->parse( <<EOD );
+<x><y>aaa</y> <y>bbb</y> <y>ccc</y>dddd</x>
 EOD
 
 is_deeply( $res,

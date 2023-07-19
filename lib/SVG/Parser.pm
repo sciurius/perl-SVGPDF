@@ -16,10 +16,10 @@ field $debug;
 method parse_file ( $fname, %args ) {
     $debug = $args{debug} if defined $args{debug};
     my $data = loadlines( $fname, { split => 0, chomp => 0 } );
-    $self->parse_string( $data, %args );
+    $self->parse( $data, %args );
 }
 
-method parse_string ( $data, %args ) {
+method parse ( $data, %args ) {
     if ( $debug ) {
 	# Make it easier to read/write long lines and disable parts.
 	$data =~ s/^#.*//mg;

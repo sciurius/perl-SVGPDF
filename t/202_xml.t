@@ -1,6 +1,6 @@
 #! perl
 
-use v5.36;
+use v5.26;
 use Test::More tests => 13;
 use utf8;
 
@@ -10,7 +10,7 @@ BEGIN {
 
 my $p = SVG::Parser->new;
 ok( $p, "have parser" );
-my $c0 = $p->parse_string( join("", <DATA> ), debug => 24 );
+my $c0 = $p->parse( join("", <DATA> ), debug => 24 );
 ok( $c0, "data parsed" );
 
 is( scalar(@$c0), 1, "one child" );
