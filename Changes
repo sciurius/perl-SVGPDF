@@ -1,6 +1,9 @@
 Revision history for PDF::SVG
 
-0.04
+0.050
+	- Warn when element is not implemented.
+
+0.040	2023-07-19
 
 	- Reworked to COR using Object::Pad (WIP).
 	- Steal and enhance parser from XML::Tiny.
@@ -13,7 +16,7 @@ Revision history for PDF::SVG
 	- Handle stroke-linejoin and stroke-linecap.
 	- Add routines for circular and elliptic arcs.
 
-0.03	2023-07-12
+0.030	2023-07-12
 
 	- Add single-style outline for simple <text>.
 	- Add circle.
@@ -27,7 +30,7 @@ Revision history for PDF::SVG
 	- Elegantly skip unimplemented arcs.
 	- Fix rectangle bug.
 
-0.02	2023-07-07
+0.020	2023-07-07
 
 	- Moved repo to Github.
 	- Added subroutine signatures.
@@ -35,7 +38,7 @@ Revision history for PDF::SVG
 	- (CSS) Handle selector el.class.
 	- Fixed css mixups and whitespace elements.
 
-0.01    2022-04-03
+0.010   2022-04-03
 
 	- First version, released on an unsuspecting world.
 
