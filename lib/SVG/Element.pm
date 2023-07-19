@@ -81,6 +81,18 @@ method set_transform ( $tf ) {
 	    $self->_dbg( "transform matrix(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @m);
 	    $xo->transform( matrix => \@m );
 	}
+	elsif ( $tf =~ /^\s*skewX\s*\((.*?)\)(.*)/i ) {
+	    $tf = $2;
+	    my ( $x ) = $self->getargs($1);
+	    $self->_dbg( "transform skewX(%.2f)", $x);
+	    $xo->transform( skew => [ $x, 0 ] );
+	}
+	elsif ( $tf =~ /^\s*skewY\s*\((.*?)\)(.*)/i ) {
+	    $tf = $2;
+	    my ( $x ) = $self->getargs($1);
+	    $self->_dbg( "transform skewY(%.2f)", $x);
+	    $xo->transform( skew => [ 0, $x ] );
+	}
 	else {
 	    warn("Ignoring transform: $tf");
 	    $self->_dbg("Ignoring transform: \"$tf\"");
@@ -204,7 +216,7 @@ method _paintsub () {
 
 method process () {
     # Unless overridden in a subclass there's not much we can do.
-    state %warned;
+    state %warned = ( desc => 1, title => 1 );
     warn("SVG: Skipping element \"$name\" (not implemented)\n")
       unless $warned{$name}++;;
     $self->_dbg("skipping $name (not implemented)");
