@@ -35,13 +35,15 @@ method css_pop () {
 method set_transform ( $tf ) {
     return unless $tf;
 
+    my $nooptimize = 1;
+
     # The parts of the transform need to be executed in order.
     while ( $tf =~ /\S/ ) {
 	if ( $tf =~ /^\s*translate\s*\((.*?)\)(.*)/ ) {
 	    $tf = $2;
 	    my ( $x, $y ) = $self->getargs($1);
 	    $y ||= 0;
-	    if ( $x || $y ) {
+	    if ( $nooptimize || $x || $y ) {
 		$xo->transform( translate => [ $x, -$y ] );
 		$self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
 	    }
@@ -49,14 +51,14 @@ method set_transform ( $tf ) {
 	elsif ( $tf =~ /^\s*rotate\s*\((.*?)\)(.*)/ ) {
 	    $tf = $2;
 	    my ( $r, $x, $y ) = $self->getargs($1);
-	    if ( $r ) {
-		if ( $x || $y ) {
+	    if ( $nooptimize || $r ) {
+		if ( $nooptimize || $x || $y ) {
 		    $xo->transform( translate => [ $x, -$y ] );
 		    $self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
 		}
 		$self->_dbg( "transform rotate(%.2f)", $r );
 		$xo->transform( rotate => -$r );
-		if ( $x || $y ) {
+		if ( $nooptimize || $x || $y ) {
 		    $xo->transform( translate => [ -$x, $y ] );
 		    $self->_dbg( "transform translate(%.2f,%.2f)", -$x, $y );
 		}
@@ -66,10 +68,18 @@ method set_transform ( $tf ) {
 	    $tf = $2;
 	    my ( $x, $y ) = $self->getargs($1);
 	    $y ||= $x;
-	    if ( $x != 1 && $y != 1 ) {
+	    if ( $nooptimize || $x != 1 && $y != 1 ) {
 		$self->_dbg( "transform scale(%.2f,%.2f)", $x, $y );
 		$xo->transform( scale => [ $x, $y ] );
 	    }
+	}
+	elsif ( $tf =~ /^\s*matrix\s*\((.*?)\)(.*)/ ) {
+	    $tf = $2;
+	    my ( @m ) = $self->getargs($1);
+	    nfi("matrix transformations");
+	    # We probably have to flip some elements...
+	    $self->_dbg( "transform matrix(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @m);
+	    $xo->transform( matrix => \@m );
 	}
 	else {
 	    warn("Ignoring transform: $tf");
