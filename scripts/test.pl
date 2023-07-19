@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Sat Jul 15 19:35:11 2023
-# Update Count    : 78
+# Last Modified On: Wed Jul 19 19:18:32 2023
+# Update Count    : 85
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -17,7 +17,7 @@ use utf8;
 # Package name.
 my $my_package = 'PDF-SVG';
 # Program name and version.
-my ($my_name, $my_version) = qw( MyProg 0.01 );
+my ($my_name, $my_version) = qw( svgdemo 0.01 );
 
 use FindBin;
 use lib "$FindBin::Bin/../lib";
@@ -28,10 +28,10 @@ use Getopt::Long 2.13;
 
 # Command line options.
 my $output = "__new__.pdf";
-my $api = "PDF::API2";
+my $api = "PDF::API2";		# or PDF::Builder
 my $wstokens;
-my $grid;
-my $prog;
+my $grid;			# add grid
+my $prog;			# generate program
 my $verbose = 1;		# verbose processing
 
 # Development options (not shown with -help).
@@ -68,6 +68,7 @@ foreach my $file ( @ARGV ) {
       ( ps => { pr => { pdf => $pdf } },
 	atts => { debug    => $debug,
 		  grid     => $grid,
+		  prog     => $prog,
 		  wstokens => $wstokens,
 		  trace    => $trace } );
 
@@ -98,8 +99,8 @@ foreach my $file ( @ARGV ) {
 	    $xo->{xo} = $xo->{xo}->xo;
 	}
 	my @bb = @{$xo->{vbox}};
-	my $w = $bb[2] - $bb[0];
-	my $h = $bb[3] - $bb[1];
+	my $w = $bb[2];
+	my $h = $bb[3];
 	my $scale = 1;
 	if ( $xo->{vwidth} ) {
 	    $scale = $xo->{vwidth} / $w;
@@ -120,16 +121,16 @@ foreach my $file ( @ARGV ) {
 		     $xo->{vwidth}
 		     ? sprintf("=> %.2f, %.2f ", $xo->{vwidth}, $xo->{vheight})
 		     : "",
-		     $x, $y-$h*$scale, $w*$scale, $h*$scale, $scale ))
+		     $x, $y-$h*$scale, $w, $h, $scale ))
 	  if $verbose;
 
 	crosshairs( $gfx, $x, $y, "blue" );
 	if ( $bb[1] ) {
 	    crosshairs( $gfx, $x, $y+$bb[1]*$scale, "red" );
 	}
-	$gfx->object( $xo->{xo}, $x, $y-( $h+$bb[1]  )*$scale, $scale );
+	$gfx->object( $xo->{xo}, $x, $y-$h*$scale, $scale );
 
-	$y -= ($h+$bb[1]) * $scale;
+	$y -= $h * $scale;
     }
     crosshairs( $gfx, $x, $y, "blue" );
 }

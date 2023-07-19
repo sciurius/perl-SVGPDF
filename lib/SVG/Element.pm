@@ -36,6 +36,7 @@ method set_transform ( $tf ) {
     return unless $tf;
 
     my $nooptimize = 1;
+    $tf =~ s/\s+/ /g;
 
     # The parts of the transform need to be executed in order.
     while ( $tf =~ /\S/ ) {
@@ -76,22 +77,25 @@ method set_transform ( $tf ) {
 	elsif ( $tf =~ /^\s*matrix\s*\((.*?)\)(.*)/ ) {
 	    $tf = $2;
 	    my ( @m ) = $self->getargs($1);
-	    nfi("matrix transformations");
+	    $self->nfi("matrix transformations");
 	    # We probably have to flip some elements...
 	    $self->_dbg( "transform matrix(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @m);
 	    $xo->transform( matrix => \@m );
 	}
-	elsif ( $tf =~ /^\s*skewX\s*\((.*?)\)(.*)/i ) {
-	    $tf = $2;
-	    my ( $x ) = $self->getargs($1);
-	    $self->_dbg( "transform skewX(%.2f)", $x);
-	    $xo->transform( skew => [ $x, 0 ] );
-	}
-	elsif ( $tf =~ /^\s*skewY\s*\((.*?)\)(.*)/i ) {
-	    $tf = $2;
-	    my ( $x ) = $self->getargs($1);
-	    $self->_dbg( "transform skewY(%.2f)", $x);
-	    $xo->transform( skew => [ 0, $x ] );
+	elsif ( $tf =~ /^\s*skew([XY])\s*\((.*?)\)(.*)/i ) {
+	    $tf = $3;
+	    my ( $x ) = $self->getargs($2);
+	    my $y = 0;
+	    if ( $1 eq "X" ) {
+		$y = -$x;
+		$x = 0;
+	    }
+	    else {
+		$x = -$x;
+		$y = 0;
+	    }
+	    $self->_dbg( "transform skew(%.2f %.2f)", $x, $y );
+	    $xo->transform( skew => [ $x, $y ] );
 	}
 	else {
 	    warn("Ignoring transform: $tf");
@@ -105,7 +109,7 @@ method set_graphics () {
 
     my $msg = $name;
 
-    if ( my $lw = $style->{'stroke-width'} || 0.01 ) {
+    if ( defined( my $lw = $style->{'stroke-width'} ) ) {
 	#if ( !defined($xo->{' linewidth'}) or $lw != $xo->{' linewidth'} ) {
 	    $msg .= " stroke-width=$lw";
 	    $xo->line_width($lw);
@@ -264,7 +268,7 @@ method traverse () {
 method u ( $a ) {
     confess("Undef in units") unless defined $a;
     return undef unless $a =~ /^([-+]?\d+(?:\.\d+)?)(.*)$/;
-    return $1 if $2 eq "" || $2 eq "pt";
+    return $1 if $2 eq "" || $2 eq "pt" || $2 eq "deg";
     return $1 if $2 eq "px";	# approx
     return $1*12 if $2 eq "em";	# approx
     return $1*10 if $2 eq "ex";	# approx

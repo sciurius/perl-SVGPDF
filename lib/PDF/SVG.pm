@@ -25,6 +25,7 @@ field $defs         :accessor;
 # For debugging/development.
 field $debug        :accessor;
 field $grid         :accessor;
+field $prog         :accessor;
 field $debug_styles :accessor;
 field $trace        :accessor;
 field $wstokens     :accessor;
@@ -59,6 +60,7 @@ use SVG::Use;
 BUILD {
     $debug        = $atts->{debug}        || 0;
     $grid         = $atts->{grid}         || 0;
+    $prog         = $atts->{prog}         || 0;
     $debug_styles = $atts->{debug_styles} || $debug > 1;
     $trace        = $atts->{trace}        || 0;
     $wstokens     = $atts->{wstokens}     || 0;
@@ -135,7 +137,7 @@ method handle_svg ( $e ) {
     $self->_dbg( "+ ==== start ", $e->{name}, " ====" );
 
     my $xo;
-    if ( $debug ) {
+    if ( $prog ) {
 	$xo = PDF::PAST->new( pdf => $ps->{pr}->{pdf} );
     }
     else {
@@ -167,23 +169,45 @@ method handle_svg ( $e ) {
     }
 
     my $atts   = $svg->atts;
-    my $width  = $svg->u(delete( $atts->{width} ) || 595);
-    my $height = $svg->u(delete( $atts->{height}) || 842);
-    my $vbox   = delete( $atts->{viewBox} ) || "0 0 $width $height";
+
+    my $width  = delete $atts->{width};
+    my $height = delete $atts->{height};
+    my $vbox   = delete $atts->{viewBox};
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $svg->css_push($atts);
 
-    my @bb = $svg->getargs($vbox);
+    my @bb;
+    if ( $vbox ) {
+	@bb = $svg->getargs($vbox);
+	$width = $svg->u($width//$bb[2]);
+	$height = $svg->u($height//$bb[3]);
+    }
+    else {
+	$width = $svg->u($width||595);
+	$height = $svg->u($height||842);
+	@bb = ( 0, 0, $width, $height );
+	$vbox = "@bb";
+    }
     $self->_dbg( "bb $vbox => %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
+
     # <svg> coordinates are topleft down, so translate.
     $self->_dbg( "translate( %.2f %.2f )", 0, $bb[1]+$bb[3] );
-    $xo->transform( translate => [ 0, $bb[1]+$bb[3] ] );
+    $xo->transform( translate => [ -$bb[0], $bb[1]+$bb[3] ] );
     if ( $debug ) {		# show bb
 	$xo->save;
-	$xo->rectangle( $bb[0], -$bb[1], $bb[0]+$bb[2], -($bb[1]+$bb[3]));
-	$xo->line_width(1);
+	$self->_dbg( "bb rect( %.2f %.2f %.2f %.2f)",
+		     $bb[0], -$bb[1], $bb[2], -$bb[3]);
+	$xo->rectangle( $bb[0], -$bb[1], $bb[2], -$bb[3]);
+	$xo->fill_color("#ffffc0");
+	$xo->fill;
+	$xo->move(  $bb[0], 0 );
+	$xo->hline( $bb[2]);
+	$xo->move( 0, -$bb[1] );
+	$xo->vline( -$bb[3] );
+	$xo->line_width(0.5);
+	$xo->stroke_color( "cyan" );
 	$xo->stroke;
 	$xo->restore;
     }
@@ -200,14 +224,18 @@ method handle_svg ( $e ) {
 
     # Establish currentColor.
     for ( $css->find("fill") ) {
-	$xo->fill_color($_)
-	  unless $_   eq 'none'
-	  or     $_   eq 'currentColor';
+	next if $_ eq 'none' or $_ eq 'transparent';
+	$self->_dbg( "xo fill_color ",
+		     $_ eq 'currentColor' ? 'black' : $_,
+		     " (initial)");
+	$xo->fill_color( $_ eq 'currentColor' ? 'black' : $_ );
     }
     for ( $css->find("stroke") ) {
-	$xo->stroke_color($_)
-	  unless $_ eq 'none'
-	  or     $_ eq 'currentColor';
+	next if $_ eq 'none' or $_ eq 'transparent';
+	$self->_dbg( "xo stroke_color ",
+		     $_ eq 'currentColor' ? 'black' : $_,
+		     " (initial)");
+	$xo->stroke_color( $_ eq 'currentColor' ? 'black' : $_ );
     }
     grid( $self->xoforms->[-1] ) if $grid;
     $svg->traverse;
@@ -223,37 +251,55 @@ sub PDF::SVG::grid ( $xof ) {
     my $d = 10;
     my $c = 6;
     my $xo = $xof->{xo};
-    my $w = $xof->{width};
-    my $h = $xof->{height};
+    my @bb = @{ $xof->{vbox} };
+    my $w = $bb[2];
+    my $h = $bb[3];
+    my $thick = 1;
+    my $thin = 0.2;
 
     $xo->save;
     $xo->stroke_color("#bbbbbb");
     $xo->line_width(0.1);
-    for ( my $x = 0; $x <= $w; $x += $d ) {
+    $xo->transform( translate => [ $bb[0], -$bb[1] ] );
+    for ( my $x = 0; 1 and $x <= $w; $x += $d ) {
 	if ( --$c == 0 ) {
-	    $xo->line_width(1);
+	    $xo->line_width($thick);
+	    $xo->move( $x, 0 );
 	}
-	$xo->move( $x, 0 );
+	else {
+	    $xo->move( $x, 0 );
+	}
 	$xo->vline(-$h);
 	$xo->stroke;
 	if ( $c == 0 ) {
-	    $xo->line_width(0.2);
+	    $xo->line_width($thin);
 	    $c = 5;
 	}
     }
     $c = 6;
-    for ( my $y = 0; $y <= $h; $y += $d ) {
+    for ( my $y = 0; 1 and $y <= $h; $y += $d ) {
 	if ( --$c == 0 ) {
-	    $xo->line_width(1);
+	    $xo->line_width($thick);
+	    $xo->move( 0, -$y );
 	}
-	$xo->move( 0, -$y );
+	else {
+	    $xo->move( 0, -$y );
+	}
 	$xo->hline($w);
 	$xo->stroke;
 	if ( $c == 0 ) {
-	    $xo->line_width(0.2);
+	    $xo->line_width($thin);
 	    $c = 5;
 	}
     }
+    $xo->transform( translate => [ -$bb[0], $bb[1] ] );
+    $xo->rectangle(-2,-2,2,2);
+    $xo->fill_color("red");
+    $xo->paint;
+    $xo->rectangle(-2,-102,2,-98);
+    $xo->paint;
+    $xo->rectangle(-2,-202,2,-198);
+    $xo->paint;
     $xo->restore;
 }
 

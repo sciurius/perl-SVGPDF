@@ -12,6 +12,10 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
+    if ( defined $atts->{id} ) {
+	$self->root->defs->{ "#" . $atts->{id} } = $self;
+    }
+
     my ( $d, $tf ) = $self->get_params( $atts, "d:!", "transform:s" );
 
     my $t = $d;
@@ -140,7 +144,7 @@ method process () {
 		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $x + $d[0], $y - $d[1],
 			  $x + $d[2], $y - $d[3] );
-		nfi("standalone s-paths");
+		$self->nfi("standalone s-paths");
 		unshift( @c, $x, -$y );
 		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
 		$xo->curve(@c);
@@ -186,7 +190,7 @@ method process () {
 		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $x, $y,
 			  $x + $d[0], $y - $d[1] );
-		nfi("standalone t-paths");
+		$self->nfi("standalone t-paths");
 		unshift( @c, $x, -$y );
 		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
 		$xo->spline(@c);
