@@ -62,32 +62,21 @@ method matrix ( @args ) {
 
 #### Graphics.
 
-method fill_color ( @args ) {
-    Carp::confess("currentColor") if $args[0] eq 'currentColor';
-    $self->xdbg( "\$xo->fill_color( \"@args\" );" );
-    $xo->fill_color( @args );
-}
-
-method stroke_color ( @args ) {
-    $self->xdbg( "\$xo->stroke_color( \"@args\" );" );
-    $xo->stroke_color( @args );
-}
-
 method fill ( @args ) {
     die if @args;
     $self->xdbg( "\$xo->fill();" );
     $xo->fill( @args );
 }
 
-method stroke ( @args ) {
-    die if @args;
-    $self->xdbg( "\$xo->stroke();" );
-    $xo->stroke( @args );
+method fill_color ( @args ) {
+    Carp::confess("currentColor") if $args[0] eq 'currentColor';
+    $self->xdbg( "\$xo->fill_color( \"@args\" );" );
+    $xo->fill_color( @args );
 }
 
-method line_width ( @args ) {
-    $self->xdbg( "\$xo->line_width( ", join(", ", @args ), " );" );
-    $xo->line_width( @args );
+method line_cap ( @args ) {
+    $self->xdbg( "\$xo->line_cap( ", join(", ", @args ), " );" );
+    $xo->line_cap( @args );
 }
 
 method line_dash_pattern ( @args ) {
@@ -95,17 +84,20 @@ method line_dash_pattern ( @args ) {
     $xo->line_dash_pattern( @args );
 }
 
+method line_join ( @args ) {
+    $self->xdbg( "\$xo->line_join( ", join(", ", @args ), " );" );
+    $xo->line_join( @args );
+}
+
+method line_width ( @args ) {
+    $self->xdbg( "\$xo->line_width( ", join(", ", @args ), " );" );
+    $xo->line_width( @args );
+}
+
 method paint ( @args ) {
     die if @args;
     $self->xdbg( "\$xo->paint();" );
     $xo->paint( @args );
-}
-
-method save ( @args ) {
-    die if @args;
-    $self->xdbg( "\$xo->save();" );
-    $indent = "$indent  ";
-    $xo->save;
 }
 
 method restore ( @args ) {
@@ -115,19 +107,25 @@ method restore ( @args ) {
     $xo->restore;
 }
 
+method save ( @args ) {
+    die if @args;
+    $self->xdbg( "\$xo->save();" );
+    $indent = "$indent  ";
+    $xo->save;
+}
+
+method stroke ( @args ) {
+    die if @args;
+    $self->xdbg( "\$xo->stroke();" );
+    $xo->stroke( @args );
+}
+
+method stroke_color ( @args ) {
+    $self->xdbg( "\$xo->stroke_color( \"@args\" );" );
+    $xo->stroke_color( @args );
+}
+
 #### Texts,
-
-method textstart ( @args ) {
-    die if @args;
-    $self->xdbg( "\$xo->textstart();" );
-    $xo->textstart( @args );
-}
-
-method textend ( @args ) {
-    die if @args;
-    $self->xdbg( "\$xo->textend();" );
-    $xo->textend( @args );
-}
 
 method font ( $font, $size, $name = "default" ) {
     $self->xdbg( "\$xo->font( \$font, $size );\t# $name" );
@@ -148,21 +146,34 @@ method text ( $text, %opts ) {
     $xo->text( $text, %opts );
 }
 
-#### Paths.
-
-method move ( @args ) {
-    $self->xdbg( "\$xo->move( ", join(", ",@args), " );" );
-    $xo->move( @args );
+method textstart ( @args ) {
+    die if @args;
+    $self->xdbg( "\$xo->textstart();" );
+    $xo->textstart( @args );
 }
 
-method hline ( @args ) {
-    $self->xdbg( "\$xo->hline( @args );" );
-    $xo->hline( @args );
+method textend ( @args ) {
+    die if @args;
+    $self->xdbg( "\$xo->textend();" );
+    $xo->textend( @args );
 }
 
-method vline ( @args ) {
-    $self->xdbg( "\$xo->vline( @args );" );
-    $xo->vline( @args );
+#### Basic shapes.
+
+method circle ( @args ) {
+    $self->xdbg( "\$xo->circle( ", join(", ",@args), " );" );
+    $xo->circle( @args );
+}
+
+method ellipse ( @args ) {
+    $self->xdbg( "\$xo->ellipse( ", join(", ",@args), " );" );
+    $xo->ellipse( @args );
+}
+
+method image( @args ) {
+    my $image = shift(@args);
+    $self->xdbg( "\$xo->image(<img>, ", join(", ",@args), " );" );
+    $xo->image( $image, @args );
 }
 
 method line ( @args ) {
@@ -170,24 +181,10 @@ method line ( @args ) {
     $xo->line( @args );
 }
 
-method curve ( @args ) {
-    $self->xdbg( "\$xo->curve( ", join(", ",@args), " );" );
-    $xo->curve( @args );
-}
-
-method spline ( @args ) {
-    $self->xdbg( "\$xo->spline( ", join(", ",@args), " );" );
-    $xo->spline( @args );
-}
-
-method pie ( @args ) {
-    $self->xdbg( "\$xo->pie( ", join(", ",@args), " );" );
-    $xo->pie( @args );
-}
-
-method bogen ( @args ) {
-    $self->xdbg( "\$xo->bogen( ", join(", ",@args), " );" );
-    $xo->bogen( @args );
+# Note: polygon is a closed polyline.
+method polyline ( @args ) {
+    $self->xdbg( "\$xo->polyline( ", join(", ",@args), " );" );
+    $xo->polyline( @args );
 }
 
 method rect ( @args ) {
@@ -200,26 +197,54 @@ method rectangle ( @args ) {
     $xo->rectangle( @args );
 }
 
-method circle ( @args ) {
-    $self->xdbg( "\$xo->circle( ", join(", ",@args), " );" );
-    $xo->circle( @args );
+#### Paths.
+
+#### NOT USED.
+method bogen ( @args ) {
+    $self->xdbg( "\$xo->bogen( ", join(", ",@args), " );" );
+    $xo->bogen( @args );
 }
 
-method polyline ( @args ) {
-    $self->xdbg( "\$xo->polyline( ", join(", ",@args), " );" );
-    $xo->polyline( @args );
-}
-
-method image( @args ) {
-    my $image = shift(@args);
-    $self->xdbg( "\$xo->image(<img>, ", join(", ",@args), " );" );
-    $xo->image( $image, @args );
+#### NOT USED.
+method bogen_ellip ( @args ) {
+    $self->xdbg( "\$xo->bogen_ellip( ", join(", ",@args), " );" );
+    $xo->bogen_ellip( @args );
 }
 
 method close ( @args ) {
     die if @args;
     $self->xdbg( "\$xo->close();" );
     $xo->close( @args );
+}
+
+method curve ( @args ) {
+    $self->xdbg( "\$xo->curve( ", join(", ",@args), " );" );
+    $xo->curve( @args );
+}
+
+method hline ( @args ) {
+    $self->xdbg( "\$xo->hline( @args );" );
+    $xo->hline( @args );
+}
+
+method move ( @args ) {
+    $self->xdbg( "\$xo->move( ", join(", ",@args), " );" );
+    $xo->move( @args );
+}
+
+method pie ( @args ) {
+    $self->xdbg( "\$xo->pie( ", join(", ",@args), " );" );
+    $xo->pie( @args );
+}
+
+method spline ( @args ) {
+    $self->xdbg( "\$xo->spline( ", join(", ",@args), " );" );
+    $xo->spline( @args );
+}
+
+method vline ( @args ) {
+    $self->xdbg( "\$xo->vline( @args );" );
+    $xo->vline( @args );
 }
 
 1;
