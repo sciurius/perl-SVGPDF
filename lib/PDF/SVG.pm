@@ -7,7 +7,7 @@ use utf8;
 
 class  PDF::SVG;
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 field $ps           :accessor :param;
 field $atts         :accessor :param;
@@ -40,6 +40,7 @@ use DDumper;
 # The SVG elements.
 use SVG::Circle;
 use SVG::Defs;
+use SVG::Ellipse;
 use SVG::G;
 use SVG::Image;
 use SVG::Line;
@@ -255,95 +256,5 @@ sub PDF::SVG::grid ( $xof ) {
     }
     $xo->restore;
 }
-
-################ Tweaks ################
-
-package PDF::API2::Content;
-
-use Math::Trig;
-
-# Fixed version of 'bogen', extraced from PDF::Builder.
-sub bogen {
-    my ($self, $x1,$y1, $x2,$y2, $r, $move, $larc, $spf) = @_;
-
-    my ($p0_x,$p0_y, $p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
-    my ($dx,$dy, $x,$y, $alpha,$beta, $alpha_rad, $d,$z, $dir, @points);
-
-    if ($x1 == $x2 && $y1 == $y2) {
-        die "bogen requires two distinct points";
-    }
-    if ($r <= 0.0) {
-        die "bogen requires a positive radius";
-    }
-    $move = 0 if !defined $move;
-    $larc = 0 if !defined $larc;
-    $spf  = 0 if !defined $spf;
-
-    $dx = $x2 - $x1;
-    $dy = $y2 - $y1;
-    $z = sqrt($dx**2 + $dy**2);
-    $alpha_rad = asin($dy/$z); # |dy/z| guaranteed <= 1.0
-    $alpha_rad = pi - $alpha_rad if $dx < 0;
-
-    # alpha is direction of vector P1 to P2
-    $alpha = rad2deg($alpha_rad);
-    # use the complementary angle for flipped arc (arc center on other side)
-    # effectively clockwise draw from P2 to P1
-    $alpha -= 180 if $spf;
-
-    $d = 2*$r;
-    # z/d must be no greater than 1.0 (arcsine arg)
-    if ($z > $d) { 
-        $d = $z;  # SILENT error and fixup
-        $r = $d/2;
-    }
-
-    $beta = rad2deg(2*asin($z/$d));
-    # beta is the sweep P1 to P2: ~0 (r very large) to 180 degrees (min r)
-    $beta = 360-$beta if $larc;  # large arc is remainder of small arc
-    # for large arc, beta could approach 360 degrees if r is very large
-
-    # always draw CW (dir=1)
-    # note that start and end could be well out of +/-360 degree range
-    @points = arctocurve($r,$r, 90+$alpha+$beta/2,90+$alpha-$beta/2, 1);
-
-    if ($spf) {  # flip order of points for reverse arc
-        my @pts = @points;
-        @points = ();
-        while (@pts) {
-            $y = pop @pts;
-            $x = pop @pts;
-            push(@points, $x,$y);
-        }
-    }
-
-    $p0_x = shift @points;
-    $p0_y = shift @points;
-    $x = $x1 - $p0_x;
-    $y = $y1 - $p0_y;
-
-    $self->move($x1,$y1) if $move;
-
-    while (scalar @points > 0) {
-        $p1_x = $x + shift @points;
-        $p1_y = $y + shift @points;
-        $p2_x = $x + shift @points;
-        $p2_y = $y + shift @points;
-        # if we run out of data points, use the end point instead
-        if (scalar @points == 0) {
-            $p3_x = $x2;
-            $p3_y = $y2;
-        } else {
-            $p3_x = $x + shift @points;
-            $p3_y = $y + shift @points;
-        }
-        $self->curve($p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
-        shift @points;
-        shift @points;
-    }
-
-    return $self;
-}
-
 
 1; # End of PDF::SVG

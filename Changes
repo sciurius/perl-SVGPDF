@@ -1,26 +1,31 @@
 Revision history for PDF::SVG
 
-0.03
+0.04
 
 	- Reworked to COR using Object::Pad (WIP).
 	- Steal and enhance parser from XML::Tiny.
+	- Improve fill/stroke (handle transparency).
+	- Add grid for debugging.
+	- Add ellipse.
+	- Improve scaling.
+	- Handle argument and units.
+	- Fix fontsize bug in makefont.
+	- Handle stroke-linejoin and stroke-linecap.
+	- Add routines for circular and elliptic arcs.
+
+0.03	2023-07-12
+
 	- Add single-style outline for simple <text>.
 	- Add circle.
 	- Add polyline.
 	- Add image (inline, base64).
 	- Add path S, Q (qubic bezier) and T.
-	- Improve fill/stroke (handle transparency).
-	- Add grid for debugging.
 	- Add sample program.
-	- Improve scaling.
-	- Handle argument and units.
 	- Neatify PAST to generate perl program.
-	- Always take element into account (css).
 	- (CSS) Handle outline shorthand.
 	- (CSS) Fix priorities.
 	- Elegantly skip unimplemented arcs.
 	- Fix rectangle bug.
-	- Fix fontsize bug in makefont.
 
 0.02	2023-07-07
 

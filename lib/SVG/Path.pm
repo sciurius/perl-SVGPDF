@@ -208,18 +208,20 @@ method process () {
 		my $ex    = $x + shift(@d);	# end point
 		my $ey    = $y - shift(@d);
 		$self->_dbg( "xo arc(%.2f,%.2f %.2f %d,%d %.2f,%.2f)",
-		      $rx, $ry, $rot, $large, $sweep, $ex, $ey );
+			     $rx, $ry, $rot, $large, $sweep, $ex, $ey );
 
-		# Hard... For the time being use the (obsolete) 'bogen'
 		# for circular arcs.
 		if ( $rx == $ry ) {
-		    $self->_dbg( "xo bogen(%.2f,%.2f %.2f,%.2f %.2f %d %d %d)",
+		    $self->_dbg( "circular_arc(%.2f,%.2f %.2f,%.2f %.2f %d %d %d)",
 				 $cx, $cy, $ex, $ey, $rx, 0, $large, 1-$sweep );
-		    $xo->bogen( $cx, $cy, $ex, $ey,
-				$rx, 0, $large, 1-$sweep );
+		    $self->circular_arc( $cx, $cy, $ex, $ey,
+					 $rx, 0, $large, 1-$sweep );
 		}
 		else {
-		    nfi("elliptic arc paths");
+		    $self->_dbg( "elliptic_arc(%.2f,%.2f %.2f,%.2f %.2f,%.2f %d %d %d)",
+				 $cx, $cy, $ex, $ey, $rx, $ry, 0, $large, 1-$sweep );
+		    $self->elliptic_arc( $cx, $cy, $ex, $ey,
+					 $rx, $ry, 0, $large, 1-$sweep );
 		}
 		$ix = $cx, $iy = $cy unless $open++;
 		( $cx, $cy ) = ( $ex, $ey );
@@ -251,5 +253,284 @@ method process () {
     $self->css_pop;
 }
 
+################ Low level ################
+
+use Math::Trig;
+
+method curve ( @points ) {
+    $self->_dbg( "+ xo curve( %.2f,%.2f %.2f,%.2f %.2f,%.2f )", @points );
+    $self->xo->curve(@points);
+    $self->_dbg( "-" );
+}
+
+# Circular arc ('bogen'), by PDF::API2 and anhanced by PDF::Builder.
+method circular_arc ( $x1,$y1, $x2,$y2, $r, $move, $larc, $spf ) {
+
+    my ($p0_x,$p0_y, $p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+    my ($dx,$dy, $x,$y, $alpha,$beta, $alpha_rad, $d,$z, $dir, @points);
+
+    if ($x1 == $x2 && $y1 == $y2) {
+        die "bogen requires two distinct points";
+    }
+    if ($r <= 0.0) {
+        die "bogen requires a positive radius";
+    }
+    $move = 0 if !defined $move;
+    $larc = 0 if !defined $larc;
+    $spf  = 0 if !defined $spf;
+
+    $dx = $x2 - $x1;
+    $dy = $y2 - $y1;
+    $z = sqrt($dx**2 + $dy**2);
+    $alpha_rad = asin($dy/$z); # |dy/z| guaranteed <= 1.0
+    $alpha_rad = pi - $alpha_rad if $dx < 0;
+
+    # alpha is direction of vector P1 to P2
+    $alpha = rad2deg($alpha_rad);
+    # use the complementary angle for flipped arc (arc center on other side)
+    # effectively clockwise draw from P2 to P1
+    $alpha -= 180 if $spf;
+
+    $d = 2*$r;
+    # z/d must be no greater than 1.0 (arcsine arg)
+    if ($z > $d) { 
+        $d = $z;  # SILENT error and fixup
+        $r = $d/2;
+    }
+
+    $beta = rad2deg(2*asin($z/$d));
+    # beta is the sweep P1 to P2: ~0 (r very large) to 180 degrees (min r)
+    $beta = 360-$beta if $larc;  # large arc is remainder of small arc
+    # for large arc, beta could approach 360 degrees if r is very large
+
+    # always draw CW (dir=1)
+    # note that start and end could be well out of +/-360 degree range
+    @points = arctocurve($r,$r, 90+$alpha+$beta/2,90+$alpha-$beta/2, 1);
+
+    if ($spf) {  # flip order of points for reverse arc
+        my @pts = @points;
+        @points = ();
+        while (@pts) {
+            $y = pop @pts;
+            $x = pop @pts;
+            push(@points, $x,$y);
+        }
+    }
+
+    $p0_x = shift @points;
+    $p0_y = shift @points;
+    $x = $x1 - $p0_x;
+    $y = $y1 - $p0_y;
+
+    $self->move($x1,$y1) if $move;
+
+    while (scalar @points > 0) {
+        $p1_x = $x + shift @points;
+        $p1_y = $y + shift @points;
+        $p2_x = $x + shift @points;
+        $p2_y = $y + shift @points;
+        # if we run out of data points, use the end point instead
+        if (scalar @points == 0) {
+            $p3_x = $x2;
+            $p3_y = $y2;
+        } else {
+            $p3_x = $x + shift @points;
+            $p3_y = $y + shift @points;
+        }
+        $self->curve($p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+        shift @points;
+        shift @points;
+    }
+
+    return $self;
+}
+
+# Elliptic arc ('bogen_ellip'), by PDF::Builder.
+method elliptic_arc ( $x1,$y1, $x2,$y2, $rx,$ry, $move, $larc, $spf) {
+     my $context = $self; 	# temp
+
+     my ($p0_x,$p0_y, $p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+     my ($dx,$dy, $x,$y, $alpha,$beta, $alpha_rad, $d,$z, $dir, @points);
+
+     if ($x1 == $x2 && $y1 == $y2) {
+         die "bogen_ellip requires two distinct points";
+     }
+     if ($rx <= 0.0) {
+         die "bogen_ellip requires a positive x radius";
+     }
+     if ($ry <= 0.0) {
+         die "bogen_ellip requires a positive y radius";
+     }
+     $move = 0 if !defined $move;
+     $larc = 0 if !defined $larc; # default 0 = take smaller arc
+     $spf  = 0 if !defined $spf;  # default 0 = do NOT mirror (flip) arc
+
+     $dx = $x2 - $x1;
+     $dy = $y2 - $y1;
+     $z = sqrt($dx**2 + $dy**2);
+     $alpha_rad = asin($dy/$z); # |dy/z| guaranteed <= 1.0
+     $alpha_rad = pi - $alpha_rad if $dx < 0;
+
+     # alpha is direction of vector P1 to P2
+     $alpha = rad2deg($alpha_rad);
+     # use the complementary angle for flipped arc (arc center on other side)
+     # effectively clockwise draw from P2 to P1
+     $alpha -= 180 if $spf;
+
+#   $d = 2*$r;
+     if ($rx > $ry) {  # pick larger radius
+         $d = 2*$rx;
+     } else {
+         $d = 2*$ry;
+     }
+     # z/d must be no greater than 1.0 (arcsine arg)
+     if ($z > $d) {
+#       $d = $z;  # SILENT error and fixup
+#       $r = $d/2;
+     }
+
+     $beta = rad2deg(2*asin($z/$d));
+print "z=$z, d=$d, alpha=$alpha, beta=$beta\n";
+     # beta is the sweep P1 to P2: ~0 (r very large) to 180 degrees (min dr)
+     $beta = 360-$beta if $larc;  # large arc is remainder of small arc
+     # for large arc, beta could approach 360 degrees if r is very large
+
+     # always draw CW (dir=1)
+     # note that start and end could be well out of +/-360 degree range
+     @points = arctocurve($rx,$ry, 90+$alpha+$beta/2,90+$alpha-$beta/2, 1);
+
+     if ($spf) {  # flip order of points for reverse arc
+         my @pts = @points;
+         @points = ();
+         while (@pts) {
+             $y = pop @pts;
+             $x = pop @pts;
+             push(@points, $x,$y);
+         }
+     }
+
+     $p0_x = shift @points;
+     $p0_y = shift @points;
+     $x = $x1 - $p0_x;
+     $y = $y1 - $p0_y;
+
+#   $self->move($x1,$y1) if $move;
+     $context->move($x1,$y1) if $move;
+
+     while (scalar @points > 0) {
+         $p1_x = $x + shift @points;
+         $p1_y = $y + shift @points;
+         $p2_x = $x + shift @points;
+         $p2_y = $y + shift @points;
+         # if we run out of data points, use the end point instead
+         if (scalar @points == 0) {
+             $p3_x = $x2;
+             $p3_y = $y2;
+         } else {
+             $p3_x = $x + shift @points;
+             $p3_y = $y + shift @points;
+         }
+#       $self->curve($p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+         $context->curve($p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+         shift @points;
+         shift @points;
+     }
+
+#   return $self;
+     return $context;
+}
+
+# Arc to curve, by PDF::API2 and enhanced by PDF::Builder.
+# input: x and y axis radii
+#        sweep start and end angles
+#        sweep direction (0=CCW (default), or 1=CW)
+# output: two endpoints and two control points for
+#           the Bezier curve describing the arc
+# maximum 30 degrees of sweep: is broken up into smaller
+#   arc segments if necessary
+# if crosses 0 degree angle in either sweep direction, split there at 0
+# if alpha=beta (0 degree sweep) or either radius <= 0, fatal error
+sub arctocurve {
+     my ($rx,$ry, $alpha,$beta, $dir) = @_;
+
+     if (!defined $dir) { $dir = 0; }  # default is CCW sweep
+     # check for non-positive radius
+     if ($rx <= 0 || $ry <= 0) {
+     die "curve request with radius not > 0 ($rx, $ry)";
+     }
+     # check for zero degrees of sweep
+     if ($alpha == $beta) {
+     die "curve request with zero degrees of sweep ($alpha to $beta)";
+     }
+
+     # constrain alpha and beta to 0..360 range so 0 crossing check works
+     while ($alpha < 0.0)   { $alpha += 360.0; }
+     while ( $beta < 0.0)   {  $beta += 360.0; }
+     while ($alpha > 360.0) { $alpha -= 360.0; }
+     while ( $beta > 360.0) {  $beta -= 360.0; }
+
+     # Note that there is a problem with the original code, when the 0 degree
+     # angle is crossed. It especially shows up in arc() and pie(). Therefore,
+     # split the original sweep at 0 degrees, if it crosses that angle.
+     if (!$dir && $alpha > $beta) { # CCW pass over 0 degrees
+       if      ($alpha == 360.0 && $beta == 0.0) { # oddball case
+         return (arctocurve($rx,$ry, 0.0,360.0, 0));
+       } elsif ($alpha == 360.0) { # alpha to 360 would be null
+         return (arctocurve($rx,$ry, 0.0,$beta, 0));
+       } elsif ($beta == 0.0) { # 0 to beta would be null
+         return (arctocurve($rx,$ry, $alpha,360.0, 0));
+       } else {
+         return (
+             arctocurve($rx,$ry, $alpha,360.0, 0),
+             arctocurve($rx,$ry, 0.0,$beta, 0)
+         );
+       }
+     }
+     if ($dir && $alpha < $beta) { # CW pass over 0 degrees
+       if      ($alpha == 0.0 && $beta == 360.0) { # oddball case
+         return (arctocurve($rx,$ry, 360.0,0.0, 1));
+       } elsif ($alpha == 0.0) { # alpha to 0 would be null
+         return (arctocurve($rx,$ry, 360.0,$beta, 1));
+       } elsif ($beta == 360.0) { # 360 to beta would be null
+         return (arctocurve($rx,$ry, $alpha,0.0, 1));
+       } else {
+         return (
+             arctocurve($rx,$ry, $alpha,0.0, 1),
+             arctocurve($rx,$ry, 360.0,$beta, 1)
+         );
+       }
+     }
+
+     # limit arc length to 30 degrees, for reasonable smoothness
+     # none of the long arcs or short resulting arcs cross 0 degrees
+     if (abs($beta-$alpha) > 30) {
+         return (
+             arctocurve($rx,$ry, $alpha,($beta+$alpha)/2, $dir),
+             arctocurve($rx,$ry, ($beta+$alpha)/2,$beta, $dir)
+         );
+     } else {
+        # Note that we can't use deg2rad(), because closed arcs (circle() and
+        # ellipse()) are 0-360 degrees, which deg2rad treats as 0-0 radians!
+         $alpha = ($alpha * pi / 180);
+         $beta  = ($beta * pi / 180);
+
+         my $bcp = (4.0/3 * (1 - cos(($beta - $alpha)/2)) / sin(($beta - $alpha)/2));
+         my $sin_alpha = sin($alpha);
+         my $sin_beta  = sin($beta);
+         my $cos_alpha = cos($alpha);
+         my $cos_beta  = cos($beta);
+
+         my $p0_x = $rx * $cos_alpha;
+         my $p0_y = $ry * $sin_alpha;
+         my $p1_x = $rx * ($cos_alpha - $bcp * $sin_alpha);
+         my $p1_y = $ry * ($sin_alpha + $bcp * $cos_alpha);
+         my $p2_x = $rx * ($cos_beta  + $bcp * $sin_beta);
+         my $p2_y = $ry * ($sin_beta  - $bcp * $cos_beta);
+         my $p3_x = $rx * $cos_beta;
+         my $p3_y = $ry * $sin_beta;
+
+         return ($p0_x,$p0_y, $p1_x,$p1_y, $p2_x,$p2_y, $p3_x,$p3_y);
+     }
+}
 
 1;
