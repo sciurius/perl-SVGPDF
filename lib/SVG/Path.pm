@@ -236,6 +236,8 @@ method process () {
 	# Close path and paint.
 	if ( lc($op) eq "z" ) {
 	    $self->_dbg( "xo $op" );
+	    #### TODO next is M ?
+	    ...;
 	    if ( $open ) {
 		$xo->close;
 		# currentpoint becomes the initial point.

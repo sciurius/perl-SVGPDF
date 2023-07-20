@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Thu Jul 20 16:35:16 2023
-# Update Count    : 98
+# Last Modified On: Thu Jul 20 21:47:13 2023
+# Update Count    : 101
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -109,7 +109,7 @@ foreach my $file ( @ARGV ) {
 	    $scale *= $pgsz[0]/$w;
 	}
 
-	if ( $y - $h * $scale <= 0 ) {
+	if ( $y - $h * $scale < 0 ) {
 	    $page = $pdf->page;
 	    $page->size( [ 0, 0, @pgsz ] );
 	    $gfx = $page->gfx;
@@ -167,7 +167,7 @@ sub app_options {
     if ( !GetOptions(
 		     'output=s' => \$output,
 		     'program=s' => \$prog,
-		     'grid=i'	=> \$grid,
+		     'grid:i'	=> \$grid,
 		     'builder'	=> sub { $api = "PDF::Builder";
 					 push( @INC, $ENV{HOME}."/src/PDF-Builder/lib" );
 					 },

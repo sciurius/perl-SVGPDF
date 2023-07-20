@@ -298,8 +298,9 @@ method get_params ( @desc ) {
 	# u   process units
 	# U   undef -> 0, process units
 	# !   barf if undef
-	my $flags;
-	( $param, $flags ) = $param =~ /^(.*):(.*)$/;
+	my $flags = "";
+	( $param, $flags ) = ( $1, $2 )
+	  if $param =~ /^(.*):(.*)$/;
 
 	# Get and remove the attribute.
 	my $p = delete( $atts{$param} );

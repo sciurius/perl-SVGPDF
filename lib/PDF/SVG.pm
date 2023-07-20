@@ -244,6 +244,10 @@ The following SVG features are not (yet) implemented.
 
 =item *
 
+Percentage units.
+
+=item *
+
 title, desc elements
 
 =item *
@@ -398,6 +402,7 @@ method _dbg ( @args ) {
     }
     elsif ( $msg =~ /^\-\s*(.*)/ ) {
 	warn( $indent, $1, "\n") if $1;
+confess("oeps") if length($indent) < 2;
 	$indent = substr( $indent, 2 );
     }
     elsif ( $msg =~ /^\^\s*(.*)/ ) {
@@ -543,7 +548,7 @@ method handle_svg ( $e ) {
 
     $svg->css_pop;
 
-    $self->_dbg( "- ==== end ", $e->{name}, " ====" );
+    $self->_dbg( "==== end ", $e->{name}, " ====" );
 }
 
 ################ Service ################
