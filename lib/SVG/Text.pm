@@ -144,9 +144,9 @@ method process () {
 		    # BEEP BEEP TRICKERY.
 		    my $fn = $xo->{" font"};
 		    my $sz = $xo->{" fontsize"};
-		    $xo->line_width( $style->{'outline-width'} || 1 );
+		    $xo->line_width( $self->u($style->{'outline-width'} || 1 ));
 		    $xo->stroke_color( $style->{'outline-color'} || 'black' );
-		    my $d = $style->{'outline-offset'} || 1;
+		    my $d = $self->u($style->{'outline-offset'}) || 1;
 		    $xo->rectangle( -$d,
 				    -$d+$sz*$fn->descender/1000,
 				    $x-$ix+2*$d,
