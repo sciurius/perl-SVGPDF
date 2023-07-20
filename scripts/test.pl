@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Wed Jul 19 19:18:32 2023
-# Update Count    : 85
+# Last Modified On: Thu Jul 20 09:15:56 2023
+# Update Count    : 91
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -52,7 +52,7 @@ my @pgsz = ( 595, 842 );	# A4
 ################ The Process ################
 
 eval "require $api;"     || die($@);
-# PDF::SVG redefines some PDF:XXX modules.
+# PDF::SVG may redefine some PDF:XXX modules.
 eval "require PDF::SVG;" || die($@);
 
 my $pdf = $api->new;
@@ -65,7 +65,7 @@ my $y = $pgsz[1];
 
 foreach my $file ( @ARGV ) {
     my $p = PDF::SVG->new
-      ( ps => { pr => { pdf => $pdf } },
+      ( pdf => $pdf,
 	atts => { debug    => $debug,
 		  grid     => $grid,
 		  prog     => $prog,
@@ -125,8 +125,8 @@ foreach my $file ( @ARGV ) {
 	  if $verbose;
 
 	crosshairs( $gfx, $x, $y, "blue" );
-	if ( $bb[1] ) {
-	    crosshairs( $gfx, $x, $y+$bb[1]*$scale, "red" );
+	if ( $bb[0] || $bb[1] ) {
+	    crosshairs( $gfx, $x-$bb[0]*$scale, $y+$bb[1]*$scale, "red" );
 	}
 	$gfx->object( $xo->{xo}, $x, $y-$h*$scale, $scale );
 
@@ -144,7 +144,7 @@ sub crosshairs ( $gfx, $x, $y, $col = "black" ) {
 	$_->save;
 	$_->line_width(0.1);
 	$_->stroke_color($col);
-	$_->move($x-0,$y);
+	$_->move($x-20,$y);
 	$_->hline($x+20);
 	$_->stroke;
 	$_->move($x,$y+20);

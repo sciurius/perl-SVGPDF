@@ -9,7 +9,38 @@ class  PDF::SVG;
 
 our $VERSION = '0.040';
 
-field $ps           :accessor :param;
+=head1 NAME
+
+PDF::SVG - Create XObject from SVG data
+
+=head1 SYNOPSIS
+
+    my $pdf = PDF::API2->new;
+    my $gfx = $pdf->gfx;
+    my $svg = PDF::SVG->new( pdf => $pdf, {} );
+    my $xof = $svg->process_file("demo.svg");
+
+    # If all goes well, $xof is an array of hashes, each representing an
+    # XObject corresponding to the <svg> elements in the file.
+    my $y = 800;
+    foreach my $xo ( @$xof ) {
+	my @bb = @{$xo->{vbox}};
+        my $h = $bb[2];
+	$gfx->object( $xo->{xo}, 10, $y-$h, 1 );
+	$y -= $h;
+    }
+
+
+This module is intended to be used with PDF::Builder, PDF::API2 and
+compatible PDF packages.
+
+=head1 DESCRIPTION
+
+
+
+=cut
+
+field $pdf          :accessor :param;
 field $atts         :accessor :param;
 
 # Callback for font handling.
@@ -138,10 +169,10 @@ method handle_svg ( $e ) {
 
     my $xo;
     if ( $prog ) {
-	$xo = PDF::PAST->new( pdf => $ps->{pr}->{pdf} );
+	$xo = PDF::PAST->new( pdf => $pdf );
     }
     else {
-	$xo = $ps->{pr}->{pdf}->xo_form;
+	$xo = $pdf->xo_form;
     }
     push( @$xoforms, { xo => $xo } );
     $self->_dbg("XObject #", scalar(@$xoforms) );
@@ -178,12 +209,14 @@ method handle_svg ( $e ) {
     my $style = $svg->css_push($atts);
 
     my @bb;
+    # Currently we rely on the <svg> to supply the correct viewBox.
     if ( $vbox ) {
 	@bb = $svg->getargs($vbox);
 	$width = $svg->u($width//$bb[2]);
 	$height = $svg->u($height//$bb[3]);
     }
     else {
+	# Fallback to width/height.
 	$width = $svg->u($width||595);
 	$height = $svg->u($height||842);
 	@bb = ( 0, 0, $width, $height );
@@ -192,28 +225,7 @@ method handle_svg ( $e ) {
     $self->_dbg( "bb $vbox => %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
 
-    # <svg> coordinates are topleft down, so translate.
-    $self->_dbg( "translate( %.2f %.2f )", 0, $bb[1]+$bb[3] );
-    $xo->transform( translate => [ -$bb[0], $bb[1]+$bb[3] ] );
-    if ( $debug ) {		# show bb
-	$xo->save;
-	$self->_dbg( "bb rect( %.2f %.2f %.2f %.2f)",
-		     $bb[0], -$bb[1], $bb[2], -$bb[3]);
-	$xo->rectangle( $bb[0], -$bb[1], $bb[2], -$bb[3]);
-	$xo->fill_color("#ffffc0");
-	$xo->fill;
-	$xo->move(  $bb[0], 0 );
-	$xo->hline( $bb[2]);
-	$xo->move( 0, -$bb[1] );
-	$xo->vline( -$bb[3] );
-	$xo->line_width(0.5);
-	$xo->stroke_color( "cyan" );
-	$xo->stroke;
-	$xo->restore;
-    }
-
     # Set up result forms.
-    # Currently we rely on the <svg> to supply the correct viewBox.
     $xoforms->[-1] =
 	  { xo      => $xo,
 	    vwidth  => $width,
@@ -221,6 +233,29 @@ method handle_svg ( $e ) {
 	    vbox    => [ @bb ],
 	    width   => $bb[2] - $bb[0],
 	    height  => $bb[3] - $bb[1] };
+
+    # <svg> coordinates are topleft down, so translate.
+    $self->_dbg( "translate( %.2f %.2f )", 0, $bb[1]+$bb[3] );
+    $xo->transform( translate => [ -$bb[0], $bb[1]+$bb[3] ] );
+
+    if ( $debug ) {		# show bb
+	$xo->save;
+	$self->_dbg( "bb rect( %.2f %.2f %.2f %.2f)",
+		     $bb[0], -$bb[1], $bb[2]+$bb[0], -$bb[1]-$bb[3]);
+	$xo->rectangle( $bb[0], -$bb[1], $bb[2]+$bb[0], -$bb[1]-$bb[3]);
+	$xo->fill_color("#ffffc0");
+	$xo->fill;
+	$xo->move(  $bb[0], 0 );
+	$xo->hline( $bb[0]+$bb[2]);
+	$xo->move( 0, -$bb[1] );
+	$xo->vline( -$bb[1]-$bb[3] );
+	$xo->line_width(0.5);
+	$xo->stroke_color( "red" );
+	$xo->stroke;
+	$xo->restore;
+    }
+    $self->draw_grid( $xo, \@bb ) if $grid;
+
 
     # Establish currentColor.
     for ( $css->find("fill") ) {
@@ -237,7 +272,6 @@ method handle_svg ( $e ) {
 		     " (initial)");
 	$xo->stroke_color( $_ eq 'currentColor' ? 'black' : $_ );
     }
-    grid( $self->xoforms->[-1] ) if $grid;
     $svg->traverse;
 
     $svg->css_pop;
@@ -246,12 +280,10 @@ method handle_svg ( $e ) {
 
 ################ Service ################
 
-no warnings 'redefine';
-sub PDF::SVG::grid ( $xof ) {
+method draw_grid ( $xo, $bb ) {
     my $d = 10;
     my $c = 6;
-    my $xo = $xof->{xo};
-    my @bb = @{ $xof->{vbox} };
+    my @bb = @$bb;
     my $w = $bb[2];
     my $h = $bb[3];
     my $thick = 1;
@@ -259,47 +291,46 @@ sub PDF::SVG::grid ( $xof ) {
 
     $xo->save;
     $xo->stroke_color("#bbbbbb");
-    $xo->line_width(0.1);
+
+    # Map viewbox to 0,0.
     $xo->transform( translate => [ $bb[0], -$bb[1] ] );
-    for ( my $x = 0; 1 and $x <= $w; $x += $d ) {
-	if ( --$c == 0 ) {
-	    $xo->line_width($thick);
-	    $xo->move( $x, 0 );
-	}
-	else {
-	    $xo->move( $x, 0 );
-	}
+
+    # Show boundary points.
+    $xo->rectangle(-2,-2,2,2);
+    $xo->fill_color("blue");
+    $xo->fill;
+    $xo->rectangle( $bb[2]-2, -$bb[3]-2, $bb[2]+2, -$bb[3]+2);
+    $xo->fill_color("blue");
+    $xo->fill;
+    # Show origin. This will cover the bb corner unless it is offset.
+    $xo->rectangle( -$bb[0]-2, $bb[1]-2, -$bb[0]+2, $bb[1]+2);
+    $xo->fill_color("red");
+    $xo->fill;
+
+    # Draw the grid (thick lines).
+    $xo->line_width($thick);
+    for ( my $x = 0; $x <= $w; $x += 5*$d ) {
+	$xo->move( $x, 0 );
 	$xo->vline(-$h);
 	$xo->stroke;
-	if ( $c == 0 ) {
-	    $xo->line_width($thin);
-	    $c = 5;
-	}
     }
-    $c = 6;
-    for ( my $y = 0; 1 and $y <= $h; $y += $d ) {
-	if ( --$c == 0 ) {
-	    $xo->line_width($thick);
-	    $xo->move( 0, -$y );
-	}
-	else {
-	    $xo->move( 0, -$y );
-	}
+    for ( my $y = 0; $y <= $h; $y += 5*$d ) {
+	$xo->move( 0, -$y );
 	$xo->hline($w);
 	$xo->stroke;
-	if ( $c == 0 ) {
-	    $xo->line_width($thin);
-	    $c = 5;
-	}
     }
-    $xo->transform( translate => [ -$bb[0], $bb[1] ] );
-    $xo->rectangle(-2,-2,2,2);
-    $xo->fill_color("red");
-    $xo->paint;
-    $xo->rectangle(-2,-102,2,-98);
-    $xo->paint;
-    $xo->rectangle(-2,-202,2,-198);
-    $xo->paint;
+    # Draw the grid (thin lines).
+    $xo->line_width($thin);
+    for ( my $x = 0; $x <= $w; $x += $d ) {
+	$xo->move( $x, 0 );
+	$xo->vline(-$h);
+	$xo->stroke;
+    }
+    for ( my $y = 0; $y <= $h; $y += $d ) {
+	$xo->move( 0, -$y );
+	$xo->hline($w);
+	$xo->stroke;
+    }
     $xo->restore;
 }
 

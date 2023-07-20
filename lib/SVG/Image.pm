@@ -39,7 +39,7 @@ method process () {
 	}
 
 	# Make the image.
-	$img = $self->root->ps->{pr}->{pdf}->image(IO::String->new($data));
+	$img = $self->root->pdf->image(IO::String->new($data));
     }
     else {
 	warn("SVG: Unhandled or missing image link: ",

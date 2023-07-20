@@ -349,7 +349,7 @@ method fc_setfont ( $style ) {
 
     if ( $root->fc ) {
 	# Use user callback.
-	return $root->fc->( $root->ps->{pr}->{pdf}, $xo, $style )
+	return $root->fc->( $root->pdf, $xo, $style )
     }
 
     my ( $fn, $sz, $em, $bd ) = ("Times-Roman", 12, 0, 0 );
@@ -378,8 +378,8 @@ method fc_setfont ( $style ) {
 	  ? $em ? "Times-BoldItalic" : "Times-Bold"
 	  : $em ? "Times-Italic" : "Times-Roman";
     }
-    my $font = $root->ps->{pr}->{pdf}->{__fontcache__}->{$fn} //= do {
-	$root->ps->{pr}->{pdf}->font($fn);
+    my $font = $root->pdf->{__fontcache__}->{$fn} //= do {
+	$root->pdf->font($fn);
     };
     $xo->font( $font, $sz, $fn );
 }

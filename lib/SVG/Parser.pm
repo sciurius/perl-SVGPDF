@@ -42,12 +42,13 @@ field %emap;
 method _parse ( $data, %params) {
     my $elem = { content => [] };
 
+    # TODO: Accept whitespace tokens by default within <text> elements.
     my $whitespace_tokens = $params{whitespace_tokens};
+
     $re_name //= '[:_a-z][\\w:\\.-]*';
     %emap = qw( lt < gt > amp & quot " apos ' );
 
     my $fixent = sub ( $e ) {
-
 	$e =~ s/&#(\d+);/chr($1)/ge && return $e;
 	$e =~ s/&#(x[0-9a-f]+);/chr(hex($1))/gie && return $e;
 	$e =~ s/&(lt|gt|quot|apos|amp);/$emap{$1}/ge && return $e;
@@ -165,12 +166,19 @@ method _parse ( $data, %params) {
       if exists($elem->{parent});
 
     if ( $whitespace_tokens ) {
-	if ( $#{$elem->{content}} > 0
+	while ( @{$elem->{content}} > 1
 	     && $elem->{content}->[0]->{type} eq 't'
 	     && $elem->{content}->[0]->{content} !~ /\S/
 	   )
 	  {
 	      shift( @{$elem->{content}} );
+	}
+	while ( @{$elem->{content}} > 1
+	     && $elem->{content}->[-1]->{type} eq 't'
+	     && $elem->{content}->[-1]->{content} !~ /\S/
+	   )
+	  {
+	      pop( @{$elem->{content}} );
 	}
     }
     croak( "SVG Parser: Junk after end of document" )
