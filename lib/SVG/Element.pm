@@ -356,7 +356,6 @@ method fc_setfont ( $style ) {
 
     $fn = $style->{'font-family'} // "Times-Roman";
     $sz = $style->{'font-size'} || 12;
-    $sz = $1 if $sz =~ /^([.\d]+)p[xt]/; # TODO: units
     $em = $style->{'font-style'}
       && $style->{'font-style'} =~ /^(italic|oblique)$/;
     $bd = $style->{'font-weight'}

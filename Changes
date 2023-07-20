@@ -1,7 +1,11 @@
 Revision history for PDF::SVG
 
 0.050
+	- Docs!
 	- Warn when element is not implemented.
+	- Add example program.
+	- Rename script to svgpdf.
+	- Add support for <style>.
 
 0.040	2023-07-19
 

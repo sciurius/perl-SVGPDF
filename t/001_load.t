@@ -1,6 +1,6 @@
 #! perl
 
-use Test::More tests => 18;
+use Test::More tests => 19;
 
 BEGIN {
     # Load the elements first.
@@ -17,6 +17,7 @@ BEGIN {
     use_ok("SVG::Polygon");
     use_ok("SVG::Polyline");
     use_ok("SVG::Rect");
+    use_ok("SVG::Style");
     use_ok("SVG::Svg");
     use_ok("SVG::Text");
     use_ok("SVG::Tspan");

@@ -17,6 +17,7 @@ lib/SVG/Path.pm
 lib/SVG/Polygon.pm
 lib/SVG/Polyline.pm
 lib/SVG/Rect.pm
+lib/SVG/Style.pm
 lib/SVG/Svg.pm
 lib/SVG/Text.pm
 lib/SVG/Tspan.pm
@@ -31,3 +32,5 @@ t/201_xml.t
 t/202_xml.t
 t/203_xml.t
 lib/DDumper.pm
+examples/sample.pl
+scripts/svgpdf.pl

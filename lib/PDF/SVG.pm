@@ -16,32 +16,270 @@ PDF::SVG - Create XObject from SVG data
 =head1 SYNOPSIS
 
     my $pdf = PDF::API2->new;
-    my $gfx = $pdf->gfx;
-    my $svg = PDF::SVG->new( pdf => $pdf, {} );
-    my $xof = $svg->process_file("demo.svg");
+    my $svg = PDF::SVG->new($pdf);
+    my $xof = $svg->process("demo.svg");
 
     # If all goes well, $xof is an array of hashes, each representing an
     # XObject corresponding to the <svg> elements in the file.
-    my $y = 800;
+    # Get a page and graphics context.
+    my $page = $pdf->page;
+    $page->bbox( 0, 0, 595, 842 );
+    my $gfx = $pdf->gfx;
+
+    # Place the objects.
+    my $y = 832;
     foreach my $xo ( @$xof ) {
 	my @bb = @{$xo->{vbox}};
-        my $h = $bb[2];
+        my $h = $bb[3];
 	$gfx->object( $xo->{xo}, 10, $y-$h, 1 );
 	$y -= $h;
     }
 
-
-This module is intended to be used with PDF::Builder, PDF::API2 and
-compatible PDF packages.
+    $pdf->save("demo.pdf");
 
 =head1 DESCRIPTION
 
+This module processes SVG data and produces one or more PDF XObjects
+to be placed in a PDF document. This module is intended to be used
+with L<PDF::Builder>, L<PDF::API2> and compatible PDF packages.
 
+The main routine is process(). It takes an input specification (see
+below) and an optional hash with sttributes for the processing.
+
+=head1 CONSTRUCTOR
+
+In its most simple form, a new PDF::SVG object can be created with a
+single argument, the PDF document.
+
+     $svg = PDF::SVG->new($pdf);
+
+There are two additional arguments, these must be specified as
+key/value pairs.
+
+=over
+
+=item C<fc>
+
+A reference to a callback routine to handle fonts. See below.
+
+=item C<grid>
+
+If not zero, a grid will be added to the image. This is mostly for
+developing and debugging.
+
+The value determines the grid spacing.
+
+=back
+
+For convenience, the mandatory PDF argument can also be specified with
+a key/value pair:
+
+    $svg = PDF::SVG->new( pdf => $pdf, grid => 1, fc => \&fonthandler );
+
+
+
+=head1 INPUT
+
+The SVG data can come from several sources.
+
+=over 4
+
+=item *
+
+An SVG document on disk, specified as the name of the document.
+
+=item *
+
+A file handle, openened on a SVG document, specified as a glob
+reference. You can use C<\*DATA> to append the SVG data after a
+C<__DATA__> separator at the end of the program.
+
+=item *
+
+A string containing SVG data, specified as a reference to a scalar.
+
+=back
+
+The SVG data can be a single C<< <svg> >> element, or a container
+element (e.g. C<< <html> >> or C<< <xml> >>) with one or more
+C<< <svg> >> elements among its children.
+
+=head1 OUTPUT
+
+The result from calling process() is a reference to an array
+containing hashes that describe the XObjects. Each hash has the
+following keys:
+
+=over 4
+
+=item C<vbox>
+
+The viewBox as specified in the SVG element.
+
+If no viewBox is specified it is set to C<0 0> I<W H>, where I<W> and
+I<H> are the width and the height.
+
+=item C<width>
+
+The width of the XObject, as specified in the SVG element or derived
+from its viewBox.
+
+=item C<height>
+
+The height of the XObject, as specified in the SVG element or derived
+from its viewBox.
+
+=item C<vwidth>
+
+The desired width, as specified in the SVG element or derived
+from its viewBox.
+
+=item C<vheight>
+
+The desired height, as specified in the SVG element or derived
+from its viewBox.
+
+=item C<xo>
+
+The XObject itself.
+
+=back
+
+=head1 FONT HANDLER CALLBACK
+
+In SVG fonts are designated by style attributes C<font-family>,
+C<font-style>, C<font-weight>, and C<font-size>. How these translate
+to a PDF font is system dependent. PDF::SVG provides a callback
+mechanism to handle this. As described at L<CONSTRUCTOR>, constructor
+argument C<fc> can be set to designate a user routine.
+
+When a font must be selected at the PDF level, the callback is called
+with three arguments:
+
+    ( $pdf, $gfx, $style )
+
+where C<$pdf> is de PDF document, C<$gfx> the graphics context where
+the font must be set, and C<$style> a has reference that contains
+values for C<font-family>, C<font-style>, C<font-weight>, and
+C<font-size>.
+
+The callback function can use the contents of C<$style> to select an
+appropriate font, B<and set it on the graphics context>:
+
+    $gfx->font( $font, $size );
+
+Example of an (extremely simplified) callback:
+
+    sub simple_font_handler {
+        my ( $pdf, $gfx, $style ) = @_;
+
+	my $family = $style->{'font-family'};
+	my $size   = $style->{'font-size'};
+
+	my $font;
+	if ( $family eq 'sans' ) {
+	    $font = $pdf->font('Helvetica');
+	}
+	else {
+	    $font = $pdf->font('Times-Roman');
+	}
+
+	$gfx->font( $font, $size );
+    }
+
+If no callback function is set, PDF::SVG will recognize the standard
+PDF corefonts, and aliases C<serif>, C<sans> and C<mono>.
+
+B<IMPORTANT: With the standard corefonts only characters of the
+ISO-8859-1 set (Latin-1) can be used. No greek, no chinese, no cyrillic.
+You have been warned.>
+
+=head1 LIMITATIONS
+
+The following SVG elements are implemented.
+
+=over 3
+
+=item *
+
+C<svg>, but not nested.
+
+=item *
+
+C<style>, as a child of the outer C<svg>.
+
+Many style attributes are understood, including but not limited to:
+
+color,
+stroke, stroke-width, stroke-linecap, stroke-linejoin, stroke-dasharray,
+fill, stroke-width, stroke-linecap, stroke-linejoin,
+transform (translate, scale, skewX, skewY, rotate, matrix)
+font-family, font-style, font-weight, font-size,
+text-anchor.
+
+Not implemented: @font-face.
+
+=item *
+
+circle,
+ellipse,
+g,
+image,
+line,
+path,
+polygon,
+polyline,
+rect,
+text and tspan.
+
+=item *
+
+defs and use,
+
+=back
+
+The following SVG features are not (yet) implemented.
+
+=over 3
+
+=item *
+
+title, desc elements
+
+=item *
+
+Shades, gradients, patterns and animations.
+
+=item *
+
+Transparency.
+
+=back
+
+=head1 AUTHOR
+
+Johan Vromans C<< < jvromans at squirrel dot nl > >>
+
+=head1 SUPPORT
+
+PDF::SVG development is hosted on GitHub, repository
+L<https://github.com/sciurius/perl-PDF-SVG>.
+
+Please report any bugs or feature requests to the GitHub issue tracker,
+L<https://github.com/sciurius/perl-PDF-SVG/issues>.
+
+=head1 LICENSE
+
+Copyright (C) 2022.2023 Johan Vromans,
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided under the terms of the Simplified
+BSD License.
 
 =cut
 
 field $pdf          :accessor :param;
-field $atts         :accessor :param;
+field $atts         :accessor :param = undef;
 
 # Callback for font handling.
 field $fc           :accessor :param = undef;
@@ -80,6 +318,7 @@ use SVG::Path;
 use SVG::Polygon;
 use SVG::Polyline;
 use SVG::Rect;
+use SVG::Style;
 use SVG::Svg;
 use SVG::Text;
 use SVG::Tspan;
@@ -87,6 +326,30 @@ use SVG::Use;
 
 
 ################ General methods ################
+
+# $pdf [ , fc => $callback ] [, atts => { ... } ] [, foo => bar ]
+# pdf => $pdf [ , fc => $callback ] [, atts => { ... } ] [, foo => bar ]
+
+sub BUILDARGS ( @args ) {
+    my $cls = shift(@args);
+
+    # Assume first is pdf if uneven.
+    unshift( @args, "pdf" ) if @args % 2;
+
+    my %args = @args;
+    @args = ();
+    push( @args, $_, delete $args{$_} ) for qw( pdf fc );
+
+    # Flatten everything else into %atts.
+    my %x = %{ delete($args{atts}) // {} };
+    $x{$_} = $args{$_} for keys(%args);
+
+    # And store as ref.
+    push( @args, "atts", \%x );
+
+    # Return new argument list.
+    @args;
+}
 
 BUILD {
     $debug        = $atts->{debug}        || 0;
@@ -101,12 +364,12 @@ BUILD {
     $self;
 }
 
-method process_file ( $file, %attr ) {
+method process ( $data, %attr ) {
 
-    # Load the SVG file.
+    # Load the SVG data.
     my $svg = SVG::Parser->new;
     $tree = $svg->parse_file
-      ( $file,
+      ( $data,
 	whitespace_tokens => $wstokens||$attr{whitespace_tokens} );
     return unless $tree;
 
@@ -117,7 +380,7 @@ method process_file ( $file, %attr ) {
     $self->search($tree);
 
     # Return (hopefully a stack of XObjects).
-    return;
+    return $xoforms;
 }
 
 method _dbg ( @args ) {
@@ -136,6 +399,10 @@ method _dbg ( @args ) {
     elsif ( $msg =~ /^\-\s*(.*)/ ) {
 	warn( $indent, $1, "\n") if $1;
 	$indent = substr( $indent, 2 );
+    }
+    elsif ( $msg =~ /^\^\s*(.*)/ ) {
+	$indent = "";
+	warn( $indent, $1, "\n") if $1;
     }
     else {
 	warn( $indent, $msg, "\n") if $msg;
@@ -165,7 +432,7 @@ method search ( $content ) {
 
 method handle_svg ( $e ) {
 
-    $self->_dbg( "+ ==== start ", $e->{name}, " ====" );
+    $self->_dbg( "^ ==== start ", $e->{name}, " ====" );
 
     my $xo;
     if ( $prog ) {
@@ -186,7 +453,7 @@ method handle_svg ( $e ) {
     # If there are <style> elements, these must be processed first.
     my $cdata = "";
     for ( $svg->get_children ) {
-	next unless ref($_) eq "SVG::Element" && $_->name eq 'style';
+	next unless ref($_) eq "SVG::Style";
 	DDumper($_->get_children) unless scalar($_->get_children) == 1;
 	croak("ASSERT: 1 child") unless scalar($_->get_children) == 1;
 	for my $t ( $_->get_children ) {
@@ -275,14 +542,14 @@ method handle_svg ( $e ) {
     $svg->traverse;
 
     $svg->css_pop;
+
     $self->_dbg( "- ==== end ", $e->{name}, " ====" );
 }
 
 ################ Service ################
 
 method draw_grid ( $xo, $bb ) {
-    my $d = 10;
-    my $c = 6;
+    my $d = $grid >= 5 ? $grid : 10;
     my @bb = @$bb;
     my $w = $bb[2];
     my $h = $bb[3];

@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Thu Jul 20 09:15:56 2023
-# Update Count    : 91
+# Last Modified On: Thu Jul 20 16:35:16 2023
+# Update Count    : 98
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -17,7 +17,7 @@ use utf8;
 # Package name.
 my $my_package = 'PDF-SVG';
 # Program name and version.
-my ($my_name, $my_version) = qw( svgdemo 0.01 );
+my ($my_name, $my_version) = qw( svgpdf 0.01 );
 
 use FindBin;
 use lib "$FindBin::Bin/../lib";
@@ -29,7 +29,7 @@ use Getopt::Long 2.13;
 # Command line options.
 my $output = "__new__.pdf";
 my $api = "PDF::API2";		# or PDF::Builder
-my $wstokens;
+my $wstokens = 1;
 my $grid;			# add grid
 my $prog;			# generate program
 my $verbose = 1;		# verbose processing
@@ -72,7 +72,7 @@ foreach my $file ( @ARGV ) {
 		  wstokens => $wstokens,
 		  trace    => $trace } );
 
-    $p->process_file($file);
+    $p->process($file);
     my $o = $p->xoforms;
     warn("$file: SVG objects: ", 0+@$o, "\n") if $verbose;
 
@@ -167,12 +167,12 @@ sub app_options {
     if ( !GetOptions(
 		     'output=s' => \$output,
 		     'program=s' => \$prog,
-		     'grid'	=> \$grid,
+		     'grid=i'	=> \$grid,
 		     'builder'	=> sub { $api = "PDF::Builder";
 					 push( @INC, $ENV{HOME}."/src/PDF-Builder/lib" );
 					 },
 		     'api=s'	=> \$api,
-		     'ws'	=> \$wstokens,
+		     'ws!'	=> \$wstokens,
 		     'ident'	=> \$ident,
 		     'verbose+'	=> \$verbose,
 		     'quiet'	=> sub { $verbose = 0 },
@@ -196,8 +196,11 @@ sub app_usage {
     print STDERR <<EndOfUsage;
 Usage: $0 [options] [svg-file ...]
    --output=XXX		PDF output file name
-   --program=XXX	generates a perl program (requires --debug)
-   --api=XXX		uses PDF API (PDF::API2 or PDF::Builder)
+   --program=XXX	generates a perl program (single SVG only)
+   --api=XXX		uses PDF API (PDF::API2 (default) or PDF::Builder)
+   --builder		short for --api=PDF::Builder
+   --grid=N             provides a grid with spacing N
+   --nows               ignore whitespace tokens
    --ident		shows identification
    --help		shows a brief help message and exits
    --verbose		provides more verbose information
