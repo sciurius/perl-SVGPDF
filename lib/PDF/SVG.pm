@@ -245,7 +245,6 @@ The following SVG features are not (yet) implemented.
 =item *
 
 Percentage units.
-
 =item *
 
 title, desc elements
@@ -560,7 +559,13 @@ method draw_grid ( $xo, $bb ) {
     my $h = $bb[3];
     my $thick = 1;
     my $thin = 0.2;
+    my $maxlines = 100;
 
+    # Avoid too many grid lines.
+    while ( $h/$d > $maxlines || $w/$d > maxlines ) {
+	$d += $d;
+    }
+ 
     $xo->save;
     $xo->stroke_color("#bbbbbb");
 
@@ -568,14 +573,15 @@ method draw_grid ( $xo, $bb ) {
     $xo->transform( translate => [ $bb[0], -$bb[1] ] );
 
     # Show boundary points.
-    $xo->rectangle(-2,-2,2,2);
+    my $dd = $d/2;
+    $xo->rectangle(-$dd,-$dd,$dd,$dd);
     $xo->fill_color("blue");
     $xo->fill;
-    $xo->rectangle( $bb[2]-2, -$bb[3]-2, $bb[2]+2, -$bb[3]+2);
+    $xo->rectangle( $bb[2]-$dd, -$bb[3]-$dd, $bb[2]+$dd, -$bb[3]+$dd);
     $xo->fill_color("blue");
     $xo->fill;
     # Show origin. This will cover the bb corner unless it is offset.
-    $xo->rectangle( -$bb[0]-2, $bb[1]-2, -$bb[0]+2, $bb[1]+2);
+    $xo->rectangle( -$bb[0]-$dd, $bb[1]-$dd, -$bb[0]+$dd, $bb[1]+$dd);
     $xo->fill_color("red");
     $xo->fill;
 
