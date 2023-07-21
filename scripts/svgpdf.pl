@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Thu Jul 20 21:47:13 2023
-# Update Count    : 101
+# Last Modified On: Fri Jul 21 07:35:25 2023
+# Update Count    : 102
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -184,6 +184,7 @@ sub app_options {
 	app_usage(2);
     }
     app_ident() if $ident;
+    $grid = 5 if defined($grid) && $grid < 5;
 }
 
 sub app_ident {
