@@ -238,16 +238,41 @@ defs and use,
 
 =back
 
+The following SVG features are partially implemented.
+
+=over 3
+
+=item *
+
+Matrix transformations.
+
+=item *
+
+Standalone T-path elements.
+
+=back
+
 The following SVG features are not (yet) implemented.
 
 =over 3
 
 =item *
 
+Nested SVG elements.
+
+=item *
+
 Percentage units.
+
 =item *
 
 title, desc elements
+
+=back
+
+The following SVG features will not be implemented.
+
+=over 3
 
 =item *
 
@@ -262,6 +287,8 @@ Transparency.
 =head1 AUTHOR
 
 Johan Vromans C<< < jvromans at squirrel dot nl > >>
+
+Code for circular and elliptic arcs donated by Phil Perry.
 
 =head1 SUPPORT
 
@@ -562,7 +589,7 @@ method draw_grid ( $xo, $bb ) {
     my $maxlines = 100;
 
     # Avoid too many grid lines.
-    while ( $h/$d > $maxlines || $w/$d > maxlines ) {
+    while ( $h/$d > $maxlines || $w/$d > $maxlines ) {
 	$d += $d;
     }
  
