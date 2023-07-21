@@ -77,7 +77,9 @@ method set_transform ( $tf ) {
 	elsif ( $tf =~ /^\s*matrix\s*\((.*?)\)(.*)/ ) {
 	    $tf = $2;
 	    my ( @m ) = $self->getargs($1);
-	    $self->nfi("matrix transformations");
+	    $self->nfi("matrix transformations")
+	      unless abs($m[0]) == 1 && abs($m[3]) == 1
+	             && !abs($m[1]) && !abs($m[2]) && !abs($m[4]) && !abs($m[5]);
 	    # We probably have to flip some elements...
 	    $self->_dbg( "transform matrix(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @m);
 	    $xo->transform( matrix => \@m );
@@ -112,7 +114,6 @@ method set_graphics () {
     if ( defined( my $lw = $style->{'stroke-width'} ) ) {
 	#if ( !defined($xo->{' linewidth'}) or $lw != $xo->{' linewidth'} ) {
 	    $msg .= " stroke-width=$lw";
-	    $xo->line_width($self->u($lw));
 	#}
     }
 
@@ -343,6 +344,21 @@ method nfi ( $tag ) {
       unless $aw->{$tag}++;
 }
 
+################ Bounding Box ################
+
+# method bb ( $x, $y, $t = 0 ) {
+#     my $bb = $self->root->xoforms->[-1]->{bb};
+#
+#     $t = $self->u($t) unless $t =~ /^[-+]?\d*(?:\.\d*)$/;
+#     $t /= 2;
+#     $bb->[0] = $x-$t if $bb->[0] > $x-$t;
+#     $bb->[1] = $y-$t if $bb->[1] > $y-$t;
+#     $bb->[2] = $x+$t if $bb->[2] < $x+$t;
+#     $bb->[3] = $y+$t if $bb->[3] < $y+$t;
+#
+#     return $bb;
+# }
+#
 ################ Styles and Fonts ################
 
 # This may be overriden by a user callback.

@@ -22,15 +22,7 @@ method process () {
     # Currently we rely on the <svg> to supply the correct viewBox.
     if ( $vbox ) {
 	@bb = $self->getargs($vbox);
-	$width = $self->u($width//$bb[2]);
-	$height = $self->u($height//$bb[3]);
-    }
-    else {
-	# Fallback to width/height.
-	$width = $self->u($width||595);
-	$height = $self->u($height||842);
-	@bb = ( 0, 0, $width, $height );
-	$vbox = "@bb";
+	warn(sprintf("vbox( %.2f,%.2f %.2f,%.2f )\n", @bb ));
     }
 
     my $xoforms = $self->root->xoforms;
@@ -41,17 +33,31 @@ method process () {
 	  } );
     $self->_dbg("XObject #", scalar(@$xoforms) );
 
-    $new_xo->bbox(@bb);
-    $self->_dbg( "translate( %.2f %.2f )", 0, $bb[1]+$bb[3] );
-    $new_xo->transform( translate => [ -$bb[0], $bb[1]+$bb[3] ] );
-
+    if ( $vbox ) {
+	$new_xo->bbox(@bb);
+	$self->_dbg( "translate( %.2f %.2f )", -$bb[0], $bb[1]+$bb[3] );
+	warn(sprintf("translate( %.2f %.2f )", -$bb[0], $bb[1]+$bb[3] ),"\n");;
+	$new_xo->transform( translate => [ -$bb[0], $bb[1]+$bb[3] ] );
+    }
+    else {
+	$new_xo->bbox(-32767,-32767,65535,65535);
+    }
     $self->traverse;
 
-    my $w = $bb[2];
-    my $h = $bb[3];
-
-    $self->_dbg( "xo object( %.2f %.2f)", $x, $y-$h );
-    $xo->object( $new_xo, $x, $y-$h, 1, 1 );
+    my $scalex = 1;
+    my $scaley = 1;
+    if ( $vbox ) {
+	if ( $width ) {
+	    $scalex = $width / $bb[2];
+	}
+	if ( $height ) {
+	    $scaley = $height / $bb[3];
+	}
+	$y -= $bb[3]*$scaley;
+    }
+    $self->_dbg( "xo object( %.2f %.2f )", $x, $y );
+    warn(sprintf("xo object( %.2f %.2f %.3f %.3f )\n", $x, $y, $scalex, $scaley ));
+    $xo->object( $new_xo, $x, $y, $scalex, $scaley );
 
     pop( @$xoforms );
 

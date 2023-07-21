@@ -499,42 +499,50 @@ method handle_svg ( $e ) {
 
     my $atts   = $svg->atts;
 
+    # The viewport, llx lly width height.
+    my $vbox   = delete $atts->{viewBox};
+
+    # Width and height are the display size of the viewport.
     my $width  = delete $atts->{width};
     my $height = delete $atts->{height};
-    my $vbox   = delete $atts->{viewBox};
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $svg->css_push($atts);
 
-    my @bb;
+    my @vb;			# viewBox: llx lly width height
+    my @bb;			# bbox:    llx lly urx ury
+
     # Currently we rely on the <svg> to supply the correct viewBox.
     if ( $vbox ) {
-	@bb = $svg->getargs($vbox);
-	$width = $svg->u($width//$bb[2]);
-	$height = $svg->u($height//$bb[3]);
+	@vb     = $svg->getargs($vbox);
+	$width  = $svg->u($width//$vb[2]);
+	$height = $svg->u($height//$vb[3]);
     }
     else {
 	# Fallback to width/height.
-	$width = $svg->u($width||595);
+	$width  = $svg->u($width||595);
 	$height = $svg->u($height||842);
-	@bb = ( 0, 0, $width, $height );
-	$vbox = "@bb";
+	@vb     = ( 0, 0, $width, $height );
+	$vbox = "@vb";
     }
-    $self->_dbg( "bb $vbox => %.2f %.2f %.2f %.2f", @bb );
+    @bb = ( $vb[0], $vb[1], $vb[0]+$vb[2], $vb[1]+$vb[3] );
+    @bb = ( $vb[0], $vb[1], $vb[2], $vb[3] );
+    $self->_dbg( "vb $vbox => bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
 
     # Set up result forms.
     $xoforms->[-1] =
 	  { xo      => $xo,
+	    bbox    => [ @bb ],
 	    vwidth  => $width,
 	    vheight => $height,
-	    vbox    => [ @bb ],
-	    width   => $bb[2] - $bb[0],
-	    height  => $bb[3] - $bb[1] };
+	    vbox    => [ @vb ],
+	    width   => $vb[2],
+	    height  => $vb[3] };
 
     # <svg> coordinates are topleft down, so translate.
-    $self->_dbg( "translate( %.2f %.2f )", 0, $bb[1]+$bb[3] );
-    $xo->transform( translate => [ -$bb[0], $bb[1]+$bb[3] ] );
+    $self->_dbg( "translate( %.2f %.2f )", -$bb[0], $bb[3]+$bb[1] );
+    $xo->transform( translate => [ -$bb[0], $bb[3]+$bb[1] ] );
 
     if ( $debug ) {		# show bb
 	$xo->save;
