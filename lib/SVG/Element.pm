@@ -112,7 +112,7 @@ method set_graphics () {
     if ( defined( my $lw = $style->{'stroke-width'} ) ) {
 	#if ( !defined($xo->{' linewidth'}) or $lw != $xo->{' linewidth'} ) {
 	    $msg .= " stroke-width=$lw";
-	    $xo->line_width($lw);
+	    $xo->line_width($self->u($lw));
 	#}
     }
 
