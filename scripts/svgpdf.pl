@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Fri Jul 21 07:35:25 2023
-# Update Count    : 102
+# Last Modified On: Fri Jul 21 21:46:56 2023
+# Update Count    : 121
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -124,7 +124,7 @@ foreach my $file ( @ARGV ) {
 		     $x, $y-$h*$scale, $w, $h, $scale ))
 	  if $verbose;
 
-	crosshairs( $gfx, $x, $y, "blue" );
+	crosshairs( $gfx, $x, $y, "lime" );
 	if ( $bb[0] || $bb[1] ) {
 	    crosshairs( $gfx, $x-$bb[0]*$scale, $y+$bb[1]*$scale, "red" );
 	}
