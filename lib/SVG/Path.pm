@@ -67,6 +67,7 @@ method process () {
 	if ( $op eq "m" ) {
 	    $x += shift(@d); $y -= shift(@d);
 	    $self->_dbg( "xo move(%.2f,%.2f)", $x, $y );
+	    $ix = $cx, $iy = $cy unless $open;
 	    $xo->move( $x, $y );
 	    if ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		# Subsequent coordinate pair(s) imply lineto.
@@ -236,8 +237,6 @@ method process () {
 	# Close path and paint.
 	if ( lc($op) eq "z" ) {
 	    $self->_dbg( "xo $op" );
-	    #### TODO next is M ?
-	    ...;
 	    if ( $open ) {
 		$xo->close;
 		# currentpoint becomes the initial point.
@@ -245,7 +244,11 @@ method process () {
 		$y = $iy;
 		$open = 0;
 	    }
-	    $paint->();
+	    if ( @d > 2 && lc($d[0]) eq 'm' ) {
+	    }
+	    else {
+		$paint->();
+	    }
 	    next;
 	}
 
