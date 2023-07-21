@@ -18,7 +18,8 @@ method process () {
 	next if ref($_) eq 'SVG::TextElement';
 	my $id  = $_->atts->{id};
 	unless ( defined($id) ) {
-	    warn("SVG: Missing id in defs (skipped)\n");
+	    warn("SVG: Missing id for ", $_->name, " in defs (skipped)\n")
+	      unless $_->name eq "style";
 	    next;
 	}
 	$self->_dbg( "defs: \"$id\" (", $_->name, ")" );
