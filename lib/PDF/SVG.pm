@@ -503,8 +503,9 @@ method handle_svg ( $e ) {
     my $vbox   = delete $atts->{viewBox};
 
     # Width and height are the display size of the viewport.
-    my $width  = delete $atts->{width};
-    my $height = delete $atts->{height};
+    # Not relevant now, but needed later when the XObject is placed.
+    my $vw = delete $atts->{width};
+    my $vh = delete $atts->{height};
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $svg->css_push($atts);
@@ -513,20 +514,23 @@ method handle_svg ( $e ) {
     my @bb;			# bbox:    llx lly urx ury
 
     # Currently we rely on the <svg> to supply the correct viewBox.
+    my $width;			# width of the vbox
+    my $height;			# height of the vbox
     if ( $vbox ) {
 	@vb     = $svg->getargs($vbox);
-	$width  = $svg->u($width//$vb[2]);
-	$height = $svg->u($height//$vb[3]);
+	$width  = $svg->u($vb[2]);
+	$height = $svg->u($vb[3]);
     }
     else {
-	# Fallback to width/height.
-	$width  = $svg->u($width||595);
-	$height = $svg->u($height||842);
+	# Fallback to width/height, falling back to A4.
+	$width  = $svg->u($vw||595);
+	$height = $svg->u($vh||842);
 	@vb     = ( 0, 0, $width, $height );
 	$vbox = "@vb";
     }
-    @bb = ( $vb[0], $vb[1], $vb[0]+$vb[2], $vb[1]+$vb[3] );
-    @bb = ( $vb[0], $vb[1], $vb[2], $vb[3] );
+
+    # Get llx lly urx ury bounding box rectangle.
+    @bb = ( 0, 0, $vb[2], $vb[3] );
     $self->_dbg( "vb $vbox => bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
 
@@ -534,33 +538,33 @@ method handle_svg ( $e ) {
     $xoforms->[-1] =
 	  { xo      => $xo,
 	    bbox    => [ @bb ],
-	    vwidth  => $width,
-	    vheight => $height,
+	    vwidth  => $vw ? $svg->u($vw) : $vb[2],
+	    vheight => $vh ? $svg->u($vh) : $vb[3],
 	    vbox    => [ @vb ],
 	    width   => $vb[2],
 	    height  => $vb[3] };
 
     # <svg> coordinates are topleft down, so translate.
-    $self->_dbg( "translate( %.2f %.2f )", -$bb[0], $bb[3]+$bb[1] );
-    $xo->transform( translate => [ -$bb[0], $bb[3]+$bb[1] ] );
+    $self->_dbg( "translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
+    $xo->transform( translate =>         [ -$vb[0], $vb[1]+$vb[3] ] );
 
     if ( $debug ) {		# show bb
 	$xo->save;
-	$self->_dbg( "bb rect( %.2f %.2f %.2f %.2f)",
-		     $bb[0], -$bb[1], $bb[2]+$bb[0], -$bb[1]-$bb[3]);
-	$xo->rectangle( $bb[0], -$bb[1], $bb[2]+$bb[0], -$bb[1]-$bb[3]);
+	$self->_dbg( "vb rect( %.2f %.2f %.2f %.2f)",
+		        $vb[0], -$vb[1], $vb[2]+$vb[0], -$vb[1]-$vb[3]);
+	$xo->rectangle( $vb[0], -$vb[1], $vb[2]+$vb[0], -$vb[1]-$vb[3]);
 	$xo->fill_color("#ffffc0");
 	$xo->fill;
-	$xo->move(  $bb[0], 0 );
-	$xo->hline( $bb[0]+$bb[2]);
-	$xo->move( 0, -$bb[1] );
-	$xo->vline( -$bb[1]-$bb[3] );
+	$xo->move(  $vb[0], 0 );
+	$xo->hline( $vb[0]+$vb[2]);
+	$xo->move( 0, -$vb[1] );
+	$xo->vline( -$vb[1]-$vb[3] );
 	$xo->line_width(0.5);
 	$xo->stroke_color( "red" );
 	$xo->stroke;
 	$xo->restore;
     }
-    $self->draw_grid( $xo, \@bb ) if $grid;
+    $self->draw_grid( $xo, \@vb ) if $grid;
 
 
     # Establish currentColor.
@@ -587,11 +591,11 @@ method handle_svg ( $e ) {
 
 ################ Service ################
 
-method draw_grid ( $xo, $bb ) {
+method draw_grid ( $xo, $vb ) {
     my $d = $grid >= 5 ? $grid : 10;
-    my @bb = @$bb;
-    my $w = $bb[2];
-    my $h = $bb[3];
+    my @vb = @$vb;
+    my $w = $vb[2];
+    my $h = $vb[3];
     my $thick = 1;
     my $thin = 0.2;
     my $maxlines = 100;
@@ -605,18 +609,18 @@ method draw_grid ( $xo, $bb ) {
     $xo->stroke_color("#bbbbbb");
 
     # Map viewbox to 0,0.
-    $xo->transform( translate => [ $bb[0], -$bb[1] ] );
+    $xo->transform( translate => [ $vb[0], -$vb[1] ] );
 
     # Show boundary points.
     my $dd = $d/2;
     $xo->rectangle(-$dd,-$dd,$dd,$dd);
     $xo->fill_color("blue");
     $xo->fill;
-    $xo->rectangle( $bb[2]-$dd, -$bb[3]-$dd, $bb[2]+$dd, -$bb[3]+$dd);
+    $xo->rectangle( $vb[2]-$dd, -$vb[3]-$dd, $vb[2]+$dd, -$vb[3]+$dd);
     $xo->fill_color("blue");
     $xo->fill;
     # Show origin. This will cover the bb corner unless it is offset.
-    $xo->rectangle( -$bb[0]-$dd, $bb[1]-$dd, -$bb[0]+$dd, $bb[1]+$dd);
+    $xo->rectangle( -$vb[0]-$dd, $vb[1]-$dd, -$vb[0]+$dd, $vb[1]+$dd);
     $xo->fill_color("red");
     $xo->fill;
 

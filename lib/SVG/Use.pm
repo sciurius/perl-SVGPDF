@@ -13,8 +13,9 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $x, $y, $xr ) =
-      $self->get_params( $atts, qw( x:U y:U xlink:href:! ) );
+    my ( $x, $y, $xr, $hr ) =
+      $self->get_params( $atts, qw( x:U y:U xlink:href:s href:s ) );
+    $xr ||= $hr;
 
     unless ( defined $xr ) {
 	warn("SVG: Missing ref in use (skipped)\n");

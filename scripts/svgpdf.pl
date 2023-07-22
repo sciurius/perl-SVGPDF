@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Fri Jul 21 21:46:56 2023
-# Update Count    : 121
+# Last Modified On: Sat Jul 22 17:19:42 2023
+# Update Count    : 123
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -98,9 +98,9 @@ foreach my $file ( @ARGV ) {
 	    }
 	    $xo->{xo} = $xo->{xo}->xo;
 	}
-	my @bb = @{$xo->{vbox}};
-	my $w = $bb[2];
-	my $h = $bb[3];
+	my @bb = @{$xo->{bbox}};
+	my $w = $bb[2]-$bb[0];
+	my $h = $bb[3]-$bb[1];
 	my $scale = 1;
 	if ( $xo->{vwidth} ) {
 	    $scale = $xo->{vwidth} / $w;
@@ -124,9 +124,10 @@ foreach my $file ( @ARGV ) {
 		     $x, $y-$h*$scale, $w, $h, $scale ))
 	  if $verbose;
 
+	my @vb = @{$xo->{vbox}};
 	crosshairs( $gfx, $x, $y, "lime" );
-	if ( $bb[0] || $bb[1] ) {
-	    crosshairs( $gfx, $x-$bb[0]*$scale, $y+$bb[1]*$scale, "red" );
+	if ( $vb[0] || $vb[1] ) {
+	    crosshairs( $gfx, $x-$vb[0]*$scale, $y+$vb[1]*$scale, "red" );
 	}
 	$gfx->object( $xo->{xo}, $x, $y-$h*$scale, $scale );
 
