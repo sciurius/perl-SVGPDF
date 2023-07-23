@@ -94,6 +94,11 @@ method _parse ( $data, %params) {
         croak( "SVG Parser: Unexpected \"$1\"" );
     }
 
+    # The abc2svg generator forgets the close the body. Fix it.
+    if ( $data =~ /\<meta\s+name="generator"\s+content="abc2svg/ ) {
+	$data =~ s;</div>\s*</html>;</div></body></html>;;
+    }
+
     # Ignore empty tokens/whitespace tokens.
     foreach my $token ( grep { length }
 		        split( /(<[^>]+>)/, $data ) ) {
@@ -102,7 +107,7 @@ method _parse ( $data, %params) {
 	        || $token =~ /^<!(ENTITY|DOCTYPE)/i;
 
 	if ( $token =~ m!^</($re_name)\s*>!i ) {     # close tag
-            croak( "SVG Parser: Not well-formed (at \"$token\")" )
+	    croak( "SVG Parser: Not well-formed (at \"$token\")" )
 	      if $elem->{name} ne $1;
             $elem = delete $elem->{parent};
         }
@@ -162,7 +167,7 @@ method _parse ( $data, %params) {
 		  { content => $token, type => 't' } );
         }
     }
-    croak( "SVG Parser: Not well-formed (duplicated parent)" )
+    croak( "SVG Parser: Not well-formed (", $elem->{name}, " duplicated parent)" )
       if exists($elem->{parent});
 
     if ( $whitespace_tokens ) {
