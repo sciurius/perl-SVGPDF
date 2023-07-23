@@ -12,6 +12,7 @@ field $errstr :accessor;
 field $base   :mutator;
 field $ctx    :accessor;
 field @stack;
+field $ffam   :accessor;
 
 BUILD {
     $css = {};
@@ -25,17 +26,23 @@ BUILD {
 	  'line-width'		    => 1,
 	};
     $ctx = {};
+    $ffam = [];
     $self->push( @_ ) if @_;
 }
 
 # Parse a string with one or more styles. Augments.
 method read_string ( $string ) {
 
+    my @ff;
     $css->{'*'} //= $base;
 
     # Flatten whitespace and remove /* comment */ style comments.
     $string =~ s/\s+/ /g;
     $string =~ s!/\*.*?\*\/!!g;
+    while ( $string =~ /^(.*)\@font-face\s*\{\s*([^}]+)\}\s*(.*)/ ) {
+	push( @$ffam, $2 );
+	$string = $1.$3;
+    }
 
     # Split into styles.
     foreach ( grep { /\S/ } split /(?<=\})/, $string ) {
