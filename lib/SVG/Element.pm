@@ -114,6 +114,7 @@ method set_graphics () {
     if ( defined( my $lw = $style->{'stroke-width'} ) ) {
 	#if ( !defined($xo->{' linewidth'}) or $lw != $xo->{' linewidth'} ) {
 	    $msg .= " stroke-width=$lw";
+	    $xo->line_width($self->u($lw));
 	#}
     }
 
@@ -239,7 +240,7 @@ method get_children () {
 	    $pkg = "SVG::Element" unless $pkg->can("process");
 	    push( @res, $pkg->new
 		  ( name    => $e->{name},
-		    atts    => $e->{attrib},
+		    atts    => { map { lc($_) => $e->{attrib}->{$_} } keys %{$e->{attrib}} },
 		    content => $e->{content},
 		    root    => $self->root,
 		  ) );
@@ -268,7 +269,7 @@ method traverse () {
 
 method u ( $a ) {
     confess("Undef in units") unless defined $a;
-    return undef unless $a =~ /^([-+]?\d+(?:\.\d+)?)(.*)$/;
+    return undef unless $a =~ /^([-+]?[\d.]+)(.*)$/;
     return $1 if $2 eq "" || $2 eq "pt" || $2 eq "deg";
     return $1 if $2 eq "px";	# approx
     return $1*12 if $2 eq "em";	# approx
@@ -304,7 +305,7 @@ method get_params ( @desc ) {
 	  if $param =~ /^(.*):(.*)$/;
 
 	# Get and remove the attribute.
-	my $p = delete( $atts{$param} );
+	my $p = delete( $atts{lc($param)} );
 
 	unless ( defined $p ) {
 	    if    ( $flags =~ /s/ )    { $p = ""; }

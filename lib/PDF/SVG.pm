@@ -248,6 +248,10 @@ Matrix transformations.
 
 =item *
 
+Nested SVG elements and preserveAspectRatio.
+
+=item *
+
 Standalone T-path elements.
 
 =back
@@ -255,10 +259,6 @@ Standalone T-path elements.
 The following SVG features are not (yet) implemented.
 
 =over 3
-
-=item *
-
-Nested SVG elements.
 
 =item *
 
@@ -476,7 +476,7 @@ method handle_svg ( $e ) {
     $self->_dbg("XObject #", scalar(@$xoforms) );
     my $svg = SVG::Element->new
 	( name    => $e->{name},
-	  atts    => $e->{attrib},
+	  atts    => { map { lc($_) => $e->{attrib}->{$_} } keys %{$e->{attrib}} },
 	  content => $e->{content},
 	  root    => $self,
 	);
@@ -500,7 +500,7 @@ method handle_svg ( $e ) {
     my $atts   = $svg->atts;
 
     # The viewport, llx lly width height.
-    my $vbox   = delete $atts->{viewBox};
+    my $vbox   = delete $atts->{viewbox};
 
     # Width and height are the display size of the viewport.
     # Not relevant now, but needed later when the XObject is placed.
