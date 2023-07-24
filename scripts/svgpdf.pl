@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Sun Jul 23 19:37:33 2023
-# Update Count    : 131
+# Last Modified On: Mon Jul 24 09:13:50 2023
+# Update Count    : 134
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -106,7 +106,7 @@ foreach my $file ( @ARGV ) {
 	    $scale = $xo->{vwidth} / $w;
 	}
 	if ( $w*$scale > $pgsz[0] ) {
-	    $scale *= $pgsz[0]/$w;
+	    $scale = $pgsz[0]/$w;
 	}
 
 	if ( $y - $h * $scale < 0 ) {
@@ -116,7 +116,7 @@ foreach my $file ( @ARGV ) {
 	    $x = 0;
 	    $y = $pgsz[1];
 	}
-	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.4f )\n",
+	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.g )\n",
 		     $i, $w, $h,
 		     $xo->{vwidth}
 		     ? sprintf("=> %.2f, %.2f ", $xo->{vwidth}, $xo->{vheight})
