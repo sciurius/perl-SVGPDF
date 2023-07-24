@@ -370,8 +370,78 @@ method nfi ( $tag ) {
 #
 ################ Styles and Fonts ################
 
-# This may be overriden by a user callback.
+# Set a font according to the style.
+#
+# Strategy: First see if there was a @font-face defined. If so, use it.
+# Then dispatch to user callback, if specified.
+# Otherwise, try builtin fonts.
+
 method fc_setfont ( $style ) {
+
+    use File::Temp qw( tempfile tempdir );
+    use MIME::Base64 qw( decode_base64 );
+    state $td = tempdir( CLEANUP => 1 );
+
+    if ( $style->{'font-family'} && $style->{'@font-face'} ) {
+	my $fam = lc( $style->{'font-family'}    // "<undef>" );
+	my $stl = lc( $style->{'font-style'}     // "normal" );
+	my $weight = lc( $style->{'font-weight'} // "normal" );
+
+	# Font in cache?
+	my $key = join( "|", $fam, $stl, $weight );
+	if ( my $f = $root->fontcache->{$key} ) {
+	    $xo->font( $f->{font},
+		       $style->{'font-size'} || 12,
+		       $f->{src} );
+	    return;
+	}
+
+	my $ff = $style->{'@font-face'};
+	for ( @$ff ) {
+	    next unless $_->{'font-family'};
+	    next unless $_->{src};
+	    next unless $fam eq lc( $_->{'font-family'} );
+	    next if $_->{'font-style'} && $style->{'font-style'}
+	      && $_->{'font-style'} ne $style->{'font-style'};
+	    next if $_->{'font-weight'} && $style->{'font-weight'}
+	      && $_->{'font-weight'} ne $style->{'font-weight'};
+ 
+	    my $src = $_->{src};
+	    if ( $src =~ /^\s*url\s*\((["'])data:application\/octet-stream;base64,(.*?)\1\s*\)/is ) {
+		my $data = $2;
+		my ( $fh,$fn) = tempfile( "${td}SVGXXXX", SUFFIX => '.ttf' );
+		binmode( $fh => ':raw' );
+		print $fh decode_base64($data);
+		close($fh);
+		my $font = eval { $root->pdf->font($fn) };
+		croak($@) if $@;
+		my $f = $root->fontcache->{$key} =
+		  { font => $font,
+		    src => 'data' };
+		$xo->font( $f->{font},
+			   $style->{'font-size'} || 12,
+			   $f->{src} );
+		return;
+	    }
+	    elsif ( $src =~ /^\s*url\s*\((["'])(.*?\.[ot]tf)\1\s*\)/is ) {
+		my $fn = $2;
+		my $font = eval { $root->pdf->font($fn) };
+		croak($@) if $@;
+		my $f = $root->fontcache->{$key} =
+		  { font => $font,
+		    src => $fn };
+		$xo->font( $f->{font},
+			   $style->{'font-size'} || 12,
+			   $f->{src} );
+		return;
+	    }
+	    else {
+		croak("\@font-face: Unhandled src \"", substr($src,0,50), "...\"");
+	    }
+
+
+	}
+    }
 
     if ( $root->fc ) {
 	# Use user callback.

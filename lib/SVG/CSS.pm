@@ -33,16 +33,16 @@ BUILD {
 # Parse a string with one or more styles. Augments.
 method read_string ( $string ) {
 
-    my @ff;
+    state $ffi = "face000";	# for unique font-face ids
+
     $css->{'*'} //= $base;
 
     # Flatten whitespace and remove /* comment */ style comments.
     $string =~ s/\s+/ /g;
     $string =~ s!/\*.*?\*\/!!g;
-    while ( $string =~ /^(.*)\@font-face\s*\{\s*([^}]+)\}\s*(.*)/ ) {
-	push( @$ffam, $2 );
-	$string = $1.$3;
-    }
+
+    # Hide semicolon in url(data:application/octet-stream;base64,...)
+    $string =~ s/(url\(['"]data:.*?\/.*?);(.*?),/$1\x{ff1b}$2,/g;
 
     # Split into styles.
     foreach ( grep { /\S/ } split /(?<=\})/, $string ) {
@@ -60,6 +60,11 @@ method read_string ( $string ) {
 	    grep { /\S/ }
 	      split( /\s*,\s*/, $style );
 	foreach ( @styles ) {
+	    # Give @font-face rules an unique id.
+	    if ( $_ eq '@font-face' ) {
+		$_ = '@font-'.$ffi;
+		$ffi++;
+	    }
 	    $css->{$_} //= {};
 	}
 
@@ -101,12 +106,14 @@ method read_string ( $string ) {
 		    }
 
 		    # These are for ABC SVG processing.
-		    elsif ( $spec =~ /^abc2svg(?:\.ttf)?$/i
-			    || $spec eq "music" ) {
+		    elsif ( $spec =~ /^abc2svg(?:\.ttf)?$/i ) {
 			$s{'font-family'} = "abc2svg";
 		    }
 		    elsif ( lc($spec) =~ /^musejazz\s*text$/i ) {
 			$s{'font-family'} = "musejazztext";
+		    }
+		    else {
+			$s{'font-family'} = $spec;
 		    }
 		}
 
@@ -145,6 +152,14 @@ method read_string ( $string ) {
     }
 
     my @keys = keys( %$css );
+    for my $k ( @keys ) {
+	if ( $k =~ /^\@font-face/ ) {
+	    # Unhide semicolons.
+	    s/\x{ff1b}/;/g for values( %{$css->{$k}} );
+	    push( @$ffam, $css->{$k} );
+	    delete $css->{$k};
+	}
+    }
     for my $k ( @keys ) {
 	next unless $k =~ /^(\S+)\s+(\S+)$/;
 	$css->{$1}->{" $2"} //= {};
@@ -228,6 +243,7 @@ method push ( @args ) {
 	$self->merge( $ret, delete $css->{__} );
     }
 
+    $ret->{'@font-face'} = $ffam if $ffam;
     push( @stack, { %{$css->{_}//{}} } );
     $self->merge( $css, { _ => $ret } );
     $ctx = $ret;

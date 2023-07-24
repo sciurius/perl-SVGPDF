@@ -316,7 +316,9 @@ field $fc           :accessor :param = undef;
 
 # If an SVG file contains more than a single SVG, the CSS applies to all.
 field $css          :accessor;
-field $tree	    :accessor;
+
+# Font cache.
+field $fontcache    :accessor;
 
 field $xoforms      :accessor;
 field $defs         :accessor;
@@ -391,6 +393,7 @@ BUILD {
     $indent       = "";
     $xoforms      = [];
     $defs         = {};
+    $fontcache    = {};
     $self;
 }
 
@@ -398,7 +401,7 @@ method process ( $data, %attr ) {
 
     # Load the SVG data.
     my $svg = SVG::Parser->new;
-    $tree = $svg->parse_file
+    my $tree = $svg->parse_file
       ( $data,
 	whitespace_tokens => $wstokens||$attr{whitespace_tokens} );
     return unless $tree;
