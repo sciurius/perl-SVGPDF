@@ -189,34 +189,42 @@ method set_graphics () {
     return $style;
 }
 
+# Return a stroke/fill/paint sub depending on the fill stroke styles.
 method _paintsub () {
-    sub {
-	if ( $style->{stroke}
-	     && $style->{stroke} ne 'none'
-	     && $style->{stroke} ne 'transparent'
+    if ( $style->{stroke}
+	 && $style->{stroke} ne 'none'
+	 && $style->{stroke} ne 'transparent'
+       ) {
+	if ( $style->{fill}
+	     && $style->{fill} ne 'none'
+	     && $style->{fill} ne 'transparent'
 	   ) {
-	    if ( $style->{fill}
-		 && $style->{fill} ne 'none'
-		 && $style->{fill} ne 'transparent'
-	       ) {
+	    return sub {
 		$self->_dbg("xo paint (",
 			    join(" ", $style->{stroke}, $style->{fill} ), ")");
 		$xo->paint;
-	    }
-	    else {
+	    };
+	}
+	else {
+	    return sub {
 		$self->_dbg("xo stroke (",
 			    join(" ", $style->{stroke}, $style->{fill} ), ")");
 		$xo->stroke;
-	    }
+	    };
 	}
-	elsif ( $style->{fill}
-		&& $style->{fill} ne 'none'
-		&& $style->{fill} ne 'transparent'
-	      ) {
+    }
+    elsif ( $style->{fill}
+	    && $style->{fill} ne 'none'
+	    && $style->{fill} ne 'transparent'
+	  ) {
+	return sub {
 	    $self->_dbg("xo fill (",
 			join(" ", $style->{stroke}, $style->{fill} ), ")");
 	    $xo->fill;
-	}
+	};
+    }
+    else {
+	return sub {};
     }
 }
 
