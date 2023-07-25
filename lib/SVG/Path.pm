@@ -14,7 +14,11 @@ method process () {
 
     if ( defined $atts->{id} ) {
 	$self->root->defs->{ "#" . $atts->{id} } = $self;
-	# MathJax tweak....
+	# MathJax uses curves to draw glyphs. These glyphs are filles
+	# *and* stroked with a very small stroke-width. According to
+	# the PDF specs, this should yield a 1-pixel (device pixel)
+	# stroke, which results in fat glyphs on screen.
+	# To avoid this, disable stroke when drawing MathJax glyphs.
 	if ( $atts->{id} =~ /^MJX-/ ) {
 	    $atts->{stroke} = 'none';
 	}

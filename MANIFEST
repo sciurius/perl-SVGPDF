@@ -9,6 +9,7 @@ lib/SVG/CSS.pm
 lib/SVG/Defs.pm
 lib/SVG/Element.pm
 lib/SVG/Ellipse.pm
+lib/SVG/FontManager.pm
 lib/SVG/G.pm
 lib/SVG/Image.pm
 lib/SVG/Line.pm

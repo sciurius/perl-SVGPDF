@@ -171,6 +171,10 @@ appropriate font, B<and set it on the graphics context>:
 
     $gfx->font( $font, $size );
 
+B<IMPORTANT:> The callback function must return a 'true' result when
+it did set the font. If it returns a 'false' result PDF::SVG will
+fallback to default fonts.
+
 Example of an (extremely simplified) callback:
 
     sub simple_font_handler {
@@ -188,6 +192,8 @@ Example of an (extremely simplified) callback:
 	}
 
 	$gfx->font( $font, $size );
+
+        return 1;
     }
 
 If no callback function is set, PDF::SVG will recognize the standard
@@ -320,8 +326,8 @@ field $fc           :accessor :param = undef;
 # If an SVG file contains more than a single SVG, the CSS applies to all.
 field $css          :accessor;
 
-# Font cache.
-field $fontcache    :accessor;
+# Font manager.
+field $fontmanager  :accessor;
 
 field $xoforms      :accessor;
 field $defs         :accessor;
@@ -339,6 +345,7 @@ our $indent = "";
 use SVG::Parser;
 use SVG::Element;
 use SVG::CSS;
+use SVG::FontManager;
 use PDF::PAST;
 use DDumper;
 
@@ -396,7 +403,7 @@ BUILD {
     $indent       = "";
     $xoforms      = [];
     $defs         = {};
-    $fontcache    = {};
+    $fontmanager  = SVG::FontManager->new( svg => $self );
     $self;
 }
 
