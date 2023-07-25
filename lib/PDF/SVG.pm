@@ -153,8 +153,11 @@ to a PDF font is system dependent. PDF::SVG provides a callback
 mechanism to handle this. As described at L<CONSTRUCTOR>, constructor
 argument C<fc> can be set to designate a user routine.
 
-When a font must be selected at the PDF level, the callback is called
-with three arguments:
+When a font is required at the PDF level, PDF::SVG first checks if a
+C<@font-face> CSS rule has been set up with matching properties. If a
+match is found, it is resolved and the font is set. If there is no
+appropriate CSS rule for this font, the callback is called with three
+arguments:
 
     ( $pdf, $gfx, $style )
 
@@ -217,7 +220,7 @@ transform (translate, scale, skewX, skewY, rotate, matrix)
 font-family, font-style, font-weight, font-size,
 text-anchor.
 
-Not implemented: @font-face.
+Partially implemented: @font-face (src url data and local file only).
 
 =item *
 
