@@ -60,7 +60,7 @@ method process () {
     if ( $vbox ) {
 	$new_xo->bbox(@bb);
 	$self->_dbg( "translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
-	warn(sprintf("translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] ),"\n");;
+#	warn(sprintf("translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] ),"\n");
 	$new_xo->transform( translate => [ -$vb[0], $vb[1]+$vb[3] ] );
     }
     else {
@@ -114,8 +114,8 @@ method process () {
     }
     $self->_dbg( "xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )",
 		 $x, $dx, $y, $dy, $scalex, $scaley );
-    warn(sprintf("xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )\n",
-		 $x, $dx, $y, $dy, $scalex, $scaley ));
+#    warn(sprintf("xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )\n",
+#		 $x, $dx, $y, $dy, $scalex, $scaley ));
     $xo->object( $new_xo, $x+$dx, $y+$dy, $scalex, $scaley );
 
     pop( @$xoforms );
