@@ -13,8 +13,8 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $x, $y, $xr, $hr ) =
-      $self->get_params( $atts, qw( x:U y:U xlink:href:s href:s ) );
+    my ( $x, $y, $xr, $hr, $tf ) =
+      $self->get_params( $atts, qw( x:U y:U xlink:href:s href:s transform:s ) );
     $xr ||= $hr;
 
     unless ( defined $xr ) {
@@ -35,12 +35,13 @@ method process () {
     $y = -$y;
     $self->_dbg( $self->name, " \"$xr\" (", $r->name, "), x=$x, y=$y" );
 
-    $self->css_push;
-
     $self->_dbg("+ xo save");
     $xo->save;
-    $self->_dbg( "translate( %.2f %.2f )", $x, $y );
-    $xo->transform( translate => [ $x, $y ] );
+    if ( $x || $y ) {
+	$self->_dbg( "translate( %.2f %.2f )", $x, $y );
+	$xo->transform( translate => [ $x, $y ] );
+    }
+    $self->set_transform($tf) if $tf;
     $self->set_graphics;
     $r->process;
     $self->_dbg("- xo restore");
