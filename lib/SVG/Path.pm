@@ -14,6 +14,10 @@ method process () {
 
     if ( defined $atts->{id} ) {
 	$self->root->defs->{ "#" . $atts->{id} } = $self;
+	# MathJax tweak....
+	if ( $atts->{id} =~ /^MJX-/ ) {
+	    $atts->{stroke} = 'none';
+	}
     }
 
     my ( $d, $tf ) = $self->get_params( $atts, "d:!", "transform:s" );
@@ -189,14 +193,25 @@ method process () {
 	if ( $op eq "t" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $x, $y,
+		my @c = ( $cx, $cy,
 			  $x + $d[0], $y - $d[1] );
-		$self->nfi("standalone t-paths");
-		unshift( @c, $x, -$y );
 		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
 		$xo->spline(@c);
-		splice( @d, 0, 2 );
-		$x = $c[2]; $y = $c[3];
+		$x = $c[0]; $y = $c[1];
+		( $cx, $cy ) = ( $x, $y );
+
+		# Check if followed by another T-curve.
+		if ( @d > 3 && lc( my $op = $d[2] ) eq "t" ) {
+		    # Turn T-curve into Q-curve.
+		    # New cp becomes reflection of current cp.
+		    my $rx = 2*$d[3] - $d[0];
+		    my $ry = 2*$d[4] - $d[1];
+		    splice( @d, 0, 3 );
+		    unshift( @d, $op eq 't' ? 'q' : 'Q', $rx, $ry );
+		}
+		else {
+		    splice( @d, 0, 2 );
+		}
 	    }
 	    next;
 	}
