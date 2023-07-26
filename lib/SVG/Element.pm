@@ -112,10 +112,8 @@ method set_graphics () {
     my $msg = $name;
 
     if ( defined( my $lw = $style->{'stroke-width'} ) ) {
-	#if ( !defined($xo->{' linewidth'}) or $lw != $xo->{' linewidth'} ) {
-	    $msg .= " stroke-width=$lw";
-	    $xo->line_width($self->u($lw));
-	#}
+	$msg .= " stroke-width=$lw";
+	$xo->line_width($self->u($lw));
     }
 
     if ( defined( my $linecap = $style->{'stroke-linecap'} ) ) {
@@ -125,10 +123,8 @@ method set_graphics () {
 	elsif ( $linecap eq "square" ) { $linecap = 2 }
 	elsif ( $linecap eq "s"      ) { $linecap = 2 }
 	else                           { $linecap = 0 } # b butt
-	#if ( !defined($xo->{' linecap'}) or $linecap != $xo->{' linecap'} ) {
-	    $msg .= " linecap=$linecap";
-	    $xo->line_cap($linecap);
-	#}
+	$msg .= " linecap=$linecap";
+	$xo->line_cap($linecap);
     }
 
     if ( defined( my $linejoin = $style->{'stroke-linejoin'} ) ) {
@@ -138,10 +134,8 @@ method set_graphics () {
 	elsif ( $linejoin eq "bevel" ) { $linejoin = 2 }
 	elsif ( $linejoin eq "b"     ) { $linejoin = 2 }
 	else                           { $linejoin = 0 } # m miter
-	#if ( !defined($xo->{' linejoin'}) or $linejoin != $xo->{' linejoin'} ) {
-	    $msg .= " linejoin=$linejoin";
-	    $xo->line_join($linejoin);
-	#}
+	$msg .= " linejoin=$linejoin";
+	$xo->line_join($linejoin);
     }
 
     my $stroke = $style->{stroke};
@@ -194,6 +188,7 @@ method _paintsub () {
     if ( $style->{stroke}
 	 && $style->{stroke} ne 'none'
 	 && $style->{stroke} ne 'transparent'
+	 && $style->{'stroke-width'} != 0
        ) {
 	if ( $style->{fill}
 	     && $style->{fill} ne 'none'
@@ -207,8 +202,7 @@ method _paintsub () {
 	}
 	else {
 	    return sub {
-		$self->_dbg("xo stroke (",
-			    join(" ", $style->{stroke}, $style->{fill} ), ")");
+		$self->_dbg("xo stroke (", $style->{stroke}, ")");
 		$xo->stroke;
 	    };
 	}
@@ -218,8 +212,7 @@ method _paintsub () {
 	    && $style->{fill} ne 'transparent'
 	  ) {
 	return sub {
-	    $self->_dbg("xo fill (",
-			join(" ", $style->{stroke}, $style->{fill} ), ")");
+	    $self->_dbg("xo fill (", $style->{stroke}, ")");
 	    $xo->fill;
 	};
     }

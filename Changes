@@ -4,6 +4,7 @@ Revision history for PDF::SVG
 	- (Partial) support for @font-face.
 	- Add tweak for MathJax.
 	- Move font managing to separate module.
+	- Suppress stroke if stroke width = 0.
 	- Docs!
 	- Warn when element is not implemented.
 	- Add example program.
