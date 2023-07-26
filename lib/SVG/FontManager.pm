@@ -28,7 +28,7 @@ method set_font ( $xo, $style ) {
 	my $weight = lc( $style->{'font-weight'} // "normal" );
 
 	# Font in cache?
-	my $key = join( "|", $fam, $stl, $weight );
+	my $key = join( "|", $fam, $weight, $stl );
 	if ( my $f = $fc->{$key} ) {
 	    $xo->font( $f->{font},
 		       $style->{'font-size'} || 12,
