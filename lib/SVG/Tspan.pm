@@ -17,7 +17,7 @@ method process () {
     my $style = $self->style;
 
     # Scale dx/dy to font size, if using em units.
-    $style->{'font-size'} = $self->u($style->{'font-size'});
+    $style->{'font-size'} = 0+$self->u($style->{'font-size'});
     if ( $dx =~ /^([.\d]+)em$/ ) {
 	$dx = $1 * $style->{'font-size'};
     }

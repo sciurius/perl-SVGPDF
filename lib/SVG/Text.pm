@@ -15,8 +15,7 @@ method process () {
     my ( $x, $y, $dx, $dy, $tf ) =
       $self->get_params( $atts, qw( x:s y:s dx:U dy:U transform:s ) );
     my $style = $self->style;
-    $_ = $self->u($_) for $style->{'font-size'};
-
+    $_ = 0+$self->u($_) for $style->{'font-size'};
     my $text = "";
 
     my $color = $style->{color};
