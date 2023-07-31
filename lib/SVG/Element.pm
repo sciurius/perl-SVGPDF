@@ -145,7 +145,11 @@ method set_graphics () {
     }
     elsif ( $stroke ne "none" ) {
 	$stroke =~ s/\s+//g;
-	if ( $stroke =~ /rgb\((\d+),(\d+),(\d+)\)/ ) {
+	if ( $stroke =~ /rgb\(([\d.]+)%,([\d.]+)%,([\d.]+)%\)/ ) {
+	    $stroke = sprintf("#%02X%02X%02X",
+			      map { $_*2.55 } $1, $2, $3);
+	}
+	elsif ( $stroke =~ /rgb\(([\d.]+),([\d.]+),([\d.]+)\)/ ) {
 	    $stroke = sprintf("#%02X%02X%02X", $1, $2, $3);
 	}
 	$xo->stroke_color($stroke);
@@ -162,7 +166,11 @@ method set_graphics () {
     }
     elsif ( lc($fill) ne "none" && $fill ne "transparent" ) {
 	$fill =~ s/\s+//g;
-	if ( $fill =~ /rgb\((\d+),(\d+),(\d+)\)/ ) {
+	if ( $fill =~ /rgb\(([\d.]+)%,([\d.]+)%,([\d.]+)%\)/ ) {
+	    $fill = sprintf("#%02X%02X%02X",
+			    map { $_*2.55 } $1, $2, $3);
+	}
+	elsif ( $fill =~ /rgb\(([\d.]+),([\d.]+),([\d.]+)\)/ ) {
 	    $fill = sprintf("#%02X%02X%02X", $1, $2, $3);
 	}
 	$xo->fill_color($fill);
