@@ -2,9 +2,11 @@ Revision history for PDF::SVG
 
 0.050
 	- (Partial) support for @font-face.
+	- Support font-family alternatives.
 	- Add tweak for MathJax.
 	- Move font managing to separate module.
 	- Suppress stroke if stroke width = 0.
+	- Allow colors as rgb percentages.
 	- Docs!
 	- Warn when element is not implemented.
 	- Add example program.
