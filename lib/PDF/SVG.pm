@@ -378,7 +378,6 @@ use SVG::Element;
 use SVG::CSS;
 use SVG::FontManager;
 use PDF::PAST;
-use DDumper;
 
 # The SVG elements.
 use SVG::Circle;
@@ -529,7 +528,7 @@ method handle_svg ( $e ) {
     my $cdata = "";
     for ( $svg->get_children ) {
 	next unless ref($_) eq "SVG::Style";
-	DDumper($_->get_children) unless scalar($_->get_children) == 1;
+	# DDumper($_->get_children) unless scalar($_->get_children) == 1;
 	croak("ASSERT: 1 child") unless scalar($_->get_children) == 1;
 	for my $t ( $_->get_children ) {
 	    croak("# ASSERT: non-text child in style")
