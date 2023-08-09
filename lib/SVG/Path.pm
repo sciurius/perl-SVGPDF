@@ -26,7 +26,7 @@ method process () {
 
     my ( $d, $tf ) = $self->get_params( $atts, "d:!", "transform:s" );
 
-    my $t = $d;
+    ( my $t = $d ) =~ s/\s+/ /g;
     $t = substr($t,0,20) . "..." if length($t) > 20;
     $self->_dbg( $self->name, " d=\"$t\"", $tf ? " tf=\"$tf\"" : "" );
     $self->_dbg( "+ xo save" );
@@ -66,9 +66,13 @@ method process () {
 	# Use abs coor if op is uppercase.
 	my $abs;
 	if ( $abs = $op eq uc($op) ) {
+	    $op = lc($op);
 	    $x = $x0;
 	    $y = $y0;
-	    $op = lc($op);
+	}
+	else {
+	    $x = $cx;
+	    $y = $cy;
 	}
 
 	# MoveTo
