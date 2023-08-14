@@ -76,8 +76,6 @@ a key/value pair:
 
     $svg = PDF::SVG->new( pdf => $pdf, grid => 1, fc => \&fonthandler );
 
-
-
 =head1 INPUT
 
 The input SVG data B<must> be correct XML data.
@@ -438,6 +436,10 @@ BUILD {
 }
 
 method process ( $data, %attr ) {
+
+    if ( $attr{reset} ) {	# for testing, mostly
+	$xoforms = [];
+    }
 
     # Load the SVG data.
     my $svg = SVG::Parser->new;
