@@ -1,0 +1,10 @@
+<svg width="500" height="600" viewBox="0 0 500 600">
+  <text x="50" y="100">Hello 1</text>
+  <g transform="scale(2)">
+    <text x="50" y="50">Hello   2</text>
+  </g>
+  <text x="50" y="200">Hello 3</text>
+  <g transform="scale(2)">
+    <text x="50" y="100">Hello   4</text>
+  </g>
+</svg>  

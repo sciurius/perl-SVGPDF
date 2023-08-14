@@ -1,0 +1,9 @@
+<svg width="500" height="600" viewBox="0 0 500 600" stroke="black">
+  <style>
+    path { stroke: red }
+  </style>
+  <path d="m100 400h100z"/>
+  <g stroke-width="5">
+    <path d="m100 200h100z"/>
+  </g>
+</svg>  

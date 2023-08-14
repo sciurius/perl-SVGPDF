@@ -1,0 +1,56 @@
+==== start svg ====
+XObject #1
+vb 0 0 320 320 => bb 0.00 0.00 320.00 320.00
+translate( 0.00 320.00 )
+vb rect( 0.00 0.00 320.00 -320.00)
+xo fill_color black (initial)
+  start handling path (SVG::Path)
+  path d="M 10 315 L 110 215 A..."
+    xo save
+    path stroke-width=2 stroke=black fill=green
+    xo move(10.00,-315.00)
+    xo line(110.00,-215.00)
+    xo arc(36.00,60.00 0.00 0,1 150.71,-170.29)
+    elliptic_arc(110.00,-215.00 150.71,-170.29 36.00,60.00 move=0 large=0 dir=0)
+      xo curve( 111.08,-207.76 112.97,-200.92 115.55,-194.83 )
+      xo curve( 118.14,-188.75 121.39,-183.52 125.12,-179.41 )
+      xo curve( 128.86,-175.31 133.02,-172.40 137.40,-170.84 )
+      xo curve( 141.78,-169.28 146.29,-169.09 150.71,-170.29 )
+    xo line(172.55,-152.45)
+    xo arc(30.00,50.00 -45.00 0,1 215.10,-109.90)
+    elliptic_arc(172.55,-152.45 215.10,-109.90 30.00,50.00 move=0 large=0 dir=0)
+      xo curve( 172.83,-144.31 174.29,-136.40 176.82,-129.42 )
+      xo curve( 179.35,-122.44 182.87,-116.60 187.07,-112.40 )
+      xo curve( 191.26,-108.21 196.01,-105.79 200.90,-105.35 )
+      xo curve( 205.78,-104.91 210.66,-106.48 215.10,-109.90 )
+    xo line(315.00,-10.00)
+    xo paint (black green)
+    xo restore
+  end handling path
+  start handling circle (SVG::Circle)
+  circle cx=150.71 cy=170.29 r=2
+    xo save
+    circle stroke=none fill=red
+    xo fill (none)
+    xo restore
+  end handling circle
+  start handling circle (SVG::Circle)
+  circle cx=110 cy=215 r=2
+    xo save
+    circle stroke=none fill=red
+    xo fill (none)
+    xo restore
+  end handling circle
+  start handling ellipse (SVG::Ellipse)
+  ellipse cx=144.931 cy=229.512 rx=36 ry=60
+    xo save
+    ellipse stroke=blue fill=none
+    xo restore
+  end handling ellipse
+  start handling ellipse (SVG::Ellipse)
+  ellipse cx=115.779 cy=155.778 rx=36 ry=60
+    xo save
+    ellipse stroke=blue fill=none
+    xo restore
+  end handling ellipse
+==== end svg ====

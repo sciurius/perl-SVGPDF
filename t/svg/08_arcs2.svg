@@ -1,0 +1,5 @@
+<svg width="200" height="200" viewBox="0 0 200 200">
+  <g stroke="blue" fill="none" stroke-width="0">
+    <path d="M0,50 a1,1 0 0,0 100,0" fill="blue" />
+  </g>
+</svg>

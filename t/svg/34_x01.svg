@@ -1,0 +1,9 @@
+<svg width="500" height="600" viewBox="0 0 500 600">
+  <g transform="translate(50,350)">
+    <text y="100">Hello 1</text>
+    <path d="M0 100H100 V200z"/>
+  </g>
+  <g transform="translate(50,50)">
+    <text y="100">Hello   2</text>
+  </g>
+</svg>  

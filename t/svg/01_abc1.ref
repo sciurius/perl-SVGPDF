@@ -1,0 +1,1576 @@
+html (ignored)
+==== start svg ====
+XObject #1
+vb 0 0 794 144 => bb 0.00 0.00 794.00 144.00
+translate( 0.00 144.00 )
+vb rect( 0.00 0.00 794.00 -144.00)
+xo fill_color black (initial)
+  start handling style (SVG::Style)
+    style ====
+  end handling style
+  start handling defs (SVG::Defs)
+    defs ====
+    defs: "stdef" (path)
+  end handling defs
+  start handling text (SVG::Text)
+  text  x=395.9 y=44.0 anchor="middle"
+    xo save
+    txt translate( 395.90, -44.00 )
+      xo save
+      xo restore
+    xo restore
+  end handling text
+  start handling text (SVG::Text)
+  text  x=738.9 y=65.2 anchor="end"
+    xo save
+    txt translate( 738.90, -65.20 )
+      xo save
+      xo restore
+    xo restore
+  end handling text
+  start handling use (SVG::Use)
+  use "#stdef" (path), x=52.9, y=-121
+    xo save
+    translate( 52.90 -121.00 )
+    use stroke-width=.7 stroke=none fill=current
+    path d="m0 0h686.0m-686.0 -6..."
+      xo save
+      path stroke-width=.7 stroke=current fill=none
+      xo move(0.00,0.00)
+      xo hline(686.00)
+      xo move(0.00,6.00)
+      xo hline(686.00)
+      xo move(0.00,12.00)
+      xo hline(686.00)
+      xo move(0.00,18.00)
+      xo hline(686.00)
+      xo move(0.00,24.00)
+      xo hline(686.00)
+      xo stroke (currentColor)
+      xo restore
+    xo restore
+  end handling use
+  start handling path (SVG::Path)
+  path d="M264.2 121.0v-24.0M4..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(264.20,-121.00)
+    xo vline(-24.00)
+    xo move(422.40,-121.00)
+    xo vline(-24.00)
+    xo move(580.60,-121.00)
+    xo vline(-24.00)
+    xo move(738.90,-121.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(100.90,-115.00)
+      start handling text (SVG::Text)
+      text  y=-12 anchor="middle"
+        xo save
+        txt translate( 0.00, 12.00 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+      start handling text (SVG::Text)
+      text  anchor="middle"
+        xo save
+        txt translate( 0.00, 0.00 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+    xo restore
+  end handling g
+  start handling path (SVG::Path)
+  path d="m113.8 123.3l49.6 -4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(113.80,-123.30)
+    xo line(163.40,-118.60)
+    xo vline(-3.20)
+    xo line(113.80,-120.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m189.8 126.3l49.6 -4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(189.80,-126.30)
+    xo line(239.40,-121.60)
+    xo vline(-3.20)
+    xo line(189.80,-123.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m272.0 123.3l49.6 -4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(272.00,-123.30)
+    xo line(321.60,-118.60)
+    xo vline(-3.20)
+    xo line(272.00,-120.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m348.0 115.7l49.6 4...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(348.00,-115.70)
+    xo line(397.60,-120.40)
+    xo vline(-3.20)
+    xo line(348.00,-112.50)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m430.3 123.3l49.6 -4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(430.30,-123.30)
+    xo line(479.90,-118.60)
+    xo vline(-3.20)
+    xo line(430.30,-120.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m506.3 126.3l49.6 -4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(506.30,-126.30)
+    xo line(555.90,-121.60)
+    xo vline(-3.20)
+    xo line(506.30,-123.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m588.5 123.8l49.6 -2..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(588.50,-123.80)
+    xo line(638.10,-121.20)
+    xo vline(-3.20)
+    xo line(588.50,-120.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m664.5 125.4l49.6 6...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(664.50,-125.40)
+    xo line(714.10,-131.60)
+    xo vline(-3.20)
+    xo line(664.50,-122.20)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling text (SVG::Text)
+  text  x=56.9,77.9,83.4,113.9,138.4,162.8,189.9,214.4,238.8,272.2,296.6,321.0,348.2,372.6,397.1,430.4,454.8,479.3,506.4,530.9,555.3,588.6,613.1,637.5,664.7,689.1,713.5 y=115.0,97.0,106.0,103.0,97.0,97.0,106.0,100.0,100.0,103.0,100.0,97.0,94.0,97.0,100.0,103.0,97.0,97.0,106.0,100.0,100.0,103.0,97.0,100.0,103.0,109.0,112.0
+    xo save
+    txt* translate( 56.90, -115.00 ) e050
+    txt* translate( 77.90, -97.00 ) e262
+    txt* translate( 83.40, -106.00 ) e262
+    txt* translate( 113.90, -103.00 ) e0a4
+    txt* translate( 138.40, -97.00 ) e0a4
+    txt* translate( 162.80, -97.00 ) e0a4
+    txt* translate( 189.90, -106.00 ) e0a4
+    txt* translate( 214.40, -100.00 ) e0a4
+    txt* translate( 238.80, -100.00 ) e0a4
+    txt* translate( 272.20, -103.00 ) e0a4
+    txt* translate( 296.60, -100.00 ) e0a4
+    txt* translate( 321.00, -97.00 ) e0a4
+    txt* translate( 348.20, -94.00 ) e0a4
+    txt* translate( 372.60, -97.00 ) e0a4
+    txt* translate( 397.10, -100.00 ) e0a4
+    txt* translate( 430.40, -103.00 ) e0a4
+    txt* translate( 454.80, -97.00 ) e0a4
+    txt* translate( 479.30, -97.00 ) e0a4
+    txt* translate( 506.40, -106.00 ) e0a4
+    txt* translate( 530.90, -100.00 ) e0a4
+    txt* translate( 555.30, -100.00 ) e0a4
+    txt* translate( 588.60, -103.00 ) e0a4
+    txt* translate( 613.10, -97.00 ) e0a4
+    txt* translate( 637.50, -100.00 ) e0a4
+    txt* translate( 664.70, -103.00 ) e0a4
+    txt* translate( 689.10, -109.00 ) e0a4
+    txt* translate( 713.50, -112.00 ) e0a4
+    xo restore
+  end handling text
+  start handling path (SVG::Path)
+  path d="M114.1 103.0v19.3M13..."
+    xo save
+    path stroke-width=.7 stroke=current fill=none
+    xo move(114.10,-103.00)
+    xo vline(19.30)
+    xo move(138.60,-97.00)
+    xo vline(23.00)
+    xo move(163.00,-97.00)
+    xo vline(20.70)
+    xo move(190.10,-106.00)
+    xo vline(19.30)
+    xo move(214.60,-100.00)
+    xo vline(23.00)
+    xo move(239.00,-100.00)
+    xo vline(20.70)
+    xo move(272.40,-103.00)
+    xo vline(19.30)
+    xo move(296.80,-100.00)
+    xo vline(20.00)
+    xo move(321.20,-97.00)
+    xo vline(20.70)
+    xo move(348.40,-94.00)
+    xo vline(20.70)
+    xo move(372.80,-97.00)
+    xo vline(20.00)
+    xo move(397.30,-100.00)
+    xo vline(19.30)
+    xo move(430.60,-103.00)
+    xo vline(19.30)
+    xo move(455.00,-97.00)
+    xo vline(23.00)
+    xo move(479.50,-97.00)
+    xo vline(20.70)
+    xo move(506.60,-106.00)
+    xo vline(19.30)
+    xo move(531.10,-100.00)
+    xo vline(23.00)
+    xo move(555.50,-100.00)
+    xo vline(20.70)
+    xo move(588.80,-103.00)
+    xo vline(19.80)
+    xo move(613.30,-97.00)
+    xo vline(24.50)
+    xo move(637.70,-100.00)
+    xo vline(20.20)
+    xo move(664.90,-103.00)
+    xo vline(21.40)
+    xo move(689.30,-109.00)
+    xo vline(18.50)
+    xo move(713.70,-112.00)
+    xo vline(18.60)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+==== end svg ====
+==== start svg ====
+XObject #2
+vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
+translate( 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 -70.00)
+xo fill_color black (initial)
+  start handling style (SVG::Style)
+    style ====
+  end handling style
+  start handling use (SVG::Use)
+  use "#stdef" (path), x=52.9, y=-47
+    xo save
+    translate( 52.90 -47.00 )
+    use stroke-width=.7 stroke=none fill=current
+    path d="m0 0h686.0m-686.0 -6..."
+      xo save
+      path stroke-width=.7 stroke=current fill=none
+      xo move(0.00,0.00)
+      xo hline(686.00)
+      xo move(0.00,6.00)
+      xo hline(686.00)
+      xo move(0.00,12.00)
+      xo hline(686.00)
+      xo move(0.00,18.00)
+      xo hline(686.00)
+      xo move(0.00,24.00)
+      xo hline(686.00)
+      xo stroke (currentColor)
+      xo restore
+    xo restore
+  end handling use
+  start handling path (SVG::Path)
+  path d="M380.8 17.0m-6.11 0h..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(380.80,-17.00)
+    xo move(374.69,-17.00)
+    xo hline(12.22)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="M220.8 47.0v-24.0M34..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(220.80,-47.00)
+    xo vline(-24.00)
+    xo move(349.60,-47.00)
+    xo vline(-24.00)
+    xo move(478.40,-47.00)
+    xo vline(-24.00)
+    xo move(604.00,-47.00)
+    xo vline(-24.00)
+    xo move(732.90,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="M608.5 47.0v-24.0M73..."
+    xo save
+    path stroke-width=3 stroke=current fill=none
+    xo move(608.50,-47.00)
+    xo vline(-24.00)
+    xo move(737.40,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m99.8 49.2l39.7 -4.4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(99.80,-49.20)
+    xo line(139.50,-44.80)
+    xo vline(-3.20)
+    xo line(99.80,-46.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m160.5 52.2l39.7 -4...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(160.50,-52.20)
+    xo line(200.20,-47.80)
+    xo vline(-3.20)
+    xo line(160.50,-49.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m228.6 49.2l39.7 -4...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(228.60,-49.20)
+    xo line(268.30,-44.80)
+    xo vline(-3.20)
+    xo line(228.60,-46.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m289.4 41.8l39.7 4.4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(289.40,-41.80)
+    xo line(329.10,-46.20)
+    xo vline(-3.20)
+    xo line(289.40,-38.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m357.4 44.0l39.7 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(357.40,-44.00)
+    xo line(397.10,-44.00)
+    xo vline(-3.20)
+    xo line(357.40,-40.80)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m418.2 41.8l39.7 4.4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(418.20,-41.80)
+    xo line(457.90,-46.20)
+    xo vline(-3.20)
+    xo line(418.20,-38.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m486.3 49.8l39.7 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(486.30,-49.80)
+    xo line(526.00,-47.20)
+    xo vline(-3.20)
+    xo line(486.30,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m547.0 51.6l39.7 5.8..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(547.00,-51.60)
+    xo line(586.70,-57.40)
+    xo vline(-3.20)
+    xo line(547.00,-48.40)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m617.9 49.8l39.7 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(617.90,-49.80)
+    xo line(657.60,-47.20)
+    xo vline(-3.20)
+    xo line(617.90,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m678.7 50.8l39.7 4.4..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(678.70,-50.80)
+    xo line(718.40,-55.20)
+    xo vline(-3.20)
+    xo line(678.70,-47.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling text (SVG::Text)
+  text  x=599.0,56.9,77.9,83.4,99.9,119.5,139.0,160.7,180.2,199.8,228.8,248.3,267.8,289.5,309.1,328.6,357.6,377.1,396.6,418.4,437.9,457.4,486.4,505.9,525.5,547.2,566.7,586.2,618.0,637.6,657.1,678.8,698.3,717.9 y=47.0,41.0,23.0,32.0,29.0,23.0,23.0,32.0,26.0,26.0,29.0,26.0,23.0,20.0,23.0,26.0,23.0,17.0,23.0,20.0,23.0,26.0,29.0,23.0,26.0,29.0,35.0,38.0,29.0,23.0,26.0,29.0,32.0,35.0
+    xo save
+    txt* translate( 599.00, -47.00 ) e043
+    txt* translate( 56.90, -41.00 ) e050
+    txt* translate( 77.90, -23.00 ) e262
+    txt* translate( 83.40, -32.00 ) e262
+    txt* translate( 99.90, -29.00 ) e0a4
+    txt* translate( 119.50, -23.00 ) e0a4
+    txt* translate( 139.00, -23.00 ) e0a4
+    txt* translate( 160.70, -32.00 ) e0a4
+    txt* translate( 180.20, -26.00 ) e0a4
+    txt* translate( 199.80, -26.00 ) e0a4
+    txt* translate( 228.80, -29.00 ) e0a4
+    txt* translate( 248.30, -26.00 ) e0a4
+    txt* translate( 267.80, -23.00 ) e0a4
+    txt* translate( 289.50, -20.00 ) e0a4
+    txt* translate( 309.10, -23.00 ) e0a4
+    txt* translate( 328.60, -26.00 ) e0a4
+    txt* translate( 357.60, -23.00 ) e0a4
+    txt* translate( 377.10, -17.00 ) e0a4
+    txt* translate( 396.60, -23.00 ) e0a4
+    txt* translate( 418.40, -20.00 ) e0a4
+    txt* translate( 437.90, -23.00 ) e0a4
+    txt* translate( 457.40, -26.00 ) e0a4
+    txt* translate( 486.40, -29.00 ) e0a4
+    txt* translate( 505.90, -23.00 ) e0a4
+    txt* translate( 525.50, -26.00 ) e0a4
+    txt* translate( 547.20, -29.00 ) e0a4
+    txt* translate( 566.70, -35.00 ) e0a4
+    txt* translate( 586.20, -38.00 ) e0a4
+    txt* translate( 618.00, -29.00 ) e0a4
+    txt* translate( 637.60, -23.00 ) e0a4
+    txt* translate( 657.10, -26.00 ) e0a4
+    txt* translate( 678.80, -29.00 ) e0a4
+    txt* translate( 698.30, -32.00 ) e0a4
+    txt* translate( 717.90, -35.00 ) e0a4
+    xo restore
+  end handling text
+  start handling path (SVG::Path)
+  path d="M100.1 29.0v19.2M119..."
+    xo save
+    path stroke-width=.7 stroke=current fill=none
+    xo move(100.10,-29.00)
+    xo vline(19.20)
+    xo move(119.70,-23.00)
+    xo vline(23.00)
+    xo move(139.20,-23.00)
+    xo vline(20.80)
+    xo move(160.90,-32.00)
+    xo vline(19.20)
+    xo move(180.40,-26.00)
+    xo vline(23.00)
+    xo move(200.00,-26.00)
+    xo vline(20.80)
+    xo move(229.00,-29.00)
+    xo vline(19.20)
+    xo move(248.50,-26.00)
+    xo vline(20.00)
+    xo move(268.00,-23.00)
+    xo vline(20.80)
+    xo move(289.70,-20.00)
+    xo vline(20.80)
+    xo move(309.30,-23.00)
+    xo vline(20.00)
+    xo move(328.80,-26.00)
+    xo vline(19.20)
+    xo move(357.80,-23.00)
+    xo vline(19.90)
+    xo move(377.30,-17.00)
+    xo vline(25.90)
+    xo move(396.80,-23.00)
+    xo vline(19.90)
+    xo move(418.60,-20.00)
+    xo vline(20.80)
+    xo move(438.10,-23.00)
+    xo vline(20.00)
+    xo move(457.60,-26.00)
+    xo vline(19.20)
+    xo move(486.60,-29.00)
+    xo vline(19.80)
+    xo move(506.10,-23.00)
+    xo vline(24.50)
+    xo move(525.70,-26.00)
+    xo vline(20.20)
+    xo move(547.40,-29.00)
+    xo vline(21.60)
+    xo move(566.90,-35.00)
+    xo vline(18.50)
+    xo move(586.40,-38.00)
+    xo vline(18.40)
+    xo move(618.20,-29.00)
+    xo vline(19.80)
+    xo move(637.80,-23.00)
+    xo vline(24.50)
+    xo move(657.30,-26.00)
+    xo vline(20.20)
+    xo move(679.00,-29.00)
+    xo vline(20.80)
+    xo move(698.50,-32.00)
+    xo vline(20.00)
+    xo move(718.10,-35.00)
+    xo vline(19.20)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(0.00,-47.00)
+      start handling text (SVG::Text)
+      text  x=482.4 y=-29.8
+        xo save
+        txt translate( 482.40, 29.80 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+      start handling path (SVG::Path)
+      path d="m478.4 -39.0m0 10v-1..."
+        xo save
+        path stroke-width=.7 stroke=current fill=none
+        xo move(478.40,39.00)
+        xo move(478.40,29.00)
+        xo vline(-10.00)
+        xo hline(123.60)
+        xo vline(10.00)
+        xo stroke (currentColor)
+        xo restore
+      end handling path
+      start handling text (SVG::Text)
+      text  x=614.0 y=-29.8
+        xo save
+        txt translate( 614.00, 29.80 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+      start handling path (SVG::Path)
+      path d="m610.0 -39.0m0 10v-1..."
+        xo save
+        path stroke-width=.7 stroke=current fill=none
+        xo move(610.00,39.00)
+        xo move(610.00,29.00)
+        xo vline(-10.00)
+        xo hline(128.80)
+        xo vline(10.00)
+        xo stroke (currentColor)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+==== end svg ====
+==== start svg ====
+XObject #3
+vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
+translate( 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 -70.00)
+xo fill_color black (initial)
+  start handling use (SVG::Use)
+  use "#stdef" (path), x=52.9, y=-47
+    xo save
+    translate( 52.90 -47.00 )
+    use stroke-width=.7 stroke=none fill=current
+    path d="m0 0h686.0m-686.0 -6..."
+      xo save
+      path stroke-width=.7 stroke=current fill=none
+      xo move(0.00,0.00)
+      xo hline(686.00)
+      xo move(0.00,6.00)
+      xo hline(686.00)
+      xo move(0.00,12.00)
+      xo hline(686.00)
+      xo move(0.00,18.00)
+      xo hline(686.00)
+      xo move(0.00,24.00)
+      xo hline(686.00)
+      xo stroke (currentColor)
+      xo restore
+    xo restore
+  end handling use
+  start handling path (SVG::Path)
+  path d="M192.9 47.0v-24.0M38..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(192.90,-47.00)
+    xo vline(-24.00)
+    xo move(380.30,-47.00)
+    xo vline(-24.00)
+    xo move(551.50,-47.00)
+    xo vline(-24.00)
+    xo move(738.90,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m200.7 41.6l59.3 4.8..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(200.70,-41.60)
+    xo line(260.00,-46.40)
+    xo vline(-3.20)
+    xo line(200.70,-38.40)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m291.9 46.2l59.3 8.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(291.90,-46.20)
+    xo line(351.20,-54.20)
+    xo vline(-3.20)
+    xo line(291.90,-43.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m395.1 17.0l59.3 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(395.10,-17.00)
+    xo line(454.40,-17.00)
+    xo vline(3.20)
+    xo line(395.10,-20.20)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m559.3 49.8l59.3 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(559.30,-49.80)
+    xo line(618.60,-47.10)
+    xo vline(-3.20)
+    xo line(559.30,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m650.5 50.6l59.3 4.8..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(650.50,-50.60)
+    xo line(709.80,-55.40)
+    xo vline(-3.20)
+    xo line(650.50,-47.40)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling text (SVG::Text)
+  text  x=56.9,77.9,83.4,99.9,110.3,148.6,159.0,200.9,230.2,259.5,292.0,321.3,350.6,388.3,417.6,446.9,479.4,521.7,521.8,559.5,588.8,618.1,650.6,679.9,709.2,101.6 y=41.0,23.0,32.0,38.0,38.0,35.0,32.0,20.0,23.0,26.0,23.0,29.0,35.0,38.0,44.0,38.0,35.0,53.0,32.0,29.0,23.0,26.0,29.0,32.0,35.0,15.0
+    xo save
+    txt* translate( 56.90, -41.00 ) e050
+    txt* translate( 77.90, -23.00 ) e262
+    txt* translate( 83.40, -32.00 ) e262
+    txt* translate( 99.90, -38.00 ) e0a4
+    txt* translate( 110.30, -38.00 ) e1e7
+    txt* translate( 148.60, -35.00 ) e0a4
+    txt* translate( 159.00, -32.00 ) e1e7
+    txt* translate( 200.90, -20.00 ) e0a4
+    txt* translate( 230.20, -23.00 ) e0a4
+    txt* translate( 259.50, -26.00 ) e0a4
+    txt* translate( 292.00, -23.00 ) e0a4
+    txt* translate( 321.30, -29.00 ) e0a4
+    txt* translate( 350.60, -35.00 ) e0a4
+    txt* translate( 388.30, -38.00 ) e0a4
+    txt* translate( 417.60, -44.00 ) e0a4
+    txt* translate( 446.90, -38.00 ) e0a4
+    txt* translate( 479.40, -35.00 ) e0a4
+    txt* translate( 521.70, -53.00 ) e241
+    txt* translate( 521.80, -32.00 ) e0a4
+    txt* translate( 559.50, -29.00 ) e0a4
+    txt* translate( 588.80, -23.00 ) e0a4
+    txt* translate( 618.10, -26.00 ) e0a4
+    txt* translate( 650.60, -29.00 ) e0a4
+    txt* translate( 679.90, -32.00 ) e0a4
+    txt* translate( 709.20, -35.00 ) e0a4
+    txt* translate( 101.60, -15.00 ) e5e2
+    xo restore
+  end handling text
+  start handling path (SVG::Path)
+  path d="M107.1 38.0v-21.0M15..."
+    xo save
+    path stroke-width=.7 stroke=current fill=none
+    xo move(107.10,-38.00)
+    xo vline(-21.00)
+    xo move(155.80,-35.00)
+    xo vline(-21.00)
+    xo move(201.10,-20.00)
+    xo vline(20.60)
+    xo move(230.40,-23.00)
+    xo vline(20.00)
+    xo move(259.70,-26.00)
+    xo vline(19.40)
+    xo move(292.20,-23.00)
+    xo vline(22.30)
+    xo move(321.50,-29.00)
+    xo vline(20.20)
+    xo move(350.80,-35.00)
+    xo vline(18.20)
+    xo move(395.50,-38.00)
+    xo vline(-20.00)
+    xo move(424.80,-44.00)
+    xo vline(-26.00)
+    xo move(454.10,-38.00)
+    xo vline(-20.00)
+    xo move(486.60,-35.00)
+    xo vline(-21.00)
+    xo move(522.00,-32.00)
+    xo vline(21.00)
+    xo move(559.70,-29.00)
+    xo vline(19.80)
+    xo move(589.00,-23.00)
+    xo vline(24.50)
+    xo move(618.30,-26.00)
+    xo vline(20.20)
+    xo move(650.80,-29.00)
+    xo vline(20.60)
+    xo move(680.10,-32.00)
+    xo vline(20.00)
+    xo move(709.40,-35.00)
+    xo vline(19.40)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+==== end svg ====
+==== start svg ====
+XObject #4
+vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
+translate( 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 -70.00)
+xo fill_color black (initial)
+  start handling use (SVG::Use)
+  use "#stdef" (path), x=52.9, y=-47
+    xo save
+    translate( 52.90 -47.00 )
+    use stroke-width=.7 stroke=none fill=current
+    path d="m0 0h686.0m-686.0 -6..."
+      xo save
+      path stroke-width=.7 stroke=current fill=none
+      xo move(0.00,0.00)
+      xo hline(686.00)
+      xo move(0.00,6.00)
+      xo hline(686.00)
+      xo move(0.00,12.00)
+      xo hline(686.00)
+      xo move(0.00,18.00)
+      xo hline(686.00)
+      xo move(0.00,24.00)
+      xo hline(686.00)
+      xo stroke (currentColor)
+      xo restore
+    xo restore
+  end handling use
+  start handling path (SVG::Path)
+  path d="M345.3 17.0m-6.11 0h..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(345.30,-17.00)
+    xo move(339.19,-17.00)
+    xo hline(12.22)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="M169.8 47.0v-24.0M31..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(169.80,-47.00)
+    xo vline(-24.00)
+    xo move(311.90,-47.00)
+    xo vline(-24.00)
+    xo move(453.90,-47.00)
+    xo vline(-24.00)
+    xo move(590.80,-47.00)
+    xo vline(-24.00)
+    xo move(732.90,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="M595.3 47.0v-24.0M73..."
+    xo save
+    path stroke-width=3 stroke=current fill=none
+    xo move(595.30,-47.00)
+    xo vline(-24.00)
+    xo move(737.40,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m177.7 47.3l44.2 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(177.70,-47.30)
+    xo line(221.90,-47.30)
+    xo vline(-3.20)
+    xo line(177.70,-44.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m245.3 46.3l44.2 -4...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(245.30,-46.30)
+    xo line(289.50,-41.80)
+    xo vline(-3.20)
+    xo line(245.30,-43.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m319.7 44.0l44.2 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(319.70,-44.00)
+    xo line(363.90,-44.00)
+    xo vline(-3.20)
+    xo line(319.70,-40.80)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m387.4 41.7l44.2 4.5..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(387.40,-41.70)
+    xo line(431.60,-46.20)
+    xo vline(-3.20)
+    xo line(387.40,-38.50)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m461.8 49.8l44.2 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(461.80,-49.80)
+    xo line(506.00,-47.20)
+    xo vline(-3.20)
+    xo line(461.80,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m529.4 50.7l44.2 4.5..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(529.40,-50.70)
+    xo line(573.60,-55.20)
+    xo vline(-3.20)
+    xo line(529.40,-47.50)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m604.7 49.8l44.2 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(604.70,-49.80)
+    xo line(648.90,-47.20)
+    xo vline(-3.20)
+    xo line(604.70,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m672.3 51.5l44.2 6.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(672.30,-51.50)
+    xo line(716.50,-57.50)
+    xo vline(-3.20)
+    xo line(672.30,-48.30)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling text (SVG::Text)
+  text  x=585.8,56.9,77.9,83.4,99.9,110.3,136.1,146.5,177.8,199.6,221.3,245.4,267.2,288.9,319.9,341.6,363.3,387.5,409.2,431.0,461.9,483.7,505.4,529.6,551.3,573.0,604.8,626.6,648.3,672.5,694.2,715.9,101.6,137.8 y=47.0,41.0,23.0,32.0,38.0,38.0,35.0,32.0,26.0,23.0,26.0,26.0,23.0,20.0,23.0,17.0,23.0,20.0,23.0,26.0,29.0,23.0,26.0,29.0,32.0,35.0,29.0,23.0,26.0,29.0,35.0,38.0,15.0,12.0
+    xo save
+    txt* translate( 585.80, -47.00 ) e043
+    txt* translate( 56.90, -41.00 ) e050
+    txt* translate( 77.90, -23.00 ) e262
+    txt* translate( 83.40, -32.00 ) e262
+    txt* translate( 99.90, -38.00 ) e0a4
+    txt* translate( 110.30, -38.00 ) e1e7
+    txt* translate( 136.10, -35.00 ) e0a4
+    txt* translate( 146.50, -32.00 ) e1e7
+    txt* translate( 177.80, -26.00 ) e0a4
+    txt* translate( 199.60, -23.00 ) e0a4
+    txt* translate( 221.30, -26.00 ) e0a4
+    txt* translate( 245.40, -26.00 ) e0a4
+    txt* translate( 267.20, -23.00 ) e0a4
+    txt* translate( 288.90, -20.00 ) e0a4
+    txt* translate( 319.90, -23.00 ) e0a4
+    txt* translate( 341.60, -17.00 ) e0a4
+    txt* translate( 363.30, -23.00 ) e0a4
+    txt* translate( 387.50, -20.00 ) e0a4
+    txt* translate( 409.20, -23.00 ) e0a4
+    txt* translate( 431.00, -26.00 ) e0a4
+    txt* translate( 461.90, -29.00 ) e0a4
+    txt* translate( 483.70, -23.00 ) e0a4
+    txt* translate( 505.40, -26.00 ) e0a4
+    txt* translate( 529.60, -29.00 ) e0a4
+    txt* translate( 551.30, -32.00 ) e0a4
+    txt* translate( 573.00, -35.00 ) e0a4
+    txt* translate( 604.80, -29.00 ) e0a4
+    txt* translate( 626.60, -23.00 ) e0a4
+    txt* translate( 648.30, -26.00 ) e0a4
+    txt* translate( 672.50, -29.00 ) e0a4
+    txt* translate( 694.20, -35.00 ) e0a4
+    txt* translate( 715.90, -38.00 ) e0a4
+    txt* translate( 101.60, -15.00 ) e5e2
+    txt* translate( 137.80, -12.00 ) e5e2
+    xo restore
+  end handling text
+  start handling path (SVG::Path)
+  path d="M107.1 38.0v-21.0M14..."
+    xo save
+    path stroke-width=.7 stroke=current fill=none
+    xo move(107.10,-38.00)
+    xo vline(-21.00)
+    xo move(143.30,-35.00)
+    xo vline(-21.00)
+    xo move(178.00,-26.00)
+    xo vline(20.30)
+    xo move(199.80,-23.00)
+    xo vline(23.30)
+    xo move(221.50,-26.00)
+    xo vline(20.30)
+    xo move(245.60,-26.00)
+    xo vline(19.20)
+    xo move(267.40,-23.00)
+    xo vline(20.00)
+    xo move(289.10,-20.00)
+    xo vline(20.80)
+    xo move(320.10,-23.00)
+    xo vline(19.90)
+    xo move(341.80,-17.00)
+    xo vline(25.90)
+    xo move(363.50,-23.00)
+    xo vline(19.90)
+    xo move(387.70,-20.00)
+    xo vline(20.80)
+    xo move(409.40,-23.00)
+    xo vline(20.00)
+    xo move(431.20,-26.00)
+    xo vline(19.20)
+    xo move(462.10,-29.00)
+    xo vline(19.80)
+    xo move(483.90,-23.00)
+    xo vline(24.50)
+    xo move(505.60,-26.00)
+    xo vline(20.20)
+    xo move(529.80,-29.00)
+    xo vline(20.80)
+    xo move(551.50,-32.00)
+    xo vline(20.00)
+    xo move(573.20,-35.00)
+    xo vline(19.20)
+    xo move(605.00,-29.00)
+    xo vline(19.80)
+    xo move(626.80,-23.00)
+    xo vline(24.50)
+    xo move(648.50,-26.00)
+    xo vline(20.20)
+    xo move(672.70,-29.00)
+    xo vline(21.50)
+    xo move(694.40,-35.00)
+    xo vline(18.50)
+    xo move(716.10,-38.00)
+    xo vline(18.50)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(0.00,-47.00)
+      start handling text (SVG::Text)
+      text  x=457.9 y=-29.8
+        xo save
+        txt translate( 457.90, 29.80 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+      start handling path (SVG::Path)
+      path d="m453.9 -39.0m0 10v-1..."
+        xo save
+        path stroke-width=.7 stroke=current fill=none
+        xo move(453.90,39.00)
+        xo move(453.90,29.00)
+        xo vline(-10.00)
+        xo hline(134.90)
+        xo vline(10.00)
+        xo stroke (currentColor)
+        xo restore
+      end handling path
+      start handling text (SVG::Text)
+      text  x=600.8 y=-29.8
+        xo save
+        txt translate( 600.80, 29.80 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+      start handling path (SVG::Path)
+      path d="m596.8 -39.0m0 10v-1..."
+        xo save
+        path stroke-width=.7 stroke=current fill=none
+        xo move(596.80,39.00)
+        xo move(596.80,29.00)
+        xo vline(-10.00)
+        xo hline(142.10)
+        xo vline(10.00)
+        xo stroke (currentColor)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+==== end svg ====
+==== start svg ====
+XObject #5
+vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
+translate( 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 -70.00)
+xo fill_color black (initial)
+  start handling use (SVG::Use)
+  use "#stdef" (path), x=52.9, y=-47
+    xo save
+    translate( 52.90 -47.00 )
+    use stroke-width=.7 stroke=none fill=current
+    path d="m0 0h686.0m-686.0 -6..."
+      xo save
+      path stroke-width=.7 stroke=current fill=none
+      xo move(0.00,0.00)
+      xo hline(686.00)
+      xo move(0.00,6.00)
+      xo hline(686.00)
+      xo move(0.00,12.00)
+      xo hline(686.00)
+      xo move(0.00,18.00)
+      xo hline(686.00)
+      xo move(0.00,24.00)
+      xo hline(686.00)
+      xo stroke (currentColor)
+      xo restore
+    xo restore
+  end handling use
+  start handling path (SVG::Path)
+  path d="M253.7 47.0v-24.0M41..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(253.70,-47.00)
+    xo vline(-24.00)
+    xo move(415.40,-47.00)
+    xo vline(-24.00)
+    xo move(577.10,-47.00)
+    xo vline(-24.00)
+    xo move(738.90,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m99.8 57.2l50.7 0.0v..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(99.80,-57.20)
+    xo line(150.50,-57.20)
+    xo vline(-3.20)
+    xo line(99.80,-54.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m177.6 57.2l50.7 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(177.60,-57.20)
+    xo line(228.30,-57.20)
+    xo vline(-3.20)
+    xo line(177.60,-54.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m261.5 49.3l50.7 -4...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(261.50,-49.30)
+    xo line(312.20,-44.60)
+    xo vline(-3.20)
+    xo line(261.50,-46.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m339.4 41.7l50.7 4.7..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(339.40,-41.70)
+    xo line(390.10,-46.40)
+    xo vline(-3.20)
+    xo line(339.40,-38.50)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m423.3 57.2l50.7 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(423.30,-57.20)
+    xo line(474.00,-57.20)
+    xo vline(-3.20)
+    xo line(423.30,-54.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m501.1 57.2l50.7 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(501.10,-57.20)
+    xo line(551.80,-57.20)
+    xo vline(-3.20)
+    xo line(501.10,-54.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m585.0 49.8l50.7 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(585.00,-49.80)
+    xo line(635.70,-47.20)
+    xo vline(-3.20)
+    xo line(585.00,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m662.8 51.4l50.7 6.3..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(662.80,-51.40)
+    xo line(713.50,-57.70)
+    xo vline(-3.20)
+    xo line(662.80,-48.20)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling text (SVG::Text)
+  text  x=56.9,77.9,83.4,99.9,124.9,150.0,177.8,202.8,227.8,261.7,286.7,311.7,339.5,364.5,389.5,423.4,448.4,473.4,501.2,526.3,551.3,585.1,610.2,635.2,663.0,688.0,713.0 y=41.0,23.0,32.0,23.0,38.0,38.0,26.0,38.0,38.0,29.0,26.0,23.0,20.0,23.0,26.0,23.0,38.0,38.0,26.0,38.0,38.0,29.0,23.0,26.0,29.0,35.0,38.0
+    xo save
+    txt* translate( 56.90, -41.00 ) e050
+    txt* translate( 77.90, -23.00 ) e262
+    txt* translate( 83.40, -32.00 ) e262
+    txt* translate( 99.90, -23.00 ) e0a4
+    txt* translate( 124.90, -38.00 ) e0a4
+    txt* translate( 150.00, -38.00 ) e0a4
+    txt* translate( 177.80, -26.00 ) e0a4
+    txt* translate( 202.80, -38.00 ) e0a4
+    txt* translate( 227.80, -38.00 ) e0a4
+    txt* translate( 261.70, -29.00 ) e0a4
+    txt* translate( 286.70, -26.00 ) e0a4
+    txt* translate( 311.70, -23.00 ) e0a4
+    txt* translate( 339.50, -20.00 ) e0a4
+    txt* translate( 364.50, -23.00 ) e0a4
+    txt* translate( 389.50, -26.00 ) e0a4
+    txt* translate( 423.40, -23.00 ) e0a4
+    txt* translate( 448.40, -38.00 ) e0a4
+    txt* translate( 473.40, -38.00 ) e0a4
+    txt* translate( 501.20, -26.00 ) e0a4
+    txt* translate( 526.30, -38.00 ) e0a4
+    txt* translate( 551.30, -38.00 ) e0a4
+    txt* translate( 585.10, -29.00 ) e0a4
+    txt* translate( 610.20, -23.00 ) e0a4
+    txt* translate( 635.20, -26.00 ) e0a4
+    txt* translate( 663.00, -29.00 ) e0a4
+    txt* translate( 688.00, -35.00 ) e0a4
+    txt* translate( 713.00, -38.00 ) e0a4
+    xo restore
+  end handling text
+  start handling path (SVG::Path)
+  path d="M100.1 23.0v33.2M125..."
+    xo save
+    path stroke-width=.7 stroke=current fill=none
+    xo move(100.10,-23.00)
+    xo vline(33.20)
+    xo move(125.10,-38.00)
+    xo vline(18.20)
+    xo move(150.20,-38.00)
+    xo vline(18.20)
+    xo move(178.00,-26.00)
+    xo vline(30.20)
+    xo move(203.00,-38.00)
+    xo vline(18.20)
+    xo move(228.00,-38.00)
+    xo vline(18.20)
+    xo move(261.90,-29.00)
+    xo vline(19.30)
+    xo move(286.90,-26.00)
+    xo vline(20.00)
+    xo move(311.90,-23.00)
+    xo vline(20.70)
+    xo move(339.70,-20.00)
+    xo vline(20.70)
+    xo move(364.70,-23.00)
+    xo vline(20.00)
+    xo move(389.70,-26.00)
+    xo vline(19.30)
+    xo move(423.60,-23.00)
+    xo vline(33.20)
+    xo move(448.60,-38.00)
+    xo vline(18.20)
+    xo move(473.60,-38.00)
+    xo vline(18.20)
+    xo move(501.40,-26.00)
+    xo vline(30.20)
+    xo move(526.50,-38.00)
+    xo vline(18.20)
+    xo move(551.50,-38.00)
+    xo vline(18.20)
+    xo move(585.30,-29.00)
+    xo vline(19.80)
+    xo move(610.40,-23.00)
+    xo vline(24.50)
+    xo move(635.40,-26.00)
+    xo vline(20.20)
+    xo move(663.20,-29.00)
+    xo vline(21.40)
+    xo move(688.20,-35.00)
+    xo vline(18.50)
+    xo move(713.20,-38.00)
+    xo vline(18.60)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+==== end svg ====
+==== start svg ====
+XObject #6
+vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
+translate( 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 -70.00)
+xo fill_color black (initial)
+  start handling use (SVG::Use)
+  use "#stdef" (path), x=52.9, y=-47
+    xo save
+    translate( 52.90 -47.00 )
+    use stroke-width=.7 stroke=none fill=current
+    path d="m0 0h686.0m-686.0 -6..."
+      xo save
+      path stroke-width=.7 stroke=current fill=none
+      xo move(0.00,0.00)
+      xo hline(686.00)
+      xo move(0.00,6.00)
+      xo hline(686.00)
+      xo move(0.00,12.00)
+      xo hline(686.00)
+      xo move(0.00,18.00)
+      xo hline(686.00)
+      xo move(0.00,24.00)
+      xo hline(686.00)
+      xo stroke (currentColor)
+      xo restore
+    xo restore
+  end handling use
+  start handling path (SVG::Path)
+  path d="M453.3 17.0m-6.11 0h..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(453.30,-17.00)
+    xo move(447.19,-17.00)
+    xo hline(12.22)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="M254.2 47.0v-24.0M41..."
+    xo save
+    path stroke-width=1 stroke=current fill=none
+    xo move(254.20,-47.00)
+    xo vline(-24.00)
+    xo move(416.50,-47.00)
+    xo vline(-24.00)
+    xo move(578.70,-47.00)
+    xo vline(-24.00)
+    xo move(732.90,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="M737.4 47.0v-24.0"
+    xo save
+    path stroke-width=3 stroke=current fill=none
+    xo move(737.40,-47.00)
+    xo vline(-24.00)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m99.8 57.2l50.9 0.0v..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(99.80,-57.20)
+    xo line(150.70,-57.20)
+    xo vline(-3.20)
+    xo line(99.80,-54.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m177.9 57.2l50.9 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(177.90,-57.20)
+    xo line(228.80,-57.20)
+    xo vline(-3.20)
+    xo line(177.90,-54.00)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m262.1 49.3l50.9 -4...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(262.10,-49.30)
+    xo line(313.00,-44.60)
+    xo vline(-3.20)
+    xo line(262.10,-46.10)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m340.2 41.7l50.9 4.7..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(340.20,-41.70)
+    xo line(391.10,-46.40)
+    xo vline(-3.20)
+    xo line(340.20,-38.50)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m424.3 44.0l50.9 0.0..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(424.30,-44.00)
+    xo line(475.20,-44.00)
+    xo vline(-3.20)
+    xo line(424.30,-40.80)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m502.4 41.7l50.9 4.7..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(502.40,-41.70)
+    xo line(553.30,-46.40)
+    xo vline(-3.20)
+    xo line(502.40,-38.50)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m586.6 49.8l50.9 -2...."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(586.60,-49.80)
+    xo line(637.50,-47.20)
+    xo vline(-3.20)
+    xo line(586.60,-46.60)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling path (SVG::Path)
+  path d="m664.7 51.4l50.9 6.3..."
+    xo save
+    path stroke-width=.7 stroke=none fill=current
+    xo move(664.70,-51.40)
+    xo line(715.60,-57.70)
+    xo vline(-3.20)
+    xo line(664.70,-48.20)
+    xo z
+    xo fill (none)
+    xo restore
+  end handling path
+  start handling text (SVG::Text)
+  text  x=727.9,56.9,77.9,83.4,99.9,125.0,150.1,178.0,203.1,228.3,262.2,287.3,312.4,340.3,365.4,390.5,424.5,449.6,474.7,502.6,527.7,552.8,586.7,611.9,637.0,664.9,690.0,715.1 y=47.0,41.0,23.0,32.0,23.0,38.0,38.0,26.0,38.0,38.0,29.0,26.0,23.0,20.0,23.0,26.0,23.0,17.0,23.0,20.0,23.0,26.0,29.0,23.0,26.0,29.0,35.0,38.0
+    xo save
+    txt* translate( 727.90, -47.00 ) e043
+    txt* translate( 56.90, -41.00 ) e050
+    txt* translate( 77.90, -23.00 ) e262
+    txt* translate( 83.40, -32.00 ) e262
+    txt* translate( 99.90, -23.00 ) e0a4
+    txt* translate( 125.00, -38.00 ) e0a4
+    txt* translate( 150.10, -38.00 ) e0a4
+    txt* translate( 178.00, -26.00 ) e0a4
+    txt* translate( 203.10, -38.00 ) e0a4
+    txt* translate( 228.30, -38.00 ) e0a4
+    txt* translate( 262.20, -29.00 ) e0a4
+    txt* translate( 287.30, -26.00 ) e0a4
+    txt* translate( 312.40, -23.00 ) e0a4
+    txt* translate( 340.30, -20.00 ) e0a4
+    txt* translate( 365.40, -23.00 ) e0a4
+    txt* translate( 390.50, -26.00 ) e0a4
+    txt* translate( 424.50, -23.00 ) e0a4
+    txt* translate( 449.60, -17.00 ) e0a4
+    txt* translate( 474.70, -23.00 ) e0a4
+    txt* translate( 502.60, -20.00 ) e0a4
+    txt* translate( 527.70, -23.00 ) e0a4
+    txt* translate( 552.80, -26.00 ) e0a4
+    txt* translate( 586.70, -29.00 ) e0a4
+    txt* translate( 611.90, -23.00 ) e0a4
+    txt* translate( 637.00, -26.00 ) e0a4
+    txt* translate( 664.90, -29.00 ) e0a4
+    txt* translate( 690.00, -35.00 ) e0a4
+    txt* translate( 715.10, -38.00 ) e0a4
+    xo restore
+  end handling text
+  start handling path (SVG::Path)
+  path d="M100.1 23.0v33.2M125..."
+    xo save
+    path stroke-width=.7 stroke=current fill=none
+    xo move(100.10,-23.00)
+    xo vline(33.20)
+    xo move(125.20,-38.00)
+    xo vline(18.20)
+    xo move(150.30,-38.00)
+    xo vline(18.20)
+    xo move(178.20,-26.00)
+    xo vline(30.20)
+    xo move(203.30,-38.00)
+    xo vline(18.20)
+    xo move(228.50,-38.00)
+    xo vline(18.20)
+    xo move(262.40,-29.00)
+    xo vline(19.30)
+    xo move(287.50,-26.00)
+    xo vline(20.00)
+    xo move(312.60,-23.00)
+    xo vline(20.70)
+    xo move(340.50,-20.00)
+    xo vline(20.70)
+    xo move(365.60,-23.00)
+    xo vline(20.00)
+    xo move(390.70,-26.00)
+    xo vline(19.30)
+    xo move(424.70,-23.00)
+    xo vline(19.90)
+    xo move(449.80,-17.00)
+    xo vline(25.90)
+    xo move(474.90,-23.00)
+    xo vline(19.90)
+    xo move(502.80,-20.00)
+    xo vline(20.70)
+    xo move(527.90,-23.00)
+    xo vline(20.00)
+    xo move(553.00,-26.00)
+    xo vline(19.30)
+    xo move(586.90,-29.00)
+    xo vline(19.80)
+    xo move(612.10,-23.00)
+    xo vline(24.50)
+    xo move(637.20,-26.00)
+    xo vline(20.20)
+    xo move(665.10,-29.00)
+    xo vline(21.40)
+    xo move(690.20,-35.00)
+    xo vline(18.50)
+    xo move(715.30,-38.00)
+    xo vline(18.60)
+    xo stroke (currentColor)
+    xo restore
+  end handling path
+==== end svg ====

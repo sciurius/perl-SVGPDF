@@ -1,0 +1,55 @@
+<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+<style>
+path {
+  fill: yellow;
+  stroke: black;
+  stroke-width: 8px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+</style>
+<svg viewBox="-1 -1 202 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path
+      id="smiley"
+      d="M50,10 A40,40,1,1,1,50,90 A40,40,1,1,1,50,10 M30,40 Q36,35,42,40 M58,40 Q64,35,70,40 M30,60 Q50,75,70,60 Q50,75,30,60" />
+  </defs>
+</svg>
+<rect omit="0" x="0" y="0" width="60" height="30">
+  <title>xMidYMid meet</title>
+</rect>
+<svg omit="0"
+  viewBox="0 0 100 100"
+  width="60"
+  height="30"
+  preserveAspectRatio="xMidYMid meet"
+  x="0"
+  y="0">
+  <use href="#smiley" />
+</svg>
+<rect omit="0" x="70" y="0" width="60" height="30">
+  <title>xMinYMid meet</title>
+</rect>
+<svg omit="0"
+  viewBox="0 0 100 100"
+  width="60"
+  height="30"
+  preserveAspectRatio="xMinYMid meet"
+  x="70"
+  y="0">
+  <use href="#smiley" />
+</svg>
+ <rect omit="0" x="140" y="0" width="60" height="30">
+    <title>xMaxYMid meet</title>
+  </rect>
+  <svg  omit="0"
+    viewBox="0 0 100 100"
+    width="60"
+    height="30"
+    preserveAspectRatio="xMaxYMid meet"
+    x="140"
+    y="0">
+    <use href="#smiley" />
+  </svg>
+</svg>

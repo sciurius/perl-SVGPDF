@@ -1,0 +1,46 @@
+==== start svg ====
+XObject #1
+vb 0 0 500 600 => bb 0.00 0.00 500.00 600.00
+translate( 0.00 600.00 )
+vb rect( 0.00 0.00 500.00 -600.00)
+xo fill_color black (initial)
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(50.00,-350.00)
+      start handling text (SVG::Text)
+      text  y=100
+        xo save
+        txt translate( 0.00, -100.00 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+      start handling path (SVG::Path)
+      path d="M0 100H100 V200z"
+        xo save
+        path stroke=none fill=current
+        xo move(0.00,-100.00)
+        xo hline(100.00)
+        xo vline(200.00)
+        xo z
+        xo fill (none)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(50.00,-50.00)
+      start handling text (SVG::Text)
+      text  y=100
+        xo save
+        txt translate( 0.00, -100.00 )
+          xo save
+          xo restore
+        xo restore
+      end handling text
+    xo restore
+  end handling g
+==== end svg ====

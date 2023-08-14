@@ -1,0 +1,26 @@
+<xml>
+<svg width="400" height="250" viewBox="0 0 400 250">
+  <desc>http://www.pindari.com/svg-arc.html</desc>
+  <g stroke="none" fill="lime" transform="translate(0,-150)">
+    <path omit="0" d="M 100 300 A 100 100 0 0 1 300 300 L 250 300 A 50 50 0 0 0 150 300 L 100 300 Z"/>
+  </g>
+</svg>
+<svg width="400" height="300" viewBox="0 0 400 300">
+  <desc>http://www.pindari.com/svg-arc.html</desc>
+  <g stroke="none" fill="lime" transform="translate(0,-200)">
+    <path omit="0" d="M 100 300 A 100 100 0 0 0 300 300 L 250 300 A 50 50 0 0 0 150 300 L 100 300 Z"/>
+  </g>
+</svg>
+<svg width="400" height="300" viewBox="0 0 400 300">
+  <desc>http://www.pindari.com/svg-arc.html</desc>
+  <g stroke="none" fill="lime" transform="translate(0,-200)">
+    <path omit="0" d="M 100 300 A 100 100 0 0 0 300 300 L 250 300 A 50 50 0 0 1 150 300 L 100 300 Z"/>
+  </g>
+</svg>
+<svg width="400" height="300" viewBox="0 0 400 300">
+  <desc>http://www.pindari.com/svg-arc.html</desc>
+  <g stroke="none" fill="lime" transform="translate(0,-150)">
+    <path omit="0" d="M 100 300 A 100 100 0 0 1 300 300 L 250 300 A 50 50 0 0 1 150 300 L 100 300 Z"/>
+  </g>
+</svg>
+</xml>

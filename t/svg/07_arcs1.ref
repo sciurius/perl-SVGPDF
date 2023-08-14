@@ -1,0 +1,189 @@
+xml (ignored)
+==== start svg ====
+XObject #1
+vb 0 0 400 250 => bb 0.00 0.00 400.00 250.00
+translate( 0.00 250.00 )
+vb rect( 0.00 0.00 400.00 -250.00)
+xo fill_color black (initial)
+  start handling desc (SVG::Element)
+  skipping desc (not implemented)
+  end handling desc
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(0.00,150.00)
+      start handling path (SVG::Path)
+      path d="M 100 300 A 100 100 ..."
+        xo save
+        path stroke=none fill=lime
+        xo move(100.00,-300.00)
+        xo arc(100.00,100.00 0.00 0,1 300.00,-300.00)
+        circular_arc(100.00,-300.00 300.00,-300.00 100.00 move=0 large=0 dir=0)
+          xo curve( 100.00,-286.87 102.59,-273.86 107.61,-261.73 )
+          xo curve( 112.64,-249.60 120.00,-238.58 129.29,-229.29 )
+          xo curve( 138.58,-220.00 149.60,-212.64 161.73,-207.61 )
+          xo curve( 173.86,-202.59 186.87,-200.00 200.00,-200.00 )
+          xo curve( 213.13,-200.00 226.14,-202.59 238.27,-207.61 )
+          xo curve( 250.40,-212.64 261.42,-220.00 270.71,-229.29 )
+          xo curve( 280.00,-238.58 287.36,-249.60 292.39,-261.73 )
+          xo curve( 297.41,-273.86 300.00,-286.87 300.00,-300.00 )
+        xo line(250.00,-300.00)
+        xo arc(50.00,50.00 0.00 0,0 150.00,-300.00)
+        circular_arc(250.00,-300.00 150.00,-300.00 50.00 move=0 large=0 dir=1)
+          xo curve( 250.00,-293.43 248.71,-286.93 246.19,-280.87 )
+          xo curve( 243.68,-274.80 240.00,-269.29 235.36,-264.64 )
+          xo curve( 230.71,-260.00 225.20,-256.32 219.13,-253.81 )
+          xo curve( 213.07,-251.29 206.57,-250.00 200.00,-250.00 )
+          xo curve( 193.43,-250.00 186.93,-251.29 180.87,-253.81 )
+          xo curve( 174.80,-256.32 169.29,-260.00 164.64,-264.64 )
+          xo curve( 160.00,-269.29 156.32,-274.80 153.81,-280.87 )
+          xo curve( 151.29,-286.93 150.00,-293.43 150.00,-300.00 )
+        xo line(100.00,-300.00)
+        xo z
+        xo fill (none)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+==== end svg ====
+==== start svg ====
+XObject #2
+vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
+translate( 0.00 300.00 )
+vb rect( 0.00 0.00 400.00 -300.00)
+xo fill_color black (initial)
+  start handling desc (SVG::Element)
+  skipping desc (not implemented)
+  end handling desc
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(0.00,200.00)
+      start handling path (SVG::Path)
+      path d="M 100 300 A 100 100 ..."
+        xo save
+        path stroke=none fill=lime
+        xo move(100.00,-300.00)
+        xo arc(100.00,100.00 0.00 0,0 300.00,-300.00)
+        circular_arc(100.00,-300.00 300.00,-300.00 100.00 move=0 large=0 dir=1)
+          xo curve( 100.00,-313.13 102.59,-326.14 107.61,-338.27 )
+          xo curve( 112.64,-350.40 120.00,-361.42 129.29,-370.71 )
+          xo curve( 138.58,-380.00 149.60,-387.36 161.73,-392.39 )
+          xo curve( 173.86,-397.41 186.87,-400.00 200.00,-400.00 )
+          xo curve( 213.13,-400.00 226.14,-397.41 238.27,-392.39 )
+          xo curve( 250.40,-387.36 261.42,-380.00 270.71,-370.71 )
+          xo curve( 280.00,-361.42 287.36,-350.40 292.39,-338.27 )
+          xo curve( 297.41,-326.14 300.00,-313.13 300.00,-300.00 )
+        xo line(250.00,-300.00)
+        xo arc(50.00,50.00 0.00 0,0 150.00,-300.00)
+        circular_arc(250.00,-300.00 150.00,-300.00 50.00 move=0 large=0 dir=1)
+          xo curve( 250.00,-293.43 248.71,-286.93 246.19,-280.87 )
+          xo curve( 243.68,-274.80 240.00,-269.29 235.36,-264.64 )
+          xo curve( 230.71,-260.00 225.20,-256.32 219.13,-253.81 )
+          xo curve( 213.07,-251.29 206.57,-250.00 200.00,-250.00 )
+          xo curve( 193.43,-250.00 186.93,-251.29 180.87,-253.81 )
+          xo curve( 174.80,-256.32 169.29,-260.00 164.64,-264.64 )
+          xo curve( 160.00,-269.29 156.32,-274.80 153.81,-280.87 )
+          xo curve( 151.29,-286.93 150.00,-293.43 150.00,-300.00 )
+        xo line(100.00,-300.00)
+        xo z
+        xo fill (none)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+==== end svg ====
+==== start svg ====
+XObject #3
+vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
+translate( 0.00 300.00 )
+vb rect( 0.00 0.00 400.00 -300.00)
+xo fill_color black (initial)
+  start handling desc (SVG::Element)
+  skipping desc (not implemented)
+  end handling desc
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(0.00,200.00)
+      start handling path (SVG::Path)
+      path d="M 100 300 A 100 100 ..."
+        xo save
+        path stroke=none fill=lime
+        xo move(100.00,-300.00)
+        xo arc(100.00,100.00 0.00 0,0 300.00,-300.00)
+        circular_arc(100.00,-300.00 300.00,-300.00 100.00 move=0 large=0 dir=1)
+          xo curve( 100.00,-313.13 102.59,-326.14 107.61,-338.27 )
+          xo curve( 112.64,-350.40 120.00,-361.42 129.29,-370.71 )
+          xo curve( 138.58,-380.00 149.60,-387.36 161.73,-392.39 )
+          xo curve( 173.86,-397.41 186.87,-400.00 200.00,-400.00 )
+          xo curve( 213.13,-400.00 226.14,-397.41 238.27,-392.39 )
+          xo curve( 250.40,-387.36 261.42,-380.00 270.71,-370.71 )
+          xo curve( 280.00,-361.42 287.36,-350.40 292.39,-338.27 )
+          xo curve( 297.41,-326.14 300.00,-313.13 300.00,-300.00 )
+        xo line(250.00,-300.00)
+        xo arc(50.00,50.00 0.00 0,1 150.00,-300.00)
+        circular_arc(250.00,-300.00 150.00,-300.00 50.00 move=0 large=0 dir=0)
+          xo curve( 250.00,-306.57 248.71,-313.07 246.19,-319.13 )
+          xo curve( 243.68,-325.20 240.00,-330.71 235.36,-335.36 )
+          xo curve( 230.71,-340.00 225.20,-343.68 219.13,-346.19 )
+          xo curve( 213.07,-348.71 206.57,-350.00 200.00,-350.00 )
+          xo curve( 193.43,-350.00 186.93,-348.71 180.87,-346.19 )
+          xo curve( 174.80,-343.68 169.29,-340.00 164.64,-335.36 )
+          xo curve( 160.00,-330.71 156.32,-325.20 153.81,-319.13 )
+          xo curve( 151.29,-313.07 150.00,-306.57 150.00,-300.00 )
+        xo line(100.00,-300.00)
+        xo z
+        xo fill (none)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+==== end svg ====
+==== start svg ====
+XObject #4
+vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
+translate( 0.00 300.00 )
+vb rect( 0.00 0.00 400.00 -300.00)
+xo fill_color black (initial)
+  start handling desc (SVG::Element)
+  skipping desc (not implemented)
+  end handling desc
+  start handling g (SVG::G)
+  g ====
+    xo save
+    transform translate(0.00,150.00)
+      start handling path (SVG::Path)
+      path d="M 100 300 A 100 100 ..."
+        xo save
+        path stroke=none fill=lime
+        xo move(100.00,-300.00)
+        xo arc(100.00,100.00 0.00 0,1 300.00,-300.00)
+        circular_arc(100.00,-300.00 300.00,-300.00 100.00 move=0 large=0 dir=0)
+          xo curve( 100.00,-286.87 102.59,-273.86 107.61,-261.73 )
+          xo curve( 112.64,-249.60 120.00,-238.58 129.29,-229.29 )
+          xo curve( 138.58,-220.00 149.60,-212.64 161.73,-207.61 )
+          xo curve( 173.86,-202.59 186.87,-200.00 200.00,-200.00 )
+          xo curve( 213.13,-200.00 226.14,-202.59 238.27,-207.61 )
+          xo curve( 250.40,-212.64 261.42,-220.00 270.71,-229.29 )
+          xo curve( 280.00,-238.58 287.36,-249.60 292.39,-261.73 )
+          xo curve( 297.41,-273.86 300.00,-286.87 300.00,-300.00 )
+        xo line(250.00,-300.00)
+        xo arc(50.00,50.00 0.00 0,1 150.00,-300.00)
+        circular_arc(250.00,-300.00 150.00,-300.00 50.00 move=0 large=0 dir=0)
+          xo curve( 250.00,-306.57 248.71,-313.07 246.19,-319.13 )
+          xo curve( 243.68,-325.20 240.00,-330.71 235.36,-335.36 )
+          xo curve( 230.71,-340.00 225.20,-343.68 219.13,-346.19 )
+          xo curve( 213.07,-348.71 206.57,-350.00 200.00,-350.00 )
+          xo curve( 193.43,-350.00 186.93,-348.71 180.87,-346.19 )
+          xo curve( 174.80,-343.68 169.29,-340.00 164.64,-335.36 )
+          xo curve( 160.00,-330.71 156.32,-325.20 153.81,-319.13 )
+          xo curve( 151.29,-313.07 150.00,-306.57 150.00,-300.00 )
+        xo line(100.00,-300.00)
+        xo z
+        xo fill (none)
+        xo restore
+      end handling path
+    xo restore
+  end handling g
+==== end svg ====

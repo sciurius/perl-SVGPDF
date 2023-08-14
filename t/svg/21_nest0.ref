@@ -1,0 +1,27 @@
+==== start svg ====
+XObject #1
+vb 0 0 600 800 => bb 0.00 0.00 600.00 800.00
+translate( 0.00 800.00 )
+vb rect( 0.00 0.00 600.00 -800.00)
+xo fill_color black (initial)
+  start handling rect (SVG::Rect)
+  rect x=10 y=10 w=100 h=100
+    xo save
+    rect stroke=#ff0000 fill=#0000ff
+    xo fill (#ff0000)
+    xo restore
+  end handling rect
+  start handling svg (SVG::Svg)
+  vb 0 0 300 400 => bb 0.00 0.00 300.00 400.00
+  XObject #2
+  translate( 0.00 400.00 )
+    start handling rect (SVG::Rect)
+    rect x=110 y=10 w=100 h=100
+      xo save
+      rect stroke=#009900 fill=#00cc00
+      xo fill (#009900)
+      xo restore
+    end handling rect
+  xo object( 0.00+0.00 -800.00+0.00 2.000 2.000 )
+  end handling svg
+==== end svg ====
