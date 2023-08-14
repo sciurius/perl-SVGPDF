@@ -1,6 +1,9 @@
 Revision history for PDF::SVG
 
-0.050
+0.000
+
+0.050	2023-08-14
+
 	- (Partial) support for @font-face.
 	- Support font-family alternatives.
 	- Add tweak for MathJax.

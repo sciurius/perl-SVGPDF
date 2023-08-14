@@ -7,7 +7,7 @@ use utf8;
 
 class  PDF::SVG;
 
-our $VERSION = '0.040';
+our $VERSION = '0.050';
 
 =head1 NAME
 
