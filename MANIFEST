@@ -2,6 +2,7 @@ Changes
 MANIFEST
 Makefile.PL
 README.md
+lib/PDF/Builder/Bogen.pm
 lib/PDF/PAST.pm
 lib/PDF/SVG.pm
 lib/SVG/Circle.pm
