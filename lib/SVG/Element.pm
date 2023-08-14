@@ -196,7 +196,7 @@ method _paintsub () {
     if ( $style->{stroke}
 	 && $style->{stroke} ne 'none'
 	 && $style->{stroke} ne 'transparent'
-	 && $style->{'stroke-width'} != 0
+	 && $style->{'stroke-width'}//0 != 0
        ) {
 	if ( $style->{fill}
 	     && $style->{fill} ne 'none'
