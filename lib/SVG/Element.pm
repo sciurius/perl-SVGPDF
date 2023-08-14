@@ -231,9 +231,9 @@ method _paintsub () {
 
 method process () {
     # Unless overridden in a subclass there's not much we can do.
-    state %warned = ( desc => 1, title => 1 );
+    state $warned = { desc => 1, title => 1 };
     warn("SVG: Skipping element \"$name\" (not implemented)\n")
-      unless $warned{$name}++;;
+      unless $warned->{$name}++;;
     $self->_dbg("skipping $name (not implemented)");
     $self->traverse;
 }
