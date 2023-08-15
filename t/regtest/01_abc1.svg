@@ -11,7 +11,7 @@
 .f3 text,tspan{white-space:pre}
 @font-face{
  font-family:music;
- src:url("svg/abc2svg.ttf") format("truetype")}
+ src:url("regtest/abc2svg.ttf") format("truetype")}
 .stroke{stroke:currentColor;fill:none}
 .bW{stroke:currentColor;fill:none;stroke-width:1}
 .bthW{stroke:currentColor;fill:none;stroke-width:3}

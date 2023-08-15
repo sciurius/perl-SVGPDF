@@ -20,7 +20,7 @@ BEGIN {
 my $test = 2;
 
 -d "t" && chdir("t");
-BAIL_OUT("Missing test data") unless -d "svg";
+BAIL_OUT("Missing test data") unless -d "regtest";
 
 # Setup PDF context.
 my $pdf = $api->new;
@@ -35,13 +35,13 @@ ok( $p, "Have PDF::SVG object" );
 $test++;
 
 # Collect the test files.
-opendir( my $dh, "svg" ) || BAIL_OUT("Cannot open test data");
+opendir( my $dh, "regtest" ) || BAIL_OUT("Cannot open test data");
 my @files = grep { /^.+\.svg$/ } readdir($dh);
 close($dh);
 diag("Testing ", scalar(@files), " SVG files");
 
 foreach my $file ( sort @files ) {
-    $file = "svg/$file";
+    $file = "regtest/$file";
     #diag("Testing: $file");
     ( my $out = $file ) =~ s/\.svg/.out/;
     ( my $ref = $file ) =~ s/\.svg/.ref/;

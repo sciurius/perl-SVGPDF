@@ -70,6 +70,8 @@ t/svg/17_curve4.ref
 t/svg/17_curve4.svg
 t/svg/18_mjinline.ref
 t/svg/18_mjinline.svg
+t/svg/19_locust.svg
+t/svg/19_locust.ref
 t/svg/21_nest0.ref
 t/svg/21_nest0.svg
 t/svg/22_nest1.ref
