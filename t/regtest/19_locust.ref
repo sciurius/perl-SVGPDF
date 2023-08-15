@@ -4,10 +4,10 @@ vb 0 0 451.271 187.542 => bb 0.00 0.00 451.27 187.54
 translate( 0.00 187.54 )
 vb rect( 0.00 -0.00 451.27 -187.54)
 xo fill_color black (initial)
-  start handling g (SVG::G)
+  start handling g (SVGPDF::G)
   g ====
     xo save
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m346.06 41.527c-0.39..."
         xo save
         path stroke=none fill=current
@@ -20,7 +20,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m337.13 40.188c-0.56..."
         xo save
         path stroke=none fill=current
@@ -32,7 +32,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m231.3 49.118c-1.233..."
         xo save
         path stroke=none fill=current
@@ -43,7 +43,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m243.8 49.118c-3.028..."
         xo save
         path stroke=none fill=current
@@ -55,7 +55,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m224.16 49.564c-0.15..."
         xo save
         path stroke=none fill=current
@@ -66,7 +66,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m313.91 52.244c0.85 ..."
         xo save
         path stroke=none fill=current
@@ -78,7 +78,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m181.74 54.923c1.404..."
         xo save
         path stroke=none fill=current
@@ -90,7 +90,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m210.32 65.193c1.61-..."
         xo save
         path stroke=none fill=current
@@ -104,7 +104,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m141.1 59.388c-0.872..."
         xo save
         path stroke=none fill=current
@@ -115,7 +115,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m135.3 58.942c1.113 ..."
         xo save
         path stroke=none fill=current
@@ -126,7 +126,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m132.17 61.174c-0.00..."
         xo save
         path stroke=none fill=current
@@ -137,7 +137,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m360.8 60.728c1.363 ..."
         xo save
         path stroke=none fill=current
@@ -148,7 +148,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m136.64 62.514c1.065..."
         xo save
         path stroke=none fill=current
@@ -159,7 +159,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m211.66 65.193c0.012..."
         xo save
         path stroke=none fill=current
@@ -180,7 +180,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m89.306 66.533c0.064..."
         xo save
         path stroke=none fill=current
@@ -192,7 +192,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m311.68 66.979c1.036..."
         xo save
         path stroke=none fill=current
@@ -204,7 +204,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m312.57 71.445c1.359..."
         xo save
         path stroke=none fill=current
@@ -215,7 +215,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m350.08 75.017c0.522..."
         xo save
         path stroke=none fill=current
@@ -230,7 +230,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m291.14 78.589c1.86-..."
         xo save
         path stroke=none fill=current
@@ -244,7 +244,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m284.89 83.054c1.665..."
         xo save
         path stroke=none fill=current
@@ -256,7 +256,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m338.47 87.073c-0.73..."
         xo save
         path stroke=none fill=current
@@ -267,7 +267,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m71.892 87.966c-0.41..."
         xo save
         path stroke=none fill=current
@@ -278,7 +278,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m280.87 87.966c0.883..."
         xo save
         path stroke=none fill=current
@@ -290,7 +290,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m254.97 91.539c-0.04..."
         xo save
         path stroke=none fill=current
@@ -301,7 +301,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m311.23 91.985c1.728..."
         xo save
         path stroke=none fill=current
@@ -313,7 +313,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m276.85 95.11c0.942-..."
         xo save
         path stroke=none fill=current
@@ -325,7 +325,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m273.72 96.896c1.122..."
         xo save
         path stroke=none fill=current
@@ -336,7 +336,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m117.44 100.92c-0.05..."
         xo save
         path stroke=none fill=current
@@ -347,7 +347,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m305.43 101.81c0.776..."
         xo save
         path stroke=none fill=current
@@ -358,7 +358,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m225.94 106.72c0.246..."
         xo save
         path stroke=none fill=current
@@ -370,7 +370,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m195.13 112.08c0.555..."
         xo save
         path stroke=none fill=current
@@ -386,7 +386,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m165.22 116.99c-0.76..."
         xo save
         path stroke=none fill=current
@@ -397,7 +397,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m137.98 109.85c0.855..."
         xo save
         path stroke=none fill=current
@@ -408,7 +408,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m255.86 118.33c-0.08..."
         xo save
         path stroke=none fill=current
@@ -421,7 +421,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m258.99 121.46c0.474..."
         xo save
         path stroke=none fill=current
@@ -432,7 +432,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m379.55 35.722c4.151..."
         xo save
         path stroke=none fill=current
@@ -3703,7 +3703,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m117.44 12.949c-1.07..."
         xo save
         path stroke=none fill=current
@@ -3716,7 +3716,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m341.6 83.501c2.471 ..."
         xo save
         path stroke=none fill=current
@@ -3730,7 +3730,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m214.78 50.458c0.862..."
         xo save
         path stroke=none fill=current
@@ -3746,7 +3746,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m313.02 62.514c-0.08..."
         xo save
         path stroke=none fill=current
@@ -3768,7 +3768,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m314.8 68.319c-0.198..."
         xo save
         path stroke=none fill=current
@@ -3787,7 +3787,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m314.36 63.854c-0.19..."
         xo save
         path stroke=none fill=current
@@ -3801,7 +3801,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m316.59 73.677c0.107..."
         xo save
         path stroke=none fill=current
@@ -3816,7 +3816,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m287.56 78.589c-0.73..."
         xo save
         path stroke=none fill=current
@@ -3831,7 +3831,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m281.76 84.84c0.771-..."
         xo save
         path stroke=none fill=current
@@ -3843,7 +3843,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m254.97 96.004c0.764..."
         xo save
         path stroke=none fill=current
@@ -3859,7 +3859,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m178.17 116.99c0.897..."
         xo save
         path stroke=none fill=current
@@ -3874,7 +3874,7 @@ xo fill_color black (initial)
         xo fill (none)
         xo restore
       end handling path
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="m260.33 116.54c0.429..."
         xo save
         path stroke=none fill=current
@@ -3887,7 +3887,7 @@ xo fill_color black (initial)
       end handling path
     xo restore
   end handling g
-  start handling metadata (SVG::Element)
+  start handling metadata (SVGPDF::Element)
   skipping metadata (not implemented)
   end handling metadata
 ==== end svg ====

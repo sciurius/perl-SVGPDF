@@ -5,10 +5,10 @@ use Test::More tests => 13;
 use utf8;
 
 BEGIN {
-      use_ok("SVG::Parser");
+      use_ok("SVGPDF::Parser");
 }
 
-my $p = SVG::Parser->new;
+my $p = SVGPDF::Parser->new;
 ok( $p, "have parser" );
 my $c0 = $p->parse( join("", <DATA> ), debug => 24 );
 ok( $c0, "data parsed" );

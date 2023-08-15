@@ -1,9 +1,9 @@
 #! perl
 
 use Test::More tests => 2;
-use SVG::CSS;
+use SVGPDF::CSS;
 
-my $css = SVG::CSS->new;
+my $css = SVGPDF::CSS->new;
 
 is_deeply( $css->base,
 	   {

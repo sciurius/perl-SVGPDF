@@ -4,20 +4,20 @@ vb 0 0 1200 400 => bb 0.00 0.00 1200.00 400.00
 translate( 0.00 400.00 )
 vb rect( 0.00 0.00 1200.00 -400.00)
 xo fill_color black (initial)
-  start handling title (SVG::Element)
+  start handling title (SVGPDF::Element)
   skipping title (not implemented)
   end handling title
-  start handling desc (SVG::Element)
+  start handling desc (SVGPDF::Element)
   skipping desc (not implemented)
   end handling desc
-  start handling rect (SVG::Rect)
+  start handling rect (SVGPDF::Rect)
   rect x=1 y=1 w=1198 h=398
     xo save
     rect stroke-width=1 stroke=blue fill=none
     xo stroke (blue)
     xo restore
   end handling rect
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M300,200 h-150 a150,..."
     xo save
     path stroke-width=5 stroke=blue fill=red
@@ -41,7 +41,7 @@ xo fill_color black (initial)
     xo paint (blue red)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M275,175 v-150 a150,..."
     xo save
     path stroke-width=5 stroke=blue fill=yellow
@@ -57,7 +57,7 @@ xo fill_color black (initial)
     xo paint (blue yellow)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M600,350 l 50,-25 a2..."
     xo save
     path stroke-width=5 stroke=red fill=none

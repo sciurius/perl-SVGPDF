@@ -3,9 +3,9 @@
 # Test if the XML parser delivers whitespace elements.
 
 use Test::More tests => 2;
-use SVG::Parser;
+use SVGPDF::Parser;
 
-my $res = SVG::Parser->new->parse( <<EOD, whitespace_tokens => 1 );
+my $res = SVGPDF::Parser->new->parse( <<EOD, whitespace_tokens => 1 );
 <x><y>aaa</y> <y>bbb</y> <y>ccc</y>dddd</x>
 EOD
 
@@ -51,7 +51,7 @@ is_deeply( $res,
 	   ]
 	   , "result" );
 
-my $res = SVG::Parser->new->parse( <<EOD );
+my $res = SVGPDF::Parser->new->parse( <<EOD );
 <x><y>aaa</y> <y>bbb</y> <y>ccc</y>dddd</x>
 EOD
 

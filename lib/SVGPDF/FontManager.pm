@@ -4,7 +4,7 @@ use v5.26;
 use Object::Pad;
 use utf8;
 
-class SVG::FontManager;
+class SVGPDF::FontManager;
 
 use Carp;
 use List::Util qw( any uniq );

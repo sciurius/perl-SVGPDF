@@ -4,94 +4,94 @@ vb 0, 0, 400, 400 => bb 0.00 0.00 400.00 400.00
 translate( 0.00 400.00 )
 vb rect( 0.00 0.00 400.00 -400.00)
 xo fill_color black (initial)
-  start handling style (SVG::Style)
+  start handling style (SVGPDF::Style)
     style ====
   end handling style
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=100 cy=100 r=50
     xo save
     circle stroke-width=2 stroke=#808080 fill=none sda=2 2
     xo stroke (rgb(128,128,128))
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=300 cy=100 r=50
     xo save
     circle stroke-width=2 stroke=#808080 fill=none sda=2 2
     xo stroke (rgb(128,128,128))
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=100 cy=300 r=50
     xo save
     circle stroke-width=2 stroke=#808080 fill=none sda=2 2
     xo stroke (rgb(128,128,128))
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=300 cy=300 r=50
     xo save
     circle stroke-width=2 stroke=#808080 fill=none sda=2 2
     xo stroke (rgb(128,128,128))
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=50 cy=100 r=6
     xo save
     circle stroke-width=2 stroke=green fill=none
     xo stroke (green)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=100 cy=150 r=6
     xo save
     circle stroke-width=2 stroke=red fill=none
     xo stroke (red)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=250 cy=100 r=6
     xo save
     circle stroke-width=2 stroke=green fill=none
     xo stroke (green)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=300 cy=150 r=6
     xo save
     circle stroke-width=2 stroke=red fill=none
     xo stroke (red)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=50 cy=300 r=6
     xo save
     circle stroke-width=2 stroke=green fill=none
     xo stroke (green)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=100 cy=350 r=6
     xo save
     circle stroke-width=2 stroke=red fill=none
     xo stroke (red)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=250 cy=300 r=6
     xo save
     circle stroke-width=2 stroke=green fill=none
     xo stroke (green)
     xo restore
   end handling circle
-  start handling circle (SVG::Circle)
+  start handling circle (SVGPDF::Circle)
   circle cx=300 cy=350 r=6
     xo save
     circle stroke-width=2 stroke=red fill=none
     xo stroke (red)
     xo restore
   end handling circle
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M50 100 A 50 50, 0, ..."
     xo save
     path stroke-width=3 stroke=black fill=none
@@ -105,7 +105,7 @@ xo fill_color black (initial)
     xo stroke (black)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M250 100 A 50 50, 0,..."
     xo save
     path stroke-width=3 stroke=black fill=none
@@ -131,7 +131,7 @@ xo fill_color black (initial)
     xo stroke (black)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M50 300 A 50,50, 0, ..."
     xo save
     path stroke-width=3 stroke=black fill=none
@@ -145,7 +145,7 @@ xo fill_color black (initial)
     xo stroke (black)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M250 300 A 50 50, 0,..."
     xo save
     path stroke-width=3 stroke=black fill=none
@@ -167,7 +167,7 @@ xo fill_color black (initial)
     xo stroke (black)
     xo restore
   end handling path
-  start handling text (SVG::Text)
+  start handling text (SVGPDF::Text)
   text  x=100 y=20 anchor="middle"
     xo save
     txt translate( 100.00, -20.00 )
@@ -184,7 +184,7 @@ xo fill_color black (initial)
       xo restore
     xo restore
   end handling text
-  start handling text (SVG::Text)
+  start handling text (SVGPDF::Text)
   text  x=300 y=20 anchor="middle"
     xo save
     txt translate( 300.00, -20.00 )
@@ -201,7 +201,7 @@ xo fill_color black (initial)
       xo restore
     xo restore
   end handling text
-  start handling text (SVG::Text)
+  start handling text (SVGPDF::Text)
   text  x=100 y=220 anchor="middle"
     xo save
     txt translate( 100.00, -220.00 )
@@ -218,7 +218,7 @@ xo fill_color black (initial)
       xo restore
     xo restore
   end handling text
-  start handling text (SVG::Text)
+  start handling text (SVGPDF::Text)
   text  x=300 y=220 anchor="middle"
     xo save
     txt translate( 300.00, -220.00 )

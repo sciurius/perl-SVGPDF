@@ -11,7 +11,7 @@ use ExtUtils::MakeMaker 7.24;	# comes with 5.26
 my @bins; # = qw( prog );
 
 my @pdfapi = ( 'PDF::API2' => 2.043 ); # default
-if ( my $a = $ENV{PDF_SVG_API} ) {
+if ( my $a = $ENV{SVGPDF_API} ) {
     if ( $a =~ /PDF::Builder/ ) {
 	@pdfapi = ( 'PDF::Builder' => 3.025 );
     }
@@ -23,9 +23,9 @@ if ( my $a = $ENV{PDF_SVG_API} ) {
 }
 
 WriteMakefile(
-    NAME                => 'PDF::SVG',
+    NAME                => 'SVGPDF',
     AUTHOR              => 'Johan Vromans <jvromans@squirrel.nl>',
-    VERSION_FROM        => 'lib/PDF/SVG.pm',
+    VERSION_FROM        => 'lib/SVGPDF.pm',
     ABSTRACT            => 'SVG processor for PDF::API2',
     LICENSE             => 'perl_5',
     PL_FILES            => {},
@@ -50,8 +50,8 @@ WriteMakefile(
 
     META_MERGE => {
       resources    => {
-        repository => 'https://github.com/sciurius/perl-PDF-SVG',
-        bugtracker => "https://github.com/sciurius/perl-PDF-SVG/issues",
+        repository => 'https://github.com/sciurius/perl-DVG-PDF',
+        bugtracker => "https://github.com/sciurius/perl-DVG-PDF/issues",
         license    => "https://dev.perl.org/licenses/",
       },
       'meta-spec' => {

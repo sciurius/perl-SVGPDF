@@ -6,7 +6,7 @@ use utf8;
 
 # SVG Parser, based on a modified version of XML::Tiny.
 
-class SVG::Parser;
+class SVGPDF::Parser;
 
 use File::LoadLines;
 use Carp;

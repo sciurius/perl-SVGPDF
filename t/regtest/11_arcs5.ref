@@ -4,7 +4,7 @@ vb 0 0 325 325 => bb 0.00 0.00 325.00 325.00
 translate( 0.00 325.00 )
 vb rect( 0.00 0.00 325.00 -325.00)
 xo fill_color black (initial)
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 80 80 A 45 45, 0, ..."
     xo save
     path stroke=none fill=green
@@ -20,7 +20,7 @@ xo fill_color black (initial)
     xo fill (none)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 230 80 A 45 45, 0,..."
     xo save
     path stroke=none fill=red
@@ -48,7 +48,7 @@ xo fill_color black (initial)
     xo fill (none)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 80 230 A 45 45, 0,..."
     xo save
     path stroke=none fill=purple
@@ -64,7 +64,7 @@ xo fill_color black (initial)
     xo fill (none)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 230 230 A 45 45, 0..."
     xo save
     path stroke=none fill=blue

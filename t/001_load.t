@@ -4,33 +4,33 @@ use Test::More tests => 19;
 
 BEGIN {
     # Load the elements first.
-    use_ok("SVG::Circle");
-    use_ok("SVG::CSS");
-    use_ok("SVG::Defs");
-    use_ok("SVG::Element");
-    use_ok("SVG::Ellipse");
-    use_ok("SVG::G");
-    use_ok("SVG::Image");
-    use_ok("SVG::Line");
-    use_ok("SVG::Parser");
-    use_ok("SVG::Path");
-    use_ok("SVG::Polygon");
-    use_ok("SVG::Polyline");
-    use_ok("SVG::Rect");
-    use_ok("SVG::Style");
-    use_ok("SVG::Svg");
-    use_ok("SVG::Text");
-    use_ok("SVG::Tspan");
-    use_ok("SVG::Use");
+    use_ok("SVGPDF::Circle");
+    use_ok("SVGPDF::CSS");
+    use_ok("SVGPDF::Defs");
+    use_ok("SVGPDF::Element");
+    use_ok("SVGPDF::Ellipse");
+    use_ok("SVGPDF::G");
+    use_ok("SVGPDF::Image");
+    use_ok("SVGPDF::Line");
+    use_ok("SVGPDF::Parser");
+    use_ok("SVGPDF::Path");
+    use_ok("SVGPDF::Polygon");
+    use_ok("SVGPDF::Polyline");
+    use_ok("SVGPDF::Rect");
+    use_ok("SVGPDF::Style");
+    use_ok("SVGPDF::Svg");
+    use_ok("SVGPDF::Text");
+    use_ok("SVGPDF::Tspan");
+    use_ok("SVGPDF::Use");
 
     # Master
-    use_ok("PDF::SVG");
+    use_ok("SVGPDF");
 }
 
-diag( "Testing PDF::SVG $PDF::SVG::VERSION, Perl $], $^X" );
+diag( "Testing SVGPDF $SVGPDF::VERSION, Perl $], $^X" );
 
 my @pdfapi = ( 'PDF::API2' => 2.043 ); # default
-if ( my $a = $ENV{PDF_SVG_API} ) {
+if ( my $a = $ENV{SVGPDF_API} ) {
     if ( $a =~ /PDF::Builder/ ) {
 	@pdfapi = ( 'PDF::Builder' => 3.025 );
     }

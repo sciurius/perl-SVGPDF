@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Tspan :isa(SVG::Element);
+class SVGPDF::Tspan :isa(SVGPDF::Element);
 
 method process () {
     my $atts  = $self->atts;
@@ -72,13 +72,13 @@ method process () {
 	    $self->_dbg( "+ xo save" );
 	    $xo->save;
 	    $xo->transform( translate => [ $x, $y ] );
-	    if ( ref($c) eq 'SVG::TextElement' ) {
+	    if ( ref($c) eq 'SVGPDF::TextElement' ) {
 		$xo->textstart;
 		$self->root->fontmanager->set_font( $xo, $style );
 		$x += $xo->text( $c->content, %o );
 		$xo->textend;
 	    }
-	    elsif ( ref($c) eq 'SVG::Tspan' ) {
+	    elsif ( ref($c) eq 'SVGPDF::Tspan' ) {
 		my ( $x0, $y0 ) = $c->process;
 		$x += $x0; $y += $y0;
 		$self->_dbg("tspan moved to $x, $y");

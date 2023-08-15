@@ -1,9 +1,9 @@
 #! perl
 
 use Test::More tests => 7;
-use SVG::Parser;
+use SVGPDF::Parser;
 
-my $p = SVG::Parser->new;
+my $p = SVGPDF::Parser->new;
 
 $SIG{__WARN__} = sub { die("Caught a warning, making it fatal:\n\n$_[0]\n"); };
 

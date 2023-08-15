@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Style :isa(SVG::Element);
+class SVGPDF::Style :isa(SVGPDF::Element);
 
 method process () {
     my $atts = $self->atts;
@@ -17,7 +17,7 @@ method process () {
     my $cdata = "";
     for my $t ( $self->get_children ) {
 	croak("# ASSERT: non-text child in style")
-	  unless ref($t) eq "SVG::TextElement";
+	  unless ref($t) eq "SVGPDF::TextElement";
 	$cdata .= $t->content;
     }
     if ( $cdata =~ /\S/ ) {

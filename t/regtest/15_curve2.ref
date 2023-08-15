@@ -4,7 +4,7 @@ vb 0 0 190 160 => bb 0.00 0.00 190.00 160.00
 translate( 0.00 160.00 )
 vb rect( 0.00 0.00 190.00 -160.00)
 xo fill_color black (initial)
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 10 80 L 40 10 M 95..."
     xo save
     path stroke=red fill=none
@@ -14,7 +14,7 @@ xo fill_color black (initial)
     xo line(65.00,-10.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 95 80 L 120 150 M ..."
     xo save
     path stroke=red fill=none
@@ -24,7 +24,7 @@ xo fill_color black (initial)
     xo line(150.00,-150.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 10 80 C 40 10, 65 ..."
     xo save
     path stroke=black fill=none

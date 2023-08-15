@@ -4,7 +4,7 @@ vb 0 0 200 100 => bb 0.00 0.00 200.00 100.00
 translate( 0.00 100.00 )
 vb rect( 0.00 0.00 200.00 -100.00)
 xo fill_color black (initial)
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 20,20 C 80,60 100,..."
     xo save
     path stroke=none fill=none
@@ -12,7 +12,7 @@ xo fill_color black (initial)
     xo curve(80.00,-60.00 100.00,-40.00 120.00,-20.00)
     xo restore
   end handling path
-  start handling text (SVG::Text)
+  start handling text (SVGPDF::Text)
   text 
     xo save
     txt translate( 0.00, 0.00 )
@@ -22,7 +22,7 @@ xo fill_color black (initial)
       xo restore
     xo restore
   end handling text
-  start handling style (SVG::Style)
+  start handling style (SVGPDF::Style)
     style ====
   end handling style
 ==== end svg ====

@@ -4,7 +4,7 @@ vb 0 0 150 100 => bb 0.00 0.00 150.00 100.00
 translate( 0.00 100.00 )
 vb rect( 0.00 0.00 150.00 -100.00)
 xo fill_color black (initial)
-  start handling g (SVG::G)
+  start handling g (SVGPDF::G)
   g ====
     xo save
     transform translate(90.00,-100.00)
@@ -13,7 +13,7 @@ xo fill_color black (initial)
     transform translate(4.00,-45.50)
     transform skew(0.00 -40.00)
     transform scale(1.00,0.50)
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="M 50,30 A 20,20 0,0,..."
         xo save
         path stroke=none fill=grey
@@ -46,7 +46,7 @@ xo fill_color black (initial)
       end handling path
     xo restore
   end handling g
-  start handling use (SVG::Use)
+  start handling use (SVGPDF::Use)
   use "#heart" (path), x=0, y=0
     xo save
     use stroke=red fill=none

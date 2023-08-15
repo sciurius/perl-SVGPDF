@@ -4,7 +4,7 @@ vb 0 0 190 160 => bb 0.00 0.00 190.00 160.00
 translate( 0.00 160.00 )
 vb rect( 0.00 0.00 190.00 -160.00)
 xo fill_color black (initial)
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 10 10 C 20 20, 40 ..."
     xo save
     path stroke=black fill=none
@@ -12,7 +12,7 @@ xo fill_color black (initial)
     xo curve(20.00,-20.00 40.00,-20.00 50.00,-10.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 70 10 C 70 20, 110..."
     xo save
     path stroke=black fill=none
@@ -20,7 +20,7 @@ xo fill_color black (initial)
     xo curve(70.00,-20.00 110.00,-20.00 110.00,-10.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 130 10 C 120 20, 1..."
     xo save
     path stroke=black fill=none
@@ -28,7 +28,7 @@ xo fill_color black (initial)
     xo curve(120.00,-20.00 180.00,-20.00 170.00,-10.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 10 60 C 20 80, 40 ..."
     xo save
     path stroke=black fill=none
@@ -36,7 +36,7 @@ xo fill_color black (initial)
     xo curve(20.00,-80.00 40.00,-80.00 50.00,-60.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 70 60 C 70 80, 110..."
     xo save
     path stroke=black fill=none
@@ -44,7 +44,7 @@ xo fill_color black (initial)
     xo curve(70.00,-80.00 110.00,-80.00 110.00,-60.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 130 60 C 120 80, 1..."
     xo save
     path stroke=black fill=none
@@ -52,7 +52,7 @@ xo fill_color black (initial)
     xo curve(120.00,-80.00 180.00,-80.00 170.00,-60.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 10 110 C 20 140, 4..."
     xo save
     path stroke=black fill=none
@@ -60,7 +60,7 @@ xo fill_color black (initial)
     xo curve(20.00,-140.00 40.00,-140.00 50.00,-110.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 70 110 C 70 140, 1..."
     xo save
     path stroke=black fill=none
@@ -68,7 +68,7 @@ xo fill_color black (initial)
     xo curve(70.00,-140.00 110.00,-140.00 110.00,-110.00)
     xo restore
   end handling path
-  start handling path (SVG::Path)
+  start handling path (SVGPDF::Path)
   path d="M 130 110 C 120 140,..."
     xo save
     path stroke=black fill=none

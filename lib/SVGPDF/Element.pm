@@ -3,7 +3,7 @@
 use v5.26;
 use Object::Pad;
 use utf8;
-class SVG::Element;
+class SVGPDF::Element;
 
 use Carp;
 
@@ -245,8 +245,8 @@ method get_children () {
     my @res;
     for my $e ( @{$self->content} ) {
 	if ( $e->{type} eq 'e' ) {
-	    my $pkg = "SVG::" . ucfirst(lc $e->{name});
-	    $pkg = "SVG::Element" unless $pkg->can("process");
+	    my $pkg = "SVGPDF::" . ucfirst(lc $e->{name});
+	    $pkg = "SVGPDF::Element" unless $pkg->can("process");
 	    push( @res, $pkg->new
 		  ( name    => $e->{name},
 		    atts    => { map { lc($_) => $e->{attrib}->{$_} } keys %{$e->{attrib}} },
@@ -255,7 +255,7 @@ method get_children () {
 		  ) );
 	}
 	elsif ( $e->{type} eq 't' ) {
-	    push( @res, SVG::TextElement->new
+	    push( @res, SVGPDF::TextElement->new
 		  ( content => $e->{content},
 		  ) );
 	}
@@ -269,7 +269,7 @@ method get_children () {
 
 method traverse () {
     for my $c ( $self->get_children ) {
-	next if ref($c) eq "SVG::TextElement";
+	next if ref($c) eq "SVGPDF::TextElement";
 	$self->_dbg("+ start handling ", $c->name, " (", ref($c), ")");
 	$c->process;
 	$self->_dbg("- end handling ", $c->name);
@@ -343,7 +343,7 @@ method get_params ( @desc ) {
 method get_cdata () {
     my $res = "";
     for ( $self->get_children ) {
-	$res .= "\n" . $_->content if ref($_) eq "SVG::TextElement";
+	$res .= "\n" . $_->content if ref($_) eq "SVGPDF::TextElement";
     }
     $res;
 }
@@ -372,7 +372,7 @@ method nfi ( $tag ) {
 
 ################ TextElement ################
 
-class SVG::TextElement;
+class SVGPDF::TextElement;
 
 field $content  :param :accessor;
 

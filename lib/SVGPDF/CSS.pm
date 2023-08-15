@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::CSS;
+class SVGPDF::CSS;
 
 field $css    :accessor;
 field $errstr :accessor;

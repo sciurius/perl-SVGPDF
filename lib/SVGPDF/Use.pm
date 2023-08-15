@@ -6,7 +6,7 @@ use utf8;
 use Carp;
 use Storable;
 
-class SVG::Use :isa(SVG::Element);
+class SVGPDF::Use :isa(SVGPDF::Element);
 
 method process () {
     my $atts = $self->atts;

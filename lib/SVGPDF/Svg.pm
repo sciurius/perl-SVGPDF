@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Svg :isa(SVG::Element);
+class SVGPDF::Svg :isa(SVGPDF::Element);
 
 method process () {
     my $atts = $self->atts;

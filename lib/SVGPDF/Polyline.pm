@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Polyline :isa(SVG::Element);
+class SVGPDF::Polyline :isa(SVGPDF::Element);
 
 method process () {
     $self->process_polyline(0);

@@ -4,31 +4,31 @@ vb 0 0 200 60 => bb 0.00 0.00 200.00 60.00
 translate( 0.00 60.00 )
 vb rect( 0.00 0.00 200.00 -60.00)
 xo fill_color black (initial)
-  start handling style (SVG::Style)
+  start handling style (SVGPDF::Style)
     style ====
   end handling style
-  start handling svg (SVG::Svg)
+  start handling svg (SVGPDF::Svg)
   vb -1 -1 202 40 => bb 0.00 0.00 202.00 40.00
   XObject #2
   translate( 1.00 39.00 )
-    start handling defs (SVG::Defs)
+    start handling defs (SVGPDF::Defs)
       defs ====
       defs: "smiley" (path)
     end handling defs
   xo object( 0.00+0.00 -60.00+0.00 0.990 1.500 )
   end handling svg
-  start handling rect (SVG::Rect)
+  start handling rect (SVGPDF::Rect)
   rect x=0 y=0 w=60 h=30
     xo save
     rect stroke=none fill=current
     xo fill (none)
     xo restore
   end handling rect
-  start handling svg (SVG::Svg)
+  start handling svg (SVGPDF::Svg)
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
   translate( 0.00 100.00 )
-    start handling use (SVG::Use)
+    start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
       use stroke=none fill=current
@@ -69,18 +69,18 @@ xo fill_color black (initial)
     end handling use
   xo object( 0.00+15.00 -30.00-15.00 0.300 0.300 )
   end handling svg
-  start handling rect (SVG::Rect)
+  start handling rect (SVGPDF::Rect)
   rect x=70 y=0 w=60 h=30
     xo save
     rect stroke=none fill=current
     xo fill (none)
     xo restore
   end handling rect
-  start handling svg (SVG::Svg)
+  start handling svg (SVGPDF::Svg)
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
   translate( 0.00 100.00 )
-    start handling use (SVG::Use)
+    start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
       use stroke=none fill=current
@@ -121,18 +121,18 @@ xo fill_color black (initial)
     end handling use
   xo object( 70.00+0.00 -30.00-15.00 0.300 0.300 )
   end handling svg
-  start handling rect (SVG::Rect)
+  start handling rect (SVGPDF::Rect)
   rect x=140 y=0 w=60 h=30
     xo save
     rect stroke=none fill=current
     xo fill (none)
     xo restore
   end handling rect
-  start handling svg (SVG::Svg)
+  start handling svg (SVGPDF::Svg)
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
   translate( 0.00 100.00 )
-    start handling use (SVG::Use)
+    start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
       use stroke=none fill=current

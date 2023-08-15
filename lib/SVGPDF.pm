@@ -5,18 +5,18 @@ use Object::Pad;
 use Carp;
 use utf8;
 
-class  PDF::SVG;
+class  SVGPDF;
 
 our $VERSION = '0.050';
 
 =head1 NAME
 
-PDF::SVG - Create XObject from SVG data
+SVGPDF - Create PDF XObject from SVG data
 
 =head1 SYNOPSIS
 
     my $pdf = PDF::API2->new;
-    my $svg = PDF::SVG->new($pdf);
+    my $svg = SVGPDF->new($pdf);
     my $xof = $svg->process("demo.svg");
 
     # If all goes well, $xof is an array of hashes, each representing an
@@ -48,10 +48,10 @@ below) and an optional hash with sttributes for the processing.
 
 =head1 CONSTRUCTOR
 
-In its most simple form, a new PDF::SVG object can be created with a
+In its most simple form, a new SVGPDF object can be created with a
 single argument, the PDF document.
 
-     $svg = PDF::SVG->new($pdf);
+     $svg = SVGPDF->new($pdf);
 
 There are two additional arguments, these must be specified as
 key/value pairs.
@@ -74,7 +74,7 @@ The value determines the grid spacing.
 For convenience, the mandatory PDF argument can also be specified with
 a key/value pair:
 
-    $svg = PDF::SVG->new( pdf => $pdf, grid => 1, fc => \&fonthandler );
+    $svg = SVGPDF->new( pdf => $pdf, grid => 1, fc => \&fonthandler );
 
 =head1 INPUT
 
@@ -151,11 +151,11 @@ The XObject itself.
 
 In SVG fonts are designated by style attributes C<font-family>,
 C<font-style>, C<font-weight>, and C<font-size>. How these translate
-to a PDF font is system dependent. PDF::SVG provides a callback
+to a PDF font is system dependent. SVGPDF provides a callback
 mechanism to handle this. As described at L<CONSTRUCTOR>, constructor
 argument C<fc> can be set to designate a user routine.
 
-When a font is required at the PDF level, PDF::SVG first checks if a
+When a font is required at the PDF level, SVGPDF first checks if a
 C<@font-face> CSS rule has been set up with matching properties. If a
 match is found, it is resolved and the font is set. If there is no
 appropriate CSS rule for this font, the callback is called with three
@@ -174,7 +174,7 @@ appropriate font, B<and set it on the graphics context>:
     $gfx->font( $font, $size );
 
 B<IMPORTANT:> The callback function must return a 'true' result when
-it did set the font. If it returns a 'false' result PDF::SVG will
+it did set the font. If it returns a 'false' result SVGPDF will
 fallback to default fonts.
 
 Example of an (extremely simplified) callback:
@@ -198,7 +198,7 @@ Example of an (extremely simplified) callback:
         return 1;
     }
 
-If no callback function is set, PDF::SVG will recognize the standard
+If no callback function is set, SVGPDF will recognize the standard
 PDF corefonts, and aliases C<serif>, C<sans> and C<mono>.
 
 B<IMPORTANT: With the standard corefonts only characters of the
@@ -330,11 +330,11 @@ Code for circular and elliptic arcs donated by Phil Perry.
 
 =head1 SUPPORT
 
-PDF::SVG development is hosted on GitHub, repository
-L<https://github.com/sciurius/perl-PDF-SVG>.
+SVGPDF development is hosted on GitHub, repository
+L<https://github.com/sciurius/perl-SVGPDF>.
 
 Please report any bugs or feature requests to the GitHub issue tracker,
-L<https://github.com/sciurius/perl-PDF-SVG/issues>.
+L<https://github.com/sciurius/perl-SVGPDF/issues>.
 
 =head1 LICENSE
 
@@ -371,29 +371,28 @@ field $wstokens     :accessor;
 
 our $indent = "";
 
-use SVG::Parser;
-use SVG::Element;
-use SVG::CSS;
-use SVG::FontManager;
-use PDF::PAST;
+use SVGPDF::Parser;
+use SVGPDF::Element;
+use SVGPDF::CSS;
+use SVGPDF::FontManager;
+use SVGPDF::PAST;
 
 # The SVG elements.
-use SVG::Circle;
-use SVG::Defs;
-use SVG::Ellipse;
-use SVG::G;
-use SVG::Image;
-use SVG::Line;
-use SVG::Path;
-use SVG::Polygon;
-use SVG::Polyline;
-use SVG::Rect;
-use SVG::Style;
-use SVG::Svg;
-use SVG::Text;
-use SVG::Tspan;
-use SVG::Use;
-
+use SVGPDF::Circle;
+use SVGPDF::Defs;
+use SVGPDF::Ellipse;
+use SVGPDF::G;
+use SVGPDF::Image;
+use SVGPDF::Line;
+use SVGPDF::Path;
+use SVGPDF::Polygon;
+use SVGPDF::Polyline;
+use SVGPDF::Rect;
+use SVGPDF::Style;
+use SVGPDF::Svg;
+use SVGPDF::Text;
+use SVGPDF::Tspan;
+use SVGPDF::Use;
 
 ################ General methods ################
 
@@ -431,7 +430,7 @@ BUILD {
     $indent       = "";
     $xoforms      = [];
     $defs         = {};
-    $fontmanager  = SVG::FontManager->new( svg => $self );
+    $fontmanager  = SVGPDF::FontManager->new( svg => $self );
     $self;
 }
 
@@ -442,14 +441,14 @@ method process ( $data, %attr ) {
     }
 
     # Load the SVG data.
-    my $svg = SVG::Parser->new;
+    my $svg = SVGPDF::Parser->new;
     my $tree = $svg->parse_file
       ( $data,
 	whitespace_tokens => $wstokens||$attr{whitespace_tokens} );
     return unless $tree;
 
     # CSS persists over svgs, but not over files.
-    $css = SVG::CSS->new;
+    $css = SVGPDF::CSS->new;
 
     # Search for svg elements and process them.
     $self->search($tree);
@@ -519,7 +518,7 @@ method handle_svg ( $e ) {
     }
     push( @$xoforms, { xo => $xo } );
     $self->_dbg("XObject #", scalar(@$xoforms) );
-    my $svg = SVG::Element->new
+    my $svg = SVGPDF::Element->new
 	( name    => $e->{name},
 	  atts    => { map { lc($_) => $e->{attrib}->{$_} } keys %{$e->{attrib}} },
 	  content => $e->{content},
@@ -529,12 +528,12 @@ method handle_svg ( $e ) {
     # If there are <style> elements, these must be processed first.
     my $cdata = "";
     for ( $svg->get_children ) {
-	next unless ref($_) eq "SVG::Style";
+	next unless ref($_) eq "SVGPDF::Style";
 	# DDumper($_->get_children) unless scalar($_->get_children) == 1;
 	croak("ASSERT: 1 child") unless scalar($_->get_children) == 1;
 	for my $t ( $_->get_children ) {
 	    croak("# ASSERT: non-text child in style")
-	      unless ref($t) eq "SVG::TextElement";
+	      unless ref($t) eq "SVGPDF::TextElement";
 	    $cdata .= $t->content;
 	}
     }
@@ -696,4 +695,4 @@ method draw_grid ( $xo, $vb ) {
     $xo->restore;
 }
 
-1; # End of PDF::SVG
+1; # End of SVGPDF

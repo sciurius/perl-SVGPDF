@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Path :isa(SVG::Element);
+class SVGPDF::Path :isa(SVGPDF::Element);
 
 method process () {
     my $atts = $self->atts;
@@ -303,15 +303,17 @@ method curve ( @points ) {
     $self->_dbg( "-" );
 }
 
-use PDF::Builder::Bogen;
-
 method elliptic_arc( $x1,$y1, $x2,$y2, $rx,$ry, %opts) {
-    PDF::Builder::Bogen::bogen_ellip
+    require SVGPDF::Contrib::Bogen;
+
+    SVGPDF::Contrib::Bogen::bogen_ellip
 	( $self, $x1,$y1, $x2,$y2, $rx,$ry, %opts );
 }
 
 method circular_arc( $x1,$y1, $x2,$y2, $r, %opts) {
-    PDF::Builder::Bogen::bogen
+    require SVGPDF::Contrib::Bogen;
+
+    SVGPDF::Contrib::Bogen::bogen
 	( $self, $x1,$y1, $x2,$y2, $r,
 	  $opts{move}, $opts{large}, $opts{dir} );
 }

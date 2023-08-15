@@ -1,6 +1,12 @@
-Revision history for PDF::SVG
+Revision history for SVGPDF
 
 0.000
+
+	- Change package name to SVGPDF.
+	- Rename PDF::* and SVG::* to SVGPDF.
+	- Adjust all modules and tests.
+	- Move contrib bogen code to SVGPDF::Contrib::Bogen.
+	- Add regression test for PDF::API2 and PDF::Builder.
 
 0.050	2023-08-14
 

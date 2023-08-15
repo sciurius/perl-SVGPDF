@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Text :isa(SVG::Element);
+class SVGPDF::Text :isa(SVGPDF::Element);
 
 method process () {
     my $atts  = $self->atts;
@@ -38,7 +38,7 @@ method process () {
     my @c = $self->get_children;
 
     if ( $x =~ /,/ ) {
-	if ( @c > 1 || ref($c[0]) ne "SVG::TextElement" ) {
+	if ( @c > 1 || ref($c[0]) ne "SVGPDF::TextElement" ) {
 	    die("text: Cannot combine coordinate list with multiple elements\n");
 	}
 	$x = [ $self->getargs($x) ];
@@ -126,7 +126,7 @@ method process () {
 	  ? "right"
 	  : $anchor eq "middle" ? "center" : "left";
 	for my $c ( @c ) {
-	    if ( ref($c) eq 'SVG::TextElement' ) {
+	    if ( ref($c) eq 'SVGPDF::TextElement' ) {
 		$self->_dbg( "+ xo save" );
 		$xo->save;
 		$xo->transform( translate => [ $x, $y ],
@@ -156,7 +156,7 @@ method process () {
 		$xo->restore;
 		$ex = $x; $ey = $y;
 	    }
-	    elsif ( ref($c) eq 'SVG::Tspan' ) {
+	    elsif ( ref($c) eq 'SVGPDF::Tspan' ) {
 		$self->_dbg( "+ xo save" );
 		$xo->save;
 		if ( defined($c->atts->{x}) ) {

@@ -5,7 +5,7 @@ use Object::Pad;
 use utf8;
 use Carp;
 
-class SVG::Defs :isa(SVG::Element);
+class SVGPDF::Defs :isa(SVGPDF::Element);
 
 method process () {
     my $atts = $self->atts;
@@ -15,7 +15,7 @@ method process () {
     $self->_dbg( "+", $self->name, " ====" );
 
     for ( $self->get_children ) {
-	next if ref($_) eq 'SVG::TextElement';
+	next if ref($_) eq 'SVGPDF::TextElement';
 	my $id  = $_->atts->{id};
 	unless ( defined($id) ) {
 	    warn("SVG: Missing id for ", $_->name, " in defs (skipped)\n")

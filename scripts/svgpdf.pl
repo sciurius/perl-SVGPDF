@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Mon Jul 24 09:13:50 2023
-# Update Count    : 134
+# Last Modified On: Tue Aug 15 21:43:00 2023
+# Update Count    : 135
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -52,8 +52,8 @@ my @pgsz = ( 595, 842 );	# A4
 ################ The Process ################
 
 eval "require $api;"     || die($@);
-# PDF::SVG may redefine some PDF:XXX modules.
-eval "require PDF::SVG;" || die($@);
+# SVGPDF may redefine some PDF:XXX modules.
+eval "require SVGPDF;" || die($@);
 
 my $pdf = $api->new;
 $api->add_to_font_path($ENV{HOME}."/.fonts");
@@ -64,7 +64,7 @@ my $x = 0;
 my $y = $pgsz[1];
 
 foreach my $file ( @ARGV ) {
-    my $p = PDF::SVG->new
+    my $p = SVGPDF->new
       ( pdf => $pdf,
 	atts => { debug    => $debug,
 		  grid     => $grid,
@@ -79,7 +79,7 @@ foreach my $file ( @ARGV ) {
     my $i = 0;
     foreach my $xo ( @$o ) {
 	$i++;
-	if ( ref($xo->{xo}) eq "PDF::PAST" ) {
+	if ( ref($xo->{xo}) eq "SVGPDF::PAST" ) {
 	    if ( $prog ) {
 		open( my $fd, '>', $prog );
 		my $pdf = $prog =~ s/\.pl$/.pdf/r;

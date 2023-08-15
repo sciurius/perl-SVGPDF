@@ -5,14 +5,14 @@ vb 0 0 400 250 => bb 0.00 0.00 400.00 250.00
 translate( 0.00 250.00 )
 vb rect( 0.00 0.00 400.00 -250.00)
 xo fill_color black (initial)
-  start handling desc (SVG::Element)
+  start handling desc (SVGPDF::Element)
   skipping desc (not implemented)
   end handling desc
-  start handling g (SVG::G)
+  start handling g (SVGPDF::G)
   g ====
     xo save
     transform translate(0.00,150.00)
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="M 100 300 A 100 100 ..."
         xo save
         path stroke=none fill=lime
@@ -52,14 +52,14 @@ vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
 translate( 0.00 300.00 )
 vb rect( 0.00 0.00 400.00 -300.00)
 xo fill_color black (initial)
-  start handling desc (SVG::Element)
+  start handling desc (SVGPDF::Element)
   skipping desc (not implemented)
   end handling desc
-  start handling g (SVG::G)
+  start handling g (SVGPDF::G)
   g ====
     xo save
     transform translate(0.00,200.00)
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="M 100 300 A 100 100 ..."
         xo save
         path stroke=none fill=lime
@@ -99,14 +99,14 @@ vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
 translate( 0.00 300.00 )
 vb rect( 0.00 0.00 400.00 -300.00)
 xo fill_color black (initial)
-  start handling desc (SVG::Element)
+  start handling desc (SVGPDF::Element)
   skipping desc (not implemented)
   end handling desc
-  start handling g (SVG::G)
+  start handling g (SVGPDF::G)
   g ====
     xo save
     transform translate(0.00,200.00)
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="M 100 300 A 100 100 ..."
         xo save
         path stroke=none fill=lime
@@ -146,14 +146,14 @@ vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
 translate( 0.00 300.00 )
 vb rect( 0.00 0.00 400.00 -300.00)
 xo fill_color black (initial)
-  start handling desc (SVG::Element)
+  start handling desc (SVGPDF::Element)
   skipping desc (not implemented)
   end handling desc
-  start handling g (SVG::G)
+  start handling g (SVGPDF::G)
   g ====
     xo save
     transform translate(0.00,150.00)
-      start handling path (SVG::Path)
+      start handling path (SVGPDF::Path)
       path d="M 100 300 A 100 100 ..."
         xo save
         path stroke=none fill=lime

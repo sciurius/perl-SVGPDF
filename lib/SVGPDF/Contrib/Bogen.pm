@@ -1,8 +1,28 @@
 #! perl
 
 use v5.26;
+use strict;
+use warnings;
 
-package PDF::Builder::Bogen;
+package SVGPDF::Contrib::Bogen;
+
+=head1 NAME
+
+SVGPDF::Contrib::Bogen - Circular and elliptic curves
+
+=head1 SYNOPSIS
+
+    $context->bogen( $x1,$y1, $x2,$y2, $r, @opts);
+    $context->bogen_ellip( $x1,$y1, $x2,$y2, $rx,$ry, @opts);
+
+=head1 DESCRIPTION
+
+This package contains functions to draw circular and elliptic curves.
+
+This code is developed by Phil Perry, based on old PDF::API2 code and
+friendly contributed to the SVGPDF project.
+
+=cut
 
 use Math::Trig;
 
