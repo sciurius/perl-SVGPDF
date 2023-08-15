@@ -42,11 +42,16 @@ method process () {
     my $x0 = $x;
     my $y0 = $y;
 
-    # Cleanup a bit and split.
-    $d =~ s/([a-z])([a-z])/$1 $2/gi;
-    $d =~ s/([a-z])([-\d])/$1 $2/gi;
-    $d =~ s/([-\d])([a-z])/$1 $2/gi;
+    # Path items may be separated by whitespace and commas, but
+    # separators may be left out if not strictly necessary.
+    # I.e. M0-1-1V10 is M 0 -1 -1 V 10 ...
+    $d =~ s/-/ -/g;
+    $d =~ s/([a-z])/ $1 /gi;
     $d =~ s/,/ /g;
+    # Cleanup a bit and split.
+    $d =~ s/^\s+//g;
+    $d =~ s/\s+$//g;
+    $d =~ s/\s+/ /g;
     my @d = split( ' ', $d );
 
     my $open;			# path is open
@@ -251,8 +256,7 @@ method process () {
 		else {
 		    $self->_dbg( "elliptic_arc(%.2f,%.2f %.2f,%.2f %.2f,%.2f ".
 				 "move=%d large=%d dir=%d)",
-				 $cx, $cy, $ex, $ey, $rx, $ry,
-				 0, $large, 1-$sweep );
+				 $cx, $cy, $ex, $ey, $rx, $ry, 0, $large, 1-$sweep );
 		    $self->elliptic_arc( $cx, $cy, $ex, $ey,
 					 $rx, $ry,
 					 move  => 0,
