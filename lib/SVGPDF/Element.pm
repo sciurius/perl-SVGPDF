@@ -376,6 +376,12 @@ class SVGPDF::TextElement;
 
 field $content  :param :accessor;
 
+# Actually, we should take style->{white-space} into account...
+BUILD {
+    # Reduce whitespace.
+    $content =~ s/\s+/ /g;
+}
+
 method process () {
     # Nothing to process.
 }

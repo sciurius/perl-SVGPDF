@@ -18,7 +18,8 @@ method process () {
     $_ = 0+$self->u($_) for $style->{'font-size'};
     my $text = "";
 
-    my $color = $style->{color};
+    my $color = $style->{fill};
+    $color = $style->{color} if $color && $color eq "currentColor";
     my $anchor = $style->{'text-anchor'} || "left";
 
     $self->_dbg( $self->name, " ",
