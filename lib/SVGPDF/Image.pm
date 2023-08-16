@@ -15,6 +15,14 @@ method process () {
     my ( $x, $y, $w, $h, $link, $tf ) =
       $self->get_params( $atts, qw( x:U y:U width:U height:U xlink:href:! transform:s ) );
 
+    $x ||= 0; $y ||= 0;
+    $w ||= 0; $h ||= 0;
+
+    unless ( $w && $h ) {
+	$self->_dbg( $self->name, " x=$x y=$y w=$w h=$h  **skipped**" );
+	return;
+    }
+
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
 
     my $img;
