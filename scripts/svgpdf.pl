@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Tue Aug 15 21:43:00 2023
-# Update Count    : 135
+# Last Modified On: Wed Aug 16 11:25:59 2023
+# Update Count    : 136
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -29,7 +29,7 @@ use Getopt::Long 2.13;
 # Command line options.
 my $output = "__new__.pdf";
 my $api = "PDF::API2";		# or PDF::Builder
-my $wstokens = 1;
+my $wstokens = 0;
 my $grid;			# add grid
 my $prog;			# generate program
 my $verbose = 1;		# verbose processing

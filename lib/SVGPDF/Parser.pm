@@ -97,6 +97,7 @@ method _parse ( $data, %params) {
     # The abc2svg generator forgets the close the body. Fix it.
     if ( $data =~ /\<meta\s+name="generator"\s+content="abc2svg/ ) {
 	$data =~ s;</div>\s*</html>;</div></body></html>;;
+	$whitespace_tokens++;
     }
 
     # Ignore empty tokens/whitespace tokens.
