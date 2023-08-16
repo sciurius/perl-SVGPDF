@@ -16,14 +16,15 @@ method process () {
 	$self->nfi("rectangle with rounded corner");
     }
 
-    my ( $x, $y, $w, $h ) =
-      $self->get_params( $atts, qw( x:U y:U width:U height:U ) );
+    my ( $x, $y, $w, $h, $tf ) =
+      $self->get_params( $atts, qw( x:U y:U width:U height:U transform:s ) );
 
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
     $self->_dbg( "+ xo save" );
     $xo->save;
 
     $self->set_graphics;
+    $self->set_transform($tf) if $tf;
 
     $xo->rectangle( $x, -$y, $x+$w, -$y-$h );
     $self->_paintsub->();

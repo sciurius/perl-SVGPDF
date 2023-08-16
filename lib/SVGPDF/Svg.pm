@@ -14,8 +14,9 @@ method process () {
     my $xo = $self->xo;
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
-    my ( $x, $y, $vw, $vh, $vbox, $par ) =
-      $self->get_params( $atts, qw( x:U y:U width:s height:s viewBox preserveAspectRatio:s ) );
+    my ( $x, $y, $vw, $vh, $vbox, $par, $tf ) =
+      $self->get_params( $atts, qw( x:U y:U width:s height:s viewBox preserveAspectRatio:s transform:s ) );
+    $self->nfi("nested svg transform") if $tf;
     my $style = $self->style;
 
     my @bb;			# bbox:    llx lly urx ury

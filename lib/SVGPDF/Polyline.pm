@@ -16,7 +16,7 @@ method process_polyline ( $close ) {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $points ) = $self->get_params( $atts, "points:s" );
+    my ( $points, $tf ) = $self->get_params( $atts, qw(points:s transform:s) );
 
     my @d = $self-> getargs($points);
 
@@ -27,6 +27,7 @@ method process_polyline ( $close ) {
     $xo->save;
 
     $self->set_graphics;
+    $self->set_transform($tf) if $tf;
 
     if ( @d ) {
 	# Flip y coordinates.

@@ -12,8 +12,8 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $x, $y, $w, $h, $link ) =
-      $self->get_params( $atts, qw( x:U y:U width:U height:U xlink:href:! ) );
+    my ( $x, $y, $w, $h, $link, $tf ) =
+      $self->get_params( $atts, qw( x:U y:U width:U height:U xlink:href:! transform:s ) );
 
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
 
@@ -51,6 +51,7 @@ method process () {
     $xo->save;
 
     # Place the image.
+    $self->set_transform($tf) if $tf;
     $xo->transform( translate => [ $x, -$y-$h ] );
     $xo->image( $img, 0, 0, $w, $h );
 

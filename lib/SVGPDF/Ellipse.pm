@@ -12,14 +12,15 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $cx, $cy, $rx, $ry ) =
-      $self->get_params( $atts, qw( cx:U cy:U rx:U ry:U ) );
+    my ( $cx, $cy, $rx, $ry, $tf ) =
+      $self->get_params( $atts, qw( cx:U cy:U rx:U ry:U transform:s ) );
 
     $self->_dbg( $self->name, " cx=$cx cy=$cy rx=$rx ry=$ry" );
     $self->_dbg( "+ xo save" );
     $xo->save;
 
     $self->set_graphics;
+    $self->set_transform($tf) if $tf;
     $xo->ellipse( $cx, -$cy, $rx, $ry );
     $self->_paintsub->();
 
