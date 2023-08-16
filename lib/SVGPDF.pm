@@ -240,8 +240,8 @@ line,
 path,
 polygon,
 polyline,
-rect,
-text and tspan.
+rect (no rounded corners),
+text and tspan (no white-space styles).
 
 =item *
 
