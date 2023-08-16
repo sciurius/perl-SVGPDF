@@ -53,13 +53,13 @@ method set_transform ( $tf ) {
 	    $tf = $2;
 	    my ( $r, $x, $y ) = $self->getargs($1);
 	    if ( $nooptimize || $r ) {
-		if ( $nooptimize || $x || $y ) {
+		if ( $x || $y ) {
 		    $xo->transform( translate => [ $x, -$y ] );
 		    $self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
 		}
 		$self->_dbg( "transform rotate(%.2f)", $r );
 		$xo->transform( rotate => -$r );
-		if ( $nooptimize || $x || $y ) {
+		if ( $x || $y ) {
 		    $xo->transform( translate => [ -$x, $y ] );
 		    $self->_dbg( "transform translate(%.2f,%.2f)", -$x, $y );
 		}
@@ -300,6 +300,7 @@ method get_params ( @desc ) {
     my $atts = shift(@desc) if ref($desc[0]) eq 'HASH';
     my @res;
     my %atts = %{ $atts // $self->atts }; # copy
+    s/^xlink:href$/href/ for values(%atts);
 
     for my $param ( @desc ) {
 

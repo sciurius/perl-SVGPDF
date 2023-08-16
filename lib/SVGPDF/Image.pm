@@ -13,7 +13,7 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
 
     my ( $x, $y, $w, $h, $link, $tf ) =
-      $self->get_params( $atts, qw( x:U y:U width:U height:U xlink:href:! transform:s ) );
+      $self->get_params( $atts, qw( x:U y:U width:U height:U href:! transform:s ) );
 
     $x ||= 0; $y ||= 0;
     $w ||= 0; $h ||= 0;
@@ -48,6 +48,10 @@ method process () {
 
 	# Make the image.
 	$img = $self->root->pdf->image(IO::String->new($data));
+    }
+    elsif ( $link =~ m!^.+\.(png|jpe?g)$! && -s $link ) {
+	# Make the image.
+	$img = $self->root->pdf->image($link);
     }
     else {
 	warn("SVG: Unhandled or missing image link: ",
