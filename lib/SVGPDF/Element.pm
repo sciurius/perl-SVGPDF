@@ -350,7 +350,7 @@ method get_cdata () {
 
 method nfi ( $tag ) {
     state $aw = {};
-    warn("SVG: $tag - not fully implemented, expect strange results.")
+    warn("SVG: $tag - not fully implemented, expect strange results.\n")
       unless $aw->{$tag}++;
 }
 

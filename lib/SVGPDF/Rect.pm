@@ -12,6 +12,10 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
+    if ( $atts->{rx} || $atts->{ry} ) {
+	$self->nfi("rectangle with rounded corner");
+    }
+
     my ( $x, $y, $w, $h ) =
       $self->get_params( $atts, qw( x:U y:U width:U height:U ) );
 
