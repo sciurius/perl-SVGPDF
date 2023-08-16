@@ -265,6 +265,10 @@ Nested SVG elements and preserveAspectRatio.
 
 Standalone T-path elements.
 
+=item *
+
+Embedded SVG elements.
+
 =back
 
 The following SVG features are not (yet) implemented.
@@ -281,7 +285,7 @@ title, desc elements
 
 =back
 
-The following SVG features will not be implemented.
+The following SVG features are niot planned to be implemented.
 
 =over 3
 
@@ -292,6 +296,14 @@ Shades, gradients, patterns and animations.
 =item *
 
 Transparency.
+
+=item *
+
+Text paths.
+
+=item *
+
+Clipping and masking.
 
 =back
 
@@ -577,6 +589,12 @@ method handle_svg ( $e ) {
     @bb = ( 0, 0, $vb[2], $vb[3] );
     $self->_dbg( "vb $vbox => bb %.2f %.2f %.2f %.2f", @bb );
     $xo->bbox(@bb);
+
+    if ( my $c = $style->{"background-color"} ) {
+	$xo->fill_color($c);
+	$xo->rect(@bb);
+	$xo->fill;
+    }
 
     # Set up result forms.
     $xoforms->[-1] =
