@@ -13,18 +13,12 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
-    my ( $x, $y, $xr, $hr, $tf ) =
-      $self->get_params( $atts, qw( x:U y:U xlink:href:s href:s transform:s ) );
-    $xr ||= $hr;
+    my ( $x, $y, $hr, $tf ) =
+      $self->get_params( $atts, qw( x:U y:U href:! transform:s ) );
 
-    unless ( defined $xr ) {
-	warn("SVG: Missing ref in use (skipped)\n");
-	$self->css_pop;
-	return;
-    }
-    my $r = $self->root->defs->{$xr};
+    my $r = $self->root->defs->{$hr};
     unless ( $r ) {
-	warn("SVG: Missing def for use \"$xr\" (skipped)\n");
+	warn("SVG: Missing def for use \"$hr\" (skipped)\n");
 	$self->css_pop;
 	return;
     }
@@ -33,7 +27,7 @@ method process () {
     $r->xo = $self->xo;
 
     $y = -$y;
-    $self->_dbg( $self->name, " \"$xr\" (", $r->name, "), x=$x, y=$y" );
+    $self->_dbg( $self->name, " \"$hr\" (", $r->name, "), x=$x, y=$y" );
 
     $self->_dbg("+ xo save");
     $xo->save;
