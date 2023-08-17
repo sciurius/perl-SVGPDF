@@ -11,6 +11,7 @@ xo fill_color black (initial)
     xo move(10.00,-75.00)
     xo spline(50.00,-10.00 100.00,-75.00)
     xo spline(150.00,-140.00 190.00,-75.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)

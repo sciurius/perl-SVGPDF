@@ -12,7 +12,7 @@ xo fill_color black (initial)
     rect x=10 y=10 w=100 h=100
       xo save
       rect stroke=#ff0000 fill=#0000ff
-      xo fill (#ff0000)
+      xo paint (#ff0000 #0000ff)
       xo restore
     end handling rect
   xo object( 10.00+0.00 -200.00+0.00 1.000 1.000 )
@@ -25,7 +25,7 @@ xo fill_color black (initial)
     rect x=10 y=10 w=100 h=100
       xo save
       rect stroke=#009900 fill=#00cc00
-      xo fill (#009900)
+      xo paint (#009900 #00cc00)
       xo restore
     end handling rect
   xo object( 200.00+0.00 -200.00+0.00 1.000 1.000 )

@@ -77,6 +77,7 @@ xo fill_color black (initial)
       xo spline(130.00,-60.00 90.00,-90.00)
       xo spline(50.00,-60.00 50.00,-30.00)
       xo z
+      xo stroke (red)
       xo restore
     xo restore
   end handling use

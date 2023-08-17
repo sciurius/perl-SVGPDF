@@ -10,6 +10,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(10.00,-10.00)
     xo curve(20.00,-20.00 40.00,-20.00 50.00,-10.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -18,6 +19,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(70.00,-10.00)
     xo curve(70.00,-20.00 110.00,-20.00 110.00,-10.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -26,6 +28,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(130.00,-10.00)
     xo curve(120.00,-20.00 180.00,-20.00 170.00,-10.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -34,6 +37,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(10.00,-60.00)
     xo curve(20.00,-80.00 40.00,-80.00 50.00,-60.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -42,6 +46,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(70.00,-60.00)
     xo curve(70.00,-80.00 110.00,-80.00 110.00,-60.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -50,6 +55,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(130.00,-60.00)
     xo curve(120.00,-80.00 180.00,-80.00 170.00,-60.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -58,6 +64,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(10.00,-110.00)
     xo curve(20.00,-140.00 40.00,-140.00 50.00,-110.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -66,6 +73,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(70.00,-110.00)
     xo curve(70.00,-140.00 110.00,-140.00 110.00,-110.00)
+    xo stroke (black)
     xo restore
   end handling path
   start handling path (SVGPDF::Path)
@@ -74,6 +82,7 @@ xo fill_color black (initial)
     path stroke=black fill=none
     xo move(130.00,-110.00)
     xo curve(120.00,-140.00 180.00,-140.00 170.00,-110.00)
+    xo stroke (black)
     xo restore
   end handling path
 ==== end svg ====

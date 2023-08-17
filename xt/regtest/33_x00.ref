@@ -15,7 +15,7 @@ xo stroke_color black (initial)
     xo move(100.00,-400.00)
     xo hline(100.00)
     xo z
-    xo fill (red)
+    xo paint (red currentColor)
     xo restore
   end handling path
   start handling g (SVGPDF::G)
