@@ -163,7 +163,7 @@ method process () {
 		if ( defined($c->atts->{x}) ) {
 		    $x = 0;
 		}
-		if ( defined($c->atts->{y}) ) {
+		if ( defined($c->atts->{'y'}) ) {
 		    $y = 0;
 		}
 		$xo->transform( translate => [ $x, $y ],
@@ -177,6 +177,9 @@ method process () {
 		$self->_dbg( "- xo restore" );
 		$xo->restore;
 		$ex = $x; $ey = $y;
+	    }
+	    else {
+		$self->nfi( $c->name . " in text" );
 	    }
 	}
     }
