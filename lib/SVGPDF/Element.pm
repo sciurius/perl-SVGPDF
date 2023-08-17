@@ -300,7 +300,7 @@ method get_params ( @desc ) {
     my $atts = shift(@desc) if ref($desc[0]) eq 'HASH';
     my @res;
     my %atts = %{ $atts // $self->atts }; # copy
-    s/^xlink:href$/href/ for values(%atts);
+    $atts{href} //= delete $atts{"xlink:href"} if exists $atts{"xlink:href"};
 
     for my $param ( @desc ) {
 
