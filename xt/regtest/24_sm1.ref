@@ -20,7 +20,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=0 y=0 w=60 h=30
     xo save
-    rect stroke=none fill=current
+    rect stroke=none fill=(current) fill=black
     xo fill (none)
     xo restore
   end handling rect
@@ -31,7 +31,7 @@ xo fill_color black (initial)
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
-      use stroke=none fill=current
+      use stroke=none fill=(current) fill=black
       path d="M50,10 A40,40,1,1,1,..."
         xo save
         path stroke-width=8px linecap=1 linejoin=1 stroke=black fill=yellow
@@ -72,7 +72,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=70 y=0 w=60 h=30
     xo save
-    rect stroke=none fill=current
+    rect stroke=none fill=(current) fill=black
     xo fill (none)
     xo restore
   end handling rect
@@ -83,7 +83,7 @@ xo fill_color black (initial)
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
-      use stroke=none fill=current
+      use stroke=none fill=(current) fill=black
       path d="M50,10 A40,40,1,1,1,..."
         xo save
         path stroke-width=8px linecap=1 linejoin=1 stroke=black fill=yellow
@@ -124,7 +124,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=140 y=0 w=60 h=30
     xo save
-    rect stroke=none fill=current
+    rect stroke=none fill=(current) fill=black
     xo fill (none)
     xo restore
   end handling rect
@@ -135,7 +135,7 @@ xo fill_color black (initial)
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
-      use stroke=none fill=current
+      use stroke=none fill=(current) fill=black
       path d="M50,10 A40,40,1,1,1,..."
         xo save
         path stroke-width=8px linecap=1 linejoin=1 stroke=black fill=yellow

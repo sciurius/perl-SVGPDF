@@ -19,7 +19,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="M0 100H100 V200z"
         xo save
-        path stroke=none fill=current
+        path stroke=none fill=(current) fill=black
         xo move(0.00,-100.00)
         xo hline(100.00)
         xo vline(200.00)

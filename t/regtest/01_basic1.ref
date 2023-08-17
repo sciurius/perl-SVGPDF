@@ -46,7 +46,7 @@ SVG: rectangle with rounded corner - not fully implemented, expect strange resul
   start handling line (SVGPDF::Line)
   line x1=10 y1=110 x2=50 y2=150
     xo save
-    line stroke-width=5 stroke=orange fill=current
+    line stroke-width=5 stroke=orange fill=(current) fill=black
     xo paint (orange currentColor)
     xo restore
   end handling line

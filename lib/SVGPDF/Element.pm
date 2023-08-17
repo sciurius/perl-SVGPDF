@@ -138,12 +138,14 @@ method set_graphics () {
 	$xo->line_join($linejoin);
     }
 
+    my $color = $style->{color};
     my $stroke = $style->{stroke};
     if ( lc($stroke) eq "currentcolor" ) {
 	# Nothing. Use current.
-	$msg .= " stroke=current";
+	$msg .= " stroke=(current)";
+	$stroke = $color;
     }
-    elsif ( $stroke ne "none" ) {
+    if ( $stroke ne "none" ) {
 	$stroke =~ s/\s+//g;
 	if ( $stroke =~ /rgb\(([\d.]+)%,([\d.]+)%,([\d.]+)%\)/ ) {
 	    $stroke = sprintf("#%02X%02X%02X",
@@ -162,9 +164,10 @@ method set_graphics () {
     my $fill = $style->{fill};
     if ( lc($fill) eq "currentcolor" ) {
 	# Nothing. Use current.
-	$msg .= " fill=current";
+	$msg .= " fill=(current)";
+	$fill = $color;
     }
-    elsif ( lc($fill) ne "none" && $fill ne "transparent" ) {
+    if ( lc($fill) ne "none" && $fill ne "transparent" ) {
 	$fill =~ s/\s+//g;
 	if ( $fill =~ /rgb\(([\d.]+)%,([\d.]+)%,([\d.]+)%\)/ ) {
 	    $fill = sprintf("#%02X%02X%02X",

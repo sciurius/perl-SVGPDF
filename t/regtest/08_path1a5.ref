@@ -34,7 +34,7 @@ xo fill_color black (initial)
               start handling use (SVGPDF::Use)
               use "#baseEllipses" (g), x=0, y=0
                 xo save
-                use stroke=none fill=current
+                use stroke=none fill=(current) fill=black
                 g ====
                   xo save
                     start handling ellipse (SVGPDF::Ellipse)
@@ -95,7 +95,7 @@ xo fill_color black (initial)
               start handling use (SVGPDF::Use)
               use "#baseEllipses" (g), x=0, y=0
                 xo save
-                use stroke=none fill=current
+                use stroke=none fill=(current) fill=black
                 g ====
                   xo save
                     start handling ellipse (SVGPDF::Ellipse)
@@ -170,7 +170,7 @@ xo fill_color black (initial)
               start handling use (SVGPDF::Use)
               use "#baseEllipses" (g), x=0, y=0
                 xo save
-                use stroke=none fill=current
+                use stroke=none fill=(current) fill=black
                 g ====
                   xo save
                     start handling ellipse (SVGPDF::Ellipse)
@@ -245,7 +245,7 @@ xo fill_color black (initial)
               start handling use (SVGPDF::Use)
               use "#baseEllipses" (g), x=0, y=0
                 xo save
-                use stroke=none fill=current
+                use stroke=none fill=(current) fill=black
                 g ====
                   xo save
                     start handling ellipse (SVGPDF::Ellipse)
@@ -332,7 +332,7 @@ xo fill_color black (initial)
               start handling use (SVGPDF::Use)
               use "#baseEllipses" (g), x=0, y=0
                 xo save
-                use stroke=none fill=current
+                use stroke=none fill=(current) fill=black
                 g ====
                   xo save
                     start handling ellipse (SVGPDF::Ellipse)
