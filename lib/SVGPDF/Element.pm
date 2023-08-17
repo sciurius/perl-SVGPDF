@@ -181,8 +181,11 @@ method set_graphics () {
     }
 
     if ( my $sda = $style->{'stroke-dasharray'}  ) {
-	$sda =~ s/,/ /g;
-	my @sda = split( ' ', $sda );
+	my @sda;
+	if ( $sda && $sda ne "none" ) {
+	    $sda =~ s/,/ /g;
+	    @sda = split( ' ', $sda );
+	}
 	$msg .= " sda=@sda";
 	$xo->line_dash_pattern(@sda);
     }

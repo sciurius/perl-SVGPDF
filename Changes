@@ -14,6 +14,7 @@ Revision history for SVGPDF
 	- (TextElement) Reduce whitespace.
 	- Add samples from https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction to regtests.
 	- Support % units for h, height, w, and width.
+	- Support stroke-dasharray none.
 
 0.050	2023-08-14
 
