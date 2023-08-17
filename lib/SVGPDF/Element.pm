@@ -302,22 +302,27 @@ method get_params ( @desc ) {
     my $atts = shift(@desc) if ref($desc[0]) eq 'HASH';
     my @res;
     my %atts = %{ $atts // $self->atts }; # copy
+
+    # xlink:href is obsoleted in favour of href.
     $atts{href} //= delete $atts{"xlink:href"} if exists $atts{"xlink:href"};
 
     for my $param ( @desc ) {
 
 	# Attribute may be followed by ':' and flags.
 	# 0   undef -> 0
+	# h   process units, % is viewBox height
 	# s   undef -> ""
 	# u   process units
+	# v   process units, % is viewBox width
 	# U   undef -> 0, process units
 	# !   barf if undef
 	my $flags = "";
 	( $param, $flags ) = ( $1, $2 )
 	  if $param =~ /^(.*):(.*)$/;
+	$param = lc($param);
 
 	# Get and remove the attribute.
-	my $p = delete( $atts{lc($param)} );
+	my $p = delete( $atts{$param} );
 
 	unless ( defined $p ) {
 	    if    ( $flags =~ /s/ )    { $p = ""; }
@@ -330,8 +335,29 @@ method get_params ( @desc ) {
 	    }
 	}
 
+	$flags = lc($flags);
 	# Convert units if 'u' flag.
-	$p = $self->u($p) if $flags =~ /u/i;
+	if ( $flags =~ /([huv])/ ) {
+	    my $flag = $1;
+	    if ( $p =~ /^([\d.]+)\%$/ ) {
+		$p = $1/100;
+		if ( $flags eq "w" || $param =~ /^w(idth)?$/i ) {
+		    # Percentage of viewBox width.
+		    $p *= $root->xoforms->[-1]->{width};
+		}
+		elsif ( $flag eq "h" || $param =~ /^h(eight)?$/i ) {
+		    # Percentage of viewBox height.
+		    $p *= $root->xoforms->[-1]->{height};
+		}
+		else {
+		    # Percentage of viewBox diagonal.
+		    $p *= $root->xoforms->[-1]->{diag};
+		}
+	    }
+	    else {
+		$p = $self->u($p);
+	    }
+	}
 
 	push( @res, $p );
     }

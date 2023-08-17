@@ -255,6 +255,16 @@ The following SVG features are partially implemented.
 
 =item *
 
+Percentage units. When the attribute is "h" or "height" the result
+will be the percentage of the viewBox height.
+
+Similar "w" and "width".
+
+Everything else will result in a percentage of the viewBox diagonal
+(according to the specs).
+
+=item *
+
 Matrix transformations.
 
 =item *
@@ -274,10 +284,6 @@ Embedded SVG elements.
 The following SVG features are not (yet) implemented.
 
 =over 3
-
-=item *
-
-Percentage units.
 
 =item *
 
@@ -604,7 +610,9 @@ method handle_svg ( $e ) {
 	    vheight => $vh ? $svg->u($vh) : $vb[3],
 	    vbox    => [ @vb ],
 	    width   => $vb[2],
-	    height  => $vb[3] };
+	    height  => $vb[3],
+	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
+	  };
 
     # <svg> coordinates are topleft down, so translate.
     $self->_dbg( "translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );

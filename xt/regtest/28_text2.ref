@@ -18,6 +18,7 @@ xo fill_color black (initial)
     txt translate( 0.00, 0.00 )
       xo save
       xo restore
+SVG: textPath in text - not fully implemented, expect strange results.
       xo save
       xo restore
     xo restore

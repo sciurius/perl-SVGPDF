@@ -49,6 +49,12 @@ t/regtest/04_ellipse1.ref
 t/regtest/04_ellipse1.svg
 t/regtest/05_line1.ref
 t/regtest/05_line1.svg
+t/regtest/05_line1cap.ref
+t/regtest/05_line1cap.svg
+t/regtest/05_line1dash.ref
+t/regtest/05_line1dash.svg
+t/regtest/05_line1join.ref
+t/regtest/05_line1join.svg
 t/regtest/06_polyline1.ref
 t/regtest/06_polyline1.svg
 t/regtest/07_polygon1.ref
@@ -79,6 +85,8 @@ t/regtest/08_path1t1.ref
 t/regtest/08_path1t1.svg
 t/regtest/09_text1.ref
 t/regtest/09_text1.svg
+t/regtest/09_tspan1.ref
+t/regtest/09_tspan1.svg
 t/regtest/10_transform1.ref
 t/regtest/10_transform1.svg
 t/regtest/10_transform2.ref
@@ -87,6 +95,11 @@ t/regtest/10_transform3.ref
 t/regtest/10_transform3.svg
 t/regtest/11_svg1.ref
 t/regtest/11_svg1.svg
+t/regtest/12_image1.ref
+t/regtest/12_image1.svg
+t/regtest/12_image2.ref
+t/regtest/12_image2.svg
+t/regtest/squirrel.png
 xt/900_regtest.t
 xt/901_regtest.t
 xt/regtest/01_abc1.ref
@@ -103,8 +116,6 @@ xt/regtest/18_mjinline.ref
 xt/regtest/18_mjinline.svg
 xt/regtest/19_locust.ref
 xt/regtest/19_locust.svg
-xt/regtest/20_image1.ref
-xt/regtest/20_image1.svg
 xt/regtest/21_nest0.ref
 xt/regtest/21_nest0.svg
 xt/regtest/22_nest1.ref
@@ -113,12 +124,6 @@ xt/regtest/23_skew.ref
 xt/regtest/23_skew.svg
 xt/regtest/24_sm1.ref
 xt/regtest/24_sm1.svg
-xt/regtest/25_stroke1.ref
-xt/regtest/25_stroke1.svg
-xt/regtest/26_stroke2.ref
-xt/regtest/26_stroke2.svg
-xt/regtest/27_stroke3.ref
-xt/regtest/27_stroke3.svg
 xt/regtest/28_text2.ref
 xt/regtest/28_text2.svg
 xt/regtest/29_transform1.ref
@@ -135,7 +140,4 @@ xt/regtest/34_x01.ref
 xt/regtest/34_x01.svg
 xt/regtest/35_x02.ref
 xt/regtest/35_x02.svg
-xt/regtest/36_x03.ref
-xt/regtest/36_x03.svg
 xt/regtest/abc2svg.ttf
-xt/regtest/fxlogo.png
