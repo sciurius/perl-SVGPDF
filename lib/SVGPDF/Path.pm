@@ -45,8 +45,11 @@ method process () {
     # Path items may be separated by whitespace and commas, but
     # separators may be left out if not strictly necessary.
     # I.e. M0-1-1V10 is M 0 -1 -1 V 10 ...
-    $d =~ s/-/ -/g;
+    $d =~ s/([-+])/ $1/g;
     $d =~ s/([a-z])/ $1 /gi;
+    # Worse: 10.11.12 is 10.11 12 ...
+    $d =~ s/(\d)\.(\d*)\./$1.$2 /g;
+    $d =~ s/(\d)\.(\d*)\./$1.$2 /g;
     $d =~ s/,/ /g;
     # Cleanup a bit and split.
     $d =~ s/^\s+//g;
