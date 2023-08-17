@@ -523,7 +523,7 @@ method handle_svg ( $e ) {
 
     my $xo;
     if ( $prog ) {
-	$xo = PDF::PAST->new( pdf => $pdf );
+	$xo = SVGPDF::PAST->new( pdf => $pdf );
     }
     else {
 	$xo = $pdf->xo_form;
