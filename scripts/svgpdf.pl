@@ -3,13 +3,13 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Wed Aug 16 11:25:59 2023
-# Update Count    : 136
+# Last Modified On: Thu Aug 17 19:09:36 2023
+# Update Count    : 137
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
 
-use v5.36;
+use v5.26;
 use feature qw(signatures);
 no warnings qw(experimental::signatures);
 use utf8;
