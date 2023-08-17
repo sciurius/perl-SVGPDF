@@ -196,7 +196,9 @@ method _paintsub () {
     if ( $style->{stroke}
 	 && $style->{stroke} ne 'none'
 	 && $style->{stroke} ne 'transparent'
-	 && $style->{'stroke-width'}//0 != 0
+	 # Hmm. Saw a note somewhere that it defaults to 0 but other notes
+	 # say that it should be 1px...
+	 && $style->{'stroke-width'}//1 != 0
        ) {
 	if ( $style->{fill}
 	     && $style->{fill} ne 'none'
