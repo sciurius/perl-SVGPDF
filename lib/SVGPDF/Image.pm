@@ -26,7 +26,7 @@ method process () {
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
 
     my $img;
-    if ( $link =~ m!^data:image/(png|jpe?g);(base64),(.*)$! ) {
+    if ( $link =~ m!^data:image/(png|jpe?g);(base64),(.*)$!s ) {
 	# In-line image asset.
 	require MIME::Base64;
 	require Image::Info;
