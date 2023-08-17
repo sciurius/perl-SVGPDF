@@ -41,6 +41,8 @@ t/900_regtest.t
 t/901_regtest.t
 t/regtest/01_basic1.ref
 t/regtest/01_basic1.svg
+t/regtest/01_basic2.ref
+t/regtest/01_basic2.svg
 t/regtest/02_rectangle1.ref
 t/regtest/02_rectangle1.svg
 t/regtest/03_circle1.ref

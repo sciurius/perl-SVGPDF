@@ -67,6 +67,7 @@ method process () {
 
     # Current point.
     my ( $cx, $cy ) = ( $x0, $y0 );
+    my @cp;
 
     while ( @d ) {
 	my $op = shift(@d);
@@ -131,7 +132,9 @@ method process () {
 
 	# Cubic Bézier curves.
 	if ( $op eq "c" ) {
+	    my ( $ox, $oy ) = ( $x, $y );
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
+		( $x, $y ) = ( $ox, $oy ) if $abs;
 		$ix = $x, $iy = $y unless $open++;
 		my @c = ( $x + $d[0], $y - $d[1], # control point 1
 			  $x + $d[2], $y - $d[3], # control point 2
@@ -139,6 +142,8 @@ method process () {
 			);
 		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
 		$xo->curve(@c);
+		push( @cp, [ $cx, $cy, $c[0], $c[1] ] );
+		push( @cp, [ $c[4], $c[5], $c[2], $c[3] ] );
 		$x = $c[4]; $y = $c[5]; # current point
 		( $cx, $cy ) = ( $x, $y );
 
@@ -178,13 +183,17 @@ method process () {
 
 	# Quadratic Bézier curves.
 	if ( $op eq "q" ) {
+	    my ( $ox, $oy ) = ( $x, $y );
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
+		( $x, $y ) = ( $ox, $oy ) if $abs;
 		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $x + $d[0], $y - $d[1], # control point 1
 			  $x + $d[2], $y - $d[3]  # end point
 			);
 		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
 		$xo->spline(@c);
+		push( @cp, [ $cx, $cy, $c[0], $c[1] ] );
+		push( @cp, [ $c[2], $c[3], $c[0], $c[1] ] );
 		$x = $c[2]; $y = $c[3]; # current point
 		( $cx, $cy ) = ( $x, $y );
 
@@ -294,9 +303,23 @@ method process () {
     }
 
     $paint->() if $open;
-
     $self->_dbg( "- xo restore" );
     $xo->restore;
+
+    # Show collected control points.
+    if ( 0 && $self->root->debug && @cp ) {
+	$xo->save;
+	$xo->stroke_color('lime');
+	$xo->line_width(1);
+	for ( @cp ) {
+	    $self->_dbg( "xo line(%.2f %.2f %.2f %.2f)", @$_ );
+	    $xo->move( $_->[0], $_->[1] );
+	    $xo->line( $_->[2], $_->[3] );
+	}
+	$xo->stroke;
+	$xo->restore;
+    }
+    
     $self->css_pop;
 }
 
