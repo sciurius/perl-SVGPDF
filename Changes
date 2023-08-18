@@ -1,6 +1,6 @@
 Revision history for SVGPDF
 
-0.000
+0.060	2023-08-18
 
 	- Change package name to SVGPDF.
 	- Rename PDF::* and SVG::* to SVGPDF.
