@@ -255,17 +255,13 @@ The following SVG features are partially implemented.
 
 =item *
 
-Percentage units. When the attribute is "h" or "height" the result
+Percentage units. For most "y", "h" or "height" attributes the result
 will be the percentage of the viewBox height.
 
-Similar "w" and "width".
+Similar for "x", "w" and "width".
 
 Everything else will result in a percentage of the viewBox diagonal
 (according to the specs).
-
-=item *
-
-Matrix transformations.
 
 =item *
 
@@ -291,7 +287,7 @@ title, desc elements
 
 =back
 
-The following SVG features are niot planned to be implemented.
+The following SVG features are not planned to be implemented.
 
 =over 3
 
