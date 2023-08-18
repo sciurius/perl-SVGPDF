@@ -77,12 +77,17 @@ method set_transform ( $tf ) {
 	elsif ( $tf =~ /^\s*matrix\s*\((.*?)\)(.*)/ ) {
 	    $tf = $2;
 	    my ( @m ) = $self->getargs($1);
+
+	    #  1  0  0  1  dx dy    translate
+	    #  sx 0  0  sy 0  0     scale
+	    #  c  s  -s c  0  0     rotate (s = sin, c = cos)
+	    #  1  a  b  1  0  0     skew (a = tan a, b = tan b)
+
 	    $self->nfi("matrix transformations")
 	      unless abs($m[0]) == 1 && abs($m[3]) == 1
 	             && !abs($m[1]) && !abs($m[2]) && !abs($m[4]) && !abs($m[5]);
-	    # We probably have to flip some elements...
 	    $self->_dbg( "transform matrix(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @m);
-	    $xo->transform( matrix => \@m );
+	    $xo->matrix(@m);
 	}
 	elsif ( $tf =~ /^\s*skew([XY])\s*\((.*?)\)(.*)/i ) {
 	    $tf = $3;
@@ -347,11 +352,11 @@ method get_params ( @desc ) {
 	    my $flag = $1;
 	    if ( $p =~ /^([\d.]+)\%$/ ) {
 		$p = $1/100;
-		if ( $flags eq "w" || $param =~ /^w(idth)?$/i ) {
+		if ( $flags eq "w" || $param =~ /^(?:w(?:idth)|x)?$/i ) {
 		    # Percentage of viewBox width.
 		    $p *= $root->xoforms->[-1]->{width};
 		}
-		elsif ( $flag eq "h" || $param =~ /^h(eight)?$/i ) {
+		elsif ( $flag eq "h" || $param =~ /^(?:h(?:eight)?|y)$/i ) {
 		    # Percentage of viewBox height.
 		    $p *= $root->xoforms->[-1]->{height};
 		}
