@@ -83,9 +83,6 @@ method set_transform ( $tf ) {
 	    #  c  s  -s c  0  0     rotate (s = sin, c = cos)
 	    #  1  a  b  1  0  0     skew (a = tan a, b = tan b)
 
-	    $self->nfi("matrix transformations")
-	      unless abs($m[0]) == 1 && abs($m[3]) == 1
-	             && !abs($m[1]) && !abs($m[2]) && !abs($m[4]) && !abs($m[5]);
 	    $self->_dbg( "transform matrix(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @m);
 	    $xo->matrix(@m);
 	}
