@@ -82,20 +82,20 @@ method process () {
 	    $self->_dbg( "X %.2f = %.2f + %.2f",
 			 $dx + $_, $dx, $_ );
 	    $self->_dbg( "Y %.2f = - %.2f - %.2f",
-			 - $dy - $y->[0], $dy, $y->[0] );
+			 $dy + $y->[0], $dy, $y->[0] );
 	}
 	my $x = $dx + $_;
-	my $y = - $dy - shift(@$y);
+	my $y = $dy + shift(@$y);
 	$self->_dbg( "txt* translate( %.2f, %.2f )%s %x",
 		     $x, $y,
-		     ( $scalex != 1 && $scaley != 1 )
-		     ? sprintf(" scale( %.1f, %.1f )", $scalex, $scaley ) : "",
+		     ( $scalex != 1 || $scaley != -1 )
+		     ? sprintf(" scale( %.1f, %.1f )", $scalex, -$scaley ) : "",
 		     ord($text->[0]));
 	#	$xo-> translate( $x, $y );
 	$xo->save;
 	$xo->transform( translate => [ $x, $y ],
-			($scalex != 1 && $scaley != 1 )
-			? ( scale => [ $scalex, $scaley ] ) : (),
+			($scalex != 1 || $scaley != -1 )
+			? ( scale => [ $scalex, -$scaley ] ) : (),
 		      );
 	my %o = ();
 	$o{align} = $anchor eq "end"
@@ -117,11 +117,11 @@ method process () {
 			 - $dy - $y->[0], $dy, $y->[0] );
 	}
 	my $x = $dx + $_;
-	my $y = - $dy - shift(@$y);
+	my $y = $dy + shift(@$y);
 	$self->_dbg( "txt translate( %.2f, %.2f )%s",
 		     $x, $y,
-		     ($scalex != 1 && $scaley != 1 )
-		     ? sprintf("scale( %.2f %.2f )", $scalex, $scaley ) : "" );
+		     ($scalex != 1 || $scaley != -1 )
+		     ? sprintf(" scale( %.2f %.2f )", $scalex, -$scaley ) : "" );
 	my %o = ();
 	$o{align} = $anchor eq "end"
 	  ? "right"
@@ -131,8 +131,8 @@ method process () {
 		$self->_dbg( "+ xo save" );
 		$xo->save;
 		$xo->transform( translate => [ $x, $y ],
-				($scalex != 1 && $scaley != 1 )
-				? ( scale => [ $scalex, $scaley ] ) : ()
+				($scalex != 1 || $scaley != -1 )
+				? ( scale => [ $scalex, -$scaley ] ) : ()
 			      );
 		$scalex = $scaley = 1; # no more scaling.
 
@@ -167,8 +167,8 @@ method process () {
 		    $y = 0;
 		}
 		$xo->transform( translate => [ $x, $y ],
-				( $scalex != 1 && $scaley != 1 )
-				? ( scale => [ $scalex, $scaley ] ) : (),
+				( $scalex != 1 || $scaley != -1 )
+				? ( scale => [ $scalex, -$scaley ] ) : (),
 			      );
 		$scalex = $scaley = 1; # no more scaling.
 		my ( $x0, $y0 ) = $c->process();

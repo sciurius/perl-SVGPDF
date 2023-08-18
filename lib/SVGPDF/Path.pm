@@ -86,7 +86,7 @@ method process () {
 
 	# MoveTo
 	if ( $op eq "m" ) {
-	    $x += shift(@d); $y -= shift(@d);
+	    $x += shift(@d); $y += shift(@d);
 	    $self->_dbg( "xo move(%.2f,%.2f)", $x, $y );
 	    $ix = $cx, $iy = $cy unless $open;
 	    $xo->move( $x, $y );
@@ -112,7 +112,7 @@ method process () {
 	if ( $op eq "v" ) {
 	    $ix = $cx, $iy = $cy unless $open++;
 	    $self->_dbg( "xo vline(%.2f)", $d[0] );
-	    $y -= shift(@d);
+	    $y += shift(@d);
 	    $xo->vline($y);
 	    ( $cx, $cy ) = ( $cx, $y );
 	    next;
@@ -122,7 +122,7 @@ method process () {
 	if ( $op eq "l" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		$ix = $x, $iy = $y unless $open++;
-		$x += shift(@d); $y -= shift(@d);
+		$x += shift(@d); $y += shift(@d);
 		$self->_dbg( "xo line(%.2f,%.2f)", $x, $y );
 		$xo->line( $x, $y );
 	    }
@@ -136,9 +136,9 @@ method process () {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		( $x, $y ) = ( $ox, $oy ) if $abs;
 		$ix = $x, $iy = $y unless $open++;
-		my @c = ( $x + $d[0], $y - $d[1], # control point 1
-			  $x + $d[2], $y - $d[3], # control point 2
-			  $x + $d[4], $y - $d[5]  # end point
+		my @c = ( $x + $d[0], $y + $d[1], # control point 1
+			  $x + $d[2], $y + $d[3], # control point 2
+			  $x + $d[4], $y + $d[5]  # end point
 			);
 		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
 		$xo->curve(@c);
@@ -168,8 +168,8 @@ method process () {
 	if ( $op eq "s" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $x + $d[0], $y - $d[1],
-			  $x + $d[2], $y - $d[3] );
+		my @c = ( $x + $d[0], $y + $d[1],
+			  $x + $d[2], $y + $d[3] );
 		$self->nfi("standalone s-paths");
 		unshift( @c, $x, -$y );
 		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
@@ -187,8 +187,8 @@ method process () {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		( $x, $y ) = ( $ox, $oy ) if $abs;
 		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $x + $d[0], $y - $d[1], # control point 1
-			  $x + $d[2], $y - $d[3]  # end point
+		my @c = ( $x + $d[0], $y + $d[1], # control point 1
+			  $x + $d[2], $y + $d[3]  # end point
 			);
 		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
 		$xo->spline(@c);
@@ -219,7 +219,7 @@ method process () {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		$ix = $cx, $iy = $cy unless $open++;
 		my @c = ( $cx, $cy,
-			  $x + $d[0], $y - $d[1] );
+			  $x + $d[0], $y + $d[1] );
 		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
 		$xo->spline(@c);
 		$x = $c[0]; $y = $c[1];
@@ -251,7 +251,7 @@ method process () {
 		my $large = shift(@d);		# select larger arc
 		my $sweep = shift(@d);		# clockwise
 		my $ex    = $x + shift(@d);	# end point
-		my $ey    = $y - shift(@d);
+		my $ey    = $y + shift(@d);
 		$self->_dbg( "xo arc(%.2f,%.2f %.2f %d,%d %.2f,%.2f)",
 			     $rx, $ry, $rot, $large, $sweep, $ex, $ey );
 
@@ -259,21 +259,21 @@ method process () {
 		if ( $rx == $ry ) {
 		    $self->_dbg( "circular_arc(%.2f,%.2f %.2f,%.2f %.2f ".
 				 "move=%d large=%d dir=%d)",
-				 $cx, $cy, $ex, $ey, $rx, 0, $large, 1-$sweep );
+				 $cx, $cy, $ex, $ey, $rx, 0, $large, $sweep );
 		    $self->circular_arc( $cx, $cy, $ex, $ey, $rx,
 					 move  => 0,
 					 large => $large,
-					 dir   => 1-$sweep );
+					 dir   => $sweep );
 		}
 		else {
 		    $self->_dbg( "elliptic_arc(%.2f,%.2f %.2f,%.2f %.2f,%.2f ".
 				 "move=%d large=%d dir=%d)",
-				 $cx, $cy, $ex, $ey, $rx, $ry, 0, $large, 1-$sweep );
+				 $cx, $cy, $ex, $ey, $rx, $ry, 0, $large, $sweep );
 		    $self->elliptic_arc( $cx, $cy, $ex, $ey,
 					 $rx, $ry,
 					 move  => 0,
 					 large => $large,
-					 dir   => 1-$sweep );
+					 dir   => $sweep );
 		}
 		$ix = $cx, $iy = $cy unless $open++;
 		( $cx, $cy ) = ( $ex, $ey );
@@ -319,7 +319,7 @@ method process () {
 	$xo->stroke;
 	$xo->restore;
     }
-    
+
     $self->css_pop;
 }
 

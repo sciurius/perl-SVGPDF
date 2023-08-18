@@ -30,10 +30,6 @@ method process_polyline ( $close ) {
     $self->set_transform($tf) if $tf;
 
     if ( @d ) {
-	# Flip y coordinates.
-	for ( my $i = 1; $i < @d; $i += 2 ) {
-	    $d[$i] = - $d[$i];
-	}
 	$xo->move( $d[0], $d[1] );
 	$xo->polyline( @d[2 .. $#d] );
 	$xo->close if $close;

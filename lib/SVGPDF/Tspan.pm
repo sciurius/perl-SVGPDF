@@ -13,7 +13,7 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
 
     my ( $x, $y, $dx, $dy ) =
-      $self->get_params( $atts, qw( x:U y:U dx:s dy:s ) );
+      $self->get_params( $atts, qw( x:H y:V dx:s dy:s ) );
     my $style = $self->style;
 
     # Scale dx/dy to font size, if using em units.
@@ -54,7 +54,7 @@ method process () {
 
     {
 	my $x = $dx + $x;
-	my $y = - $dy - $y;
+	my $y = $dy + $y;
 
 	my %o = ();
 	$o{align} = $anchor eq "end"
@@ -72,7 +72,7 @@ method process () {
 	for my $c ( @c ) {
 	    $self->_dbg( "+ xo save" );
 	    $xo->save;
-	    $xo->transform( translate => [ $x, $y ] );
+	    $xo->transform( translate => [ $x, -$y ] );
 	    if ( ref($c) eq 'SVGPDF::TextElement' ) {
 		$xo->textstart;
 		$self->root->fontmanager->set_font( $xo, $style );

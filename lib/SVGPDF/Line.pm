@@ -13,7 +13,7 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
 
     my ( $x1, $y1, $x2, $y2, $tf ) =
-      $self->get_params( $atts, qw( x1:U y1:U x2:U y2:U transform:s ) );
+      $self->get_params( $atts, qw( x1:H y1:V x2:H y2:V transform:s ) );
 
     $self->_dbg( $self->name, " x1=$x1 y1=$y1 x2=$x2 y2=$y2" );
     $self->_dbg( "+ xo save" );
@@ -22,8 +22,8 @@ method process () {
     $self->set_graphics;
     $self->set_transform($tf) if $tf;
 
-    $xo->move( $x1, -$y1 );
-    $xo->line( $x2, -$y2 );
+    $xo->move( $x1, $y1 );
+    $xo->line( $x2, $y2 );
     $self->_paintsub->();
 
     $self->_dbg( "- xo restore" );

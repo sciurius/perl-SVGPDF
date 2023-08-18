@@ -1,8 +1,8 @@
 ==== start svg ====
 XObject #1
 vb 0 0 500 600 => bb 0.00 0.00 500.00 600.00
-translate( 0.00 600.00 )
-vb rect( 0.00 0.00 500.00 -600.00)
+matrix( 1 0 0 -1 0.00 600.00 )
+vb rect( 0.00 0.00 500.00 600.00)
 xo fill_color black (initial)
 xo stroke_color black (initial)
   start handling style (SVGPDF::Style)
@@ -12,7 +12,7 @@ xo stroke_color black (initial)
   path d="m100 400h100z"
     xo save
     path stroke=red fill=(current) fill=black
-    xo move(100.00,-400.00)
+    xo move(100.00,400.00)
     xo hline(100.00)
     xo z
     xo paint (red currentColor)
@@ -25,7 +25,7 @@ xo stroke_color black (initial)
       path d="m100 200h100z"
         xo save
         path stroke-width=5 stroke=red fill=(current) fill=black
-        xo move(100.00,-200.00)
+        xo move(100.00,200.00)
         xo hline(100.00)
         xo z
         xo paint (red currentColor)

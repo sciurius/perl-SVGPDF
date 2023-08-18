@@ -17,7 +17,7 @@ method process () {
     }
 
     my ( $x, $y, $w, $h, $tf ) =
-      $self->get_params( $atts, qw( x:U y:U width:U height:U transform:s ) );
+      $self->get_params( $atts, qw( x:H y:V width:H height:V transform:s ) );
 
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
     $self->_dbg( "+ xo save" );
@@ -26,7 +26,7 @@ method process () {
     $self->set_graphics;
     $self->set_transform($tf) if $tf;
 
-    $xo->rectangle( $x, -$y, $x+$w, -$y-$h );
+    $xo->rectangle( $x, $y, $x+$w, $y+$h );
     $self->_paintsub->();
 
     $self->_dbg( "- xo restore" );

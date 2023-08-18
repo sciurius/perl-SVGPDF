@@ -1,15 +1,15 @@
 ==== start svg ====
 XObject #1
 vb 0 0 450 400 => bb 0.00 0.00 450.00 400.00
-translate( 0.00 400.00 )
-vb rect( 0.00 0.00 450.00 -400.00)
+matrix( 1 0 0 -1 0.00 400.00 )
+vb rect( 0.00 0.00 450.00 400.00)
 xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M 100 350 l 150 -300"
     xo save
     path stroke-width=3 stroke=red fill=none
-    xo move(100.00,-350.00)
-    xo line(250.00,-50.00)
+    xo move(100.00,350.00)
+    xo line(250.00,50.00)
     xo stroke (red)
     xo restore
   end handling path
@@ -17,8 +17,8 @@ xo fill_color black (initial)
   path d="M 250 50 l 150 300"
     xo save
     path stroke-width=3 stroke=red fill=none
-    xo move(250.00,-50.00)
-    xo line(400.00,-350.00)
+    xo move(250.00,50.00)
+    xo line(400.00,350.00)
     xo stroke (red)
     xo restore
   end handling path
@@ -26,8 +26,8 @@ xo fill_color black (initial)
   path d="M 175 200 l 150 0"
     xo save
     path stroke-width=3 stroke=green fill=none
-    xo move(175.00,-200.00)
-    xo line(325.00,-200.00)
+    xo move(175.00,200.00)
+    xo line(325.00,200.00)
     xo stroke (green)
     xo restore
   end handling path
@@ -35,8 +35,8 @@ xo fill_color black (initial)
   path d="M 100 350 q 150 -300..."
     xo save
     path stroke-width=5 stroke=blue fill=none
-    xo move(100.00,-350.00)
-    xo spline(250.00,-50.00 400.00,-350.00)
+    xo move(100.00,350.00)
+    xo spline(250.00,50.00 400.00,350.00)
     xo stroke (blue)
     xo restore
   end handling path
@@ -72,7 +72,7 @@ xo fill_color black (initial)
       start handling text (SVGPDF::Text)
       text  x=100 y=350 dx=-30 anchor="middle"
         xo save
-        txt translate( 70.00, -350.00 )
+        txt translate( 70.00, 350.00 ) scale( 1.00 -1.00 )
           xo save
           xo restore
         xo restore
@@ -80,7 +80,7 @@ xo fill_color black (initial)
       start handling text (SVGPDF::Text)
       text  x=250 y=50 dy=-10 anchor="middle"
         xo save
-        txt translate( 250.00, -40.00 )
+        txt translate( 250.00, 40.00 ) scale( 1.00 -1.00 )
           xo save
           xo restore
         xo restore
@@ -88,7 +88,7 @@ xo fill_color black (initial)
       start handling text (SVGPDF::Text)
       text  x=400 y=350 dx=30 anchor="middle"
         xo save
-        txt translate( 430.00, -350.00 )
+        txt translate( 430.00, 350.00 ) scale( 1.00 -1.00 )
           xo save
           xo restore
         xo restore

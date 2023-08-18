@@ -8,8 +8,8 @@ div (ignored)
 ==== start svg ====
 XObject #1
 vb 0 0 794 153 => bb 0.00 0.00 794.00 153.00
-translate( 0.00 153.00 )
-vb rect( 0.00 0.00 794.00 -153.00)
+matrix( 1 0 0 -1 0.00 153.00 )
+vb rect( 0.00 0.00 794.00 153.00)
 xo fill_color black (initial)
   start handling style (SVGPDF::Style)
     style ====
@@ -21,7 +21,7 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=395.9 y=44.0 anchor="middle"
     xo save
-    txt translate( 395.90, -44.00 )
+    txt translate( 395.90, 44.00 ) scale( 1.00 -1.00 )
       xo save
       xo restore
     xo restore
@@ -29,7 +29,7 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=738.9 y=65.2 anchor="end"
     xo save
-    txt translate( 738.90, -65.20 )
+    txt translate( 738.90, 65.20 ) scale( 1.00 -1.00 )
       xo save
       xo restore
     xo restore
@@ -37,44 +37,44 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=76.9 y=89.6
     xo save
-    txt translate( 76.90, -89.60 )
+    txt translate( 76.90, 89.60 ) scale( 1.00 -1.00 )
       xo save
       tspan  dy=-1
-      txt translate( 0.00, 1.00 )
+      txt translate( 0.00, -1.00 )
         xo save
         xo restore
-      tspan moved to 84.8404, -88.6
+      tspan moved to 84.8404, 88.6
       xo restore
       xo save
       xo restore
       xo save
       tspan  dy=1
-      txt translate( 0.00, -1.00 )
+      txt translate( 0.00, 1.00 )
         xo save
         xo restore
-      tspan moved to 92.9804, -89.6
+      tspan moved to 92.9804, 89.6
       xo restore
       xo save
       xo restore
     xo restore
   end handling text
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-130
+  use "#stdef" (path), x=52.9, y=130.0
     xo save
-    translate( 52.90 -130.00 )
+    translate( 52.90 130.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -84,15 +84,15 @@ xo fill_color black (initial)
   path d="M114.3 130.0v-24.0M2..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(114.30,-130.00)
+    xo move(114.30,130.00)
     xo vline(-24.00)
-    xo move(273.50,-130.00)
+    xo move(273.50,130.00)
     xo vline(-24.00)
-    xo move(437.20,-130.00)
+    xo move(437.20,130.00)
     xo vline(-24.00)
-    xo move(591.40,-130.00)
+    xo move(591.40,130.00)
     xo vline(-24.00)
-    xo move(732.90,-130.00)
+    xo move(732.90,130.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -101,9 +101,9 @@ xo fill_color black (initial)
   path d="M109.8 130.0v-24.0M7..."
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(109.80,-130.00)
+    xo move(109.80,130.00)
     xo vline(-24.00)
-    xo move(737.40,-130.00)
+    xo move(737.40,130.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -112,10 +112,10 @@ xo fill_color black (initial)
   path d="m127.2 143.2l51.5 -6..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(127.20,-143.20)
-    xo line(178.70,-136.90)
+    xo move(127.20,143.20)
+    xo line(178.70,136.90)
     xo vline(-3.20)
-    xo line(127.20,-140.00)
+    xo line(127.20,140.00)
     xo z
     xo fill (none)
     xo restore
@@ -124,10 +124,10 @@ xo fill_color black (initial)
   path d="m127.5 138.2l50.9 -6..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(127.50,-138.20)
-    xo line(178.40,-132.00)
+    xo move(127.50,138.20)
+    xo line(178.40,132.00)
     xo vline(-3.20)
-    xo line(127.50,-135.00)
+    xo line(127.50,135.00)
     xo z
     xo fill (none)
     xo restore
@@ -136,10 +136,10 @@ xo fill_color black (initial)
   path d="m221.3 130.0l34.6 4...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(221.30,-130.00)
-    xo line(255.90,-134.20)
+    xo move(221.30,130.00)
+    xo line(255.90,134.20)
     xo vline(-3.20)
-    xo line(221.30,-126.80)
+    xo line(221.30,126.80)
     xo z
     xo fill (none)
     xo restore
@@ -148,10 +148,10 @@ xo fill_color black (initial)
   path d="m221.7 125.0l33.9 4...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(221.70,-125.00)
-    xo line(255.60,-129.20)
+    xo move(221.70,125.00)
+    xo line(255.60,129.20)
     xo vline(-3.20)
-    xo line(221.70,-121.80)
+    xo line(221.70,121.80)
     xo z
     xo fill (none)
     xo restore
@@ -160,10 +160,10 @@ xo fill_color black (initial)
   path d="m281.4 137.9l51.5 0...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(281.40,-137.90)
-    xo line(332.90,-137.90)
+    xo move(281.40,137.90)
+    xo line(332.90,137.90)
     xo vline(-3.20)
-    xo line(281.40,-134.70)
+    xo line(281.40,134.70)
     xo z
     xo fill (none)
     xo restore
@@ -172,10 +172,10 @@ xo fill_color black (initial)
   path d="m281.7 132.9l50.9 0...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(281.70,-132.90)
-    xo line(332.60,-132.90)
+    xo move(281.70,132.90)
+    xo line(332.60,132.90)
     xo vline(-3.20)
-    xo line(281.70,-129.70)
+    xo line(281.70,129.70)
     xo z
     xo fill (none)
     xo restore
@@ -184,10 +184,10 @@ xo fill_color black (initial)
   path d="m356.2 95.8l17.6 2.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(356.20,-95.80)
-    xo line(373.80,-98.00)
+    xo move(356.20,95.80)
+    xo line(373.80,98.00)
     xo vline(3.20)
-    xo line(356.20,-99.00)
+    xo line(356.20,99.00)
     xo z
     xo fill (none)
     xo restore
@@ -196,10 +196,10 @@ xo fill_color black (initial)
   path d="m356.5 100.8l17.0 2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(356.50,-100.80)
-    xo line(373.50,-102.90)
+    xo move(356.50,100.80)
+    xo line(373.50,102.90)
     xo vline(3.20)
-    xo line(356.50,-104.00)
+    xo line(356.50,104.00)
     xo z
     xo fill (none)
     xo restore
@@ -208,10 +208,10 @@ xo fill_color black (initial)
   path d="m385.0 136.8l34.6 6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(385.00,-136.80)
-    xo line(419.60,-143.30)
+    xo move(385.00,136.80)
+    xo line(419.60,143.30)
     xo vline(-3.20)
-    xo line(385.00,-133.60)
+    xo line(385.00,133.60)
     xo z
     xo fill (none)
     xo restore
@@ -220,10 +220,10 @@ xo fill_color black (initial)
   path d="m385.3 131.8l33.9 6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(385.30,-131.80)
-    xo line(419.20,-138.20)
+    xo move(385.30,131.80)
+    xo line(419.20,138.20)
     xo vline(-3.20)
-    xo line(385.30,-128.60)
+    xo line(385.30,128.60)
     xo z
     xo fill (none)
     xo restore
@@ -232,10 +232,10 @@ xo fill_color black (initial)
   path d="m445.0 143.2l51.5 -6..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(445.00,-143.20)
-    xo line(496.50,-136.90)
+    xo move(445.00,143.20)
+    xo line(496.50,136.90)
     xo vline(-3.20)
-    xo line(445.00,-140.00)
+    xo line(445.00,140.00)
     xo z
     xo fill (none)
     xo restore
@@ -244,10 +244,10 @@ xo fill_color black (initial)
   path d="m445.4 138.2l50.9 -6..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(445.40,-138.20)
-    xo line(496.30,-132.00)
+    xo move(445.40,138.20)
+    xo line(496.30,132.00)
     xo vline(-3.20)
-    xo line(445.40,-135.00)
+    xo line(445.40,135.00)
     xo z
     xo fill (none)
     xo restore
@@ -256,10 +256,10 @@ xo fill_color black (initial)
   path d="m539.2 130.0l34.6 4...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(539.20,-130.00)
-    xo line(573.80,-134.20)
+    xo move(539.20,130.00)
+    xo line(573.80,134.20)
     xo vline(-3.20)
-    xo line(539.20,-126.80)
+    xo line(539.20,126.80)
     xo z
     xo fill (none)
     xo restore
@@ -268,10 +268,10 @@ xo fill_color black (initial)
   path d="m539.5 125.0l33.9 4...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(539.50,-125.00)
-    xo line(573.40,-129.20)
+    xo move(539.50,125.00)
+    xo line(573.40,129.20)
     xo vline(-3.20)
-    xo line(539.50,-121.80)
+    xo line(539.50,121.80)
     xo z
     xo fill (none)
     xo restore
@@ -280,10 +280,10 @@ xo fill_color black (initial)
   path d="m599.2 137.9l51.5 0...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(599.20,-137.90)
-    xo line(650.70,-137.90)
+    xo move(599.20,137.90)
+    xo line(650.70,137.90)
     xo vline(-3.20)
-    xo line(599.20,-134.70)
+    xo line(599.20,134.70)
     xo z
     xo fill (none)
     xo restore
@@ -292,10 +292,10 @@ xo fill_color black (initial)
   path d="m599.6 132.9l50.9 0...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(599.60,-132.90)
-    xo line(650.50,-132.90)
+    xo move(599.60,132.90)
+    xo line(650.50,132.90)
     xo vline(-3.20)
-    xo line(599.60,-129.70)
+    xo line(599.60,129.70)
     xo z
     xo fill (none)
     xo restore
@@ -304,10 +304,10 @@ xo fill_color black (initial)
   path d="m674.1 95.7l17.6 3.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.10,-95.70)
-    xo line(691.70,-99.00)
+    xo move(674.10,95.70)
+    xo line(691.70,99.00)
     xo vline(3.20)
-    xo line(674.10,-98.90)
+    xo line(674.10,98.90)
     xo z
     xo fill (none)
     xo restore
@@ -316,10 +316,10 @@ xo fill_color black (initial)
   path d="m674.4 100.8l17.0 3...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.40,-100.80)
-    xo line(691.40,-104.00)
+    xo move(674.40,100.80)
+    xo line(691.40,104.00)
     xo vline(3.20)
-    xo line(674.40,-104.00)
+    xo line(674.40,104.00)
     xo z
     xo fill (none)
     xo restore
@@ -327,116 +327,116 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=117.3,727.9,56.9,78.9,86.4,127.3,144.3,161.2,178.2,196.9,197.0,221.5,238.4,255.4,281.5,298.5,315.4,332.4,349.3,366.3,385.1,402.1,419.0,445.2,462.1,479.1,496.0,514.8,514.9,539.3,556.3,573.2,599.4,616.3,633.3,650.2,667.2,684.1,709.9,703.0,713.4 y=130.0,130.0,124.0,118.0,115.0,121.0,118.0,115.0,112.0,130.0,109.0,106.0,106.0,112.0,115.0,109.0,112.0,115.0,118.0,121.0,109.0,109.0,121.0,121.0,118.0,115.0,112.0,130.0,109.0,106.0,106.0,112.0,115.0,109.0,112.0,115.0,118.0,124.0,100.0,121.0,121.0
     xo save
-    txt* translate( 117.30, -130.00 ) e043
-    txt* translate( 727.90, -130.00 ) e043
-    txt* translate( 56.90, -124.00 ) e050
-    txt* translate( 78.90, -118.00 ) e260
-    txt* translate( 86.40, -115.00 ) e262
-    txt* translate( 127.30, -121.00 ) e0a4
-    txt* translate( 144.30, -118.00 ) e0a4
-    txt* translate( 161.20, -115.00 ) e0a4
-    txt* translate( 178.20, -112.00 ) e0a4
-    txt* translate( 196.90, -130.00 ) e241
-    txt* translate( 197.00, -109.00 ) e0a4
-    txt* translate( 221.50, -106.00 ) e0a4
-    txt* translate( 238.40, -106.00 ) e0a4
-    txt* translate( 255.40, -112.00 ) e0a4
-    txt* translate( 281.50, -115.00 ) e0a4
-    txt* translate( 298.50, -109.00 ) e0a4
-    txt* translate( 315.40, -112.00 ) e0a4
-    txt* translate( 332.40, -115.00 ) e0a4
-    txt* translate( 349.30, -118.00 ) e0a4
-    txt* translate( 366.30, -121.00 ) e0a4
-    txt* translate( 385.10, -109.00 ) e0a4
-    txt* translate( 402.10, -109.00 ) e0a4
-    txt* translate( 419.00, -121.00 ) e0a4
-    txt* translate( 445.20, -121.00 ) e0a4
-    txt* translate( 462.10, -118.00 ) e0a4
-    txt* translate( 479.10, -115.00 ) e0a4
-    txt* translate( 496.00, -112.00 ) e0a4
-    txt* translate( 514.80, -130.00 ) e241
-    txt* translate( 514.90, -109.00 ) e0a4
-    txt* translate( 539.30, -106.00 ) e0a4
-    txt* translate( 556.30, -106.00 ) e0a4
-    txt* translate( 573.20, -112.00 ) e0a4
-    txt* translate( 599.40, -115.00 ) e0a4
-    txt* translate( 616.30, -109.00 ) e0a4
-    txt* translate( 633.30, -112.00 ) e0a4
-    txt* translate( 650.20, -115.00 ) e0a4
-    txt* translate( 667.20, -118.00 ) e0a4
-    txt* translate( 684.10, -124.00 ) e0a4
-    txt* translate( 709.90, -100.00 ) e240
-    txt* translate( 703.00, -121.00 ) e0a4
-    txt* translate( 713.40, -121.00 ) e1e7
+    txt* translate( 117.30, 130.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 727.90, 130.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 124.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 118.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 115.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 127.30, 121.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 144.30, 118.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 161.20, 115.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 178.20, 112.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 196.90, 130.00 ) scale( 1.0, -1.0 ) e241
+    txt* translate( 197.00, 109.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 221.50, 106.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 238.40, 106.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 255.40, 112.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 281.50, 115.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 298.50, 109.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 315.40, 112.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 332.40, 115.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 349.30, 118.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 366.30, 121.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 385.10, 109.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 402.10, 109.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 419.00, 121.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 445.20, 121.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 462.10, 118.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 479.10, 115.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 496.00, 112.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 514.80, 130.00 ) scale( 1.0, -1.0 ) e241
+    txt* translate( 514.90, 109.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 539.30, 106.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 556.30, 106.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 573.20, 112.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 599.40, 115.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 616.30, 109.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 633.30, 112.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 650.20, 115.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 667.20, 118.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 684.10, 124.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 709.90, 100.00 ) scale( 1.0, -1.0 ) e240
+    txt* translate( 703.00, 121.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 713.40, 121.00 ) scale( 1.0, -1.0 ) e1e7
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M127.5 121.0v21.2M14..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(127.50,-121.00)
+    xo move(127.50,121.00)
     xo vline(21.20)
-    xo move(144.50,-118.00)
+    xo move(144.50,118.00)
     xo vline(22.10)
-    xo move(161.40,-115.00)
+    xo move(161.40,115.00)
     xo vline(23.00)
-    xo move(178.40,-112.00)
+    xo move(178.40,112.00)
     xo vline(24.00)
-    xo move(197.20,-109.00)
+    xo move(197.20,109.00)
     xo vline(21.00)
-    xo move(221.70,-106.00)
+    xo move(221.70,106.00)
     xo vline(23.00)
-    xo move(238.60,-106.00)
+    xo move(238.60,106.00)
     xo vline(25.10)
-    xo move(255.60,-112.00)
+    xo move(255.60,112.00)
     xo vline(21.20)
-    xo move(281.70,-115.00)
+    xo move(281.70,115.00)
     xo vline(21.90)
-    xo move(298.70,-109.00)
+    xo move(298.70,109.00)
     xo vline(27.90)
-    xo move(315.60,-112.00)
+    xo move(315.60,112.00)
     xo vline(24.90)
-    xo move(332.60,-115.00)
+    xo move(332.60,115.00)
     xo vline(21.90)
-    xo move(356.50,-118.00)
+    xo move(356.50,118.00)
     xo vline(-21.20)
-    xo move(373.50,-121.00)
+    xo move(373.50,121.00)
     xo vline(-22.10)
-    xo move(385.30,-109.00)
+    xo move(385.30,109.00)
     xo vline(26.80)
-    xo move(402.30,-109.00)
+    xo move(402.30,109.00)
     xo vline(30.00)
-    xo move(419.20,-121.00)
+    xo move(419.20,121.00)
     xo vline(21.20)
-    xo move(445.40,-121.00)
+    xo move(445.40,121.00)
     xo vline(21.20)
-    xo move(462.30,-118.00)
+    xo move(462.30,118.00)
     xo vline(22.10)
-    xo move(479.30,-115.00)
+    xo move(479.30,115.00)
     xo vline(23.00)
-    xo move(496.20,-112.00)
+    xo move(496.20,112.00)
     xo vline(24.00)
-    xo move(515.10,-109.00)
+    xo move(515.10,109.00)
     xo vline(21.00)
-    xo move(539.50,-106.00)
+    xo move(539.50,106.00)
     xo vline(23.00)
-    xo move(556.50,-106.00)
+    xo move(556.50,106.00)
     xo vline(25.10)
-    xo move(573.40,-112.00)
+    xo move(573.40,112.00)
     xo vline(21.20)
-    xo move(599.60,-115.00)
+    xo move(599.60,115.00)
     xo vline(21.90)
-    xo move(616.50,-109.00)
+    xo move(616.50,109.00)
     xo vline(27.90)
-    xo move(633.50,-112.00)
+    xo move(633.50,112.00)
     xo vline(24.90)
-    xo move(650.40,-115.00)
+    xo move(650.40,115.00)
     xo vline(21.90)
-    xo move(674.40,-118.00)
+    xo move(674.40,118.00)
     xo vline(-21.20)
-    xo move(691.30,-124.00)
+    xo move(691.30,124.00)
     xo vline(-24.00)
-    xo move(710.20,-121.00)
+    xo move(710.20,121.00)
     xo vline(-21.00)
     xo stroke (currentColor)
     xo restore
@@ -445,26 +445,26 @@ xo fill_color black (initial)
 ==== start svg ====
 XObject #2
 vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-translate( 0.00 70.00 )
-vb rect( 0.00 0.00 794.00 -70.00)
+matrix( 1 0 0 -1 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-47
+  use "#stdef" (path), x=52.9, y=47.0
     xo save
-    translate( 52.90 -47.00 )
+    translate( 52.90 47.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -474,15 +474,15 @@ xo fill_color black (initial)
   path d="M108.3 47.0v-24.0M27..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(108.30,-47.00)
+    xo move(108.30,47.00)
     xo vline(-24.00)
-    xo move(270.90,-47.00)
+    xo move(270.90,47.00)
     xo vline(-24.00)
-    xo move(434.40,-47.00)
+    xo move(434.40,47.00)
     xo vline(-24.00)
-    xo move(592.00,-47.00)
+    xo move(592.00,47.00)
     xo vline(-24.00)
-    xo move(738.90,-47.00)
+    xo move(738.90,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -491,7 +491,7 @@ xo fill_color black (initial)
   path d="M103.8 47.0v-24.0"
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(103.80,-47.00)
+    xo move(103.80,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -500,10 +500,10 @@ xo fill_color black (initial)
   path d="m121.2 54.2l48.9 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.20,-54.20)
-    xo line(170.10,-51.60)
+    xo move(121.20,54.20)
+    xo line(170.10,51.60)
     xo vline(-3.20)
-    xo line(121.20,-51.00)
+    xo line(121.20,51.00)
     xo z
     xo fill (none)
     xo restore
@@ -512,10 +512,10 @@ xo fill_color black (initial)
   path d="m121.5 49.2l48.2 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.50,-49.20)
-    xo line(169.70,-46.60)
+    xo move(121.50,49.20)
+    xo line(169.70,46.60)
     xo vline(-3.20)
-    xo line(121.50,-46.00)
+    xo line(121.50,46.00)
     xo z
     xo fill (none)
     xo restore
@@ -524,10 +524,10 @@ xo fill_color black (initial)
   path d="m187.3 53.3l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(187.30,-53.30)
-    xo line(204.10,-53.30)
+    xo move(187.30,53.30)
+    xo line(204.10,53.30)
     xo vline(-3.20)
-    xo line(187.30,-50.10)
+    xo line(187.30,50.10)
     xo z
     xo fill (none)
     xo restore
@@ -536,10 +536,10 @@ xo fill_color black (initial)
   path d="m187.6 48.3l16.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(187.60,-48.30)
-    xo line(203.70,-48.30)
+    xo move(187.60,48.30)
+    xo line(203.70,48.30)
     xo vline(-3.20)
-    xo line(187.60,-45.10)
+    xo line(187.60,45.10)
     xo z
     xo fill (none)
     xo restore
@@ -548,10 +548,10 @@ xo fill_color black (initial)
   path d="m221.2 47.1l32.8 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(221.20,-47.10)
-    xo line(254.00,-51.30)
+    xo move(221.20,47.10)
+    xo line(254.00,51.30)
     xo vline(-3.20)
-    xo line(221.20,-43.90)
+    xo line(221.20,43.90)
     xo z
     xo fill (none)
     xo restore
@@ -560,10 +560,10 @@ xo fill_color black (initial)
   path d="m221.6 42.1l32.2 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(221.60,-42.10)
-    xo line(253.80,-46.20)
+    xo move(221.60,42.10)
+    xo line(253.80,46.20)
     xo vline(-3.20)
-    xo line(221.60,-38.90)
+    xo line(221.60,38.90)
     xo z
     xo fill (none)
     xo restore
@@ -572,10 +572,10 @@ xo fill_color black (initial)
   path d="m284.6 57.2l48.9 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(284.60,-57.20)
-    xo line(333.50,-54.60)
+    xo move(284.60,57.20)
+    xo line(333.50,54.60)
     xo vline(-3.20)
-    xo line(284.60,-54.00)
+    xo line(284.60,54.00)
     xo z
     xo fill (none)
     xo restore
@@ -584,10 +584,10 @@ xo fill_color black (initial)
   path d="m284.9 52.2l48.2 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(284.90,-52.20)
-    xo line(333.10,-49.60)
+    xo move(284.90,52.20)
+    xo line(333.10,49.60)
     xo vline(-3.20)
-    xo line(284.90,-49.00)
+    xo line(284.90,49.00)
     xo z
     xo fill (none)
     xo restore
@@ -596,10 +596,10 @@ xo fill_color black (initial)
   path d="m350.7 55.0l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(350.70,-55.00)
-    xo line(367.50,-55.00)
+    xo move(350.70,55.00)
+    xo line(367.50,55.00)
     xo vline(-3.20)
-    xo line(350.70,-51.80)
+    xo line(350.70,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -608,10 +608,10 @@ xo fill_color black (initial)
   path d="m351.1 50.0l16.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(351.10,-50.00)
-    xo line(367.20,-50.00)
+    xo move(351.10,50.00)
+    xo line(367.20,50.00)
     xo vline(-3.20)
-    xo line(351.10,-46.80)
+    xo line(351.10,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -620,10 +620,10 @@ xo fill_color black (initial)
   path d="m384.7 50.1l32.8 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(384.70,-50.10)
-    xo line(417.50,-54.30)
+    xo move(384.70,50.10)
+    xo line(417.50,54.30)
     xo vline(-3.20)
-    xo line(384.70,-46.90)
+    xo line(384.70,46.90)
     xo z
     xo fill (none)
     xo restore
@@ -632,10 +632,10 @@ xo fill_color black (initial)
   path d="m385.0 45.1l32.2 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(385.00,-45.10)
-    xo line(417.20,-49.20)
+    xo move(385.00,45.10)
+    xo line(417.20,49.20)
     xo vline(-3.20)
-    xo line(385.00,-41.90)
+    xo line(385.00,41.90)
     xo z
     xo fill (none)
     xo restore
@@ -644,10 +644,10 @@ xo fill_color black (initial)
   path d="m449.2 12.8l48.9 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(449.20,-12.80)
-    xo line(498.10,-12.80)
+    xo move(449.20,12.80)
+    xo line(498.10,12.80)
     xo vline(3.20)
-    xo line(449.20,-16.00)
+    xo line(449.20,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -656,10 +656,10 @@ xo fill_color black (initial)
   path d="m449.6 17.8l48.2 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(449.60,-17.80)
-    xo line(497.80,-17.80)
+    xo move(449.60,17.80)
+    xo line(497.80,17.80)
     xo vline(3.20)
-    xo line(449.60,-21.00)
+    xo line(449.60,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -668,10 +668,10 @@ xo fill_color black (initial)
   path d="m515.3 12.8l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(515.30,-12.80)
-    xo line(532.10,-12.80)
+    xo move(515.30,12.80)
+    xo line(532.10,12.80)
     xo vline(3.20)
-    xo line(515.30,-16.00)
+    xo line(515.30,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -680,10 +680,10 @@ xo fill_color black (initial)
   path d="m515.7 17.8l16.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(515.70,-17.80)
-    xo line(531.80,-17.80)
+    xo move(515.70,17.80)
+    xo line(531.80,17.80)
     xo vline(3.20)
-    xo line(515.70,-21.00)
+    xo line(515.70,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -692,10 +692,10 @@ xo fill_color black (initial)
   path d="m542.3 53.1l32.8 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(542.30,-53.10)
-    xo line(575.10,-57.30)
+    xo move(542.30,53.10)
+    xo line(575.10,57.30)
     xo vline(-3.20)
-    xo line(542.30,-49.90)
+    xo line(542.30,49.90)
     xo z
     xo fill (none)
     xo restore
@@ -704,10 +704,10 @@ xo fill_color black (initial)
   path d="m542.6 48.1l32.2 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(542.60,-48.10)
-    xo line(574.80,-52.20)
+    xo move(542.60,48.10)
+    xo line(574.80,52.20)
     xo vline(-3.20)
-    xo line(542.60,-44.90)
+    xo line(542.60,44.90)
     xo z
     xo fill (none)
     xo restore
@@ -716,10 +716,10 @@ xo fill_color black (initial)
   path d="m599.9 60.2l48.9 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(599.90,-60.20)
-    xo line(648.80,-54.00)
+    xo move(599.90,60.20)
+    xo line(648.80,54.00)
     xo vline(-3.20)
-    xo line(599.90,-57.00)
+    xo line(599.90,57.00)
     xo z
     xo fill (none)
     xo restore
@@ -728,10 +728,10 @@ xo fill_color black (initial)
   path d="m600.2 55.2l48.2 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(600.20,-55.20)
-    xo line(648.40,-49.10)
+    xo move(600.20,55.20)
+    xo line(648.40,49.10)
     xo vline(-3.20)
-    xo line(600.20,-52.00)
+    xo line(600.20,52.00)
     xo z
     xo fill (none)
     xo restore
@@ -740,10 +740,10 @@ xo fill_color black (initial)
   path d="m689.2 53.9l32.8 6.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(689.20,-53.90)
-    xo line(722.00,-60.20)
+    xo move(689.20,53.90)
+    xo line(722.00,60.20)
     xo vline(-3.20)
-    xo line(689.20,-50.70)
+    xo line(689.20,50.70)
     xo z
     xo fill (none)
     xo restore
@@ -752,10 +752,10 @@ xo fill_color black (initial)
   path d="m689.5 49.0l32.2 6.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(689.50,-49.00)
-    xo line(721.70,-55.20)
+    xo move(689.50,49.00)
+    xo line(721.70,55.20)
     xo vline(-3.20)
-    xo line(689.50,-45.80)
+    xo line(689.50,45.80)
     xo z
     xo fill (none)
     xo restore
@@ -763,122 +763,122 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=111.3,56.9,78.9,86.4,121.3,137.4,153.5,169.6,187.4,203.5,221.4,237.5,253.5,284.7,276.4,300.8,316.9,333.0,350.9,366.9,384.8,400.9,417.0,442.4,458.5,474.5,490.6,508.5,524.6,542.4,558.5,574.6,600.0,616.1,632.2,648.2,666.0,666.1,689.3,705.4,721.5 y=47.0,41.0,35.0,32.0,32.0,29.0,29.0,29.0,29.0,29.0,23.0,26.0,29.0,35.0,35.0,32.0,32.0,32.0,32.0,32.0,26.0,29.0,32.0,38.0,35.0,35.0,35.0,35.0,35.0,29.0,32.0,35.0,38.0,35.0,32.0,29.0,47.0,26.0,26.0,26.0,38.0
     xo save
-    txt* translate( 111.30, -47.00 ) e043
-    txt* translate( 56.90, -41.00 ) e050
-    txt* translate( 78.90, -35.00 ) e260
-    txt* translate( 86.40, -32.00 ) e262
-    txt* translate( 121.30, -32.00 ) e0a4
-    txt* translate( 137.40, -29.00 ) e0a4
-    txt* translate( 153.50, -29.00 ) e0a4
-    txt* translate( 169.60, -29.00 ) e0a4
-    txt* translate( 187.40, -29.00 ) e0a4
-    txt* translate( 203.50, -29.00 ) e0a4
-    txt* translate( 221.40, -23.00 ) e0a4
-    txt* translate( 237.50, -26.00 ) e0a4
-    txt* translate( 253.50, -29.00 ) e0a4
-    txt* translate( 284.70, -35.00 ) e0a4
-    txt* translate( 276.40, -35.00 ) e262
-    txt* translate( 300.80, -32.00 ) e0a4
-    txt* translate( 316.90, -32.00 ) e0a4
-    txt* translate( 333.00, -32.00 ) e0a4
-    txt* translate( 350.90, -32.00 ) e0a4
-    txt* translate( 366.90, -32.00 ) e0a4
-    txt* translate( 384.80, -26.00 ) e0a4
-    txt* translate( 400.90, -29.00 ) e0a4
-    txt* translate( 417.00, -32.00 ) e0a4
-    txt* translate( 442.40, -38.00 ) e0a4
-    txt* translate( 458.50, -35.00 ) e0a4
-    txt* translate( 474.50, -35.00 ) e0a4
-    txt* translate( 490.60, -35.00 ) e0a4
-    txt* translate( 508.50, -35.00 ) e0a4
-    txt* translate( 524.60, -35.00 ) e0a4
-    txt* translate( 542.40, -29.00 ) e0a4
-    txt* translate( 558.50, -32.00 ) e0a4
-    txt* translate( 574.60, -35.00 ) e0a4
-    txt* translate( 600.00, -38.00 ) e0a4
-    txt* translate( 616.10, -35.00 ) e0a4
-    txt* translate( 632.20, -32.00 ) e0a4
-    txt* translate( 648.20, -29.00 ) e0a4
-    txt* translate( 666.00, -47.00 ) e241
-    txt* translate( 666.10, -26.00 ) e0a4
-    txt* translate( 689.30, -26.00 ) e0a4
-    txt* translate( 705.40, -26.00 ) e0a4
-    txt* translate( 721.50, -38.00 ) e0a4
+    txt* translate( 111.30, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 35.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 32.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 121.30, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 137.40, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 153.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 169.60, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 187.40, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 203.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 221.40, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 237.50, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 253.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 284.70, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 276.40, 35.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 300.80, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 316.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 333.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 350.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 366.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 384.80, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 400.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 417.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 442.40, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 458.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 474.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 490.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 508.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 524.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 542.40, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 558.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 574.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 600.00, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 616.10, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 632.20, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 648.20, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 666.00, 47.00 ) scale( 1.0, -1.0 ) e241
+    txt* translate( 666.10, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 689.30, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 705.40, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 721.50, 38.00 ) scale( 1.0, -1.0 ) e0a4
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M121.5 32.0v21.2M137..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(121.50,-32.00)
+    xo move(121.50,32.00)
     xo vline(21.20)
-    xo move(137.60,-29.00)
+    xo move(137.60,29.00)
     xo vline(23.30)
-    xo move(153.70,-29.00)
+    xo move(153.70,29.00)
     xo vline(22.50)
-    xo move(169.80,-29.00)
+    xo move(169.80,29.00)
     xo vline(21.60)
-    xo move(187.60,-29.00)
+    xo move(187.60,29.00)
     xo vline(23.30)
-    xo move(203.70,-29.00)
+    xo move(203.70,29.00)
     xo vline(23.30)
-    xo move(221.60,-23.00)
+    xo move(221.60,23.00)
     xo vline(23.10)
-    xo move(237.70,-26.00)
+    xo move(237.70,26.00)
     xo vline(22.20)
-    xo move(253.70,-29.00)
+    xo move(253.70,29.00)
     xo vline(21.20)
-    xo move(284.90,-35.00)
+    xo move(284.90,35.00)
     xo vline(21.20)
-    xo move(301.00,-32.00)
+    xo move(301.00,32.00)
     xo vline(23.30)
-    xo move(317.10,-32.00)
+    xo move(317.10,32.00)
     xo vline(22.50)
-    xo move(333.20,-32.00)
+    xo move(333.20,32.00)
     xo vline(21.60)
-    xo move(351.10,-32.00)
+    xo move(351.10,32.00)
     xo vline(21.90)
-    xo move(367.10,-32.00)
+    xo move(367.10,32.00)
     xo vline(21.90)
-    xo move(385.00,-26.00)
+    xo move(385.00,26.00)
     xo vline(23.10)
-    xo move(401.10,-29.00)
+    xo move(401.10,29.00)
     xo vline(22.20)
-    xo move(417.20,-32.00)
+    xo move(417.20,32.00)
     xo vline(21.20)
-    xo move(449.60,-38.00)
+    xo move(449.60,38.00)
     xo vline(-24.20)
-    xo move(465.70,-35.00)
+    xo move(465.70,35.00)
     xo vline(-21.20)
-    xo move(481.70,-35.00)
+    xo move(481.70,35.00)
     xo vline(-21.20)
-    xo move(497.80,-35.00)
+    xo move(497.80,35.00)
     xo vline(-21.20)
-    xo move(515.70,-35.00)
+    xo move(515.70,35.00)
     xo vline(-21.20)
-    xo move(531.80,-35.00)
+    xo move(531.80,35.00)
     xo vline(-21.20)
-    xo move(542.60,-29.00)
+    xo move(542.60,29.00)
     xo vline(23.10)
-    xo move(558.70,-32.00)
+    xo move(558.70,32.00)
     xo vline(22.20)
-    xo move(574.80,-35.00)
+    xo move(574.80,35.00)
     xo vline(21.20)
-    xo move(600.20,-38.00)
+    xo move(600.20,38.00)
     xo vline(21.20)
-    xo move(616.30,-35.00)
+    xo move(616.30,35.00)
     xo vline(22.20)
-    xo move(632.40,-32.00)
+    xo move(632.40,32.00)
     xo vline(23.10)
-    xo move(648.40,-29.00)
+    xo move(648.40,29.00)
     xo vline(24.10)
-    xo move(666.30,-26.00)
+    xo move(666.30,26.00)
     xo vline(21.00)
-    xo move(689.50,-26.00)
+    xo move(689.50,26.00)
     xo vline(27.00)
-    xo move(705.60,-26.00)
+    xo move(705.60,26.00)
     xo vline(30.10)
-    xo move(721.70,-38.00)
+    xo move(721.70,38.00)
     xo vline(21.20)
     xo stroke (currentColor)
     xo restore
@@ -887,26 +887,26 @@ xo fill_color black (initial)
 ==== start svg ====
 XObject #3
 vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-translate( 0.00 70.00 )
-vb rect( 0.00 0.00 794.00 -70.00)
+matrix( 1 0 0 -1 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-47
+  use "#stdef" (path), x=52.9, y=47.0
     xo save
-    translate( 52.90 -47.00 )
+    translate( 52.90 47.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -916,13 +916,13 @@ xo fill_color black (initial)
   path d="M258.8 47.0v-24.0M42..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(258.80,-47.00)
+    xo move(258.80,47.00)
     xo vline(-24.00)
-    xo move(428.60,-47.00)
+    xo move(428.60,47.00)
     xo vline(-24.00)
-    xo move(592.50,-47.00)
+    xo move(592.50,47.00)
     xo vline(-24.00)
-    xo move(732.90,-47.00)
+    xo move(732.90,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -931,7 +931,7 @@ xo fill_color black (initial)
   path d="M737.4 47.0v-24.0"
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(737.40,-47.00)
+    xo move(737.40,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -940,10 +940,10 @@ xo fill_color black (initial)
   path d="m102.8 54.2l51.0 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(102.80,-54.20)
-    xo line(153.80,-51.60)
+    xo move(102.80,54.20)
+    xo line(153.80,51.60)
     xo vline(-3.20)
-    xo line(102.80,-51.00)
+    xo line(102.80,51.00)
     xo z
     xo fill (none)
     xo restore
@@ -952,10 +952,10 @@ xo fill_color black (initial)
   path d="m103.1 49.2l50.3 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(103.10,-49.20)
-    xo line(153.40,-46.60)
+    xo move(103.10,49.20)
+    xo line(153.40,46.60)
     xo vline(-3.20)
-    xo line(103.10,-46.00)
+    xo line(103.10,46.00)
     xo z
     xo fill (none)
     xo restore
@@ -964,10 +964,10 @@ xo fill_color black (initial)
   path d="m171.7 53.3l17.5 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(171.70,-53.30)
-    xo line(189.20,-53.30)
+    xo move(171.70,53.30)
+    xo line(189.20,53.30)
     xo vline(-3.20)
-    xo line(171.70,-50.10)
+    xo line(171.70,50.10)
     xo z
     xo fill (none)
     xo restore
@@ -976,10 +976,10 @@ xo fill_color black (initial)
   path d="m172.1 48.3l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(172.10,-48.30)
-    xo line(188.90,-48.30)
+    xo move(172.10,48.30)
+    xo line(188.90,48.30)
     xo vline(-3.20)
-    xo line(172.10,-45.10)
+    xo line(172.10,45.10)
     xo z
     xo fill (none)
     xo restore
@@ -988,10 +988,10 @@ xo fill_color black (initial)
   path d="m207.2 47.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(207.20,-47.00)
-    xo line(241.40,-51.20)
+    xo move(207.20,47.00)
+    xo line(241.40,51.20)
     xo vline(-3.20)
-    xo line(207.20,-43.80)
+    xo line(207.20,43.80)
     xo z
     xo fill (none)
     xo restore
@@ -1000,10 +1000,10 @@ xo fill_color black (initial)
   path d="m207.5 42.1l33.5 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(207.50,-42.10)
-    xo line(241.00,-46.20)
+    xo move(207.50,42.10)
+    xo line(241.00,46.20)
     xo vline(-3.20)
-    xo line(207.50,-38.90)
+    xo line(207.50,38.90)
     xo z
     xo fill (none)
     xo restore
@@ -1012,10 +1012,10 @@ xo fill_color black (initial)
   path d="m272.5 57.2l51.0 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(272.50,-57.20)
-    xo line(323.50,-54.60)
+    xo move(272.50,57.20)
+    xo line(323.50,54.60)
     xo vline(-3.20)
-    xo line(272.50,-54.00)
+    xo line(272.50,54.00)
     xo z
     xo fill (none)
     xo restore
@@ -1024,10 +1024,10 @@ xo fill_color black (initial)
   path d="m272.8 52.2l50.3 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(272.80,-52.20)
-    xo line(323.10,-49.60)
+    xo move(272.80,52.20)
+    xo line(323.10,49.60)
     xo vline(-3.20)
-    xo line(272.80,-49.00)
+    xo line(272.80,49.00)
     xo z
     xo fill (none)
     xo restore
@@ -1036,10 +1036,10 @@ xo fill_color black (initial)
   path d="m341.5 55.0l17.5 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(341.50,-55.00)
-    xo line(359.00,-55.00)
+    xo move(341.50,55.00)
+    xo line(359.00,55.00)
     xo vline(-3.20)
-    xo line(341.50,-51.80)
+    xo line(341.50,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -1048,10 +1048,10 @@ xo fill_color black (initial)
   path d="m341.8 50.0l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(341.80,-50.00)
-    xo line(358.60,-50.00)
+    xo move(341.80,50.00)
+    xo line(358.60,50.00)
     xo vline(-3.20)
-    xo line(341.80,-46.80)
+    xo line(341.80,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -1060,10 +1060,10 @@ xo fill_color black (initial)
   path d="m376.9 50.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(376.90,-50.00)
-    xo line(411.10,-54.20)
+    xo move(376.90,50.00)
+    xo line(411.10,54.20)
     xo vline(-3.20)
-    xo line(376.90,-46.80)
+    xo line(376.90,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -1072,10 +1072,10 @@ xo fill_color black (initial)
   path d="m377.2 45.1l33.5 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(377.20,-45.10)
-    xo line(410.70,-49.20)
+    xo move(377.20,45.10)
+    xo line(410.70,49.20)
     xo vline(-3.20)
-    xo line(377.20,-41.90)
+    xo line(377.20,41.90)
     xo z
     xo fill (none)
     xo restore
@@ -1084,10 +1084,10 @@ xo fill_color black (initial)
   path d="m443.4 12.8l51.0 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(443.40,-12.80)
-    xo line(494.40,-12.80)
+    xo move(443.40,12.80)
+    xo line(494.40,12.80)
     xo vline(3.20)
-    xo line(443.40,-16.00)
+    xo line(443.40,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -1096,10 +1096,10 @@ xo fill_color black (initial)
   path d="m443.8 17.8l50.3 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(443.80,-17.80)
-    xo line(494.10,-17.80)
+    xo move(443.80,17.80)
+    xo line(494.10,17.80)
     xo vline(3.20)
-    xo line(443.80,-21.00)
+    xo line(443.80,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -1108,10 +1108,10 @@ xo fill_color black (initial)
   path d="m512.4 12.8l17.5 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(512.40,-12.80)
-    xo line(529.90,-12.80)
+    xo move(512.40,12.80)
+    xo line(529.90,12.80)
     xo vline(3.20)
-    xo line(512.40,-16.00)
+    xo line(512.40,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -1120,10 +1120,10 @@ xo fill_color black (initial)
   path d="m512.7 17.8l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(512.70,-17.80)
-    xo line(529.50,-17.80)
+    xo move(512.70,17.80)
+    xo line(529.50,17.80)
     xo vline(3.20)
-    xo line(512.70,-21.00)
+    xo line(512.70,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -1132,10 +1132,10 @@ xo fill_color black (initial)
   path d="m540.8 53.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(540.80,-53.00)
-    xo line(575.00,-57.20)
+    xo move(540.80,53.00)
+    xo line(575.00,57.20)
     xo vline(-3.20)
-    xo line(540.80,-49.80)
+    xo line(540.80,49.80)
     xo z
     xo fill (none)
     xo restore
@@ -1144,10 +1144,10 @@ xo fill_color black (initial)
   path d="m541.1 48.1l33.5 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(541.10,-48.10)
-    xo line(574.60,-52.20)
+    xo move(541.10,48.10)
+    xo line(574.60,52.20)
     xo vline(-3.20)
-    xo line(541.10,-44.90)
+    xo line(541.10,44.90)
     xo z
     xo fill (none)
     xo restore
@@ -1156,10 +1156,10 @@ xo fill_color black (initial)
   path d="m600.3 55.0l51.0 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(600.30,-55.00)
-    xo line(651.30,-55.00)
+    xo move(600.30,55.00)
+    xo line(651.30,55.00)
     xo vline(-3.20)
-    xo line(600.30,-51.80)
+    xo line(600.30,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -1168,10 +1168,10 @@ xo fill_color black (initial)
   path d="m600.7 50.0l50.3 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(600.70,-50.00)
-    xo line(651.00,-50.00)
+    xo move(600.70,50.00)
+    xo line(651.00,50.00)
     xo vline(-3.20)
-    xo line(600.70,-46.80)
+    xo line(600.70,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -1180,10 +1180,10 @@ xo fill_color black (initial)
   path d="m674.4 12.7l17.5 3.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.40,-12.70)
-    xo line(691.90,-16.00)
+    xo move(674.40,12.70)
+    xo line(691.90,16.00)
     xo vline(3.20)
-    xo line(674.40,-15.90)
+    xo line(674.40,15.90)
     xo z
     xo fill (none)
     xo restore
@@ -1192,10 +1192,10 @@ xo fill_color black (initial)
   path d="m674.8 17.8l16.8 3.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.80,-17.80)
-    xo line(691.60,-21.00)
+    xo move(674.80,17.80)
+    xo line(691.60,21.00)
     xo vline(3.20)
-    xo line(674.80,-21.00)
+    xo line(674.80,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -1203,120 +1203,120 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=727.9,56.9,78.9,86.4,102.9,119.7,136.5,153.2,171.9,188.7,207.3,224.1,240.8,272.6,264.3,289.4,306.2,323.0,341.6,358.4,377.0,393.8,410.6,436.6,453.3,470.1,486.9,505.5,522.3,540.9,557.7,574.5,600.5,617.2,634.0,650.8,667.6,684.3,709.9,703.0,713.4 y=47.0,41.0,35.0,32.0,32.0,29.0,29.0,29.0,29.0,29.0,23.0,26.0,29.0,35.0,35.0,32.0,32.0,32.0,32.0,32.0,26.0,29.0,32.0,38.0,35.0,35.0,35.0,35.0,35.0,29.0,32.0,35.0,32.0,26.0,29.0,32.0,35.0,41.0,17.0,38.0,38.0
     xo save
-    txt* translate( 727.90, -47.00 ) e043
-    txt* translate( 56.90, -41.00 ) e050
-    txt* translate( 78.90, -35.00 ) e260
-    txt* translate( 86.40, -32.00 ) e262
-    txt* translate( 102.90, -32.00 ) e0a4
-    txt* translate( 119.70, -29.00 ) e0a4
-    txt* translate( 136.50, -29.00 ) e0a4
-    txt* translate( 153.20, -29.00 ) e0a4
-    txt* translate( 171.90, -29.00 ) e0a4
-    txt* translate( 188.70, -29.00 ) e0a4
-    txt* translate( 207.30, -23.00 ) e0a4
-    txt* translate( 224.10, -26.00 ) e0a4
-    txt* translate( 240.80, -29.00 ) e0a4
-    txt* translate( 272.60, -35.00 ) e0a4
-    txt* translate( 264.30, -35.00 ) e262
-    txt* translate( 289.40, -32.00 ) e0a4
-    txt* translate( 306.20, -32.00 ) e0a4
-    txt* translate( 323.00, -32.00 ) e0a4
-    txt* translate( 341.60, -32.00 ) e0a4
-    txt* translate( 358.40, -32.00 ) e0a4
-    txt* translate( 377.00, -26.00 ) e0a4
-    txt* translate( 393.80, -29.00 ) e0a4
-    txt* translate( 410.60, -32.00 ) e0a4
-    txt* translate( 436.60, -38.00 ) e0a4
-    txt* translate( 453.30, -35.00 ) e0a4
-    txt* translate( 470.10, -35.00 ) e0a4
-    txt* translate( 486.90, -35.00 ) e0a4
-    txt* translate( 505.50, -35.00 ) e0a4
-    txt* translate( 522.30, -35.00 ) e0a4
-    txt* translate( 540.90, -29.00 ) e0a4
-    txt* translate( 557.70, -32.00 ) e0a4
-    txt* translate( 574.50, -35.00 ) e0a4
-    txt* translate( 600.50, -32.00 ) e0a4
-    txt* translate( 617.20, -26.00 ) e0a4
-    txt* translate( 634.00, -29.00 ) e0a4
-    txt* translate( 650.80, -32.00 ) e0a4
-    txt* translate( 667.60, -35.00 ) e0a4
-    txt* translate( 684.30, -41.00 ) e0a4
-    txt* translate( 709.90, -17.00 ) e240
-    txt* translate( 703.00, -38.00 ) e0a4
-    txt* translate( 713.40, -38.00 ) e1e7
+    txt* translate( 727.90, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 35.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 32.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 102.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 119.70, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 136.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 153.20, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 171.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 188.70, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 207.30, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 224.10, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 240.80, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 272.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 264.30, 35.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 289.40, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 306.20, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 323.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 341.60, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 358.40, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 377.00, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 393.80, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 410.60, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 436.60, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 453.30, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 470.10, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 486.90, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 505.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 522.30, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 540.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 557.70, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 574.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 600.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 617.20, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 634.00, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 650.80, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 667.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 684.30, 41.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 709.90, 17.00 ) scale( 1.0, -1.0 ) e240
+    txt* translate( 703.00, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 713.40, 38.00 ) scale( 1.0, -1.0 ) e1e7
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M103.1 32.0v21.2M119..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(103.10,-32.00)
+    xo move(103.10,32.00)
     xo vline(21.20)
-    xo move(119.90,-29.00)
+    xo move(119.90,29.00)
     xo vline(23.30)
-    xo move(136.70,-29.00)
+    xo move(136.70,29.00)
     xo vline(22.50)
-    xo move(153.40,-29.00)
+    xo move(153.40,29.00)
     xo vline(21.60)
-    xo move(172.10,-29.00)
+    xo move(172.10,29.00)
     xo vline(23.30)
-    xo move(188.90,-29.00)
+    xo move(188.90,29.00)
     xo vline(23.30)
-    xo move(207.50,-23.00)
+    xo move(207.50,23.00)
     xo vline(23.10)
-    xo move(224.30,-26.00)
+    xo move(224.30,26.00)
     xo vline(22.10)
-    xo move(241.00,-29.00)
+    xo move(241.00,29.00)
     xo vline(21.20)
-    xo move(272.80,-35.00)
+    xo move(272.80,35.00)
     xo vline(21.20)
-    xo move(289.60,-32.00)
+    xo move(289.60,32.00)
     xo vline(23.30)
-    xo move(306.40,-32.00)
+    xo move(306.40,32.00)
     xo vline(22.50)
-    xo move(323.20,-32.00)
+    xo move(323.20,32.00)
     xo vline(21.60)
-    xo move(341.80,-32.00)
+    xo move(341.80,32.00)
     xo vline(21.90)
-    xo move(358.60,-32.00)
+    xo move(358.60,32.00)
     xo vline(21.90)
-    xo move(377.20,-26.00)
+    xo move(377.20,26.00)
     xo vline(23.10)
-    xo move(394.00,-29.00)
+    xo move(394.00,29.00)
     xo vline(22.10)
-    xo move(410.80,-32.00)
+    xo move(410.80,32.00)
     xo vline(21.20)
-    xo move(443.80,-38.00)
+    xo move(443.80,38.00)
     xo vline(-24.20)
-    xo move(460.50,-35.00)
+    xo move(460.50,35.00)
     xo vline(-21.20)
-    xo move(477.30,-35.00)
+    xo move(477.30,35.00)
     xo vline(-21.20)
-    xo move(494.10,-35.00)
+    xo move(494.10,35.00)
     xo vline(-21.20)
-    xo move(512.70,-35.00)
+    xo move(512.70,35.00)
     xo vline(-21.20)
-    xo move(529.50,-35.00)
+    xo move(529.50,35.00)
     xo vline(-21.20)
-    xo move(541.10,-29.00)
+    xo move(541.10,29.00)
     xo vline(23.10)
-    xo move(557.90,-32.00)
+    xo move(557.90,32.00)
     xo vline(22.10)
-    xo move(574.70,-35.00)
+    xo move(574.70,35.00)
     xo vline(21.20)
-    xo move(600.70,-32.00)
+    xo move(600.70,32.00)
     xo vline(21.90)
-    xo move(617.40,-26.00)
+    xo move(617.40,26.00)
     xo vline(27.90)
-    xo move(634.20,-29.00)
+    xo move(634.20,29.00)
     xo vline(24.90)
-    xo move(651.00,-32.00)
+    xo move(651.00,32.00)
     xo vline(21.90)
-    xo move(674.80,-35.00)
+    xo move(674.80,35.00)
     xo vline(-21.20)
-    xo move(691.50,-41.00)
+    xo move(691.50,41.00)
     xo vline(-24.00)
-    xo move(710.20,-38.00)
+    xo move(710.20,38.00)
     xo vline(-21.00)
     xo stroke (currentColor)
     xo restore
@@ -1325,26 +1325,26 @@ xo fill_color black (initial)
 ==== start svg ====
 XObject #4
 vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-translate( 0.00 70.00 )
-vb rect( 0.00 0.00 794.00 -70.00)
+matrix( 1 0 0 -1 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-47
+  use "#stdef" (path), x=52.9, y=47.0
     xo save
-    translate( 52.90 -47.00 )
+    translate( 52.90 47.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -1354,10 +1354,10 @@ xo fill_color black (initial)
   path d="M331.6 17.0m-6.11 0h..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(331.60,-17.00)
-    xo move(325.49,-17.00)
+    xo move(331.60,17.00)
+    xo move(325.49,17.00)
     xo hline(12.22)
-    xo move(361.55,-17.00)
+    xo move(361.55,17.00)
     xo hline(12.22)
     xo stroke (currentColor)
     xo restore
@@ -1366,15 +1366,15 @@ xo fill_color black (initial)
   path d="M108.3 47.0v-24.0M26..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(108.30,-47.00)
+    xo move(108.30,47.00)
     xo vline(-24.00)
-    xo move(268.60,-47.00)
+    xo move(268.60,47.00)
     xo vline(-24.00)
-    xo move(435.30,-47.00)
+    xo move(435.30,47.00)
     xo vline(-24.00)
-    xo move(590.60,-47.00)
+    xo move(590.60,47.00)
     xo vline(-24.00)
-    xo move(732.90,-47.00)
+    xo move(732.90,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -1383,9 +1383,9 @@ xo fill_color black (initial)
   path d="M103.8 47.0v-24.0M73..."
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(103.80,-47.00)
+    xo move(103.80,47.00)
     xo vline(-24.00)
-    xo move(737.40,-47.00)
+    xo move(737.40,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -1394,10 +1394,10 @@ xo fill_color black (initial)
   path d="m121.2 60.2l51.9 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.20,-60.20)
-    xo line(173.10,-53.90)
+    xo move(121.20,60.20)
+    xo line(173.10,53.90)
     xo vline(-3.20)
-    xo line(121.20,-57.00)
+    xo line(121.20,57.00)
     xo z
     xo fill (none)
     xo restore
@@ -1406,10 +1406,10 @@ xo fill_color black (initial)
   path d="m121.5 55.2l51.2 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.50,-55.20)
-    xo line(172.70,-48.90)
+    xo move(121.50,55.20)
+    xo line(172.70,48.90)
     xo vline(-3.20)
-    xo line(121.50,-52.00)
+    xo line(121.50,52.00)
     xo z
     xo fill (none)
     xo restore
@@ -1418,10 +1418,10 @@ xo fill_color black (initial)
   path d="m216.1 48.7l34.8 5.5..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(216.10,-48.70)
-    xo line(250.90,-54.20)
+    xo move(216.10,48.70)
+    xo line(250.90,54.20)
     xo vline(-3.20)
-    xo line(216.10,-45.50)
+    xo line(216.10,45.50)
     xo z
     xo fill (none)
     xo restore
@@ -1430,10 +1430,10 @@ xo fill_color black (initial)
   path d="m216.4 43.8l34.2 5.4..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(216.40,-43.80)
-    xo line(250.60,-49.20)
+    xo move(216.40,43.80)
+    xo line(250.60,49.20)
     xo vline(-3.20)
-    xo line(216.40,-40.60)
+    xo line(216.40,40.60)
     xo z
     xo fill (none)
     xo restore
@@ -1442,10 +1442,10 @@ xo fill_color black (initial)
   path d="m276.5 51.3l51.9 -7...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(276.50,-51.30)
-    xo line(328.40,-43.60)
+    xo move(276.50,51.30)
+    xo line(328.40,43.60)
     xo vline(-3.20)
-    xo line(276.50,-48.10)
+    xo line(276.50,48.10)
     xo z
     xo fill (none)
     xo restore
@@ -1454,10 +1454,10 @@ xo fill_color black (initial)
   path d="m276.8 46.2l51.2 -7...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(276.80,-46.20)
-    xo line(328.00,-38.60)
+    xo move(276.80,46.20)
+    xo line(328.00,38.60)
     xo vline(-3.20)
-    xo line(276.80,-43.00)
+    xo line(276.80,43.00)
     xo z
     xo fill (none)
     xo restore
@@ -1466,10 +1466,10 @@ xo fill_color black (initial)
   path d="m346.7 45.3l17.8 -3...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(346.70,-45.30)
-    xo line(364.50,-42.00)
+    xo move(346.70,45.30)
+    xo line(364.50,42.00)
     xo vline(-3.20)
-    xo line(346.70,-42.10)
+    xo line(346.70,42.10)
     xo z
     xo fill (none)
     xo restore
@@ -1478,10 +1478,10 @@ xo fill_color black (initial)
   path d="m347.0 40.2l17.1 -3...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(347.00,-40.20)
-    xo line(364.10,-37.00)
+    xo move(347.00,40.20)
+    xo line(364.10,37.00)
     xo vline(-3.20)
-    xo line(347.00,-37.00)
+    xo line(347.00,37.00)
     xo z
     xo fill (none)
     xo restore
@@ -1490,10 +1490,10 @@ xo fill_color black (initial)
   path d="m382.8 47.0l34.8 4.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(382.80,-47.00)
-    xo line(417.60,-51.30)
+    xo move(382.80,47.00)
+    xo line(417.60,51.30)
     xo vline(-3.20)
-    xo line(382.80,-43.80)
+    xo line(382.80,43.80)
     xo z
     xo fill (none)
     xo restore
@@ -1502,10 +1502,10 @@ xo fill_color black (initial)
   path d="m383.1 42.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(383.10,-42.00)
-    xo line(417.30,-46.20)
+    xo move(383.10,42.00)
+    xo line(417.30,46.20)
     xo vline(-3.20)
-    xo line(383.10,-38.80)
+    xo line(383.10,38.80)
     xo z
     xo fill (none)
     xo restore
@@ -1514,10 +1514,10 @@ xo fill_color black (initial)
   path d="m443.2 60.2l51.9 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(443.20,-60.20)
-    xo line(495.10,-53.90)
+    xo move(443.20,60.20)
+    xo line(495.10,53.90)
     xo vline(-3.20)
-    xo line(443.20,-57.00)
+    xo line(443.20,57.00)
     xo z
     xo fill (none)
     xo restore
@@ -1526,10 +1526,10 @@ xo fill_color black (initial)
   path d="m443.5 55.2l51.2 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(443.50,-55.20)
-    xo line(494.70,-48.90)
+    xo move(443.50,55.20)
+    xo line(494.70,48.90)
     xo vline(-3.20)
-    xo line(443.50,-52.00)
+    xo line(443.50,52.00)
     xo z
     xo fill (none)
     xo restore
@@ -1538,10 +1538,10 @@ xo fill_color black (initial)
   path d="m538.0 47.0l34.8 4.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(538.00,-47.00)
-    xo line(572.80,-51.30)
+    xo move(538.00,47.00)
+    xo line(572.80,51.30)
     xo vline(-3.20)
-    xo line(538.00,-43.80)
+    xo line(538.00,43.80)
     xo z
     xo fill (none)
     xo restore
@@ -1550,10 +1550,10 @@ xo fill_color black (initial)
   path d="m538.4 42.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(538.40,-42.00)
-    xo line(572.60,-46.20)
+    xo move(538.40,42.00)
+    xo line(572.60,46.20)
     xo vline(-3.20)
-    xo line(538.40,-38.80)
+    xo line(538.40,38.80)
     xo z
     xo fill (none)
     xo restore
@@ -1562,10 +1562,10 @@ xo fill_color black (initial)
   path d="m598.5 55.0l51.9 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(598.50,-55.00)
-    xo line(650.40,-55.00)
+    xo move(598.50,55.00)
+    xo line(650.40,55.00)
     xo vline(-3.20)
-    xo line(598.50,-51.80)
+    xo line(598.50,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -1574,10 +1574,10 @@ xo fill_color black (initial)
   path d="m598.8 50.0l51.2 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(598.80,-50.00)
-    xo line(650.00,-50.00)
+    xo move(598.80,50.00)
+    xo line(650.00,50.00)
     xo vline(-3.20)
-    xo line(598.80,-46.80)
+    xo line(598.80,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -1586,10 +1586,10 @@ xo fill_color black (initial)
   path d="m673.8 12.7l17.8 3.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(673.80,-12.70)
-    xo line(691.60,-16.00)
+    xo move(673.80,12.70)
+    xo line(691.60,16.00)
     xo vline(3.20)
-    xo line(673.80,-15.90)
+    xo line(673.80,15.90)
     xo z
     xo fill (none)
     xo restore
@@ -1598,10 +1598,10 @@ xo fill_color black (initial)
   path d="m674.1 17.8l17.1 3.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.10,-17.80)
-    xo line(691.20,-21.00)
+    xo move(674.10,17.80)
+    xo line(691.20,21.00)
     xo vline(3.20)
-    xo line(674.10,-21.00)
+    xo line(674.10,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -1609,116 +1609,116 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=111.3,727.9,56.9,78.9,86.4,121.3,138.4,155.5,172.6,191.4,191.5,216.2,233.3,250.4,276.6,293.7,310.8,327.9,346.8,363.9,382.9,400.0,417.1,443.3,460.4,477.5,494.5,513.4,513.5,538.2,555.3,572.3,598.6,615.7,632.8,649.8,666.9,684.0,709.9,703.0,713.4 y=47.0,47.0,41.0,35.0,32.0,38.0,35.0,32.0,29.0,47.0,26.0,23.0,23.0,32.0,29.0,26.0,23.0,17.0,23.0,17.0,23.0,23.0,29.0,38.0,35.0,32.0,29.0,47.0,26.0,23.0,23.0,29.0,32.0,26.0,29.0,32.0,35.0,41.0,17.0,38.0,38.0
     xo save
-    txt* translate( 111.30, -47.00 ) e043
-    txt* translate( 727.90, -47.00 ) e043
-    txt* translate( 56.90, -41.00 ) e050
-    txt* translate( 78.90, -35.00 ) e260
-    txt* translate( 86.40, -32.00 ) e262
-    txt* translate( 121.30, -38.00 ) e0a4
-    txt* translate( 138.40, -35.00 ) e0a4
-    txt* translate( 155.50, -32.00 ) e0a4
-    txt* translate( 172.60, -29.00 ) e0a4
-    txt* translate( 191.40, -47.00 ) e241
-    txt* translate( 191.50, -26.00 ) e0a4
-    txt* translate( 216.20, -23.00 ) e0a4
-    txt* translate( 233.30, -23.00 ) e0a4
-    txt* translate( 250.40, -32.00 ) e0a4
-    txt* translate( 276.60, -29.00 ) e0a4
-    txt* translate( 293.70, -26.00 ) e0a4
-    txt* translate( 310.80, -23.00 ) e0a4
-    txt* translate( 327.90, -17.00 ) e0a4
-    txt* translate( 346.80, -23.00 ) e0a4
-    txt* translate( 363.90, -17.00 ) e0a4
-    txt* translate( 382.90, -23.00 ) e0a4
-    txt* translate( 400.00, -23.00 ) e0a4
-    txt* translate( 417.10, -29.00 ) e0a4
-    txt* translate( 443.30, -38.00 ) e0a4
-    txt* translate( 460.40, -35.00 ) e0a4
-    txt* translate( 477.50, -32.00 ) e0a4
-    txt* translate( 494.50, -29.00 ) e0a4
-    txt* translate( 513.40, -47.00 ) e241
-    txt* translate( 513.50, -26.00 ) e0a4
-    txt* translate( 538.20, -23.00 ) e0a4
-    txt* translate( 555.30, -23.00 ) e0a4
-    txt* translate( 572.30, -29.00 ) e0a4
-    txt* translate( 598.60, -32.00 ) e0a4
-    txt* translate( 615.70, -26.00 ) e0a4
-    txt* translate( 632.80, -29.00 ) e0a4
-    txt* translate( 649.80, -32.00 ) e0a4
-    txt* translate( 666.90, -35.00 ) e0a4
-    txt* translate( 684.00, -41.00 ) e0a4
-    txt* translate( 709.90, -17.00 ) e240
-    txt* translate( 703.00, -38.00 ) e0a4
-    txt* translate( 713.40, -38.00 ) e1e7
+    txt* translate( 111.30, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 727.90, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 35.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 32.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 121.30, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 138.40, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 155.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 172.60, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 191.40, 47.00 ) scale( 1.0, -1.0 ) e241
+    txt* translate( 191.50, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 216.20, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 233.30, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 250.40, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 276.60, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 293.70, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 310.80, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 327.90, 17.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 346.80, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 363.90, 17.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 382.90, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 400.00, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 417.10, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 443.30, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 460.40, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 477.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 494.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 513.40, 47.00 ) scale( 1.0, -1.0 ) e241
+    txt* translate( 513.50, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 538.20, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 555.30, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 572.30, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 598.60, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 615.70, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 632.80, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 649.80, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 666.90, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 684.00, 41.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 709.90, 17.00 ) scale( 1.0, -1.0 ) e240
+    txt* translate( 703.00, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 713.40, 38.00 ) scale( 1.0, -1.0 ) e1e7
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M121.5 38.0v21.2M138..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(121.50,-38.00)
+    xo move(121.50,38.00)
     xo vline(21.20)
-    xo move(138.60,-35.00)
+    xo move(138.60,35.00)
     xo vline(22.10)
-    xo move(155.70,-32.00)
+    xo move(155.70,32.00)
     xo vline(23.00)
-    xo move(172.80,-29.00)
+    xo move(172.80,29.00)
     xo vline(23.90)
-    xo move(191.70,-26.00)
+    xo move(191.70,26.00)
     xo vline(21.00)
-    xo move(216.40,-23.00)
+    xo move(216.40,23.00)
     xo vline(24.80)
-    xo move(233.50,-23.00)
+    xo move(233.50,23.00)
     xo vline(27.50)
-    xo move(250.60,-32.00)
+    xo move(250.60,32.00)
     xo vline(21.20)
-    xo move(276.80,-29.00)
+    xo move(276.80,29.00)
     xo vline(21.20)
-    xo move(293.90,-26.00)
+    xo move(293.90,26.00)
     xo vline(21.70)
-    xo move(311.00,-23.00)
+    xo move(311.00,23.00)
     xo vline(22.20)
-    xo move(328.10,-17.00)
+    xo move(328.10,17.00)
     xo vline(25.60)
-    xo move(347.00,-23.00)
+    xo move(347.00,23.00)
     xo vline(21.20)
-    xo move(364.10,-17.00)
+    xo move(364.10,17.00)
     xo vline(24.00)
-    xo move(383.10,-23.00)
+    xo move(383.10,23.00)
     xo vline(23.00)
-    xo move(400.20,-23.00)
+    xo move(400.20,23.00)
     xo vline(25.10)
-    xo move(417.30,-29.00)
+    xo move(417.30,29.00)
     xo vline(21.20)
-    xo move(443.50,-38.00)
+    xo move(443.50,38.00)
     xo vline(21.20)
-    xo move(460.60,-35.00)
+    xo move(460.60,35.00)
     xo vline(22.10)
-    xo move(477.70,-32.00)
+    xo move(477.70,32.00)
     xo vline(23.00)
-    xo move(494.70,-29.00)
+    xo move(494.70,29.00)
     xo vline(23.90)
-    xo move(513.70,-26.00)
+    xo move(513.70,26.00)
     xo vline(21.00)
-    xo move(538.40,-23.00)
+    xo move(538.40,23.00)
     xo vline(23.00)
-    xo move(555.50,-23.00)
+    xo move(555.50,23.00)
     xo vline(25.10)
-    xo move(572.50,-29.00)
+    xo move(572.50,29.00)
     xo vline(21.20)
-    xo move(598.80,-32.00)
+    xo move(598.80,32.00)
     xo vline(21.90)
-    xo move(615.90,-26.00)
+    xo move(615.90,26.00)
     xo vline(27.90)
-    xo move(633.00,-29.00)
+    xo move(633.00,29.00)
     xo vline(24.90)
-    xo move(650.00,-32.00)
+    xo move(650.00,32.00)
     xo vline(21.90)
-    xo move(674.10,-35.00)
+    xo move(674.10,35.00)
     xo vline(-21.20)
-    xo move(691.20,-41.00)
+    xo move(691.20,41.00)
     xo vline(-24.00)
-    xo move(710.20,-38.00)
+    xo move(710.20,38.00)
     xo vline(-21.00)
     xo stroke (currentColor)
     xo restore
@@ -1727,26 +1727,26 @@ xo fill_color black (initial)
 ==== start svg ====
 XObject #5
 vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-translate( 0.00 70.00 )
-vb rect( 0.00 0.00 794.00 -70.00)
+matrix( 1 0 0 -1 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-47
+  use "#stdef" (path), x=52.9, y=47.0
     xo save
-    translate( 52.90 -47.00 )
+    translate( 52.90 47.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -1756,15 +1756,15 @@ xo fill_color black (initial)
   path d="M108.3 47.0v-24.0M27..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(108.30,-47.00)
+    xo move(108.30,47.00)
     xo vline(-24.00)
-    xo move(270.90,-47.00)
+    xo move(270.90,47.00)
     xo vline(-24.00)
-    xo move(434.40,-47.00)
+    xo move(434.40,47.00)
     xo vline(-24.00)
-    xo move(592.00,-47.00)
+    xo move(592.00,47.00)
     xo vline(-24.00)
-    xo move(738.90,-47.00)
+    xo move(738.90,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -1773,7 +1773,7 @@ xo fill_color black (initial)
   path d="M103.8 47.0v-24.0"
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(103.80,-47.00)
+    xo move(103.80,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -1782,10 +1782,10 @@ xo fill_color black (initial)
   path d="m121.2 54.2l48.9 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.20,-54.20)
-    xo line(170.10,-51.60)
+    xo move(121.20,54.20)
+    xo line(170.10,51.60)
     xo vline(-3.20)
-    xo line(121.20,-51.00)
+    xo line(121.20,51.00)
     xo z
     xo fill (none)
     xo restore
@@ -1794,10 +1794,10 @@ xo fill_color black (initial)
   path d="m121.5 49.2l48.2 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.50,-49.20)
-    xo line(169.70,-46.60)
+    xo move(121.50,49.20)
+    xo line(169.70,46.60)
     xo vline(-3.20)
-    xo line(121.50,-46.00)
+    xo line(121.50,46.00)
     xo z
     xo fill (none)
     xo restore
@@ -1806,10 +1806,10 @@ xo fill_color black (initial)
   path d="m187.3 53.3l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(187.30,-53.30)
-    xo line(204.10,-53.30)
+    xo move(187.30,53.30)
+    xo line(204.10,53.30)
     xo vline(-3.20)
-    xo line(187.30,-50.10)
+    xo line(187.30,50.10)
     xo z
     xo fill (none)
     xo restore
@@ -1818,10 +1818,10 @@ xo fill_color black (initial)
   path d="m187.6 48.3l16.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(187.60,-48.30)
-    xo line(203.70,-48.30)
+    xo move(187.60,48.30)
+    xo line(203.70,48.30)
     xo vline(-3.20)
-    xo line(187.60,-45.10)
+    xo line(187.60,45.10)
     xo z
     xo fill (none)
     xo restore
@@ -1830,10 +1830,10 @@ xo fill_color black (initial)
   path d="m221.2 47.1l32.8 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(221.20,-47.10)
-    xo line(254.00,-51.30)
+    xo move(221.20,47.10)
+    xo line(254.00,51.30)
     xo vline(-3.20)
-    xo line(221.20,-43.90)
+    xo line(221.20,43.90)
     xo z
     xo fill (none)
     xo restore
@@ -1842,10 +1842,10 @@ xo fill_color black (initial)
   path d="m221.6 42.1l32.2 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(221.60,-42.10)
-    xo line(253.80,-46.20)
+    xo move(221.60,42.10)
+    xo line(253.80,46.20)
     xo vline(-3.20)
-    xo line(221.60,-38.90)
+    xo line(221.60,38.90)
     xo z
     xo fill (none)
     xo restore
@@ -1854,10 +1854,10 @@ xo fill_color black (initial)
   path d="m284.6 57.2l48.9 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(284.60,-57.20)
-    xo line(333.50,-54.60)
+    xo move(284.60,57.20)
+    xo line(333.50,54.60)
     xo vline(-3.20)
-    xo line(284.60,-54.00)
+    xo line(284.60,54.00)
     xo z
     xo fill (none)
     xo restore
@@ -1866,10 +1866,10 @@ xo fill_color black (initial)
   path d="m284.9 52.2l48.2 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(284.90,-52.20)
-    xo line(333.10,-49.60)
+    xo move(284.90,52.20)
+    xo line(333.10,49.60)
     xo vline(-3.20)
-    xo line(284.90,-49.00)
+    xo line(284.90,49.00)
     xo z
     xo fill (none)
     xo restore
@@ -1878,10 +1878,10 @@ xo fill_color black (initial)
   path d="m350.7 55.0l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(350.70,-55.00)
-    xo line(367.50,-55.00)
+    xo move(350.70,55.00)
+    xo line(367.50,55.00)
     xo vline(-3.20)
-    xo line(350.70,-51.80)
+    xo line(350.70,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -1890,10 +1890,10 @@ xo fill_color black (initial)
   path d="m351.1 50.0l16.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(351.10,-50.00)
-    xo line(367.20,-50.00)
+    xo move(351.10,50.00)
+    xo line(367.20,50.00)
     xo vline(-3.20)
-    xo line(351.10,-46.80)
+    xo line(351.10,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -1902,10 +1902,10 @@ xo fill_color black (initial)
   path d="m384.7 50.1l32.8 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(384.70,-50.10)
-    xo line(417.50,-54.30)
+    xo move(384.70,50.10)
+    xo line(417.50,54.30)
     xo vline(-3.20)
-    xo line(384.70,-46.90)
+    xo line(384.70,46.90)
     xo z
     xo fill (none)
     xo restore
@@ -1914,10 +1914,10 @@ xo fill_color black (initial)
   path d="m385.0 45.1l32.2 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(385.00,-45.10)
-    xo line(417.20,-49.20)
+    xo move(385.00,45.10)
+    xo line(417.20,49.20)
     xo vline(-3.20)
-    xo line(385.00,-41.90)
+    xo line(385.00,41.90)
     xo z
     xo fill (none)
     xo restore
@@ -1926,10 +1926,10 @@ xo fill_color black (initial)
   path d="m449.2 12.8l48.9 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(449.20,-12.80)
-    xo line(498.10,-12.80)
+    xo move(449.20,12.80)
+    xo line(498.10,12.80)
     xo vline(3.20)
-    xo line(449.20,-16.00)
+    xo line(449.20,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -1938,10 +1938,10 @@ xo fill_color black (initial)
   path d="m449.6 17.8l48.2 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(449.60,-17.80)
-    xo line(497.80,-17.80)
+    xo move(449.60,17.80)
+    xo line(497.80,17.80)
     xo vline(3.20)
-    xo line(449.60,-21.00)
+    xo line(449.60,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -1950,10 +1950,10 @@ xo fill_color black (initial)
   path d="m515.3 12.8l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(515.30,-12.80)
-    xo line(532.10,-12.80)
+    xo move(515.30,12.80)
+    xo line(532.10,12.80)
     xo vline(3.20)
-    xo line(515.30,-16.00)
+    xo line(515.30,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -1962,10 +1962,10 @@ xo fill_color black (initial)
   path d="m515.7 17.8l16.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(515.70,-17.80)
-    xo line(531.80,-17.80)
+    xo move(515.70,17.80)
+    xo line(531.80,17.80)
     xo vline(3.20)
-    xo line(515.70,-21.00)
+    xo line(515.70,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -1974,10 +1974,10 @@ xo fill_color black (initial)
   path d="m542.3 53.1l32.8 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(542.30,-53.10)
-    xo line(575.10,-57.30)
+    xo move(542.30,53.10)
+    xo line(575.10,57.30)
     xo vline(-3.20)
-    xo line(542.30,-49.90)
+    xo line(542.30,49.90)
     xo z
     xo fill (none)
     xo restore
@@ -1986,10 +1986,10 @@ xo fill_color black (initial)
   path d="m542.6 48.1l32.2 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(542.60,-48.10)
-    xo line(574.80,-52.20)
+    xo move(542.60,48.10)
+    xo line(574.80,52.20)
     xo vline(-3.20)
-    xo line(542.60,-44.90)
+    xo line(542.60,44.90)
     xo z
     xo fill (none)
     xo restore
@@ -1998,10 +1998,10 @@ xo fill_color black (initial)
   path d="m599.9 60.2l48.9 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(599.90,-60.20)
-    xo line(648.80,-54.00)
+    xo move(599.90,60.20)
+    xo line(648.80,54.00)
     xo vline(-3.20)
-    xo line(599.90,-57.00)
+    xo line(599.90,57.00)
     xo z
     xo fill (none)
     xo restore
@@ -2010,10 +2010,10 @@ xo fill_color black (initial)
   path d="m600.2 55.2l48.2 -6...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(600.20,-55.20)
-    xo line(648.40,-49.10)
+    xo move(600.20,55.20)
+    xo line(648.40,49.10)
     xo vline(-3.20)
-    xo line(600.20,-52.00)
+    xo line(600.20,52.00)
     xo z
     xo fill (none)
     xo restore
@@ -2022,10 +2022,10 @@ xo fill_color black (initial)
   path d="m689.2 53.9l32.8 6.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(689.20,-53.90)
-    xo line(722.00,-60.20)
+    xo move(689.20,53.90)
+    xo line(722.00,60.20)
     xo vline(-3.20)
-    xo line(689.20,-50.70)
+    xo line(689.20,50.70)
     xo z
     xo fill (none)
     xo restore
@@ -2034,10 +2034,10 @@ xo fill_color black (initial)
   path d="m689.5 49.0l32.2 6.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(689.50,-49.00)
-    xo line(721.70,-55.20)
+    xo move(689.50,49.00)
+    xo line(721.70,55.20)
     xo vline(-3.20)
-    xo line(689.50,-45.80)
+    xo line(689.50,45.80)
     xo z
     xo fill (none)
     xo restore
@@ -2045,122 +2045,122 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=111.3,56.9,78.9,86.4,121.3,137.4,153.5,169.6,187.4,203.5,221.4,237.5,253.5,284.7,276.4,300.8,316.9,333.0,350.9,366.9,384.8,400.9,417.0,442.4,458.5,474.5,490.6,508.5,524.6,542.4,558.5,574.6,600.0,616.1,632.2,648.2,666.0,666.1,689.3,705.4,721.5 y=47.0,41.0,35.0,32.0,32.0,29.0,29.0,29.0,29.0,29.0,23.0,26.0,29.0,35.0,35.0,32.0,32.0,32.0,32.0,32.0,26.0,29.0,32.0,38.0,35.0,35.0,35.0,35.0,35.0,29.0,32.0,35.0,38.0,35.0,32.0,29.0,47.0,26.0,26.0,26.0,38.0
     xo save
-    txt* translate( 111.30, -47.00 ) e043
-    txt* translate( 56.90, -41.00 ) e050
-    txt* translate( 78.90, -35.00 ) e260
-    txt* translate( 86.40, -32.00 ) e262
-    txt* translate( 121.30, -32.00 ) e0a4
-    txt* translate( 137.40, -29.00 ) e0a4
-    txt* translate( 153.50, -29.00 ) e0a4
-    txt* translate( 169.60, -29.00 ) e0a4
-    txt* translate( 187.40, -29.00 ) e0a4
-    txt* translate( 203.50, -29.00 ) e0a4
-    txt* translate( 221.40, -23.00 ) e0a4
-    txt* translate( 237.50, -26.00 ) e0a4
-    txt* translate( 253.50, -29.00 ) e0a4
-    txt* translate( 284.70, -35.00 ) e0a4
-    txt* translate( 276.40, -35.00 ) e262
-    txt* translate( 300.80, -32.00 ) e0a4
-    txt* translate( 316.90, -32.00 ) e0a4
-    txt* translate( 333.00, -32.00 ) e0a4
-    txt* translate( 350.90, -32.00 ) e0a4
-    txt* translate( 366.90, -32.00 ) e0a4
-    txt* translate( 384.80, -26.00 ) e0a4
-    txt* translate( 400.90, -29.00 ) e0a4
-    txt* translate( 417.00, -32.00 ) e0a4
-    txt* translate( 442.40, -38.00 ) e0a4
-    txt* translate( 458.50, -35.00 ) e0a4
-    txt* translate( 474.50, -35.00 ) e0a4
-    txt* translate( 490.60, -35.00 ) e0a4
-    txt* translate( 508.50, -35.00 ) e0a4
-    txt* translate( 524.60, -35.00 ) e0a4
-    txt* translate( 542.40, -29.00 ) e0a4
-    txt* translate( 558.50, -32.00 ) e0a4
-    txt* translate( 574.60, -35.00 ) e0a4
-    txt* translate( 600.00, -38.00 ) e0a4
-    txt* translate( 616.10, -35.00 ) e0a4
-    txt* translate( 632.20, -32.00 ) e0a4
-    txt* translate( 648.20, -29.00 ) e0a4
-    txt* translate( 666.00, -47.00 ) e241
-    txt* translate( 666.10, -26.00 ) e0a4
-    txt* translate( 689.30, -26.00 ) e0a4
-    txt* translate( 705.40, -26.00 ) e0a4
-    txt* translate( 721.50, -38.00 ) e0a4
+    txt* translate( 111.30, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 35.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 32.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 121.30, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 137.40, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 153.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 169.60, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 187.40, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 203.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 221.40, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 237.50, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 253.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 284.70, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 276.40, 35.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 300.80, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 316.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 333.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 350.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 366.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 384.80, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 400.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 417.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 442.40, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 458.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 474.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 490.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 508.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 524.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 542.40, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 558.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 574.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 600.00, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 616.10, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 632.20, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 648.20, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 666.00, 47.00 ) scale( 1.0, -1.0 ) e241
+    txt* translate( 666.10, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 689.30, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 705.40, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 721.50, 38.00 ) scale( 1.0, -1.0 ) e0a4
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M121.5 32.0v21.2M137..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(121.50,-32.00)
+    xo move(121.50,32.00)
     xo vline(21.20)
-    xo move(137.60,-29.00)
+    xo move(137.60,29.00)
     xo vline(23.30)
-    xo move(153.70,-29.00)
+    xo move(153.70,29.00)
     xo vline(22.50)
-    xo move(169.80,-29.00)
+    xo move(169.80,29.00)
     xo vline(21.60)
-    xo move(187.60,-29.00)
+    xo move(187.60,29.00)
     xo vline(23.30)
-    xo move(203.70,-29.00)
+    xo move(203.70,29.00)
     xo vline(23.30)
-    xo move(221.60,-23.00)
+    xo move(221.60,23.00)
     xo vline(23.10)
-    xo move(237.70,-26.00)
+    xo move(237.70,26.00)
     xo vline(22.20)
-    xo move(253.70,-29.00)
+    xo move(253.70,29.00)
     xo vline(21.20)
-    xo move(284.90,-35.00)
+    xo move(284.90,35.00)
     xo vline(21.20)
-    xo move(301.00,-32.00)
+    xo move(301.00,32.00)
     xo vline(23.30)
-    xo move(317.10,-32.00)
+    xo move(317.10,32.00)
     xo vline(22.50)
-    xo move(333.20,-32.00)
+    xo move(333.20,32.00)
     xo vline(21.60)
-    xo move(351.10,-32.00)
+    xo move(351.10,32.00)
     xo vline(21.90)
-    xo move(367.10,-32.00)
+    xo move(367.10,32.00)
     xo vline(21.90)
-    xo move(385.00,-26.00)
+    xo move(385.00,26.00)
     xo vline(23.10)
-    xo move(401.10,-29.00)
+    xo move(401.10,29.00)
     xo vline(22.20)
-    xo move(417.20,-32.00)
+    xo move(417.20,32.00)
     xo vline(21.20)
-    xo move(449.60,-38.00)
+    xo move(449.60,38.00)
     xo vline(-24.20)
-    xo move(465.70,-35.00)
+    xo move(465.70,35.00)
     xo vline(-21.20)
-    xo move(481.70,-35.00)
+    xo move(481.70,35.00)
     xo vline(-21.20)
-    xo move(497.80,-35.00)
+    xo move(497.80,35.00)
     xo vline(-21.20)
-    xo move(515.70,-35.00)
+    xo move(515.70,35.00)
     xo vline(-21.20)
-    xo move(531.80,-35.00)
+    xo move(531.80,35.00)
     xo vline(-21.20)
-    xo move(542.60,-29.00)
+    xo move(542.60,29.00)
     xo vline(23.10)
-    xo move(558.70,-32.00)
+    xo move(558.70,32.00)
     xo vline(22.20)
-    xo move(574.80,-35.00)
+    xo move(574.80,35.00)
     xo vline(21.20)
-    xo move(600.20,-38.00)
+    xo move(600.20,38.00)
     xo vline(21.20)
-    xo move(616.30,-35.00)
+    xo move(616.30,35.00)
     xo vline(22.20)
-    xo move(632.40,-32.00)
+    xo move(632.40,32.00)
     xo vline(23.10)
-    xo move(648.40,-29.00)
+    xo move(648.40,29.00)
     xo vline(24.10)
-    xo move(666.30,-26.00)
+    xo move(666.30,26.00)
     xo vline(21.00)
-    xo move(689.50,-26.00)
+    xo move(689.50,26.00)
     xo vline(27.00)
-    xo move(705.60,-26.00)
+    xo move(705.60,26.00)
     xo vline(30.10)
-    xo move(721.70,-38.00)
+    xo move(721.70,38.00)
     xo vline(21.20)
     xo stroke (currentColor)
     xo restore
@@ -2169,26 +2169,26 @@ xo fill_color black (initial)
 ==== start svg ====
 XObject #6
 vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-translate( 0.00 70.00 )
-vb rect( 0.00 0.00 794.00 -70.00)
+matrix( 1 0 0 -1 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-47
+  use "#stdef" (path), x=52.9, y=47.0
     xo save
-    translate( 52.90 -47.00 )
+    translate( 52.90 47.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -2198,13 +2198,13 @@ xo fill_color black (initial)
   path d="M258.8 47.0v-24.0M42..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(258.80,-47.00)
+    xo move(258.80,47.00)
     xo vline(-24.00)
-    xo move(428.60,-47.00)
+    xo move(428.60,47.00)
     xo vline(-24.00)
-    xo move(592.50,-47.00)
+    xo move(592.50,47.00)
     xo vline(-24.00)
-    xo move(732.90,-47.00)
+    xo move(732.90,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -2213,7 +2213,7 @@ xo fill_color black (initial)
   path d="M737.4 47.0v-24.0"
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(737.40,-47.00)
+    xo move(737.40,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -2222,10 +2222,10 @@ xo fill_color black (initial)
   path d="m102.8 54.2l51.0 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(102.80,-54.20)
-    xo line(153.80,-51.60)
+    xo move(102.80,54.20)
+    xo line(153.80,51.60)
     xo vline(-3.20)
-    xo line(102.80,-51.00)
+    xo line(102.80,51.00)
     xo z
     xo fill (none)
     xo restore
@@ -2234,10 +2234,10 @@ xo fill_color black (initial)
   path d="m103.1 49.2l50.3 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(103.10,-49.20)
-    xo line(153.40,-46.60)
+    xo move(103.10,49.20)
+    xo line(153.40,46.60)
     xo vline(-3.20)
-    xo line(103.10,-46.00)
+    xo line(103.10,46.00)
     xo z
     xo fill (none)
     xo restore
@@ -2246,10 +2246,10 @@ xo fill_color black (initial)
   path d="m171.7 53.3l17.5 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(171.70,-53.30)
-    xo line(189.20,-53.30)
+    xo move(171.70,53.30)
+    xo line(189.20,53.30)
     xo vline(-3.20)
-    xo line(171.70,-50.10)
+    xo line(171.70,50.10)
     xo z
     xo fill (none)
     xo restore
@@ -2258,10 +2258,10 @@ xo fill_color black (initial)
   path d="m172.1 48.3l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(172.10,-48.30)
-    xo line(188.90,-48.30)
+    xo move(172.10,48.30)
+    xo line(188.90,48.30)
     xo vline(-3.20)
-    xo line(172.10,-45.10)
+    xo line(172.10,45.10)
     xo z
     xo fill (none)
     xo restore
@@ -2270,10 +2270,10 @@ xo fill_color black (initial)
   path d="m207.2 47.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(207.20,-47.00)
-    xo line(241.40,-51.20)
+    xo move(207.20,47.00)
+    xo line(241.40,51.20)
     xo vline(-3.20)
-    xo line(207.20,-43.80)
+    xo line(207.20,43.80)
     xo z
     xo fill (none)
     xo restore
@@ -2282,10 +2282,10 @@ xo fill_color black (initial)
   path d="m207.5 42.1l33.5 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(207.50,-42.10)
-    xo line(241.00,-46.20)
+    xo move(207.50,42.10)
+    xo line(241.00,46.20)
     xo vline(-3.20)
-    xo line(207.50,-38.90)
+    xo line(207.50,38.90)
     xo z
     xo fill (none)
     xo restore
@@ -2294,10 +2294,10 @@ xo fill_color black (initial)
   path d="m272.5 57.2l51.0 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(272.50,-57.20)
-    xo line(323.50,-54.60)
+    xo move(272.50,57.20)
+    xo line(323.50,54.60)
     xo vline(-3.20)
-    xo line(272.50,-54.00)
+    xo line(272.50,54.00)
     xo z
     xo fill (none)
     xo restore
@@ -2306,10 +2306,10 @@ xo fill_color black (initial)
   path d="m272.8 52.2l50.3 -2...."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(272.80,-52.20)
-    xo line(323.10,-49.60)
+    xo move(272.80,52.20)
+    xo line(323.10,49.60)
     xo vline(-3.20)
-    xo line(272.80,-49.00)
+    xo line(272.80,49.00)
     xo z
     xo fill (none)
     xo restore
@@ -2318,10 +2318,10 @@ xo fill_color black (initial)
   path d="m341.5 55.0l17.5 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(341.50,-55.00)
-    xo line(359.00,-55.00)
+    xo move(341.50,55.00)
+    xo line(359.00,55.00)
     xo vline(-3.20)
-    xo line(341.50,-51.80)
+    xo line(341.50,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -2330,10 +2330,10 @@ xo fill_color black (initial)
   path d="m341.8 50.0l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(341.80,-50.00)
-    xo line(358.60,-50.00)
+    xo move(341.80,50.00)
+    xo line(358.60,50.00)
     xo vline(-3.20)
-    xo line(341.80,-46.80)
+    xo line(341.80,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2342,10 +2342,10 @@ xo fill_color black (initial)
   path d="m376.9 50.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(376.90,-50.00)
-    xo line(411.10,-54.20)
+    xo move(376.90,50.00)
+    xo line(411.10,54.20)
     xo vline(-3.20)
-    xo line(376.90,-46.80)
+    xo line(376.90,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2354,10 +2354,10 @@ xo fill_color black (initial)
   path d="m377.2 45.1l33.5 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(377.20,-45.10)
-    xo line(410.70,-49.20)
+    xo move(377.20,45.10)
+    xo line(410.70,49.20)
     xo vline(-3.20)
-    xo line(377.20,-41.90)
+    xo line(377.20,41.90)
     xo z
     xo fill (none)
     xo restore
@@ -2366,10 +2366,10 @@ xo fill_color black (initial)
   path d="m443.4 12.8l51.0 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(443.40,-12.80)
-    xo line(494.40,-12.80)
+    xo move(443.40,12.80)
+    xo line(494.40,12.80)
     xo vline(3.20)
-    xo line(443.40,-16.00)
+    xo line(443.40,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -2378,10 +2378,10 @@ xo fill_color black (initial)
   path d="m443.8 17.8l50.3 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(443.80,-17.80)
-    xo line(494.10,-17.80)
+    xo move(443.80,17.80)
+    xo line(494.10,17.80)
     xo vline(3.20)
-    xo line(443.80,-21.00)
+    xo line(443.80,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2390,10 +2390,10 @@ xo fill_color black (initial)
   path d="m512.4 12.8l17.5 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(512.40,-12.80)
-    xo line(529.90,-12.80)
+    xo move(512.40,12.80)
+    xo line(529.90,12.80)
     xo vline(3.20)
-    xo line(512.40,-16.00)
+    xo line(512.40,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -2402,10 +2402,10 @@ xo fill_color black (initial)
   path d="m512.7 17.8l16.8 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(512.70,-17.80)
-    xo line(529.50,-17.80)
+    xo move(512.70,17.80)
+    xo line(529.50,17.80)
     xo vline(3.20)
-    xo line(512.70,-21.00)
+    xo line(512.70,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2414,10 +2414,10 @@ xo fill_color black (initial)
   path d="m540.8 53.0l34.2 4.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(540.80,-53.00)
-    xo line(575.00,-57.20)
+    xo move(540.80,53.00)
+    xo line(575.00,57.20)
     xo vline(-3.20)
-    xo line(540.80,-49.80)
+    xo line(540.80,49.80)
     xo z
     xo fill (none)
     xo restore
@@ -2426,10 +2426,10 @@ xo fill_color black (initial)
   path d="m541.1 48.1l33.5 4.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(541.10,-48.10)
-    xo line(574.60,-52.20)
+    xo move(541.10,48.10)
+    xo line(574.60,52.20)
     xo vline(-3.20)
-    xo line(541.10,-44.90)
+    xo line(541.10,44.90)
     xo z
     xo fill (none)
     xo restore
@@ -2438,10 +2438,10 @@ xo fill_color black (initial)
   path d="m600.3 55.0l51.0 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(600.30,-55.00)
-    xo line(651.30,-55.00)
+    xo move(600.30,55.00)
+    xo line(651.30,55.00)
     xo vline(-3.20)
-    xo line(600.30,-51.80)
+    xo line(600.30,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -2450,10 +2450,10 @@ xo fill_color black (initial)
   path d="m600.7 50.0l50.3 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(600.70,-50.00)
-    xo line(651.00,-50.00)
+    xo move(600.70,50.00)
+    xo line(651.00,50.00)
     xo vline(-3.20)
-    xo line(600.70,-46.80)
+    xo line(600.70,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2462,10 +2462,10 @@ xo fill_color black (initial)
   path d="m674.4 12.7l17.5 3.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.40,-12.70)
-    xo line(691.90,-16.00)
+    xo move(674.40,12.70)
+    xo line(691.90,16.00)
     xo vline(3.20)
-    xo line(674.40,-15.90)
+    xo line(674.40,15.90)
     xo z
     xo fill (none)
     xo restore
@@ -2474,10 +2474,10 @@ xo fill_color black (initial)
   path d="m674.8 17.8l16.8 3.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(674.80,-17.80)
-    xo line(691.60,-21.00)
+    xo move(674.80,17.80)
+    xo line(691.60,21.00)
     xo vline(3.20)
-    xo line(674.80,-21.00)
+    xo line(674.80,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2485,120 +2485,120 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=727.9,56.9,78.9,86.4,102.9,119.7,136.5,153.2,171.9,188.7,207.3,224.1,240.8,272.6,264.3,289.4,306.2,323.0,341.6,358.4,377.0,393.8,410.6,436.6,453.3,470.1,486.9,505.5,522.3,540.9,557.7,574.5,600.5,617.2,634.0,650.8,667.6,684.3,709.9,703.0,713.4 y=47.0,41.0,35.0,32.0,32.0,29.0,29.0,29.0,29.0,29.0,23.0,26.0,29.0,35.0,35.0,32.0,32.0,32.0,32.0,32.0,26.0,29.0,32.0,38.0,35.0,35.0,35.0,35.0,35.0,29.0,32.0,35.0,32.0,26.0,29.0,32.0,35.0,41.0,17.0,38.0,38.0
     xo save
-    txt* translate( 727.90, -47.00 ) e043
-    txt* translate( 56.90, -41.00 ) e050
-    txt* translate( 78.90, -35.00 ) e260
-    txt* translate( 86.40, -32.00 ) e262
-    txt* translate( 102.90, -32.00 ) e0a4
-    txt* translate( 119.70, -29.00 ) e0a4
-    txt* translate( 136.50, -29.00 ) e0a4
-    txt* translate( 153.20, -29.00 ) e0a4
-    txt* translate( 171.90, -29.00 ) e0a4
-    txt* translate( 188.70, -29.00 ) e0a4
-    txt* translate( 207.30, -23.00 ) e0a4
-    txt* translate( 224.10, -26.00 ) e0a4
-    txt* translate( 240.80, -29.00 ) e0a4
-    txt* translate( 272.60, -35.00 ) e0a4
-    txt* translate( 264.30, -35.00 ) e262
-    txt* translate( 289.40, -32.00 ) e0a4
-    txt* translate( 306.20, -32.00 ) e0a4
-    txt* translate( 323.00, -32.00 ) e0a4
-    txt* translate( 341.60, -32.00 ) e0a4
-    txt* translate( 358.40, -32.00 ) e0a4
-    txt* translate( 377.00, -26.00 ) e0a4
-    txt* translate( 393.80, -29.00 ) e0a4
-    txt* translate( 410.60, -32.00 ) e0a4
-    txt* translate( 436.60, -38.00 ) e0a4
-    txt* translate( 453.30, -35.00 ) e0a4
-    txt* translate( 470.10, -35.00 ) e0a4
-    txt* translate( 486.90, -35.00 ) e0a4
-    txt* translate( 505.50, -35.00 ) e0a4
-    txt* translate( 522.30, -35.00 ) e0a4
-    txt* translate( 540.90, -29.00 ) e0a4
-    txt* translate( 557.70, -32.00 ) e0a4
-    txt* translate( 574.50, -35.00 ) e0a4
-    txt* translate( 600.50, -32.00 ) e0a4
-    txt* translate( 617.20, -26.00 ) e0a4
-    txt* translate( 634.00, -29.00 ) e0a4
-    txt* translate( 650.80, -32.00 ) e0a4
-    txt* translate( 667.60, -35.00 ) e0a4
-    txt* translate( 684.30, -41.00 ) e0a4
-    txt* translate( 709.90, -17.00 ) e240
-    txt* translate( 703.00, -38.00 ) e0a4
-    txt* translate( 713.40, -38.00 ) e1e7
+    txt* translate( 727.90, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 35.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 32.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 102.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 119.70, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 136.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 153.20, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 171.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 188.70, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 207.30, 23.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 224.10, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 240.80, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 272.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 264.30, 35.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 289.40, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 306.20, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 323.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 341.60, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 358.40, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 377.00, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 393.80, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 410.60, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 436.60, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 453.30, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 470.10, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 486.90, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 505.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 522.30, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 540.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 557.70, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 574.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 600.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 617.20, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 634.00, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 650.80, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 667.60, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 684.30, 41.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 709.90, 17.00 ) scale( 1.0, -1.0 ) e240
+    txt* translate( 703.00, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 713.40, 38.00 ) scale( 1.0, -1.0 ) e1e7
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M103.1 32.0v21.2M119..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(103.10,-32.00)
+    xo move(103.10,32.00)
     xo vline(21.20)
-    xo move(119.90,-29.00)
+    xo move(119.90,29.00)
     xo vline(23.30)
-    xo move(136.70,-29.00)
+    xo move(136.70,29.00)
     xo vline(22.50)
-    xo move(153.40,-29.00)
+    xo move(153.40,29.00)
     xo vline(21.60)
-    xo move(172.10,-29.00)
+    xo move(172.10,29.00)
     xo vline(23.30)
-    xo move(188.90,-29.00)
+    xo move(188.90,29.00)
     xo vline(23.30)
-    xo move(207.50,-23.00)
+    xo move(207.50,23.00)
     xo vline(23.10)
-    xo move(224.30,-26.00)
+    xo move(224.30,26.00)
     xo vline(22.10)
-    xo move(241.00,-29.00)
+    xo move(241.00,29.00)
     xo vline(21.20)
-    xo move(272.80,-35.00)
+    xo move(272.80,35.00)
     xo vline(21.20)
-    xo move(289.60,-32.00)
+    xo move(289.60,32.00)
     xo vline(23.30)
-    xo move(306.40,-32.00)
+    xo move(306.40,32.00)
     xo vline(22.50)
-    xo move(323.20,-32.00)
+    xo move(323.20,32.00)
     xo vline(21.60)
-    xo move(341.80,-32.00)
+    xo move(341.80,32.00)
     xo vline(21.90)
-    xo move(358.60,-32.00)
+    xo move(358.60,32.00)
     xo vline(21.90)
-    xo move(377.20,-26.00)
+    xo move(377.20,26.00)
     xo vline(23.10)
-    xo move(394.00,-29.00)
+    xo move(394.00,29.00)
     xo vline(22.10)
-    xo move(410.80,-32.00)
+    xo move(410.80,32.00)
     xo vline(21.20)
-    xo move(443.80,-38.00)
+    xo move(443.80,38.00)
     xo vline(-24.20)
-    xo move(460.50,-35.00)
+    xo move(460.50,35.00)
     xo vline(-21.20)
-    xo move(477.30,-35.00)
+    xo move(477.30,35.00)
     xo vline(-21.20)
-    xo move(494.10,-35.00)
+    xo move(494.10,35.00)
     xo vline(-21.20)
-    xo move(512.70,-35.00)
+    xo move(512.70,35.00)
     xo vline(-21.20)
-    xo move(529.50,-35.00)
+    xo move(529.50,35.00)
     xo vline(-21.20)
-    xo move(541.10,-29.00)
+    xo move(541.10,29.00)
     xo vline(23.10)
-    xo move(557.90,-32.00)
+    xo move(557.90,32.00)
     xo vline(22.10)
-    xo move(574.70,-35.00)
+    xo move(574.70,35.00)
     xo vline(21.20)
-    xo move(600.70,-32.00)
+    xo move(600.70,32.00)
     xo vline(21.90)
-    xo move(617.40,-26.00)
+    xo move(617.40,26.00)
     xo vline(27.90)
-    xo move(634.20,-29.00)
+    xo move(634.20,29.00)
     xo vline(24.90)
-    xo move(651.00,-32.00)
+    xo move(651.00,32.00)
     xo vline(21.90)
-    xo move(674.80,-35.00)
+    xo move(674.80,35.00)
     xo vline(-21.20)
-    xo move(691.50,-41.00)
+    xo move(691.50,41.00)
     xo vline(-24.00)
-    xo move(710.20,-38.00)
+    xo move(710.20,38.00)
     xo vline(-21.00)
     xo stroke (currentColor)
     xo restore
@@ -2607,26 +2607,26 @@ xo fill_color black (initial)
 ==== start svg ====
 XObject #7
 vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-translate( 0.00 70.00 )
-vb rect( 0.00 0.00 794.00 -70.00)
+matrix( 1 0 0 -1 0.00 70.00 )
+vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
-  use "#stdef" (path), x=52.9, y=-47
+  use "#stdef" (path), x=52.9, y=47.0
     xo save
-    translate( 52.90 -47.00 )
+    translate( 52.90 47.00 )
     use stroke-width=.7 stroke=none fill=(current) fill=black
     path d="m0 0h686.0m-686.0 -6..."
       xo save
       path stroke-width=.7 stroke=(current) stroke=black fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
-      xo move(0.00,6.00)
+      xo move(0.00,-6.00)
       xo hline(686.00)
-      xo move(0.00,12.00)
+      xo move(0.00,-12.00)
       xo hline(686.00)
-      xo move(0.00,18.00)
+      xo move(0.00,-18.00)
       xo hline(686.00)
-      xo move(0.00,24.00)
+      xo move(0.00,-24.00)
       xo hline(686.00)
       xo stroke (currentColor)
       xo restore
@@ -2636,15 +2636,15 @@ xo fill_color black (initial)
   path d="M108.3 47.0v-24.0M27..."
     xo save
     path stroke-width=1 stroke=(current) stroke=black fill=none
-    xo move(108.30,-47.00)
+    xo move(108.30,47.00)
     xo vline(-24.00)
-    xo move(275.60,-47.00)
+    xo move(275.60,47.00)
     xo vline(-24.00)
-    xo move(437.90,-47.00)
+    xo move(437.90,47.00)
     xo vline(-24.00)
-    xo move(600.10,-47.00)
+    xo move(600.10,47.00)
     xo vline(-24.00)
-    xo move(732.90,-47.00)
+    xo move(732.90,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -2653,9 +2653,9 @@ xo fill_color black (initial)
   path d="M103.8 47.0v-24.0M73..."
     xo save
     path stroke-width=3 stroke=(current) stroke=black fill=none
-    xo move(103.80,-47.00)
+    xo move(103.80,47.00)
     xo vline(-24.00)
-    xo move(737.40,-47.00)
+    xo move(737.40,47.00)
     xo vline(-24.00)
     xo stroke (currentColor)
     xo restore
@@ -2664,10 +2664,10 @@ xo fill_color black (initial)
   path d="m121.2 55.0l51.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.20,-55.00)
-    xo line(172.30,-55.00)
+    xo move(121.20,55.00)
+    xo line(172.30,55.00)
     xo vline(-3.20)
-    xo line(121.20,-51.80)
+    xo line(121.20,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -2676,10 +2676,10 @@ xo fill_color black (initial)
   path d="m121.5 50.0l50.4 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(121.50,-50.00)
-    xo line(171.90,-50.00)
+    xo move(121.50,50.00)
+    xo line(171.90,50.00)
     xo vline(-3.20)
-    xo line(121.50,-46.80)
+    xo line(121.50,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2688,10 +2688,10 @@ xo fill_color black (initial)
   path d="m195.4 12.8l17.5 2.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(195.40,-12.80)
-    xo line(212.90,-15.00)
+    xo move(195.40,12.80)
+    xo line(212.90,15.00)
     xo vline(3.20)
-    xo line(195.40,-16.00)
+    xo line(195.40,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -2700,10 +2700,10 @@ xo fill_color black (initial)
   path d="m195.7 17.8l16.8 2.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(195.70,-17.80)
-    xo line(212.50,-19.90)
+    xo move(195.70,17.80)
+    xo line(212.50,19.90)
     xo vline(3.20)
-    xo line(195.70,-21.00)
+    xo line(195.70,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2712,10 +2712,10 @@ xo fill_color black (initial)
   path d="m223.8 53.8l34.3 6.5..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(223.80,-53.80)
-    xo line(258.10,-60.30)
+    xo move(223.80,53.80)
+    xo line(258.10,60.30)
     xo vline(-3.20)
-    xo line(223.80,-50.60)
+    xo line(223.80,50.60)
     xo z
     xo fill (none)
     xo restore
@@ -2724,10 +2724,10 @@ xo fill_color black (initial)
   path d="m224.2 48.9l33.6 6.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(224.20,-48.90)
-    xo line(257.80,-55.20)
+    xo move(224.20,48.90)
+    xo line(257.80,55.20)
     xo vline(-3.20)
-    xo line(224.20,-45.70)
+    xo line(224.20,45.70)
     xo z
     xo fill (none)
     xo restore
@@ -2736,10 +2736,10 @@ xo fill_color black (initial)
   path d="m283.4 55.0l51.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(283.40,-55.00)
-    xo line(334.50,-55.00)
+    xo move(283.40,55.00)
+    xo line(334.50,55.00)
     xo vline(-3.20)
-    xo line(283.40,-51.80)
+    xo line(283.40,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -2748,10 +2748,10 @@ xo fill_color black (initial)
   path d="m283.8 50.0l50.4 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(283.80,-50.00)
-    xo line(334.20,-50.00)
+    xo move(283.80,50.00)
+    xo line(334.20,50.00)
     xo vline(-3.20)
-    xo line(283.80,-46.80)
+    xo line(283.80,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2760,10 +2760,10 @@ xo fill_color black (initial)
   path d="m357.6 12.7l17.5 3.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(357.60,-12.70)
-    xo line(375.10,-16.00)
+    xo move(357.60,12.70)
+    xo line(375.10,16.00)
     xo vline(3.20)
-    xo line(357.60,-15.90)
+    xo line(357.60,15.90)
     xo z
     xo fill (none)
     xo restore
@@ -2772,10 +2772,10 @@ xo fill_color black (initial)
   path d="m358.0 17.8l16.8 3.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(358.00,-17.80)
-    xo line(374.80,-21.00)
+    xo move(358.00,17.80)
+    xo line(374.80,21.00)
     xo vline(3.20)
-    xo line(358.00,-21.00)
+    xo line(358.00,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2784,10 +2784,10 @@ xo fill_color black (initial)
   path d="m393.1 15.1l34.3 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(393.10,-15.10)
-    xo line(427.40,-15.10)
+    xo move(393.10,15.10)
+    xo line(427.40,15.10)
     xo vline(3.20)
-    xo line(393.10,-18.30)
+    xo line(393.10,18.30)
     xo z
     xo fill (none)
     xo restore
@@ -2796,10 +2796,10 @@ xo fill_color black (initial)
   path d="m393.4 20.1l33.6 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(393.40,-20.10)
-    xo line(427.00,-20.10)
+    xo move(393.40,20.10)
+    xo line(427.00,20.10)
     xo vline(3.20)
-    xo line(393.40,-23.30)
+    xo line(393.40,23.30)
     xo z
     xo fill (none)
     xo restore
@@ -2808,10 +2808,10 @@ xo fill_color black (initial)
   path d="m445.7 55.0l51.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(445.70,-55.00)
-    xo line(496.80,-55.00)
+    xo move(445.70,55.00)
+    xo line(496.80,55.00)
     xo vline(-3.20)
-    xo line(445.70,-51.80)
+    xo line(445.70,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -2820,10 +2820,10 @@ xo fill_color black (initial)
   path d="m446.1 50.0l50.4 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(446.10,-50.00)
-    xo line(496.50,-50.00)
+    xo move(446.10,50.00)
+    xo line(496.50,50.00)
     xo vline(-3.20)
-    xo line(446.10,-46.80)
+    xo line(446.10,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2832,10 +2832,10 @@ xo fill_color black (initial)
   path d="m519.9 12.8l17.5 2.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(519.90,-12.80)
-    xo line(537.40,-15.00)
+    xo move(519.90,12.80)
+    xo line(537.40,15.00)
     xo vline(3.20)
-    xo line(519.90,-16.00)
+    xo line(519.90,16.00)
     xo z
     xo fill (none)
     xo restore
@@ -2844,10 +2844,10 @@ xo fill_color black (initial)
   path d="m520.2 17.8l16.8 2.1..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(520.20,-17.80)
-    xo line(537.00,-19.90)
+    xo move(520.20,17.80)
+    xo line(537.00,19.90)
     xo vline(3.20)
-    xo line(520.20,-21.00)
+    xo line(520.20,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2856,10 +2856,10 @@ xo fill_color black (initial)
   path d="m548.4 53.8l34.3 6.5..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(548.40,-53.80)
-    xo line(582.70,-60.30)
+    xo move(548.40,53.80)
+    xo line(582.70,60.30)
     xo vline(-3.20)
-    xo line(548.40,-50.60)
+    xo line(548.40,50.60)
     xo z
     xo fill (none)
     xo restore
@@ -2868,10 +2868,10 @@ xo fill_color black (initial)
   path d="m548.7 48.9l33.6 6.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(548.70,-48.90)
-    xo line(582.30,-55.20)
+    xo move(548.70,48.90)
+    xo line(582.30,55.20)
     xo vline(-3.20)
-    xo line(548.70,-45.70)
+    xo line(548.70,45.70)
     xo z
     xo fill (none)
     xo restore
@@ -2880,10 +2880,10 @@ xo fill_color black (initial)
   path d="m608.0 55.0l51.1 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(608.00,-55.00)
-    xo line(659.10,-55.00)
+    xo move(608.00,55.00)
+    xo line(659.10,55.00)
     xo vline(-3.20)
-    xo line(608.00,-51.80)
+    xo line(608.00,51.80)
     xo z
     xo fill (none)
     xo restore
@@ -2892,10 +2892,10 @@ xo fill_color black (initial)
   path d="m608.3 50.0l50.4 0.0..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(608.30,-50.00)
-    xo line(658.70,-50.00)
+    xo move(608.30,50.00)
+    xo line(658.70,50.00)
     xo vline(-3.20)
-    xo line(608.30,-46.80)
+    xo line(608.30,46.80)
     xo z
     xo fill (none)
     xo restore
@@ -2904,10 +2904,10 @@ xo fill_color black (initial)
   path d="m682.2 12.7l17.5 3.3..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(682.20,-12.70)
-    xo line(699.70,-16.00)
+    xo move(682.20,12.70)
+    xo line(699.70,16.00)
     xo vline(3.20)
-    xo line(682.20,-15.90)
+    xo line(682.20,15.90)
     xo z
     xo fill (none)
     xo restore
@@ -2916,10 +2916,10 @@ xo fill_color black (initial)
   path d="m682.5 17.8l16.8 3.2..."
     xo save
     path stroke-width=.7 stroke=none fill=(current) fill=black
-    xo move(682.50,-17.80)
-    xo line(699.30,-21.00)
+    xo move(682.50,17.80)
+    xo line(699.30,21.00)
     xo vline(3.20)
-    xo line(682.50,-21.00)
+    xo line(682.50,21.00)
     xo z
     xo fill (none)
     xo restore
@@ -2927,120 +2927,120 @@ xo fill_color black (initial)
   start handling text (SVGPDF::Text)
   text  x=111.3,727.9,56.9,78.9,86.4,121.3,138.1,154.9,171.7,188.5,205.3,224.0,240.8,257.6,283.6,300.4,317.2,334.0,350.8,367.6,386.2,403.0,419.8,445.9,462.7,479.5,496.2,513.0,529.8,548.5,565.3,582.1,608.1,624.9,641.7,658.5,675.3,692.1,717.7,710.8,721.2 y=47.0,47.0,41.0,35.0,32.0,32.0,26.0,29.0,32.0,35.0,38.0,26.0,26.0,38.0,32.0,26.0,29.0,32.0,35.0,41.0,38.0,38.0,38.0,32.0,26.0,29.0,32.0,35.0,38.0,26.0,26.0,38.0,32.0,26.0,29.0,32.0,35.0,41.0,17.0,38.0,38.0
     xo save
-    txt* translate( 111.30, -47.00 ) e043
-    txt* translate( 727.90, -47.00 ) e043
-    txt* translate( 56.90, -41.00 ) e050
-    txt* translate( 78.90, -35.00 ) e260
-    txt* translate( 86.40, -32.00 ) e262
-    txt* translate( 121.30, -32.00 ) e0a4
-    txt* translate( 138.10, -26.00 ) e0a4
-    txt* translate( 154.90, -29.00 ) e0a4
-    txt* translate( 171.70, -32.00 ) e0a4
-    txt* translate( 188.50, -35.00 ) e0a4
-    txt* translate( 205.30, -38.00 ) e0a4
-    txt* translate( 224.00, -26.00 ) e0a4
-    txt* translate( 240.80, -26.00 ) e0a4
-    txt* translate( 257.60, -38.00 ) e0a4
-    txt* translate( 283.60, -32.00 ) e0a4
-    txt* translate( 300.40, -26.00 ) e0a4
-    txt* translate( 317.20, -29.00 ) e0a4
-    txt* translate( 334.00, -32.00 ) e0a4
-    txt* translate( 350.80, -35.00 ) e0a4
-    txt* translate( 367.60, -41.00 ) e0a4
-    txt* translate( 386.20, -38.00 ) e0a4
-    txt* translate( 403.00, -38.00 ) e0a4
-    txt* translate( 419.80, -38.00 ) e0a4
-    txt* translate( 445.90, -32.00 ) e0a4
-    txt* translate( 462.70, -26.00 ) e0a4
-    txt* translate( 479.50, -29.00 ) e0a4
-    txt* translate( 496.20, -32.00 ) e0a4
-    txt* translate( 513.00, -35.00 ) e0a4
-    txt* translate( 529.80, -38.00 ) e0a4
-    txt* translate( 548.50, -26.00 ) e0a4
-    txt* translate( 565.30, -26.00 ) e0a4
-    txt* translate( 582.10, -38.00 ) e0a4
-    txt* translate( 608.10, -32.00 ) e0a4
-    txt* translate( 624.90, -26.00 ) e0a4
-    txt* translate( 641.70, -29.00 ) e0a4
-    txt* translate( 658.50, -32.00 ) e0a4
-    txt* translate( 675.30, -35.00 ) e0a4
-    txt* translate( 692.10, -41.00 ) e0a4
-    txt* translate( 717.70, -17.00 ) e240
-    txt* translate( 710.80, -38.00 ) e0a4
-    txt* translate( 721.20, -38.00 ) e1e7
+    txt* translate( 111.30, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 727.90, 47.00 ) scale( 1.0, -1.0 ) e043
+    txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
+    txt* translate( 78.90, 35.00 ) scale( 1.0, -1.0 ) e260
+    txt* translate( 86.40, 32.00 ) scale( 1.0, -1.0 ) e262
+    txt* translate( 121.30, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 138.10, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 154.90, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 171.70, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 188.50, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 205.30, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 224.00, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 240.80, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 257.60, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 283.60, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 300.40, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 317.20, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 334.00, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 350.80, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 367.60, 41.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 386.20, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 403.00, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 419.80, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 445.90, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 462.70, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 479.50, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 496.20, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 513.00, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 529.80, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 548.50, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 565.30, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 582.10, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 608.10, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 624.90, 26.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 641.70, 29.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 658.50, 32.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 675.30, 35.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 692.10, 41.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 717.70, 17.00 ) scale( 1.0, -1.0 ) e240
+    txt* translate( 710.80, 38.00 ) scale( 1.0, -1.0 ) e0a4
+    txt* translate( 721.20, 38.00 ) scale( 1.0, -1.0 ) e1e7
     xo restore
   end handling text
   start handling path (SVGPDF::Path)
   path d="M121.5 32.0v21.9M138..."
     xo save
     path stroke-width=.7 stroke=(current) stroke=black fill=none
-    xo move(121.50,-32.00)
+    xo move(121.50,32.00)
     xo vline(21.90)
-    xo move(138.30,-26.00)
+    xo move(138.30,26.00)
     xo vline(27.90)
-    xo move(155.10,-29.00)
+    xo move(155.10,29.00)
     xo vline(24.90)
-    xo move(171.90,-32.00)
+    xo move(171.90,32.00)
     xo vline(21.90)
-    xo move(195.70,-35.00)
+    xo move(195.70,35.00)
     xo vline(-21.20)
-    xo move(212.50,-38.00)
+    xo move(212.50,38.00)
     xo vline(-22.10)
-    xo move(224.20,-26.00)
+    xo move(224.20,26.00)
     xo vline(26.90)
-    xo move(241.00,-26.00)
+    xo move(241.00,26.00)
     xo vline(30.00)
-    xo move(257.80,-38.00)
+    xo move(257.80,38.00)
     xo vline(21.20)
-    xo move(283.80,-32.00)
+    xo move(283.80,32.00)
     xo vline(21.90)
-    xo move(300.60,-26.00)
+    xo move(300.60,26.00)
     xo vline(27.90)
-    xo move(317.40,-29.00)
+    xo move(317.40,29.00)
     xo vline(24.90)
-    xo move(334.20,-32.00)
+    xo move(334.20,32.00)
     xo vline(21.90)
-    xo move(358.00,-35.00)
+    xo move(358.00,35.00)
     xo vline(-21.20)
-    xo move(374.80,-41.00)
+    xo move(374.80,41.00)
     xo vline(-24.00)
-    xo move(393.40,-38.00)
+    xo move(393.40,38.00)
     xo vline(-21.90)
-    xo move(410.20,-38.00)
+    xo move(410.20,38.00)
     xo vline(-21.90)
-    xo move(427.00,-38.00)
+    xo move(427.00,38.00)
     xo vline(-21.90)
-    xo move(446.10,-32.00)
+    xo move(446.10,32.00)
     xo vline(21.90)
-    xo move(462.90,-26.00)
+    xo move(462.90,26.00)
     xo vline(27.90)
-    xo move(479.70,-29.00)
+    xo move(479.70,29.00)
     xo vline(24.90)
-    xo move(496.40,-32.00)
+    xo move(496.40,32.00)
     xo vline(21.90)
-    xo move(520.20,-35.00)
+    xo move(520.20,35.00)
     xo vline(-21.20)
-    xo move(537.00,-38.00)
+    xo move(537.00,38.00)
     xo vline(-22.10)
-    xo move(548.70,-26.00)
+    xo move(548.70,26.00)
     xo vline(26.90)
-    xo move(565.50,-26.00)
+    xo move(565.50,26.00)
     xo vline(30.00)
-    xo move(582.30,-38.00)
+    xo move(582.30,38.00)
     xo vline(21.20)
-    xo move(608.30,-32.00)
+    xo move(608.30,32.00)
     xo vline(21.90)
-    xo move(625.10,-26.00)
+    xo move(625.10,26.00)
     xo vline(27.90)
-    xo move(641.90,-29.00)
+    xo move(641.90,29.00)
     xo vline(24.90)
-    xo move(658.70,-32.00)
+    xo move(658.70,32.00)
     xo vline(21.90)
-    xo move(682.50,-35.00)
+    xo move(682.50,35.00)
     xo vline(-21.20)
-    xo move(699.30,-41.00)
+    xo move(699.30,41.00)
     xo vline(-24.00)
-    xo move(718.00,-38.00)
+    xo move(718.00,38.00)
     xo vline(-21.00)
     xo stroke (currentColor)
     xo restore

@@ -45,8 +45,8 @@ method set_transform ( $tf ) {
 	    my ( $x, $y ) = $self->getargs($1);
 	    $y ||= 0;
 	    if ( $nooptimize || $x || $y ) {
-		$xo->transform( translate => [ $x, -$y ] );
-		$self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
+		$xo->transform( translate => [ $x, $y ] );
+		$self->_dbg( "transform translate(%.2f,%.2f)", $x, $y );
 	    }
 	}
 	elsif ( $tf =~ /^\s*rotate\s*\((.*?)\)(.*)/ ) {
@@ -54,14 +54,14 @@ method set_transform ( $tf ) {
 	    my ( $r, $x, $y ) = $self->getargs($1);
 	    if ( $nooptimize || $r ) {
 		if ( $x || $y ) {
-		    $xo->transform( translate => [ $x, -$y ] );
-		    $self->_dbg( "transform translate(%.2f,%.2f)", $x, -$y );
+		    $xo->transform( translate => [ $x, $y ] );
+		    $self->_dbg( "transform translate(%.2f,%.2f)", $x, $y );
 		}
 		$self->_dbg( "transform rotate(%.2f)", $r );
-		$xo->transform( rotate => -$r );
+		$xo->transform( rotate => $r );
 		if ( $x || $y ) {
-		    $xo->transform( translate => [ -$x, $y ] );
-		    $self->_dbg( "transform translate(%.2f,%.2f)", -$x, $y );
+		    $xo->transform( translate => [ -$x, -$y ] );
+		    $self->_dbg( "transform translate(%.2f,%.2f)", -$x, -$y );
 		}
 	    }
 	}
@@ -93,13 +93,9 @@ method set_transform ( $tf ) {
 	    $tf = $3;
 	    my ( $x ) = $self->getargs($2);
 	    my $y = 0;
-	    if ( $1 eq "X" ) {
-		$y = -$x;
+	    if ( $1 eq "Y" ) {
+		$y = $x;
 		$x = 0;
-	    }
-	    else {
-		$x = -$x;
-		$y = 0;
 	    }
 	    $self->_dbg( "transform skew(%.2f %.2f)", $x, $y );
 	    $xo->transform( skew => [ $x, $y ] );
@@ -337,7 +333,7 @@ method get_params ( @desc ) {
 
 	unless ( defined $p ) {
 	    if    ( $flags =~ /s/ )    { $p = ""; }
-	    elsif ( $flags =~ /[0U]/ ) { $p = 0;  }
+	    elsif ( $flags =~ /[0HUV]/ ) { $p = 0;  }
 	    else {
 		croak("Undefined mandatory attribute: $param")
 		  if $flags =~ /\!/;

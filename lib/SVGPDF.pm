@@ -615,20 +615,21 @@ method handle_svg ( $e ) {
 	  };
 
     # <svg> coordinates are topleft down, so translate.
-    $self->_dbg( "translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
-    $xo->transform( translate =>         [ -$vb[0], $vb[1]+$vb[3] ] );
+    $self->_dbg( "matrix( 1 0 0 -1 %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
+#    $xo->transform( matrix =>         [ 1, 0, 0, -1, -$vb[0], $vb[1]+$vb[3] ] );
+    $xo->matrix( 1, 0, 0, -1, -$vb[0], $vb[1]+$vb[3] );
 
     if ( $debug ) {		# show bb
 	$xo->save;
 	$self->_dbg( "vb rect( %.2f %.2f %.2f %.2f)",
-		        $vb[0], -$vb[1], $vb[2]+$vb[0], -$vb[1]-$vb[3]);
-	$xo->rectangle( $vb[0], -$vb[1], $vb[2]+$vb[0], -$vb[1]-$vb[3]);
+		        $vb[0], $vb[1], $vb[2]+$vb[0], $vb[1]+$vb[3]);
+	$xo->rectangle( $vb[0], $vb[1], $vb[2]+$vb[0], $vb[1]+$vb[3]);
 	$xo->fill_color("#ffffc0");
 	$xo->fill;
 	$xo->move(  $vb[0], 0 );
 	$xo->hline( $vb[0]+$vb[2]);
-	$xo->move( 0, -$vb[1] );
-	$xo->vline( -$vb[1]-$vb[3] );
+	$xo->move( 0, $vb[1] );
+	$xo->vline( $vb[1]+$vb[3] );
 	$xo->line_width(0.5);
 	$xo->stroke_color( "red" );
 	$xo->stroke;
@@ -679,18 +680,18 @@ method draw_grid ( $xo, $vb ) {
     $xo->stroke_color("#bbbbbb");
 
     # Map viewbox to 0,0.
-    $xo->transform( translate => [ $vb[0], -$vb[1] ] );
+    $xo->transform( translate => [ $vb[0], $vb[1] ] );
 
     # Show boundary points.
     my $dd = $d/2;
     $xo->rectangle(-$dd,-$dd,$dd,$dd);
     $xo->fill_color("blue");
     $xo->fill;
-    $xo->rectangle( $vb[2]-$dd, -$vb[3]-$dd, $vb[2]+$dd, -$vb[3]+$dd);
+    $xo->rectangle( $vb[2]-$dd, $vb[3]+$dd, $vb[2]+$dd, $vb[3]-$dd);
     $xo->fill_color("blue");
     $xo->fill;
     # Show origin. This will cover the bb corner unless it is offset.
-    $xo->rectangle( -$vb[0]-$dd, $vb[1]-$dd, -$vb[0]+$dd, $vb[1]+$dd);
+    $xo->rectangle( -$vb[0]-$dd, -$vb[1]+$dd, -$vb[0]+$dd, -$vb[1]-$dd);
     $xo->fill_color("red");
     $xo->fill;
 
@@ -698,11 +699,11 @@ method draw_grid ( $xo, $vb ) {
     $xo->line_width($thick);
     for ( my $x = 0; $x <= $w; $x += 5*$d ) {
 	$xo->move( $x, 0 );
-	$xo->vline(-$h);
+	$xo->vline($h);
 	$xo->stroke;
     }
     for ( my $y = 0; $y <= $h; $y += 5*$d ) {
-	$xo->move( 0, -$y );
+	$xo->move( 0, $y );
 	$xo->hline($w);
 	$xo->stroke;
     }
@@ -710,11 +711,11 @@ method draw_grid ( $xo, $vb ) {
     $xo->line_width($thin);
     for ( my $x = 0; $x <= $w; $x += $d ) {
 	$xo->move( $x, 0 );
-	$xo->vline(-$h);
+	$xo->vline($h);
 	$xo->stroke;
     }
     for ( my $y = 0; $y <= $h; $y += $d ) {
-	$xo->move( 0, -$y );
+	$xo->move( 0, $y );
 	$xo->hline($w);
 	$xo->stroke;
     }

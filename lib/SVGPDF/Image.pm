@@ -13,7 +13,7 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
 
     my ( $x, $y, $w, $h, $link, $tf ) =
-      $self->get_params( $atts, qw( x:U y:U width:U height:U href:! transform:s ) );
+      $self->get_params( $atts, qw( x:H y:V width:H height:V href:! transform:s ) );
 
     $x ||= 0; $y ||= 0;
     $w ||= 0; $h ||= 0;
@@ -64,8 +64,8 @@ method process () {
 
     # Place the image.
     $self->set_transform($tf) if $tf;
-    $xo->transform( translate => [ $x, -$y-$h ] );
-    $xo->image( $img, 0, 0, $w, $h );
+    $xo->transform( translate => [ $x, $y+$h ] );
+    $xo->image( $img, 0, 0, $w, -$h );
 
     $self->_dbg( "xo restore" );
     $xo->restore;

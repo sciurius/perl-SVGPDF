@@ -1,21 +1,21 @@
 ==== start svg ====
 XObject #1
 vb 0 0 200 100 => bb 0.00 0.00 200.00 100.00
-translate( 0.00 100.00 )
-vb rect( 0.00 0.00 200.00 -100.00)
+matrix( 1 0 0 -1 0.00 100.00 )
+vb rect( 0.00 0.00 200.00 100.00)
 xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M 20,20 C 80,60 100,..."
     xo save
     path stroke=none fill=none
-    xo move(20.00,-20.00)
-    xo curve(80.00,-60.00 100.00,-40.00 120.00,-20.00)
+    xo move(20.00,20.00)
+    xo curve(80.00,60.00 100.00,40.00 120.00,20.00)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
   text 
     xo save
-    txt translate( 0.00, 0.00 )
+    txt translate( 0.00, 0.00 ) scale( 1.00 -1.00 )
       xo save
       xo restore
 SVG: textPath in text - not fully implemented, expect strange results.

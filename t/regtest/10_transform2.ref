@@ -1,8 +1,8 @@
 ==== start svg ====
 XObject #1
 vb 0 0 31 31 => bb 0.00 0.00 31.00 31.00
-translate( 0.00 31.00 )
-vb rect( 0.00 0.00 31.00 -31.00)
+matrix( 1 0 0 -1 0.00 31.00 )
+vb rect( 0.00 0.00 31.00 31.00)
 xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=12 y=-10 w=20 h=20

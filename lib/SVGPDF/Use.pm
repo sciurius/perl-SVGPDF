@@ -14,7 +14,7 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
 
     my ( $x, $y, $hr, $tf ) =
-      $self->get_params( $atts, qw( x:U y:U href:! transform:s ) );
+      $self->get_params( $atts, qw( x:H y:V href:! transform:s ) );
 
     my $r = $self->root->defs->{$hr};
     unless ( $r ) {
@@ -26,7 +26,6 @@ method process () {
     # Update its xo.
     $r->xo = $self->xo;
 
-    $y = -$y;
     $self->_dbg( $self->name, " \"$hr\" (", $r->name, "), x=$x, y=$y" );
 
     $self->_dbg("+ xo save");
