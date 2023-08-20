@@ -602,8 +602,8 @@ method handle_svg ( $e ) {
     $xoforms->[-1] =
 	  { xo      => $xo,
 	    bbox    => [ @bb ],
-	    vwidth  => $vw ? $svg->u($vw) : $vb[2],
-	    vheight => $vh ? $svg->u($vh) : $vb[3],
+	    vwidth  => $vw ? $vw : $vb[2],
+	    vheight => $vh ? $vh : $vb[3],
 	    vbox    => [ @vb ],
 	    width   => $vb[2],
 	    height  => $vb[3],

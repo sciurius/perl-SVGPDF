@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Thu Aug 17 19:09:36 2023
-# Update Count    : 137
+# Last Modified On: Sun Aug 20 14:20:45 2023
+# Update Count    : 140
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -102,6 +102,12 @@ foreach my $file ( @ARGV ) {
 	my $w = $bb[2]-$bb[0];
 	my $h = $bb[3]-$bb[1];
 	my $scale = 1;
+
+	for ( $xo->{vwidth}, $xo->{vheight} ) {
+	    next unless /^(.*)e([xm])$/;
+	    $_ = $1 * ( $2 eq 'm' ? 12 : 6 );
+	}
+
 	if ( $xo->{vwidth} ) {
 	    $scale = $xo->{vwidth} / $w;
 	}
