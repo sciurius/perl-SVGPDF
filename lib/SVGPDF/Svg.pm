@@ -33,11 +33,16 @@ method process () {
 	@vb     = $self->getargs($vbox);
 	$width  = $self->u($vb[2]);
 	$height = $self->u($vb[3]);
+	if ( $style->{'min-width'} ) {
+	    my $mw = $self->u($style->{'min-width'});
+	    my $vw = $self->u($self->root->xoforms->[-1]->{vheight});
+	    $vb[2] = $mw/$vw * $height;
+	}
     }
     else {
 	# Fallback to width/height, falling back to A4.
-	$width  = $self->u($vw||595);
-	$height = $self->u($vh||842);
+	$width  = $self->u($vw||$self->root->pagesize->[0]);
+	$height = $self->u($vh||$self->root->pagesize->[1]);
 	@vb     = ( 0, 0, $width, $height );
 	$vbox = "@vb";
     }
@@ -45,6 +50,7 @@ method process () {
     # Get llx lly urx ury bounding box rectangle.
     @bb = ( 0, 0, $vb[2], $vb[3] );
     $self->_dbg( "vb $vbox => bb %.2f %.2f %.2f %.2f", @bb );
+    warn( sprintf("vb $vbox => bb %.2f %.2f %.2f %.2f\n", @bb ));
 
     my $xoforms = $self->root->xoforms;
     my $new_xo = $self->root->pdf->xo_form;
@@ -115,8 +121,8 @@ method process () {
     }
     $self->_dbg( "xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )",
 		 $x, $dx, $y, $dy, $scalex, $scaley );
-#    warn(sprintf("xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )\n",
-#		 $x, $dx, $y, $dy, $scalex, $scaley ));
+    warn(sprintf("xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )\n",
+		 $x, $dx, $y, $dy, $scalex, $scaley ));
     $xo->object( $new_xo, $x+$dx, $y+$dy, $scalex, $scaley );
 
     pop( @$xoforms );

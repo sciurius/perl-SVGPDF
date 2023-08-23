@@ -287,8 +287,8 @@ method u ( $a ) {
     return undef unless $a =~ /^([-+]?[\d.]+)(.*)$/;
     return $1 if $2 eq "" || $2 eq "pt" || $2 eq "deg";
     return $1 if $2 eq "px";	# approx
-    return $1*12 if $2 eq "em";	# approx
-    return $1*10 if $2 eq "ex";	# approx
+    return $1*$self->root->fontsize if $2 eq "em";	# approx
+    return $1*0.7*$self->root->fontsize if $2 eq "ex";	# approx
     return $1*72/2.54 if $2 eq "cm";
     return $1*72/25.4 if $2 eq "mm";
     return $1;			# will hopefully crash somewhere...

@@ -374,6 +374,8 @@ field $fontmanager  :accessor;
 
 field $xoforms      :accessor;
 field $defs         :accessor;
+field $pagesize     :accessor;
+field $fontsize     :accessor;
 
 # For debugging/development.
 field $debug        :accessor;
@@ -440,6 +442,8 @@ BUILD {
     $prog         = $atts->{prog}         || 0;
     $debug_styles = $atts->{debug_styles} || $debug > 1;
     $trace        = $atts->{trace}        || 0;
+    $pagesize     = $atts->{pagesize}     || [ 595, 842 ];
+    $fontsize     = $atts->{fontsize}     || 12;
     $wstokens     = $atts->{wstokens}     || 0;
     $indent       = "";
     $xoforms      = [];
@@ -531,6 +535,7 @@ method handle_svg ( $e ) {
 	$xo = $pdf->xo_form;
     }
     push( @$xoforms, { xo => $xo } );
+
     $self->_dbg("XObject #", scalar(@$xoforms) );
     my $svg = SVGPDF::Element->new
 	( name    => $e->{name},
@@ -578,11 +583,15 @@ method handle_svg ( $e ) {
 	@vb     = $svg->getargs($vbox);
 	$width  = $svg->u($vb[2]);
 	$height = $svg->u($vb[3]);
+	if ( $style->{'min-width'} ) {
+	    my $mw = $svg->u($style->{'min-width'});
+	    $vb[2] = $mw/$svg->u($vh) * $height;
+	}
     }
     else {
-	# Fallback to width/height, falling back to A4.
-	$width  = $svg->u($vw||595);
-	$height = $svg->u($vh||842);
+	# Fallback to width/height, falling back to pagesize.
+	$width  = $svg->u($vw||$pagesize->[0]);
+	$height = $svg->u($vh||$pagesize->[1]);
 	@vb     = ( 0, 0, $width, $height );
 	$vbox = "@vb";
     }
@@ -604,12 +613,18 @@ method handle_svg ( $e ) {
 	    bbox    => [ @bb ],
 	    vwidth  => $vw ? $vw : $vb[2],
 	    vheight => $vh ? $vh : $vb[3],
+	    vpagesize => $pagesize,
 	    vbox    => [ @vb ],
 	    width   => $vb[2],
 	    height  => $vb[3],
 	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
 	  };
+    $xoforms->[-1]->{'min-width'} = $style->{'min-width'}
+      if $style->{'min-width'};
+    $xoforms->[-1]->{'vertical-align'} = $style->{'vertical-align'}
+      if $style->{'vertical-align'};
 
+#    use DDumper; DDumper( { %{$xoforms->[-1]}, xo => 'XO' } );
     # <svg> coordinates are topleft down, so translate.
     $self->_dbg( "matrix( 1 0 0 -1 %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
 #    $xo->transform( matrix =>         [ 1, 0, 0, -1, -$vb[0], $vb[1]+$vb[3] ] );

@@ -3,7 +3,7 @@ Revision history for SVGPDF
 0.000
 
 	- Internal: Flipped coordinates.
-	- Leave vwidth/vheight as is so caller can scale to font size,
+	- Leave vwidth/vheight as is so caller can scale to font size.
 
 0.060	2023-08-18
 

@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Sun Aug 20 14:20:45 2023
-# Update Count    : 140
+# Last Modified On: Wed Aug 23 16:36:34 2023
+# Update Count    : 152
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -22,6 +22,8 @@ my ($my_name, $my_version) = qw( svgpdf 0.01 );
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 
+my @pgsz = ( 595, 842 );	# A4
+
 ################ Command line parameters ################
 
 use Getopt::Long 2.13;
@@ -29,6 +31,8 @@ use Getopt::Long 2.13;
 # Command line options.
 my $output = "__new__.pdf";
 my $api = "PDF::API2";		# or PDF::Builder
+my $pagesize;
+my $fontsize = 12;		# design
 my $wstokens = 0;
 my $grid;			# add grid
 my $prog;			# generate program
@@ -46,8 +50,6 @@ app_options();
 $trace |= ($debug || $test);
 
 ################ Presets ################
-
-my @pgsz = ( 595, 842 );	# A4
 
 ################ The Process ################
 
@@ -69,6 +71,8 @@ foreach my $file ( @ARGV ) {
 	atts => { debug    => $debug,
 		  grid     => $grid,
 		  prog     => $prog,
+		  pagesize => \@pgsz,
+		  fontsize => $fontsize,
 		  wstokens => $wstokens,
 		  trace    => $trace } );
 
@@ -105,7 +109,7 @@ foreach my $file ( @ARGV ) {
 
 	for ( $xo->{vwidth}, $xo->{vheight} ) {
 	    next unless /^(.*)e([xm])$/;
-	    $_ = $1 * ( $2 eq 'm' ? 12 : 6 );
+	    $_ = $1 * ( $2 eq 'm' ? $fontsize : 0.7*$fontsize );
 	}
 
 	if ( $xo->{vwidth} ) {
@@ -179,6 +183,8 @@ sub app_options {
 					 push( @INC, $ENV{HOME}."/src/PDF-Builder/lib" );
 					 },
 		     'api=s'	=> \$api,
+		     'pagesize=s' => \$pagesize,
+		     'fontsize=f' => \$fontsize,
 		     'ws!'	=> \$wstokens,
 		     'ident'	=> \$ident,
 		     'verbose+'	=> \$verbose,
@@ -192,6 +198,11 @@ sub app_options {
     }
     app_ident() if $ident;
     $grid = 5 if defined($grid) && $grid < 5;
+    if ( $pagesize ) {
+	die("--pagesize requires WIDTHxHEIGHT\n")
+	  unless $pagesize =~ /^(\d+)x(\d+)$/;
+	@pgsz = ( $1, 2 );
+    }
 }
 
 sub app_ident {
@@ -204,6 +215,7 @@ sub app_usage {
     print STDERR <<EndOfUsage;
 Usage: $0 [options] [svg-file ...]
    --output=XXX		PDF output file name
+  --pagesize=WWxHH	pagesize
    --program=XXX	generates a perl program (single SVG only)
    --api=XXX		uses PDF API (PDF::API2 (default) or PDF::Builder)
    --builder		short for --api=PDF::Builder
