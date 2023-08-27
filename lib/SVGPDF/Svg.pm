@@ -12,67 +12,69 @@ method process () {
     return if $atts->{omit};	# for testing/debugging.
 
     my $xo = $self->xo;
+    my $xoforms = $self->root->xoforms;
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
-    my ( $x, $y, $vw, $vh, $vbox, $par, $tf ) =
+    my ( $x, $y, $vwidth, $vheight, $vbox, $par, $tf ) =
       $self->get_params( $atts, qw( x:U y:U width:s height:s viewBox preserveAspectRatio:s transform:s ) );
     $self->nfi("nested svg transform") if $tf;
     my $style = $self->style;
 
-    my @bb;			# bbox:    llx lly urx ury
-    @bb = $xo->bbox;		# use parent (root?)
-    $vw ||= $bb[2]-$bb[0];
-    $vh ||= $bb[3]-$bb[1];
+    my $pwidth  = $xoforms->[0]->{width};
+    my $pheight = $xoforms->[0]->{height};
+    for ( $vwidth ) {
+	$_ = $self->u( $_ || $pwidth, width => $pwidth );
+    }
+    for ( $vheight ) {
+	$_ = $self->u( $_ || $pheight, width => $pheight );
+    }
+
+    $self->_dbg("pp w=$pwidth h=$pheight vw=$vwidth vh=$vheight");
 
     my @vb;			# viewBox: llx lly width height
+    my @bb;			# bbox:    llx lly urx ury
 
-    # Currently we rely on the <svg> to supply the correct viewBox.
     my $width;			# width of the vbox
     my $height;			# height of the vbox
     if ( $vbox ) {
 	@vb     = $self->getargs($vbox);
-	$width  = $self->u($vb[2]);
-	$height = $self->u($vb[3]);
-	if ( $style->{'min-width'} ) {
-	    my $mw = $self->u($style->{'min-width'});
-	    my $vw = $self->u($self->root->xoforms->[-1]->{vheight});
-	    $vb[2] = $mw/$vw * $height;
-	}
+	$width  = $self->u( $vb[2],
+			    width => $pwidth );
+	$height = $self->u( $vb[3],
+			    width => $height );
     }
     else {
-	# Fallback to width/height, falling back to A4.
-	$width  = $self->u($vw||$self->root->pagesize->[0]);
-	$height = $self->u($vh||$self->root->pagesize->[1]);
+	$width  = $vwidth;
+	$height = $vheight;
 	@vb     = ( 0, 0, $width, $height );
 	$vbox = "@vb";
     }
 
     # Get llx lly urx ury bounding box rectangle.
-    @bb = ( 0, 0, $vb[2], $vb[3] );
+    @bb = $self->root->vb2bb_noflip(@vb);
     $self->_dbg( "vb $vbox => bb %.2f %.2f %.2f %.2f", @bb );
-    warn( sprintf("vb $vbox => bb %.2f %.2f %.2f %.2f\n", @bb ));
+    warn( sprintf("vb $vbox => bb %.2f %.2f %.2f %.2f\n", @bb ))
+      if $self->root->verbose && !$self->root->debug;
 
-    my $xoforms = $self->root->xoforms;
     my $new_xo = $self->root->pdf->xo_form;
+    $new_xo->bbox(@bb);
+
+    # Set up result forms.
     push( @$xoforms,
-	  { xo => $new_xo,
-	    bbox    => [ @bb ],
-	    vwidth  => $vw ? $self->u($vw) : $vb[2],
-	    vheight => $vh ? $self->u($vh) : $vb[3],
+	  { xo     => $new_xo,
+	    # Design (desired) width and height.
+	    vwidth  => $vwidth  || $vb[2],
+	    vheight => $vheight || $vb[3],
+	    # viewBox (SVG coordinates)
 	    vbox    => [ @vb ],
 	    width   => $vb[2],
-	    height  => $vb[3] } );
+	    height  => $vb[3],
+	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
+	    # bbox (PDF coordinates)
+	    bbox    => [ @bb ],
+	  } );
     $self->_dbg("XObject #", scalar(@$xoforms) );
 
-    if ( $vbox ) {
-	$new_xo->bbox(@bb);
-	$self->_dbg( "translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
-#	warn(sprintf("translate( %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] ),"\n");
-	$new_xo->transform( translate => [ -$vb[0], $vb[1]+$vb[3] ] );
-    }
-    else {
-	$new_xo->bbox(-32767,-32767,32767,32767);
-    }
     $self->traverse;
 
     my $scalex = 1;
@@ -81,48 +83,45 @@ method process () {
     my $dy = 0;
     if ( $vbox ) {
 	my @pbb = $xo->bbox;
-	if ( $vw ) {
-	    $scalex = $vw / $vb[2];
+	if ( $vwidth ) {
+	    $scalex = $vwidth / $vb[2];
 	}
-	if ( $vh ) {
-	    $scaley = $vh / $vb[3];
+	if ( $vheight ) {
+	    $scaley = $vheight / $vb[3];
 	}
-	if ( $par =~ /xMax/i ) {
+	if ( $par =~ /xM(ax|id|in)/i ) {
+	    if ( $1 eq "ax" ) {
+		$dx = $pbb[2] - $bb[2];
+	    }
+	    elsif ( $1 eq "id" ) {
+		$dx = (($pbb[2]-$pbb[0])/2) - (($bb[2]-$bb[0])/2);
+	    }
+	    else {
+		$dx = $pbb[0] - $bb[0];
+	    }
 	    $scalex = $scaley = min( $scalex, $scaley );
-	    $dx = $pbb[2] - $bb[2];
 	    $dx *= $scalex;
 	}
-	elsif ( $par =~ /xMid/i ) {
-	    $dx = (($pbb[2]-$pbb[0])/2) - (($bb[2]-$bb[0])/2);
-	    $scalex = $scaley = min( $scalex, $scaley );
-	    $dx *= $scalex;
-	}
-	elsif ( $par =~ /xMin/i ) {
-	    $dx = $pbb[0] - $bb[0];
-	    $scalex = $scaley = min( $scalex, $scaley );
-	}
-	if ( $par =~ /yMax/i ) {
-	    $dy = $pbb[3] - $bb[3];
+	if ( $par =~ /yM(in|id|ax)/i ) {
+	    if ( $1 eq "ax" ) {
+		$dy = $pbb[3] - $bb[3];
+	    }
+	    elsif ( $1 eq "id" ) {
+		$dy = (($pbb[3]-$pbb[1])/2) - (($bb[3]-$bb[1])/2);
+		$dy = 0;	# ####TODO?
+	    }
+	    else {
+		$dy = $pbb[1] - $bb[1];
+	    }
 	    $scalex = $scaley = min( $scalex, $scaley );
 	    $dy *= $scaley;
 	}
-	elsif ( $par =~ /yMid/i ) {
-	    $dy = (($pbb[3]-$pbb[1])/2) - $scaley*(($bb[3]-$bb[1])/2);
-	    $scalex = $scaley = min( $scalex, $scaley );
-	    #	    $dy *= $scaley;
-	    $dy = -$dy;
-	}
-	elsif ( $par =~ /yMin/i ) {
-	    $dy = $pbb[1] - $bb[1];
-	    $scalex = $scaley = min( $scalex, $scaley );
-	    $dy *= $scaley;
-	}
-	$y -= $vb[3]*$scaley;
     }
-    $self->_dbg( "xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )",
-		 $x, $dx, $y, $dy, $scalex, $scaley );
-    warn(sprintf("xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f )\n",
-		 $x, $dx, $y, $dy, $scalex, $scaley ));
+    $self->_dbg( "xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f ) %s",
+		 $x, $dx, $y, $dy, $scalex, $scaley, $par//"" );
+    warn(sprintf("xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f ) %s\n",
+		 $x, $dx, $y, $dy, $scalex, $scaley, $par//"" ))
+      if $self->root->verbose && !$self->root->debug;
     $xo->object( $new_xo, $x+$dx, $y+$dy, $scalex, $scaley );
 
     pop( @$xoforms );
