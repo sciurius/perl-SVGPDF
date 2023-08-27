@@ -102,7 +102,7 @@ method process () {
 	  ? "right"
 	  : $anchor eq "middle" ? "center" : "left";
 	$xo->textstart;
-	$self->root->fontmanager->set_font( $xo, $style );
+	$self->set_font( $xo, $style );
 	$xo->text( shift(@$text), %o );
 	$xo->textend;
 	$xo->restore;
@@ -137,7 +137,7 @@ method process () {
 		$scalex = $scaley = 1; # no more scaling.
 
 		$xo->textstart;
-		$self->root->fontmanager->set_font( $xo, $style );
+		$self->set_font( $xo, $style );
 		$x += $xo->text( $c->content, %o );
 		$xo->textend;
 		if ( $style->{'outline-style'} ) {
