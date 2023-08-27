@@ -90,7 +90,7 @@ method set_transform ( $tf ) {
 	    $tf = $3;
 	    my ( $x ) = $self->getargs($2);
 	    my $y = 0;
-	    if ( $1 eq "Y" ) {
+	    if ( $1 eq "X" ) {
 		$y = $x;
 		$x = 0;
 	    }
@@ -98,10 +98,12 @@ method set_transform ( $tf ) {
 	    $xo->transform( skew => [ $x, $y ] );
 	}
 	else {
-	    warn("Ignoring transform: $tf");
+	    warn("Ignoring transform: $tf")
+	      if $self->root->verbose;
 	    $self->_dbg("Ignoring transform: \"$tf\"");
 	    $tf = "";
 	}
+#	%rel = ( relative => 1 );
     }
 }
 
@@ -239,7 +241,7 @@ method process () {
     # Unless overridden in a subclass there's not much we can do.
     state $warned = { desc => 1, title => 1, metadata => 1 };
     warn("SVG: Skipping element \"$name\" (not implemented)\n")
-      unless $warned->{$name}++;;
+      unless $warned->{$name}++ || !$self->root->verbose;
     $self->_dbg("skipping $name (not implemented)");
     # $self->traverse;
 }
@@ -282,15 +284,27 @@ method traverse () {
     }
 }
 
-method u ( $a ) {
+method u ( $a, %args ) {
     confess("Undef in units") unless defined $a;
+
     return undef unless $a =~ /^([-+]?[\d.]+)(.*)$/;
     return $1 if $2 eq "" || $2 eq "pt" || $2 eq "deg";
     return $1 if $2 eq "px";	# approx
-    return $1*12 if $2 eq "em";	# approx
-    return $1*10 if $2 eq "ex";	# approx
+
     return $1*72/2.54 if $2 eq "cm";
     return $1*72/25.4 if $2 eq "mm";
+
+    if ( $2 eq '%' ) {
+	return $1/100 * $args{width} if $args{width};
+    }
+    # Font dependent. Approximate based on the font size.
+    if ( $2 eq "em" ) {
+	return $1 * ( $args{fontsize} // $self->root->fontsize );
+    }
+    if ( $2 eq "ex" ) {
+	return $1 * 0.5 * ( $args{fontsize} // $self->root->fontsize );
+    }
+
     return $1;			# will hopefully crash somewhere...
 }
 
@@ -384,7 +398,20 @@ method get_cdata () {
 method nfi ( $tag ) {
     state $aw = {};
     warn("SVG: $tag - not fully implemented, expect strange results.\n")
-      unless $aw->{$tag}++;
+      unless !$self->root->verbose || $aw->{$tag}++;
+}
+
+method set_font ( $xo, $style ) {
+    my $msg ="";
+    my $ret;
+    {
+	local $SIG{__WARN__} = sub { $msg .= "@_" };
+	$ret = $self->root->fontmanager->set_font( $xo, $style );
+    }
+    if ( $msg && $self->root->verbose ) {
+	warn($msg);
+    }
+    $ret;
 }
 
 ################ Bounding Box ################

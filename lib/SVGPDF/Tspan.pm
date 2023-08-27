@@ -75,7 +75,7 @@ method process () {
 	    $xo->transform( translate => [ $x, -$y ] );
 	    if ( ref($c) eq 'SVGPDF::TextElement' ) {
 		$xo->textstart;
-		$self->root->fontmanager->set_font( $xo, $style );
+		$self->set_font( $xo, $style );
 		$x += $xo->text( $c->content, %o );
 		$xo->textend;
 	    }

@@ -19,7 +19,7 @@ method process () {
 	my $id  = $_->atts->{id};
 	unless ( defined($id) ) {
 	    warn("SVG: Missing id for ", $_->name, " in defs (skipped)\n")
-	      unless $_->name eq "style";
+	      if $self->root->verbose && $_->name ne "style";
 	    next;
 	}
 	$self->_dbg( "defs: \"$id\" (", $_->name, ")" );

@@ -5,6 +5,7 @@
         style="stroke:#ff0000; fill: #0000ff"/>
   <svg omit="0" viewBox="0 0 300 400">
     <rect x="110" y="10" height="100" width="100"
-        style="stroke:#009900; fill: #00cc00"/>
+          style="stroke:#009900; fill: #00cc00"/>
+    <path d="M110 10 l100 100" stroke-width="2" stroke="red"/>
   </svg>
 </svg>

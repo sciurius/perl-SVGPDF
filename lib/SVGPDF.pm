@@ -375,7 +375,12 @@ field $fontmanager  :accessor;
 field $xoforms      :accessor;
 field $defs         :accessor;
 
+# Defaults for rendering.
+field $pagesize     :accessor;
+field $fontsize     :accessor;
+
 # For debugging/development.
+field $verbose      :accessor;
 field $debug        :accessor;
 field $grid         :accessor;
 field $prog         :accessor;
@@ -435,11 +440,14 @@ sub BUILDARGS ( @args ) {
 }
 
 BUILD {
+    $verbose      = $atts->{verbose}      // 1;
     $debug        = $atts->{debug}        || 0;
     $grid         = $atts->{grid}         || 0;
     $prog         = $atts->{prog}         || 0;
     $debug_styles = $atts->{debug_styles} || $debug > 1;
     $trace        = $atts->{trace}        || 0;
+    $pagesize     = $atts->{pagesize}     || [ 595, 842 ];
+    $fontsize     = $atts->{fontsize}     || 12;
     $wstokens     = $atts->{wstokens}     || 0;
     $indent       = "";
     $xoforms      = [];
@@ -454,6 +462,10 @@ method process ( $data, %attr ) {
 	$xoforms = [];
     }
 
+    my $save_fontsize = $fontsize;
+    $fontsize = $attr{fontsize} if $attr{fontsize};
+    # TODO: Page size
+
     # Load the SVG data.
     my $svg = SVGPDF::Parser->new;
     my $tree = $svg->parse_file
@@ -466,6 +478,9 @@ method process ( $data, %attr ) {
 
     # Search for svg elements and process them.
     $self->search($tree);
+
+    # Restore.
+    $fontsize = $save_fontsize;
 
     # Return (hopefully a stack of XObjects).
     return $xoforms;
@@ -531,6 +546,7 @@ method handle_svg ( $e ) {
 	$xo = $pdf->xo_form;
     }
     push( @$xoforms, { xo => $xo } );
+
     $self->_dbg("XObject #", scalar(@$xoforms) );
     my $svg = SVGPDF::Element->new
 	( name    => $e->{name},
@@ -561,59 +577,116 @@ method handle_svg ( $e ) {
     my $vbox   = delete $atts->{viewbox};
 
     # Width and height are the display size of the viewport.
-    # Not relevant now, but needed later when the XObject is placed.
-    my $vw = delete $atts->{width};
-    my $vh = delete $atts->{height};
+    # Resolve em, ex and percentages.
+    my $vwidth  = delete $atts->{width} // 0;
+    my $vheight = delete $atts->{height} // 0;
+    for ( $vwidth ) {
+	$_ = $svg->u( $_, width => $pagesize->[0],
+		      fontsize => $fontsize );
+    }
+    for ( $vheight ) {
+	$_ = $svg->u( $_, width => $pagesize->[1],
+		      fontsize => $fontsize );
+    }
 
     delete $atts->{$_} for qw( xmlns:xlink xmlns:svg xmlns version );
     my $style = $svg->css_push($atts);
 
+    # If there is min-width the image must be scaled if the available
+    # width is smaller. If the width is larger we render to the
+    # available space.
+    my $minw = $style->{'min-width'} // 0;
+    $minw = $svg->u( $minw, width => $pagesize->[0],
+		     fontsize => $fontsize ) if $minw;
+
+    # vertical-align is needed later when the XObject is placed.
+    my $valign = $style->{'vertical-align'} // 0;
+    $valign = $svg->u( $valign, fontsize => $fontsize ) if $valign;
+
     my @vb;			# viewBox: llx lly width height
     my @bb;			# bbox:    llx lly urx ury
 
-    # Currently we rely on the <svg> to supply the correct viewBox.
+    # We rely on the <svg> to supply the correct viewBox.
     my $width;			# width of the vbox
     my $height;			# height of the vbox
     if ( $vbox ) {
 	@vb     = $svg->getargs($vbox);
-	$width  = $svg->u($vb[2]);
-	$height = $svg->u($vb[3]);
+	$width  = $svg->u( $vb[2],
+			   width => $pagesize->[0],
+			   fontsize => $fontsize );
+	$height = $svg->u( $vb[3],
+			   width => $pagesize->[1],
+			   fontsize => $fontsize );
+	if ( $minw && $minw > $width ) {
+	    $width  = $minw;
+	    $vb[2] = $minw / $vheight * $height;
+	    $self->_dbg("minw: ", $style->{'min-width'}, " ",
+			"width -> $width, \$vb[2] -> $vb[2]\n");
+	}
+	if ( $valign ) {
+	    # Verify valign against the vbox.
+	    my $va = sprintf("%.2f", -$valign/$vheight);
+	    my $vb = sprintf("%.2f", ($vb[3]+$vb[1])/$vb[3]);
+	    warn("Vertical align = $va, but vbox says $vb\n")
+	      unless $va eq $vb;
+	}
     }
     else {
-	# Fallback to width/height, falling back to A4.
-	$width  = $svg->u($vw||595);
-	$height = $svg->u($vh||842);
+	# Use to width/height, falling back to pagesize.
+	$width  = $svg->u( $vwidth  ||$pagesize->[0],
+			   width => $pagesize->[0],
+			   fontsize => $fontsize );
+	$height = $svg->u( $vheight ||$pagesize->[1],
+			   width => $pagesize->[1],
+			   fontsize => $fontsize );
+	if ( $minw && $minw > $width ) {
+	    $width = $minw if $minw > $width;
+	    $self->_dbg("minw: ", $style->{'min-width'}, " ",
+			"width -> $width");
+	}
 	@vb     = ( 0, 0, $width, $height );
-	$vbox = "@vb";
+	if ( $valign ) {
+	    $vb[1] = -( $vb[3] + $valign );
+	    $self->_dbg("valign: ", $style->{'vertical-align'}, " ",
+			"\$vb[1] -> $vb[1]");
+	}
+	$vbox = "@vb (inferred)";
     }
 
     # Get llx lly urx ury bounding box rectangle.
-    @bb = ( 0, 0, $vb[2], $vb[3] );
+    @bb = $self->vb2bb(@vb);
     $self->_dbg( "vb $vbox => bb %.2f %.2f %.2f %.2f", @bb );
+    warn( sprintf("vb $vbox => bb %.2f %.2f %.2f %.2f\n", @bb ))
+      if $verbose && !$debug;
     $xo->bbox(@bb);
 
     if ( my $c = $style->{"background-color"} ) {
 	$xo->fill_color($c);
-	$xo->rect(@bb);
+	$xo->rectangle(@bb);
 	$xo->fill;
     }
 
     # Set up result forms.
     $xoforms->[-1] =
-	  { xo      => $xo,
-	    bbox    => [ @bb ],
-	    vwidth  => $vw ? $vw : $vb[2],
-	    vheight => $vh ? $vh : $vb[3],
-	    vbox    => [ @vb ],
-	    width   => $vb[2],
-	    height  => $vb[3],
-	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
-	  };
+      { xo      => $xo,
+	# Design (desired) width and height.
+	vwidth  => $vwidth  || $vb[2],
+	vheight => $vheight || $vb[3],
+	# viewBox (SVG coordinates)
+	vbox    => [ @vb ],
+	width   => $vb[2],
+	height  => $vb[3],
+	diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
+	# bbox (PDF coordinates)
+	bbox    => [ @bb ],
+      };
+    # Not sure if this is ever needed.
+    $xoforms->[-1]->{valign} = $valign if $valign;
 
+#    use DDumper; DDumper( { %{$xoforms->[-1]}, xo => 'XO' } );
     # <svg> coordinates are topleft down, so translate.
-    $self->_dbg( "matrix( 1 0 0 -1 %.2f %.2f )", -$vb[0], $vb[1]+$vb[3] );
-#    $xo->transform( matrix =>         [ 1, 0, 0, -1, -$vb[0], $vb[1]+$vb[3] ] );
-    $xo->matrix( 1, 0, 0, -1, -$vb[0], $vb[1]+$vb[3] );
+    $self->_dbg( "matrix( 1 0 0 -1 0 0)" );
+    $xo->matrix( 1, 0, 0, -1, 0, 0 );
 
     if ( $debug ) {		# show bb
 	$xo->save;
@@ -658,11 +731,34 @@ method handle_svg ( $e ) {
 
 ################ Service ################
 
+method vb2bb( @vb ) {
+    # Calculate bounding box from viewBox
+    @vb = @{$vb[0]} if ref($vb[0]) eq 'ARRAY';
+    my @bb = ( $vb[0],        -$vb[1]-$vb[3],
+	       $vb[0]+$vb[2], -$vb[1]       );
+
+    wantarray ? @bb : \@bb;
+}
+
+method vb2bb_noflip( @vb ) {
+    # Calculate bounding box from viewBox
+    @vb = @{$vb[0]} if ref($vb[0]) eq 'ARRAY';
+    my @bb = ( $vb[0],        $vb[1],
+	       $vb[2]-$vb[0], $vb[3]-$vb[1] );
+
+    wantarray ? @bb : \@bb;
+}
+
 method draw_grid ( $xo, $vb ) {
     my $d = $grid >= 5 ? $grid : 10;
-    my @vb = @$vb;
-    my $w = $vb[2];
-    my $h = $vb[3];
+    my @bb = @$vb;
+
+    # Note that this methos is called *after* the yflip.
+    $bb[2] += $bb[0];
+    $bb[3] += $bb[1];
+
+    my $w = -$bb[0]+$bb[2];
+    my $h = -$bb[1]+$bb[3];
     my $thick = 1;
     my $thin = 0.2;
     my $maxlines = 100;
@@ -671,48 +767,68 @@ method draw_grid ( $xo, $vb ) {
     while ( $h/$d > $maxlines || $w/$d > $maxlines ) {
 	$d += $d;
     }
- 
-    $xo->save;
-    $xo->stroke_color("#bbbbbb");
 
-    # Map viewbox to 0,0.
-    $xo->transform( translate => [ $vb[0], $vb[1] ] );
+    $xo->save;
 
     # Show boundary points.
     my $dd = $d/2;
-    $xo->rectangle(-$dd,-$dd,$dd,$dd);
-    $xo->fill_color("blue");
+    $xo->rectangle( $bb[0]-$dd, $bb[1]-$dd, $bb[0]+$dd, $bb[1]+$dd);
+    $xo->fill_color("cyan");
     $xo->fill;
-    $xo->rectangle( $vb[2]-$dd, $vb[3]+$dd, $vb[2]+$dd, $vb[3]-$dd);
-    $xo->fill_color("blue");
+    $xo->rectangle( $bb[2]-$dd, $bb[3]-$dd, $bb[2]+$dd, $bb[3]+$dd);
+    $xo->fill_color("magenta");
     $xo->fill;
     # Show origin. This will cover the bb corner unless it is offset.
-    $xo->rectangle( -$vb[0]-$dd, -$vb[1]+$dd, -$vb[0]+$dd, -$vb[1]-$dd);
+    $xo->rectangle( -$dd, $dd, $dd, -$dd );
     $xo->fill_color("red");
     $xo->fill;
 
+    $xo->stroke_color("#bbbbbb");
+
     # Draw the grid (thick lines).
     $xo->line_width($thick);
-    for ( my $x = 0; $x <= $w; $x += 5*$d ) {
-	$xo->move( $x, 0 );
-	$xo->vline($h);
+    for ( my $x = 0; $x <= $bb[2]; $x += 5*$d ) {
+	$xo->move( $x, $bb[1] );
+	$xo->vline($bb[3]);
 	$xo->stroke;
     }
-    for ( my $y = 0; $y <= $h; $y += 5*$d ) {
-	$xo->move( 0, $y );
-	$xo->hline($w);
+    for ( my $x = -5*$d; $x > $bb[0]; $x -= 5*$d ) {
+	next;
+	$xo->move( $x, $bb[1] );
+	$xo->vline($bb[3]);
+	$xo->stroke;
+    }
+    for ( my $y = 0; $y <= $bb[3]; $y += 5*$d ) {
+	$xo->move( $bb[0], $y );
+	$xo->hline($bb[2]);
+	$xo->stroke;
+    }
+    for ( my $y = -5*$d; $y > $bb[0]; $y -= 5*$d ) {
+	next;
+	$xo->move( $bb[0], $y );
+	$xo->hline($bb[2]);
 	$xo->stroke;
     }
     # Draw the grid (thin lines).
     $xo->line_width($thin);
     for ( my $x = 0; $x <= $w; $x += $d ) {
-	$xo->move( $x, 0 );
-	$xo->vline($h);
+	$xo->move( $x, $bb[1] );
+	$xo->vline($bb[3]);
+	$xo->stroke;
+    }
+    for ( my $x = -$d; $x > $bb[0]; $x -= $d ) {
+	$xo->move( $x, $bb[1] );
+	$xo->vline($bb[3]);
 	$xo->stroke;
     }
     for ( my $y = 0; $y <= $h; $y += $d ) {
-	$xo->move( 0, $y );
-	$xo->hline($w);
+	$xo->move( $bb[0], $y );
+	$xo->hline($bb[2]);
+	$xo->stroke;
+    }
+    for ( my $y = -$d; $y > $bb[1]; $y -= $d ) {
+	$xo->move( $bb[0], $y );
+	$xo->hline($bb[2]);
 	$xo->stroke;
     }
     $xo->restore;

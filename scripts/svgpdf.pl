@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Sun Aug 20 14:20:45 2023
-# Update Count    : 140
+# Last Modified On: Sun Aug 27 16:42:54 2023
+# Update Count    : 215
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -22,6 +22,8 @@ my ($my_name, $my_version) = qw( svgpdf 0.01 );
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 
+my @pgsz = ( 595, 842 );	# A4
+
 ################ Command line parameters ################
 
 use Getopt::Long 2.13;
@@ -29,6 +31,8 @@ use Getopt::Long 2.13;
 # Command line options.
 my $output = "__new__.pdf";
 my $api = "PDF::API2";		# or PDF::Builder
+my $pagesize;
+my $fontsize = 12;		# design
 my $wstokens = 0;
 my $grid;			# add grid
 my $prog;			# generate program
@@ -47,8 +51,6 @@ $trace |= ($debug || $test);
 
 ################ Presets ################
 
-my @pgsz = ( 595, 842 );	# A4
-
 ################ The Process ################
 
 eval "require $api;"     || die($@);
@@ -60,15 +62,18 @@ $api->add_to_font_path($ENV{HOME}."/.fonts");
 my $page = $pdf->page;
 $page->size( [ 0, 0, @pgsz ] );
 my $gfx = $page->gfx;
-my $x = 0;
-my $y = $pgsz[1];
+my $x = 10;
+my $y = $pgsz[1]-10;
 
 foreach my $file ( @ARGV ) {
     my $p = SVGPDF->new
       ( pdf => $pdf,
 	atts => { debug    => $debug,
+		  verbose  => $verbose,
 		  grid     => $grid,
 		  prog     => $prog,
+		  pagesize => \@pgsz,
+		  fontsize => $fontsize,
 		  wstokens => $wstokens,
 		  trace    => $trace } );
 
@@ -79,6 +84,7 @@ foreach my $file ( @ARGV ) {
     my $i = 0;
     foreach my $xo ( @$o ) {
 	$i++;
+	# use DDumper; DDumper( { %{ $xo }, xo => "XO" } );
 	if ( ref($xo->{xo}) eq "SVGPDF::PAST" ) {
 	    if ( $prog ) {
 		open( my $fd, '>', $prog );
@@ -103,11 +109,6 @@ foreach my $file ( @ARGV ) {
 	my $h = $bb[3]-$bb[1];
 	my $scale = 1;
 
-	for ( $xo->{vwidth}, $xo->{vheight} ) {
-	    next unless /^(.*)e([xm])$/;
-	    $_ = $1 * ( $2 eq 'm' ? 12 : 6 );
-	}
-
 	if ( $xo->{vwidth} ) {
 	    $scale = $xo->{vwidth} / $w;
 	}
@@ -119,8 +120,8 @@ foreach my $file ( @ARGV ) {
 	    $page = $pdf->page;
 	    $page->size( [ 0, 0, @pgsz ] );
 	    $gfx = $page->gfx;
-	    $x = 0;
-	    $y = $pgsz[1];
+	    $x = 10;
+	    $y = $pgsz[1]-10;
 	}
 	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.g )\n",
 		     $i, $w, $h,
@@ -130,12 +131,12 @@ foreach my $file ( @ARGV ) {
 		     $x, $y-$h*$scale, $w, $h, $scale ))
 	  if $verbose;
 
-	my @vb = @{$xo->{vbox}};
-	crosshairs( $gfx, $x, $y, "lime" );
-	if ( $vb[0] || $vb[1] ) {
-	    crosshairs( $gfx, $x-$vb[0]*$scale, $y+$vb[1]*$scale, "red" );
+	$gfx->object( $xo->{xo}, $x-$bb[0]*$scale,
+		      $y-($bb[1]+$h)*$scale, $scale );
+	crosshairs( $gfx, $x, $y, "green" );
+	if ( $bb[0] || $bb[1] ) {
+	    crosshairs( $gfx, $x-$bb[0]*$scale, $y-$bb[3]*$scale, "red" );
 	}
-	$gfx->object( $xo->{xo}, $x, $y-$h*$scale, $scale );
 
 	$y -= $h * $scale;
     }
@@ -152,7 +153,7 @@ sub crosshairs ( $gfx, $x, $y, $col = "black" ) {
 	$_->line_width(0.1);
 	$_->stroke_color($col);
 	$_->move($x-20,$y);
-	$_->hline($x+20);
+	$_->hline($x+300);
 	$_->stroke;
 	$_->move($x,$y+20);
 	$_->vline($y-20);
@@ -179,6 +180,8 @@ sub app_options {
 					 push( @INC, $ENV{HOME}."/src/PDF-Builder/lib" );
 					 },
 		     'api=s'	=> \$api,
+		     'pagesize=s' => \$pagesize,
+		     'fontsize=f' => \$fontsize,
 		     'ws!'	=> \$wstokens,
 		     'ident'	=> \$ident,
 		     'verbose+'	=> \$verbose,
@@ -192,6 +195,11 @@ sub app_options {
     }
     app_ident() if $ident;
     $grid = 5 if defined($grid) && $grid < 5;
+    if ( $pagesize ) {
+	die("--pagesize requires WIDTHxHEIGHT\n")
+	  unless $pagesize =~ /^(\d+)x(\d+)$/;
+	@pgsz = ( $1, $2 );
+    }
 }
 
 sub app_ident {
@@ -204,6 +212,7 @@ sub app_usage {
     print STDERR <<EndOfUsage;
 Usage: $0 [options] [svg-file ...]
    --output=XXX		PDF output file name
+   --pagesize=WWxHH	pagesize
    --program=XXX	generates a perl program (single SVG only)
    --api=XXX		uses PDF API (PDF::API2 (default) or PDF::Builder)
    --builder		short for --api=PDF::Builder
