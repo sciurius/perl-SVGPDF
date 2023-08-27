@@ -18,6 +18,7 @@ method process () {
     my ( $x, $y, $vwidth, $vheight, $vbox, $par, $tf ) =
       $self->get_params( $atts, qw( x:U y:U width:s height:s viewBox preserveAspectRatio:s transform:s ) );
     $self->nfi("nested svg transform") if $tf;
+    $self->nfi("preserveAspectRatio 'slice'") if $par =~ /slice/;
     my $style = $self->style;
 
     my $pwidth  = $xoforms->[0]->{width};
