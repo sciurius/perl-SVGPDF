@@ -112,8 +112,19 @@ method set_graphics () {
     my $msg = $name;
 
     if ( defined( my $lw = $style->{'stroke-width'} ) ) {
-	$msg .= " stroke-width=$lw";
-	$xo->line_width($self->u($lw));
+	my $w = $self->u( $lw,
+			  fontsize => $style->{'font-size'},
+			  width => $self->root->xoforms->[-1]->{diag});
+	$msg .= " stroke-width=$w";
+	if ( $lw =~ /e[mx]/ ) {
+	    $msg .= "($lw@" .
+	      ( $style->{'font-size'}|| $self->root->fontsize) . ")";
+	}
+	if ( $lw =~ /\%/ ) {
+	    $msg .= "($lw@" .
+	      ( $self->root->xoforms->[-1]->{diag}) . ")";
+	}
+	$xo->line_width($w);
     }
 
     if ( defined( my $linecap = $style->{'stroke-linecap'} ) ) {
@@ -193,7 +204,7 @@ method set_graphics () {
 	$xo->line_dash_pattern(@sda);
     }
 
-    $self->_dbg($msg);
+    $self->_dbg( "%s", $msg );
     return $style;
 }
 
@@ -288,25 +299,40 @@ method u ( $a, %args ) {
     confess("Undef in units") unless defined $a;
 
     return undef unless $a =~ /^([-+]?[\d.]+)(.*)$/;
-    return $1 if $2 eq "" || $2 eq "pt" || $2 eq "deg";
-    return $1 if $2 eq "px";	# approx
+    return $1 if $2 eq "pt";
 
-    return $1*72/2.54 if $2 eq "cm";
-    return $1*72/25.4 if $2 eq "mm";
-    return $1*72      if $2 eq "in";
+    # Default is pt?
+    return $1 if $2 eq "";
+
+    # default is px?
+    # 1px = approx 0.75 pt.
+    return $1*72/96 if $2 eq "" || $2 eq "px";
+
+    # CSS defines 1 inch = 96 px.
+    return $1*96/2.54 if $2 eq "cm";
+    return $1*96/25.4 if $2 eq "mm";
+    return $1*96      if $2 eq "in";
 
     if ( $2 eq '%' ) {
-	return $1/100 * $args{width} if $args{width};
+	my $w = $args{width} || $self->root->xoforms->[-1]->{diag};
+	return $1/100 * $w;
     }
-    # Font dependent. Approximate based on the font size.
+    # Font dependent.
+    # CSS defines em to be the font size.
     if ( $2 eq "em" ) {
-	return $1 * ( $args{fontsize} // $self->root->fontsize );
+	return $1 * ( $args{fontsize}
+		      || $style->{'font-size'}
+		      || $self->root->fontsize );
     }
+    # CSS defines ex to be half the font size.
     if ( $2 eq "ex" ) {
-	return $1 * 0.5 * ( $args{fontsize} // $self->root->fontsize );
+	return $1 * 0.5 * ( $args{fontsize}
+			    || $style->{'font-size'}
+			    || $self->root->fontsize );
     }
 
-    return $1;			# will hopefully crash somewhere...
+    confess("Unhandled units in \"$a\"");
+    return $a;			# will hopefully crash somewhere...
 }
 
 method getargs ( $a ) {
@@ -325,6 +351,7 @@ method get_params ( @desc ) {
     # xlink:href is obsoleted in favour of href.
     $atts{href} //= delete $atts{"xlink:href"} if exists $atts{"xlink:href"};
 
+    my @todo;
     for my $param ( @desc ) {
 
 	# Attribute may be followed by ':' and flags.
@@ -342,6 +369,17 @@ method get_params ( @desc ) {
 
 	# Get and remove the attribute.
 	my $p = delete( $atts{$param} );
+
+	# Queue.
+	push( @todo, [ $param, $flags, $p ] );
+    }
+
+    # CSS push with updated attributes.
+    $self->css_push( \%atts );
+
+    # Now we can process the values.
+    for ( @todo ) {
+	my ( $param, $flags, $p ) = @$_;
 
 	unless ( defined $p ) {
 	    if    ( $flags =~ /s/ )    { $p = ""; }
@@ -380,9 +418,6 @@ method get_params ( @desc ) {
 
 	push( @res, $p );
     }
-
-    # CSS push with updated attributes.
-    $self->css_push( \%atts );
 
     # Return param values.
     return @res;
