@@ -293,6 +293,7 @@ method u ( $a, %args ) {
 
     return $1*72/2.54 if $2 eq "cm";
     return $1*72/25.4 if $2 eq "mm";
+    return $1*72      if $2 eq "in";
 
     if ( $2 eq '%' ) {
 	return $1/100 * $args{width} if $args{width};
