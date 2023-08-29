@@ -7,8 +7,8 @@ body (ignored)
 div (ignored)
 ==== start svg ====
 XObject #1
-vb 0 0 794 188 => bb 0.00 0.00 794.00 188.00
-matrix( 1 0 0 -1 0.00 188.00 )
+vb 0 0 794 188 => bb 0.00 -188.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 188.00)
 xo fill_color black (initial)
   start handling style (SVGPDF::Style)
@@ -398,8 +398,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #2
-vb 0 0 794 128 => bb 0.00 0.00 794.00 128.00
-matrix( 1 0 0 -1 0.00 128.00 )
+vb 0 0 794 128 => bb 0.00 -128.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 128.00)
 xo fill_color black (initial)
   start handling path (SVGPDF::Path)
@@ -719,8 +719,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #3
-vb 0 0 794 128 => bb 0.00 0.00 794.00 128.00
-matrix( 1 0 0 -1 0.00 128.00 )
+vb 0 0 794 128 => bb 0.00 -128.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 128.00)
 xo fill_color black (initial)
   start handling path (SVGPDF::Path)
@@ -1036,8 +1036,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #4
-vb 0 0 794 128 => bb 0.00 0.00 794.00 128.00
-matrix( 1 0 0 -1 0.00 128.00 )
+vb 0 0 794 128 => bb 0.00 -128.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 128.00)
 xo fill_color black (initial)
   start handling path (SVGPDF::Path)

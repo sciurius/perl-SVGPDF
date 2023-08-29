@@ -1,8 +1,8 @@
 ==== start svg ====
 XObject #1
-vb 0 0 200 200 => bb 0.00 0.00 200.00 200.00
-matrix( 1 0 0 -1 0.00 200.00 )
-vb rect( 0.00 0.00 200.00 200.00)
+vb -100 -100 200 200 => bb -100.00 -100.00 100.00 100.00
+matrix( 1 0 0 -1 0 0)
+vb rect( -100.00 -100.00 100.00 100.00)
 xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=-50 y=-50 w=100 h=100
@@ -14,7 +14,7 @@ xo fill_color black (initial)
   start handling g (SVGPDF::G)
   g ====
     xo save
-    transform skew(0.00 15.00)
+    transform skew(15.00 0.00)
       start handling rect (SVGPDF::Rect)
       rect x=-50 y=-50 w=100 h=100
         xo save

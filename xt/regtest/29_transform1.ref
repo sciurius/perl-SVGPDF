@@ -1,7 +1,7 @@
 ==== start svg ====
 XObject #1
-vb 0 0 150 100 => bb 0.00 0.00 150.00 100.00
-matrix( 1 0 0 -1 0.00 100.00 )
+vb 0 0 150 100 => bb 0.00 -100.00 150.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 150.00 100.00)
 xo fill_color black (initial)
   start handling g (SVGPDF::G)
@@ -11,7 +11,7 @@ xo fill_color black (initial)
     transform rotate(-10.00)
     transform translate(-90.00,-100.00)
     transform translate(4.00,45.50)
-    transform skew(40.00 0.00)
+    transform skew(0.00 40.00)
     transform scale(1.00,0.50)
       start handling path (SVGPDF::Path)
       path d="M 50,30 A 20,20 0,0,..."

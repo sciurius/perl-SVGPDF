@@ -1,7 +1,7 @@
 ==== start svg ====
 XObject #1
-vb -100 -100 200 400 => bb 0.00 0.00 200.00 400.00
-matrix( 1 0 0 -1 100.00 300.00 )
+vb -100 -100 200 400 => bb -100.00 -300.00 100.00 100.00
+matrix( 1 0 0 -1 0 0)
 vb rect( -100.00 -100.00 100.00 300.00)
 xo fill_color black (initial)
   start handling desc (SVGPDF::Element)

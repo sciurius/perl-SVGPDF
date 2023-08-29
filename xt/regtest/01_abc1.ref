@@ -1,8 +1,8 @@
 html (ignored)
 ==== start svg ====
 XObject #1
-vb 0 0 794 144 => bb 0.00 0.00 794.00 144.00
-matrix( 1 0 0 -1 0.00 144.00 )
+vb 0 0 794 144 => bb 0.00 -144.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 144.00)
 xo fill_color black (initial)
   start handling style (SVGPDF::Style)
@@ -273,8 +273,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #2
-vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-matrix( 1 0 0 -1 0.00 70.00 )
+vb 0 0 794 70 => bb 0.00 -70.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling style (SVGPDF::Style)
@@ -615,8 +615,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #3
-vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-matrix( 1 0 0 -1 0.00 70.00 )
+vb 0 0 794 70 => bb 0.00 -70.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
@@ -795,8 +795,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #4
-vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-matrix( 1 0 0 -1 0.00 70.00 )
+vb 0 0 794 70 => bb 0.00 -70.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)
@@ -1102,8 +1102,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #5
-vb 0 0 794 70 => bb 0.00 0.00 794.00 70.00
-matrix( 1 0 0 -1 0.00 70.00 )
+vb 0 0 794 70 => bb 0.00 -70.00 794.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 794.00 70.00)
 xo fill_color black (initial)
   start handling use (SVGPDF::Use)

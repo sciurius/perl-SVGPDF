@@ -1,0 +1,109 @@
+==== start svg ====
+XObject #1
+vb 0 0 4000 2000 => bb 0.00 -2000.00 4000.00 0.00
+matrix( 1 0 0 -1 0 0)
+vb rect( 0.00 0.00 4000.00 2000.00)
+xo fill_color black (initial)
+  start handling title (SVGPDF::Element)
+  skipping title (not implemented)
+  end handling title
+  start handling desc (SVGPDF::Element)
+  skipping desc (not implemented)
+  end handling desc
+  start handling rect (SVGPDF::Rect)
+  rect x=5 y=5 w=3990 h=1990
+    xo save
+    rect stroke-width=10 stroke=blue fill=none
+    xo stroke (blue)
+    xo restore
+  end handling rect
+  start handling g (SVGPDF::G)
+  g ====
+    xo save
+      start handling g (SVGPDF::G)
+      end handling g
+      start handling g (SVGPDF::G)
+      g ====
+        xo save
+        transform translate(1600.00,0.00)
+          start handling text (SVGPDF::Text)
+          text  x=-50 y=300
+            xo save
+            txt translate( -50.00, 300.00 ) scale( 1.00 -1.00 )
+              xo save
+              xo restore
+            xo restore
+          end handling text
+          start handling rect (SVGPDF::Rect)
+          rect x=0 y=400 w=375 h=187.5
+            xo save
+            rect stroke-width=37.5(.25em@150) stroke=red fill=blue
+            xo paint (red blue)
+            xo restore
+          end handling rect
+          start handling rect (SVGPDF::Rect)
+          rect x=0 y=750 w=375 h=187.5
+            xo save
+            rect stroke-width=37.5 stroke=red fill=blue
+            xo paint (red blue)
+            xo restore
+          end handling rect
+          start handling g (SVGPDF::G)
+          g ====
+            xo save
+            transform scale(2.00,2.00)
+              start handling rect (SVGPDF::Rect)
+              rect x=0 y=600 w=375 h=187.5
+                xo save
+                rect stroke-width=37.5(.25em@150) stroke=red fill=blue
+                xo paint (red blue)
+                xo restore
+              end handling rect
+            xo restore
+          end handling g
+        xo restore
+      end handling g
+      start handling g (SVGPDF::G)
+      g ====
+        xo save
+        transform translate(2800.00,0.00)
+          start handling text (SVGPDF::Text)
+          text  x=-50 y=300
+            xo save
+            txt translate( -50.00, 300.00 ) scale( 1.00 -1.00 )
+              xo save
+              xo restore
+            xo restore
+          end handling text
+          start handling rect (SVGPDF::Rect)
+          rect x=0 y=400 w=400 h=200
+            xo save
+            rect stroke-width=44.7213595499958(1%@4472.13595499958) stroke=red fill=blue
+            xo paint (red blue)
+            xo restore
+          end handling rect
+          start handling rect (SVGPDF::Rect)
+          rect x=0 y=750 w=400 h=200
+            xo save
+            rect stroke-width=31.62 stroke=red fill=blue
+            xo paint (red blue)
+            xo restore
+          end handling rect
+          start handling g (SVGPDF::G)
+          g ====
+            xo save
+            transform scale(2.00,2.00)
+              start handling rect (SVGPDF::Rect)
+              rect x=0 y=600 w=400 h=200
+                xo save
+                rect stroke-width=44.7213595499958(1%@4472.13595499958) stroke=red fill=blue
+                xo paint (red blue)
+                xo restore
+              end handling rect
+            xo restore
+          end handling g
+        xo restore
+      end handling g
+    xo restore
+  end handling g
+==== end svg ====

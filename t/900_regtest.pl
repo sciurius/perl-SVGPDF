@@ -62,7 +62,7 @@ foreach my $file ( sort @files ) {
     ok( $ok, $file );
     $test++;
     unlink($out), next if $ok;
-    system( $ENV{PDFSVG_DIFF}, $out, $ref) if $ENV{PDFSVG_DIFF};
+    system( $ENV{SVGPDF_DIFF}, $out, $ref) if $ENV{SVGPDF_DIFF};
 }
 
 ok( $test == 2*@files+3, "Tested @{[0+@files]} files" );

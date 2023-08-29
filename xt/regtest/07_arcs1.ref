@@ -1,8 +1,8 @@
 xml (ignored)
 ==== start svg ====
 XObject #1
-vb 0 0 400 250 => bb 0.00 0.00 400.00 250.00
-matrix( 1 0 0 -1 0.00 250.00 )
+vb 0 0 400 250 => bb 0.00 -250.00 400.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 400.00 250.00)
 xo fill_color black (initial)
   start handling desc (SVGPDF::Element)
@@ -48,8 +48,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #2
-vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
-matrix( 1 0 0 -1 0.00 300.00 )
+vb 0 0 400 300 => bb 0.00 -300.00 400.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 400.00 300.00)
 xo fill_color black (initial)
   start handling desc (SVGPDF::Element)
@@ -95,8 +95,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #3
-vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
-matrix( 1 0 0 -1 0.00 300.00 )
+vb 0 0 400 300 => bb 0.00 -300.00 400.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 400.00 300.00)
 xo fill_color black (initial)
   start handling desc (SVGPDF::Element)
@@ -142,8 +142,8 @@ xo fill_color black (initial)
 ==== end svg ====
 ==== start svg ====
 XObject #4
-vb 0 0 400 300 => bb 0.00 0.00 400.00 300.00
-matrix( 1 0 0 -1 0.00 300.00 )
+vb 0 0 400 300 => bb 0.00 -300.00 400.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 400.00 300.00)
 xo fill_color black (initial)
   start handling desc (SVGPDF::Element)

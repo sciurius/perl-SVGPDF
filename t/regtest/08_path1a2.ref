@@ -1,7 +1,7 @@
 ==== start svg ====
 XObject #1
-vb 0 0 320 320 => bb 0.00 0.00 320.00 320.00
-matrix( 1 0 0 -1 0.00 320.00 )
+vb 0 0 320 320 (inferred) => bb 0.00 -320.00 320.00 0.00
+matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 320.00 320.00)
 xo fill_color black (initial)
   start handling path (SVGPDF::Path)
