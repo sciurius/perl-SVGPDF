@@ -679,7 +679,6 @@ method handle_svg ( $e ) {
 	diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
 	# bbox (PDF coordinates)
 	bbox    => [ @bb ],
-	yflip   => 1,
       };
     # Not sure if this is ever needed.
     $xoforms->[-1]->{valign} = $valign if $valign;
