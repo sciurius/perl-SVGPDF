@@ -202,11 +202,22 @@ method find ( $arg ) {
 method push ( @args ) {
     my $args = ref($args[0]) eq 'HASH' ? $args[0] : { @args };
     $css->{'*'} //= $base;
-    my $ret = { %{$css->{'*'}} };
+    my $ret;
 
-    ## Parent,
+    # CSS defaults.
+    while ( my($k,$v) = each %{$css->{'*'}} ) {
+	$ret->{$k} //= $v;
+    }
+
+    ## Parent.
     if ( exists( $css->{_} ) ) {
 	$self->merge( $ret, $css->{_} );
+    }
+
+    ## Presentation attributes.
+    for ( keys %$args ) {
+	next if /^element|class|style|id$/;
+	$ret->{$_} = $args->{$_};
     }
 
     ## Tag style.
@@ -228,12 +239,6 @@ method push ( @args ) {
     ## ID.
     if ( $args->{id} && exists( $css->{ "#" . $args->{id} } ) ) {
 	$self->merge( $ret, $css->{ "#" . $args->{id} } );
-    }
-
-    ## Attributes.
-    for ( keys %$args ) {
-	next if /^element|class|style|id$/;
-	$ret->{$_} = $args->{$_};
     }
 
     ## Style attribute.
