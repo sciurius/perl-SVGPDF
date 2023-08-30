@@ -170,10 +170,10 @@ method process () {
 	if ( $op eq "s" ) {
 	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
 		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $x + $d[0], $y + $d[1],
-			  $x + $d[2], $y + $d[3] );
-		$self->nfi("standalone s-paths");
-		unshift( @c, $x, -$y );
+		my @c = ( $x + $d[0], $y + $d[1], # control point 2
+			  $x + $d[2], $y + $d[3], # end point
+			);
+		unshift( @c, $cx, $cy );  # control point 1
 		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
 		$xo->curve(@c);
 		splice( @d, 0, 4 );
