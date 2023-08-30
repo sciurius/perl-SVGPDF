@@ -13,7 +13,7 @@ xo fill_color black (initial)
         path stroke-width=0 stroke=blue fill=blue
         xo move(0.00,50.00)
         xo arc(1.00,1.00 0.00 0,0 100.00,50.00)
-        circular_arc(0.00,50.00 100.00,50.00 1.00 move=0 large=0 dir=0)
+        circular_arc(0.00,50.00 100.00,50.00 1.00 move=0 large=0 dir=0 rot=0.00)
           xo curve( -0.00,56.57 1.29,63.07 3.81,69.13 )
           xo curve( 6.32,75.20 10.00,80.71 14.64,85.36 )
           xo curve( 19.29,90.00 24.80,93.68 30.87,96.19 )

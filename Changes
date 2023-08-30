@@ -3,6 +3,7 @@ Revision history for SVGPDF
 0.000
 
 	- Internal: Flipped coordinates.
+	- Internal: Rework Path.
 	- Leave vwidth/vheight as is so caller can scale to font size.
 	- Add rounded rectangles.
 

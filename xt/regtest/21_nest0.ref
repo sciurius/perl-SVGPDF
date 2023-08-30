@@ -12,9 +12,9 @@ xo fill_color black (initial)
     xo restore
   end handling rect
   start handling svg (SVGPDF::Svg)
+  pp w=600 h=800 vw=600 vh=800
   vb 0 0 300 400 => bb 0.00 0.00 300.00 400.00
   XObject #2
-  translate( 0.00 400.00 )
     start handling rect (SVGPDF::Rect)
     rect x=110 y=10 w=100 h=100
       xo save
@@ -22,6 +22,17 @@ xo fill_color black (initial)
       xo paint (#009900 #00cc00)
       xo restore
     end handling rect
-  xo object( 0.00+0.00 -800.00+0.00 2.000 2.000 )
+    start handling path (SVGPDF::Path)
+    path d="M110 10 l100 100"
+      xo save
+      path stroke-width=2 stroke=red fill=(current) fill=black
+      xo move(110.00,10.00)
+      xo line(210.00,110.00)
+      xo paint (red currentColor)
+      xo restore
+    end handling path
+pbbx 0 -800 600 0
+bbox 0 0 300 400 scale=2/2
+  xo object( 0.00+0.00 0.00+0.00 2.000 2.000 ) 
   end handling svg
 ==== end svg ====

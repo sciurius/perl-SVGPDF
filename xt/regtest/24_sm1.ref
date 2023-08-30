@@ -8,14 +8,16 @@ xo fill_color black (initial)
     style ====
   end handling style
   start handling svg (SVGPDF::Svg)
-  vb -1 -1 202 40 => bb 0.00 0.00 202.00 40.00
+  pp w=200 h=60 vw=200 vh=60
+  vb -1 -1 202 40 => bb -1.00 -1.00 203.00 41.00
   XObject #2
-  translate( 1.00 39.00 )
     start handling defs (SVGPDF::Defs)
       defs ====
       defs: "smiley" (path)
     end handling defs
-  xo object( 0.00+0.00 -60.00+0.00 0.990 1.500 )
+pbbx 0 -60 200 0
+bbox -1 -1 203 41 scale=0.99009900990099/1.5
+  xo object( 0.00+0.00 0.00+0.00 0.990 1.500 ) 
   end handling svg
   start handling rect (SVGPDF::Rect)
   rect x=0 y=0 w=60 h=30
@@ -25,19 +27,19 @@ xo fill_color black (initial)
     xo restore
   end handling rect
   start handling svg (SVGPDF::Svg)
+  pp w=200 h=60 vw=60 vh=30
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
-  translate( 0.00 100.00 )
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
       use stroke=none fill=(current) fill=black
       path d="M50,10 A40,40,1,1,1,..."
         xo save
-        path stroke-width=8px linecap=1 linejoin=1 stroke=black fill=yellow
+        path stroke-width=6 linecap=1 linejoin=1 stroke=black fill=yellow
         xo move(50.00,10.00)
         xo arc(40.00,40.00 1.00 1,1 50.00,90.00)
-        circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1)
+        circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1 rot=1.00)
           xo curve( 55.25,10.00 60.45,11.03 65.31,13.04 )
           xo curve( 70.16,15.06 74.57,18.00 78.28,21.72 )
           xo curve( 82.00,25.43 84.94,29.84 86.96,34.69 )
@@ -47,7 +49,7 @@ xo fill_color black (initial)
           xo curve( 74.57,82.00 70.16,84.94 65.31,86.96 )
           xo curve( 60.45,88.97 55.25,90.00 50.00,90.00 )
         xo arc(40.00,40.00 1.00 1,1 50.00,10.00)
-        circular_arc(50.00,90.00 50.00,10.00 40.00 move=0 large=1 dir=1)
+        circular_arc(50.00,90.00 50.00,10.00 40.00 move=0 large=1 dir=1 rot=1.00)
           xo curve( 44.75,90.00 39.55,88.97 34.69,86.96 )
           xo curve( 29.84,84.94 25.43,82.00 21.72,78.28 )
           xo curve( 18.00,74.57 15.06,70.16 13.04,65.31 )
@@ -67,7 +69,10 @@ xo fill_color black (initial)
         xo restore
       xo restore
     end handling use
-  xo object( 0.00+15.00 -30.00-15.00 0.300 0.300 )
+pbbx 0 -60 200 0
+bbox 0 0 100 100 scale=0.6/0.3
+disp dx=15, dy=0
+  xo object( 0.00+15.00 0.00+0.00 0.300 0.300 ) xMidYMid meet
   end handling svg
   start handling rect (SVGPDF::Rect)
   rect x=70 y=0 w=60 h=30
@@ -77,19 +82,19 @@ xo fill_color black (initial)
     xo restore
   end handling rect
   start handling svg (SVGPDF::Svg)
+  pp w=200 h=60 vw=60 vh=30
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
-  translate( 0.00 100.00 )
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
       use stroke=none fill=(current) fill=black
       path d="M50,10 A40,40,1,1,1,..."
         xo save
-        path stroke-width=8px linecap=1 linejoin=1 stroke=black fill=yellow
+        path stroke-width=6 linecap=1 linejoin=1 stroke=black fill=yellow
         xo move(50.00,10.00)
         xo arc(40.00,40.00 1.00 1,1 50.00,90.00)
-        circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1)
+        circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1 rot=1.00)
           xo curve( 55.25,10.00 60.45,11.03 65.31,13.04 )
           xo curve( 70.16,15.06 74.57,18.00 78.28,21.72 )
           xo curve( 82.00,25.43 84.94,29.84 86.96,34.69 )
@@ -99,7 +104,7 @@ xo fill_color black (initial)
           xo curve( 74.57,82.00 70.16,84.94 65.31,86.96 )
           xo curve( 60.45,88.97 55.25,90.00 50.00,90.00 )
         xo arc(40.00,40.00 1.00 1,1 50.00,10.00)
-        circular_arc(50.00,90.00 50.00,10.00 40.00 move=0 large=1 dir=1)
+        circular_arc(50.00,90.00 50.00,10.00 40.00 move=0 large=1 dir=1 rot=1.00)
           xo curve( 44.75,90.00 39.55,88.97 34.69,86.96 )
           xo curve( 29.84,84.94 25.43,82.00 21.72,78.28 )
           xo curve( 18.00,74.57 15.06,70.16 13.04,65.31 )
@@ -119,7 +124,10 @@ xo fill_color black (initial)
         xo restore
       xo restore
     end handling use
-  xo object( 70.00+0.00 -30.00-15.00 0.300 0.300 )
+pbbx 0 -60 200 0
+bbox 0 0 100 100 scale=0.6/0.3
+disp dx=0, dy=0
+  xo object( 70.00+0.00 0.00+0.00 0.300 0.300 ) xMinYMid meet
   end handling svg
   start handling rect (SVGPDF::Rect)
   rect x=140 y=0 w=60 h=30
@@ -129,19 +137,19 @@ xo fill_color black (initial)
     xo restore
   end handling rect
   start handling svg (SVGPDF::Svg)
+  pp w=200 h=60 vw=60 vh=30
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
-  translate( 0.00 100.00 )
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
       use stroke=none fill=(current) fill=black
       path d="M50,10 A40,40,1,1,1,..."
         xo save
-        path stroke-width=8px linecap=1 linejoin=1 stroke=black fill=yellow
+        path stroke-width=6 linecap=1 linejoin=1 stroke=black fill=yellow
         xo move(50.00,10.00)
         xo arc(40.00,40.00 1.00 1,1 50.00,90.00)
-        circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1)
+        circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1 rot=1.00)
           xo curve( 55.25,10.00 60.45,11.03 65.31,13.04 )
           xo curve( 70.16,15.06 74.57,18.00 78.28,21.72 )
           xo curve( 82.00,25.43 84.94,29.84 86.96,34.69 )
@@ -151,7 +159,7 @@ xo fill_color black (initial)
           xo curve( 74.57,82.00 70.16,84.94 65.31,86.96 )
           xo curve( 60.45,88.97 55.25,90.00 50.00,90.00 )
         xo arc(40.00,40.00 1.00 1,1 50.00,10.00)
-        circular_arc(50.00,90.00 50.00,10.00 40.00 move=0 large=1 dir=1)
+        circular_arc(50.00,90.00 50.00,10.00 40.00 move=0 large=1 dir=1 rot=1.00)
           xo curve( 44.75,90.00 39.55,88.97 34.69,86.96 )
           xo curve( 29.84,84.94 25.43,82.00 21.72,78.28 )
           xo curve( 18.00,74.57 15.06,70.16 13.04,65.31 )
@@ -171,6 +179,9 @@ xo fill_color black (initial)
         xo restore
       xo restore
     end handling use
-  xo object( 140.00+30.00 -30.00-15.00 0.300 0.300 )
+pbbx 0 -60 200 0
+bbox 0 0 100 100 scale=0.6/0.3
+disp dx=30, dy=0
+  xo object( 140.00+30.00 0.00+0.00 0.300 0.300 ) xMaxYMid meet
   end handling svg
 ==== end svg ====

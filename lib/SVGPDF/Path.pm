@@ -7,6 +7,8 @@ use Carp;
 
 class SVGPDF::Path :isa(SVGPDF::Element);
 
+use Image::SVG::Path qw( extract_path_info );
+
 method process () {
     my $atts = $self->atts;
     my $xo   = $self->xo;
@@ -31,277 +33,174 @@ method process () {
     $self->_dbg( $self->name, " d=\"$t\"", $tf ? " tf=\"$tf\"" : "" );
     $self->_dbg( "+ xo save" );
     $xo->save;
-
-    my $x = 0;
-    my $y = 0;
-
     $self->set_transform($tf);
     $self->set_graphics;
 
-    # Starting point of this path.
-    my $x0 = $x;
-    my $y0 = $y;
-
-    # Path items may be separated by whitespace and commas, but
-    # separators may be left out if not strictly necessary.
-    # I.e. M0-1-1V10 is M 0 -1 -1 V 10 ...
-    $d =~ s/([-+])/ $1/g;
-    $d =~ s/([a-z])/ $1 /gi;
-    # Worse: .10.11 is .10 .11 ...
-    $d =~ s/\.(\d+)\.(\d*)/.$1 $2 /g;
-    # Worse: 10.11.12 is 10.11 12 ...
-    $d =~ s/(\d)\.(\d*)\./$1.$2 /g;
-    $d =~ s/(\d)\.(\d*)\./$1.$2 /g;
-    $d =~ s/,/ /g;
-    # Cleanup a bit and split.
-    $d =~ s/^\s+//g;
-    $d =~ s/\s+$//g;
-    $d =~ s/\s+/ /g;
-    my @d = split( ' ', $d );
+    # Get path info, turning relative coordinates into absolute
+    # and eliminate S and T curves.
+    my @d = extract_path_info( $d, { absolute => 1, no_smooth => 1 } );
 
     my $open;			# path is open
 
     my $paint = $self->_paintsub;
 
-    # Initial x,y for path. See 'z'.
-    my $ix;
-    my $iy;
+    # Initial x,y for path, if open. See 'z'.
+    my ( $ix, $iy );
 
-    # Current point.
-    my ( $cx, $cy ) = ( $x0, $y0 );
+    # Current point. Starting point of this path.
+    # Since we're always use absolute coordinates, this is the
+    # starting point for subpaths as well.
+    my ( $cx, $cy ) = ( 0, 0 );
+
+    # For debugging: collect control points.
     my @cp;
 
+    my $id = -1;		# for diagnostics
     while ( @d ) {
-	my $op = shift(@d);
+	my $d = shift(@d);
+	my $op = $d->{svg_key};
+	$id++;
 
-	# Use abs coor if op is uppercase.
-	my $abs;
-	if ( $abs = $op eq uc($op) ) {
-	    $op = lc($op);
-	    $x = $x0;
-	    $y = $y0;
-	}
-	else {
-	    $x = $cx;
-	    $y = $cy;
-	}
+	# Reset starting point for the subpath.
+	my ( $x, $y ) = ( 0, 0 );
+
+	# Remember initial point of path.
+	$ix = $cx, $iy = $cy unless $open++ || $op eq "Z";
+
+	warn(sprintf("%s[%d] x=%.2f,y=%.2f cx=%.2f,cy=%.2f ix=%.2f,iy=%.2f\n",
+		     $op, $id, $x, $y, $cx, $cy, $ix, $iy))
+	  if $x || $y || $ix || $iy;
 
 	# MoveTo
-	if ( $op eq "m" ) {
-	    $x += shift(@d); $y += shift(@d);
+	if ( $op eq "M" ) {
+	    $x += $d->{point}->[0];
+	    $y += $d->{point}->[1];
 	    $self->_dbg( "xo move(%.2f,%.2f)", $x, $y );
-	    $ix = $cx, $iy = $cy unless $open;
 	    $xo->move( $x, $y );
-	    if ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		# Subsequent coordinate pair(s) imply lineto.
-		unshift( @d, $abs ? 'L' : 'l' );
-	    }
-	    ( $cx, $cy ) = ( $x, $y );
-	    next;
 	}
 
 	# Horizontal LineTo.
-	if ( $op eq "h" ) {
-	    $ix = $cx, $iy = $cy unless $open++;
-	    $self->_dbg( "xo hline(%.2f)", $d[0] );
-	    $x += shift(@d);
+	elsif ( $op eq "H" ) {
+	    $x += $d->{x};
+	    $y = $cy;
+	    $self->_dbg( "xo hline(%.2f)", $x );
 	    $xo->hline($x);
-	    ( $cx, $cy ) = ( $x, $cy );
-	    next;
 	}
 
 	# Vertical LineTo.
-	if ( $op eq "v" ) {
-	    $ix = $cx, $iy = $cy unless $open++;
-	    $self->_dbg( "xo vline(%.2f)", $d[0] );
-	    $y += shift(@d);
+	elsif ( $op eq "V" ) {
+	    $x = $cx;
+	    $y += $d->{y};
+	    $self->_dbg( "xo vline(%.2f)", $y );
 	    $xo->vline($y);
-	    ( $cx, $cy ) = ( $cx, $y );
-	    next;
 	}
 
 	# Generic LineTo.
-	if ( $op eq "l" ) {
-	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		$ix = $x, $iy = $y unless $open++;
-		$x += shift(@d); $y += shift(@d);
-		$self->_dbg( "xo line(%.2f,%.2f)", $x, $y );
-		$xo->line( $x, $y );
-	    }
-	    ( $cx, $cy ) = ( $x, $y );
-	    next;
+	elsif ( $op eq "L" ) {
+	    $x += $d->{point}->[0];
+	    $y += $d->{point}->[1];
+	    $self->_dbg( "xo line(%.2f,%.2f)", $x, $y );
+	    $xo->line( $x, $y );
 	}
 
 	# Cubic Bézier curves.
-	if ( $op eq "c" ) {
-	    my ( $ox, $oy ) = ( $x, $y );
-	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		( $x, $y ) = ( $ox, $oy ) if $abs;
-		$ix = $x, $iy = $y unless $open++;
-		my @c = ( $x + $d[0], $y + $d[1], # control point 1
-			  $x + $d[2], $y + $d[3], # control point 2
-			  $x + $d[4], $y + $d[5]  # end point
-			);
-		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
-		$xo->curve(@c);
-		push( @cp, [ $cx, $cy, $c[0], $c[1] ] );
-		push( @cp, [ $c[4], $c[5], $c[2], $c[3] ] );
-		$x = $c[4]; $y = $c[5]; # current point
-		( $cx, $cy ) = ( $x, $y );
-
-		# Check if followed by S-curve.
-		if ( @d > 7 && lc( my $op = $d[6] ) eq "s" ) {
-		    # Turn S-curve into C-curve.
-		    # New cp1 becomes reflection of cp2.
-		    my $rx = 2*$d[4] - $d[2];
-		    my $ry = 2*$d[5] - $d[3];
-		    splice( @d, 0, 7 );
-		    unshift( @d, $op eq 's' ? 'c' : 'C', $rx, $ry );
-		}
-		else {
-		    splice( @d, 0, 6 );
-		}
-	    }
-	    next;
-	}
-
-	# Standalone shorthand Bézier curve.
-	# (When following an S-curve these will have been modified into S.)
-	if ( $op eq "s" ) {
-	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $x + $d[0], $y + $d[1], # control point 2
-			  $x + $d[2], $y + $d[3], # end point
-			);
-		unshift( @c, $cx, $cy );  # control point 1
-		$self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
-		$xo->curve(@c);
-		splice( @d, 0, 4 );
-		$x = $c[4]; $y = $c[5];
-		( $cx, $cy ) = ( $x, $y );
-	    }
-	    next;
+	elsif ( $op eq "C" ) {
+	    my @c = ( # control point 1
+		      $x + $d->{control1}->[0],
+		      $y + $d->{control1}->[1],
+		      # control point 2
+		      $x + $d->{control2}->[0],
+		      $y + $d->{control2}->[1],
+		      # end point
+		      $x + $d->{end}->[0],
+		      $y + $d->{end}->[1],
+		    );
+	    $self->_dbg( "xo curve(%.2f,%.2f %.2f,%.2f %.2f,%.2f)", @c );
+	    $xo->curve(@c);
+	    push( @cp, [ $cx, $cy, $c[0], $c[1] ] );
+	    push( @cp, [ $c[4], $c[5], $c[2], $c[3] ] );
+	    $x = $c[4]; $y = $c[5]; # end point
 	}
 
 	# Quadratic Bézier curves.
-	if ( $op eq "q" ) {
-	    my ( $ox, $oy ) = ( $x, $y );
-	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		( $x, $y ) = ( $ox, $oy ) if $abs;
-		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $x + $d[0], $y + $d[1], # control point 1
-			  $x + $d[2], $y + $d[3]  # end point
-			);
-		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
-		$xo->spline(@c);
-		push( @cp, [ $cx, $cy, $c[0], $c[1] ] );
-		push( @cp, [ $c[2], $c[3], $c[0], $c[1] ] );
-		$x = $c[2]; $y = $c[3]; # current point
-		( $cx, $cy ) = ( $x, $y );
-
-		# Check if followed by T-curve.
-		if ( @d > 5 && lc( my $op = $d[4] ) eq "t" ) {
-		    # Turn T-curve into Q-curve.
-		    # New cp becomes reflection of current cp.
-		    my $rx = 2*$d[2] - $d[0];
-		    my $ry = 2*$d[3] - $d[1];
-		    splice( @d, 0, 5 );
-		    unshift( @d, $op eq 't' ? 'q' : 'Q', $rx, $ry );
-		}
-		else {
-		    splice( @d, 0, 4 );
-		}
-	    }
-	    next;
+	elsif ( $op eq "Q" ) {
+	    my @c = ( # control point 1
+		      $x + $d->{control}->[0],
+		      $y + $d->{control}->[1],
+		      # end point
+		      $x + $d->{end}->[0],
+		      $y + $d->{end}->[1],
+		    );
+	    $self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
+	    $xo->spline(@c);
+	    push( @cp, [ $cx, $cy, $c[0], $c[1] ] );
+	    push( @cp, [ $c[2], $c[3], $c[0], $c[1] ] );
+	    $x = $c[2]; $y = $c[3]; # end point
 	}
-
-	# Standalone shorthand quadratic Bézier curve.
-	# (When following an S-curve these will have been modified into S.)
-	if ( $op eq "t" ) {
-	    while ( @d && $d[0] =~ /^-?[.\d]+$/ ) {
-		$ix = $cx, $iy = $cy unless $open++;
-		my @c = ( $cx, $cy,
-			  $x + $d[0], $y + $d[1] );
-		$self->_dbg( "xo spline(%.2f,%.2f %.2f,%.2f)", @c );
-		$xo->spline(@c);
-		$x = $c[0]; $y = $c[1];
-		( $cx, $cy ) = ( $x, $y );
-
-		# Check if followed by another T-curve.
-		if ( @d > 3 && lc( my $op = $d[2] ) eq "t" ) {
-		    # Turn T-curve into Q-curve.
-		    # New cp becomes reflection of current cp.
-		    my $rx = 2*$d[3] - $d[0];
-		    my $ry = 2*$d[4] - $d[1];
-		    splice( @d, 0, 3 );
-		    unshift( @d, $op eq 't' ? 'q' : 'Q', $rx, $ry );
-		}
-		else {
-		    splice( @d, 0, 2 );
-		}
-	    }
-	    next;
-	}
-
 
 	# Arcs.
-	if ( $op eq "a" ) {
-	    while ( @d > 6 && $d[0] =~ /^-?[.\d]+$/ ) {
-		my $rx    = shift(@d);		# radius 1
-		my $ry    = shift(@d);		# radius 2
-		my $rot   = shift(@d);		# rotation
-		my $large = shift(@d);		# select larger arc
-		my $sweep = shift(@d);		# clockwise
-		my $ex    = $x + shift(@d);	# end point
-		my $ey    = $y + shift(@d);
-		$self->_dbg( "xo arc(%.2f,%.2f %.2f %d,%d %.2f,%.2f)",
-			     $rx, $ry, $rot, $large, $sweep, $ex, $ey );
+	elsif ( $op eq "A" ) {
+	    my $rx    = $d->{rx};		# radius 1
+	    my $ry    = $d->{ry};		# radius 2
+	    my $rot   = $d->{x_axis_rotation};	# rotation
+	    my $large = $d->{large_arc_flag};	# select larger arc
+	    my $sweep = $d->{sweep_flag};	# clockwise
+	    my $ex    = $x + $d->{x};		# end point
+	    my $ey    = $y + $d->{y};
+	    $self->_dbg( "xo arc(%.2f,%.2f %.2f %d,%d %.2f,%.2f)",
+			 $rx, $ry, $rot, $large, $sweep, $ex, $ey );
 
-		# for circular arcs.
-		if ( $rx == $ry ) {
-		    $self->_dbg( "circular_arc(%.2f,%.2f %.2f,%.2f %.2f ".
-				 "move=%d large=%d dir=%d)",
-				 $cx, $cy, $ex, $ey, $rx, 0, $large, $sweep );
-		    $self->circular_arc( $cx, $cy, $ex, $ey, $rx,
-					 move  => 0,
-					 large => $large,
-					 dir   => $sweep );
-		}
-		else {
-		    $self->_dbg( "elliptic_arc(%.2f,%.2f %.2f,%.2f %.2f,%.2f ".
-				 "move=%d large=%d dir=%d)",
-				 $cx, $cy, $ex, $ey, $rx, $ry, 0, $large, $sweep );
-		    $self->elliptic_arc( $cx, $cy, $ex, $ey,
-					 $rx, $ry,
-					 move  => 0,
-					 large => $large,
-					 dir   => $sweep );
-		}
-		$ix = $cx, $iy = $cy unless $open++;
-		( $cx, $cy ) = ( $ex, $ey );
+	    # for circular arcs.
+	    if ( $rx == $ry ) {
+		$self->_dbg( "circular_arc(%.2f,%.2f %.2f,%.2f %.2f ".
+			     "move=%d large=%d dir=%d rot=%.2f)",
+			     $cx, $cy, $ex, $ey, $rx,
+			     0, $large, $sweep, $rot );
+		$self->circular_arc( $cx, $cy, $ex, $ey, $rx,
+				     move   => 0,
+				     large  => $large,
+				     rotate => $rot,
+				     dir    => $sweep );
 	    }
-	    next;
+	    else {
+		$self->_dbg( "elliptic_arc(%.2f,%.2f %.2f,%.2f %.2f,%.2f ".
+			     "move=%d large=%d dir=%d rot=%.2f)",
+			     $cx, $cy, $ex, $ey, $rx, $ry,
+			     0, $large, $sweep, $rot );
+		$self->elliptic_arc( $cx, $cy, $ex, $ey,
+				     $rx, $ry,
+				     move   => 0,
+				     large  => $large,
+				     rotate => $rot,
+				     dir    => $sweep );
+	    }
+	    ( $x, $y ) = ( $ex, $ey ); # end point
 	}
 
 	# Close path and paint.
-	if ( lc($op) eq "z" ) {
-	    $self->_dbg( "xo $op" );
+	elsif ( $op eq "Z" ) {
+	    $self->_dbg( "xo z" );
 	    if ( $open ) {
 		$xo->close;
+		$open = 0;
 		# currentpoint becomes the initial point.
 		$x = $ix;
 		$y = $iy;
-		$open = 0;
 	    }
-	    if ( @d > 2 && lc($d[0]) eq 'm' ) {
+	    if ( @d && $d[0]->{svg_key} eq 'M' ) {
+		# Close is followed by a move -> do not paint yet.
 	    }
 	    else {
 		$paint->();
 	    }
-	    next;
 	}
 
-	die("path[$op] @d");
+	# Unidenfied subpath element.
+	else {
+	    croak("Unidenfied subpath element[$id] $op");
+	}
+
+	( $cx, $cy ) = ( $x, $y ) unless $op eq "Z";
     }
 
     $paint->() if $open;
@@ -312,7 +211,7 @@ method process () {
     if ( 0 && $self->root->debug && @cp ) {
 	$xo->save;
 	$xo->stroke_color('lime');
-	$xo->line_width(1);
+	$xo->line_width(0.5);
 	for ( @cp ) {
 	    $self->_dbg( "xo line(%.2f %.2f %.2f %.2f)", @$_ );
 	    $xo->move( $_->[0], $_->[1] );

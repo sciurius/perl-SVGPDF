@@ -5,9 +5,9 @@ matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 400.00 200.00)
 xo fill_color black (initial)
   start handling svg (SVGPDF::Svg)
+  pp w=400 h=200 vw=400 vh=200
   vb 0 0 400 200 => bb 0.00 0.00 400.00 200.00
   XObject #2
-  translate( 0.00 200.00 )
     start handling rect (SVGPDF::Rect)
     rect x=10 y=10 w=100 h=100
       xo save
@@ -15,12 +15,14 @@ xo fill_color black (initial)
       xo paint (#ff0000 #0000ff)
       xo restore
     end handling rect
-  xo object( 10.00+0.00 -200.00+0.00 1.000 1.000 )
+pbbx 0 -200 400 0
+bbox 0 0 400 200 scale=1/1
+  xo object( 10.00+0.00 0.00+0.00 1.000 1.000 ) 
   end handling svg
   start handling svg (SVGPDF::Svg)
+  pp w=400 h=200 vw=400 vh=200
   vb 0 0 400 200 => bb 0.00 0.00 400.00 200.00
   XObject #2
-  translate( 0.00 200.00 )
     start handling rect (SVGPDF::Rect)
     rect x=10 y=10 w=100 h=100
       xo save
@@ -28,6 +30,8 @@ xo fill_color black (initial)
       xo paint (#009900 #00cc00)
       xo restore
     end handling rect
-  xo object( 200.00+0.00 -200.00+0.00 1.000 1.000 )
+pbbx 0 -200 400 0
+bbox 0 0 400 200 scale=1/1
+  xo object( 200.00+0.00 0.00+0.00 1.000 1.000 ) 
   end handling svg
 ==== end svg ====
