@@ -8,6 +8,7 @@ Revision history for SVGPDF
 	- Add rounded rectangles.
 	- Auto def for <g> with id.
 	- Add warning when viewBox and width/height are disproportional.
+	- Add sample programs, update documentation.
 
 0.060	2023-08-18
 

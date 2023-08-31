@@ -109,9 +109,14 @@ method set_font ( $xo, $style ) {
 	}
     }
 
-    if ( $svg->fc ) {
-	# Use user callback.
-	return if $svg->fc->( $svg->pdf, $xo, $style );
+    if ( my $fc = $svg->fc ) {
+	unless ( ref($fc) eq 'ARRAY' ) {
+	    $fc = [ $fc ];
+	}
+	# Run callbacks.
+	for ( @$fc ) {
+	    return if $_->( $svg, $svg->pdf, $xo, $style );
+	}
     }
 
     # No @font-face, no (or failed) callback, we're on our own.

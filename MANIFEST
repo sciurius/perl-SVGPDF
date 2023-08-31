@@ -3,6 +3,10 @@ LICENSE.md
 MANIFEST
 Makefile.PL
 README.md
+examples/fontconfig.pl
+examples/mathjax.pl
+examples/mathjax.svg
+examples/sample.pl
 lib/SVGPDF.pm
 lib/SVGPDF/CSS.pm
 lib/SVGPDF/Circle.pm

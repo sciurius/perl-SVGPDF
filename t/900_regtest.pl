@@ -96,7 +96,7 @@ sub differ {
 
 my $font;
 sub fontcallback {
-    my ( $pdf, $xo, $style ) = @_;
+    my ( $self, $pdf, $xo, $style ) = @_;
     $font //= $pdf->font('Times-Roman');
     $xo->font($font,10);
 }
