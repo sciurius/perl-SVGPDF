@@ -71,7 +71,7 @@ method process () {
 
 	warn(sprintf("%s[%d] x=%.2f,y=%.2f cx=%.2f,cy=%.2f ix=%.2f,iy=%.2f\n",
 		     $op, $id, $x, $y, $cx, $cy, $ix, $iy))
-	  if $x || $y || $ix || $iy;
+	  if 0 & ($x || $y || $ix || $iy);
 
 	# MoveTo
 	if ( $op eq "M" ) {
