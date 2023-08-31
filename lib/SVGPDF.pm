@@ -626,11 +626,11 @@ method handle_svg ( $e ) {
 	    warn("Vertical align = $va, but vbox says $vb\n")
 	      unless $va eq $vb;
 	}
-	if ( $vwidth ) {
-	    $vheight ||= $height * $vwidth/$vheight;
+	if ( $vwidth && !$vheight ) {
+	    $vheight = $vwidth * $height / $width;
 	}
-	elsif ( $vheight ) {
-	    $vwidth ||= $width * $vheight/$vwidth;
+	if ( $vheight && !$vwidth ) {
+	    $vwidth = $vheight * $width / $height;
 	}
     }
     else {
@@ -656,8 +656,8 @@ method handle_svg ( $e ) {
     }
 
     $svg->nfi("disproportional vbox/width/height")
-      unless sprintf("%.2f", $width/$height)
-             eq sprintf("%.2f", $vwidth/$vheight);
+      if $vheight &&
+         sprintf("%.2f", $width/$height) ne sprintf("%.2f", $vwidth/$vheight);
 
     # Get llx lly urx ury bounding box rectangle.
     @bb = $self->vb2bb(@vb);

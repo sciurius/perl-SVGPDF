@@ -15,8 +15,6 @@ xo fill_color black (initial)
       defs ====
       defs: "smiley" (path)
     end handling defs
-pbbx 0 -60 200 0
-bbox -1 -1 203 41 scale=0.99009900990099/1.5
   xo object( 0.00+0.00 0.00+0.00 0.990 1.500 ) 
   end handling svg
   start handling rect (SVGPDF::Rect)
@@ -27,6 +25,7 @@ bbox -1 -1 203 41 scale=0.99009900990099/1.5
     xo restore
   end handling rect
   start handling svg (SVGPDF::Svg)
+SVG: preserveAspectRatio - not fully implemented, expect strange results.
   pp w=200 h=60 vw=60 vh=30
   vb 0 0 100 100 => bb 0.00 0.00 100.00 100.00
   XObject #2
@@ -69,8 +68,6 @@ bbox -1 -1 203 41 scale=0.99009900990099/1.5
         xo restore
       xo restore
     end handling use
-pbbx 0 -60 200 0
-bbox 0 0 100 100 scale=0.6/0.3
 disp dx=15, dy=0
   xo object( 0.00+15.00 0.00+0.00 0.300 0.300 ) xMidYMid meet
   end handling svg
@@ -124,8 +121,6 @@ disp dx=15, dy=0
         xo restore
       xo restore
     end handling use
-pbbx 0 -60 200 0
-bbox 0 0 100 100 scale=0.6/0.3
 disp dx=0, dy=0
   xo object( 70.00+0.00 0.00+0.00 0.300 0.300 ) xMinYMid meet
   end handling svg
@@ -179,8 +174,6 @@ disp dx=0, dy=0
         xo restore
       xo restore
     end handling use
-pbbx 0 -60 200 0
-bbox 0 0 100 100 scale=0.6/0.3
 disp dx=30, dy=0
   xo object( 140.00+30.00 0.00+0.00 0.300 0.300 ) xMaxYMid meet
   end handling svg

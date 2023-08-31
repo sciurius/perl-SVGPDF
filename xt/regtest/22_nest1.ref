@@ -15,8 +15,6 @@ xo fill_color black (initial)
       xo paint (#ff0000 #0000ff)
       xo restore
     end handling rect
-pbbx 0 -200 400 0
-bbox 0 0 400 200 scale=1/1
   xo object( 10.00+0.00 0.00+0.00 1.000 1.000 ) 
   end handling svg
   start handling svg (SVGPDF::Svg)
@@ -30,8 +28,6 @@ bbox 0 0 400 200 scale=1/1
       xo paint (#009900 #00cc00)
       xo restore
     end handling rect
-pbbx 0 -200 400 0
-bbox 0 0 400 200 scale=1/1
   xo object( 200.00+0.00 0.00+0.00 1.000 1.000 ) 
   end handling svg
 ==== end svg ====

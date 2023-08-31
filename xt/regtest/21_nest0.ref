@@ -31,8 +31,6 @@ xo fill_color black (initial)
       xo paint (red currentColor)
       xo restore
     end handling path
-pbbx 0 -800 600 0
-bbox 0 0 300 400 scale=2/2
   xo object( 0.00+0.00 0.00+0.00 2.000 2.000 ) 
   end handling svg
 ==== end svg ====

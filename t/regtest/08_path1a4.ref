@@ -1,5 +1,6 @@
 ==== start svg ====
 XObject #1
+SVG: disproportional vbox/width/height - not fully implemented, expect strange results.
 vb 0 0 1200 400 => bb 0.00 -400.00 1200.00 0.00
 matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 1200.00 400.00)

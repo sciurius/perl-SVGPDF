@@ -1,6 +1,7 @@
 ==== start svg ====
 XObject #1
 Vertical align = 0.23, but vbox says 0.38
+SVG: disproportional vbox/width/height - not fully implemented, expect strange results.
 vb 0 -1438 5135.5 2329 => bb 0.00 -891.00 5135.50 1438.00
 matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 -1438.00 5135.50 891.00)
