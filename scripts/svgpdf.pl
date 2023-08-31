@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Sun Aug 27 16:42:54 2023
-# Update Count    : 215
+# Last Modified On: Thu Aug 31 14:20:21 2023
+# Update Count    : 221
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -107,38 +107,50 @@ foreach my $file ( @ARGV ) {
 	my @bb = @{$xo->{bbox}};
 	my $w = $bb[2]-$bb[0];
 	my $h = $bb[3]-$bb[1];
-	my $scale = 1;
+	my $xscale = 1;
+	my $yscale = 1;
 
 	if ( $xo->{vwidth} ) {
-	    $scale = $xo->{vwidth} / $w;
+	    $xscale = $xo->{vwidth} / $w;
 	}
-	if ( $w*$scale > $pgsz[0] ) {
-	    $scale = $pgsz[0]/$w;
+	if ( $xo->{vheight} ) {
+	    $yscale = $xo->{vheight} / $h;
+	}
+	if ( $w*$xscale > $pgsz[0] ) {
+	    my $scale = $pgsz[0]/$w*$xscale;
+	    $xscale *= $scale;
+	    $yscale *= $scale;
+	}
+	if ( $h*$yscale > $pgsz[1] ) {
+	    my $scale = $pgsz[1]/$h*$yscale;
+	    $xscale *= $scale;
+	    $yscale *= $scale;
 	}
 
-	if ( $y - $h * $scale < 0 ) {
+	if ( $y - $h * $yscale < 0 ) {
 	    $page = $pdf->page;
 	    $page->size( [ 0, 0, @pgsz ] );
 	    $gfx = $page->gfx;
 	    $x = 10;
 	    $y = $pgsz[1]-10;
 	}
-	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.g )\n",
+	warn(sprintf("object %d [ %.2f, %.2f %s] ( %.2f, %.2f, %.2f, %.2f @%.g,%.g )\n",
 		     $i, $w, $h,
 		     $xo->{vwidth}
 		     ? sprintf("=> %.2f, %.2f ", $xo->{vwidth}, $xo->{vheight})
 		     : "",
-		     $x, $y-$h*$scale, $w, $h, $scale ))
+		     $x, $y-$h*$yscale, $w, $h, $xscale, $yscale ))
 	  if $verbose;
 
-	$gfx->object( $xo->{xo}, $x-$bb[0]*$scale,
-		      $y-($bb[1]+$h)*$scale, $scale );
+	$gfx->object( $xo->{xo}, $x-$bb[0]*$xscale,
+		      $y-($bb[1]+$h)*$yscale, $xscale, $yscale );
 	crosshairs( $gfx, $x, $y, "green" );
+	crosshairs( $gfx, $x+$bb[2]*$xscale, $y-$bb[3]*$yscale, "magenta" );
 	if ( $bb[0] || $bb[1] ) {
-	    crosshairs( $gfx, $x-$bb[0]*$scale, $y-$bb[3]*$scale, "red" );
+	    crosshairs( $gfx, $x-$bb[0]*$xscale, $y-$bb[3]*$yscale, "red" );
 	}
 
-	$y -= $h * $scale;
+	$y -= $h * $yscale;
     }
     crosshairs( $gfx, $x, $y, "blue" );
 }
