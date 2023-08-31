@@ -7,7 +7,7 @@ use Carp;
 
 class SVGPDF::Path :isa(SVGPDF::Element);
 
-use Image::SVG::Path qw( extract_path_info );
+use SVGPDF::Contrib::PathExtract qw( extract_path_info );
 
 method process () {
     my $atts = $self->atts;

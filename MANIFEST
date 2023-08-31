@@ -7,6 +7,7 @@ lib/SVGPDF.pm
 lib/SVGPDF/CSS.pm
 lib/SVGPDF/Circle.pm
 lib/SVGPDF/Contrib/Bogen.pm
+lib/SVGPDF/Contrib/PathExtract.pm
 lib/SVGPDF/Defs.pm
 lib/SVGPDF/Element.pm
 lib/SVGPDF/Ellipse.pm
