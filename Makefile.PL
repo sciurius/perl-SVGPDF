@@ -41,6 +41,7 @@ WriteMakefile(
     PREREQ_PM      => {
 			@pdfapi,
 			'File::LoadLines'	=> 1.021,
+			'Image::Info'           => 1.42,
 			'Object::Pad'           => 0.78,
 		      },
 
