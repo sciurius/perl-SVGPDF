@@ -265,15 +265,11 @@ Everything else will result in a percentage of the viewBox diagonal
 
 =item *
 
-Nested SVG elements and preserveAspectRatio.
+Embedded SVG elements and preserveAspectRatio.
 
 =item *
 
 Standalone T-path elements.
-
-=item *
-
-Embedded SVG elements.
 
 =back
 
@@ -630,6 +626,12 @@ method handle_svg ( $e ) {
 	    warn("Vertical align = $va, but vbox says $vb\n")
 	      unless $va eq $vb;
 	}
+	if ( $vwidth ) {
+	    $vheight ||= $height * $vwidth/$vheight;
+	}
+	elsif ( $vheight ) {
+	    $vwidth ||= $width * $vheight/$vwidth;
+	}
     }
     else {
 	# Use to width/height, falling back to pagesize.
@@ -652,6 +654,10 @@ method handle_svg ( $e ) {
 	}
 	$vbox = "@vb (inferred)";
     }
+
+    $svg->nfi("disproportional vbox/width/height")
+      unless sprintf("%.2f", $width/$height)
+             eq sprintf("%.2f", $vwidth/$vheight);
 
     # Get llx lly urx ury bounding box rectangle.
     @bb = $self->vb2bb(@vb);
