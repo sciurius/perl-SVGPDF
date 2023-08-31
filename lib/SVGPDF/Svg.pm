@@ -18,11 +18,19 @@ method process () {
     my ( $x, $y, $vwidth, $vheight, $vbox, $par, $tf ) =
       $self->get_params( $atts, qw( x:U y:U width:s height:s viewBox preserveAspectRatio:s transform:s ) );
     $self->nfi("nested svg transform") if $tf;
-    $self->nfi("preserveAspectRatio 'slice'") if $par =~ /slice/;
+    $self->nfi("preserveAspectRatio") if $par;
     my $style = $self->style;
 
-    my $pwidth  = $xoforms->[0]->{width};
-    my $pheight = $xoforms->[0]->{height};
+    my $parent;
+    for ( @{ $self->root->xoforms } ) {
+	next unless $_->{xo} eq $xo;
+	$parent = $_;
+	last;
+    }
+    croak("I feel like a motherless child") unless $parent;
+
+    my $pwidth  = $parent->{width};
+    my $pheight = $parent->{height};
     for ( $vwidth ) {
 	$_ = $self->u( $_ || $pwidth, width => $pwidth );
     }
@@ -73,6 +81,7 @@ method process () {
 	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
 	    # bbox (PDF coordinates)
 	    bbox    => [ @bb ],
+	    yflip   => 0,
 	  } );
     $self->_dbg("XObject #", scalar(@$xoforms) );
 
@@ -83,39 +92,51 @@ method process () {
     my $dx = 0;
     my $dy = 0;
     if ( $vbox ) {
-	my @pbb = $xo->bbox;
+	my @pbb = $xo->bbox;	# parent
 	if ( $vwidth ) {
 	    $scalex = $vwidth / $vb[2];
 	}
 	if ( $vheight ) {
 	    $scaley = $vheight / $vb[3];
 	}
-	if ( $par =~ /xM(ax|id|in)/i ) {
+#	warn("pbbx @pbb\n");
+#	warn("bbox @bb scale=$scalex/$scaley\n");
+	if ( $par =~ /none/i ) {
+	    $par = "";
+	}
+	else {
+	    # Uniform scale.
+#	    $scalex = $scaley = min( $scalex, $scaley );
+	}
+	if ( $par =~ /xM(ax|id|in)/i && $scalex > $scaley ) {
 	    if ( $1 eq "ax" ) {
-		$dx = $pbb[2] - $bb[2];
+		$dx = max($pbb[0],$pbb[2]) - max($bb[0],$bb[2]);
 	    }
 	    elsif ( $1 eq "id" ) {
 		$dx = (($pbb[2]-$pbb[0])/2) - (($bb[2]-$bb[0])/2);
 	    }
 	    else {
-		$dx = $pbb[0] - $bb[0];
+		$dx = min($pbb[0],$pbb[2]) - min($bb[0],$bb[2]);
 	    }
-	    $scalex = $scaley = min( $scalex, $scaley );
-	    $dx *= $scalex;
 	}
-	if ( $par =~ /yM(in|id|ax)/i ) {
+	if ( $par =~ /yM(in|id|ax)/i && $scaley > $scalex ) {
 	    if ( $1 eq "ax" ) {
-		$dy = $pbb[3] - $bb[3];
+		$dy = max($pbb[1],$pbb[3]) - max($bb[1],$bb[3]);
 	    }
 	    elsif ( $1 eq "id" ) {
-		$dy = (($pbb[3]-$pbb[1])/2) - (($bb[3]-$bb[1])/2);
-		$dy = 0;	# ####TODO?
+		$dy =
+		  ((max($pbb[1],$pbb[3])-min($pbb[1],$pbb[3]))/2)
+		  - ((max($bb[1],$bb[3])-min($bb[1],$bb[3]))/2)
 	    }
 	    else {
-		$dy = $pbb[1] - $bb[1];
+		$dy = min($pbb[1],$pbb[3]) - min($bb[1],$bb[3]);
 	    }
+	}
+	if ( $par ) {
 	    $scalex = $scaley = min( $scalex, $scaley );
+	    $dx *= $scalex;
 	    $dy *= $scaley;
+	    warn("disp dx=$dx, dy=$dy\n");
 	}
     }
     $self->_dbg( "xo object( %.2f%+.2f %.2f%+.2f %.3f %.3f ) %s",
@@ -132,5 +153,6 @@ method process () {
 }
 
 sub min ( $x, $y ) { $x < $y ? $x : $y }
+sub max ( $x, $y ) { $x > $y ? $x : $y }
 
 1;
