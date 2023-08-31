@@ -31,6 +31,8 @@ method process () {
     ( my $t = $d ) =~ s/\s+/ /g;
     $t = substr($t,0,20) . "..." if length($t) > 20;
     $self->_dbg( $self->name, " d=\"$t\"", $tf ? " tf=\"$tf\"" : "" );
+    return unless $d;
+
     $self->_dbg( "+ xo save" );
     $xo->save;
     $self->set_transform($tf);
