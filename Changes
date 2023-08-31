@@ -6,6 +6,7 @@ Revision history for SVGPDF
 	- Internal: Rework Path.
 	- Leave vwidth/vheight as is so caller can scale to font size.
 	- Add rounded rectangles.
+	- Auto def for <g> with id.
 
 0.060	2023-08-18
 

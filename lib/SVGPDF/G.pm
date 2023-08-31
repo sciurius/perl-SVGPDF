@@ -12,6 +12,10 @@ method process () {
     my $xo   = $self->xo;
     return if $atts->{omit};	# for testing/debugging.
 
+    if ( defined $atts->{id} ) {
+	$self->root->defs->{ "#" . $atts->{id} } = $self;
+    }
+
     my ( $tf )  = $self->get_params( $atts, "transform:s" );
 
     $self->_dbg( $self->name, " ====" );
