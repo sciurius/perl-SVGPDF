@@ -5,7 +5,7 @@ matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 188.98 151.18)
 xo fill_color black (initial)
   start handling image (SVGPDF::Image)
-  image x=0 y=0 w=37.5 h=37.5
+  image x=0 y=0 w=50 h=50
   xo save
   xo restore
   end handling image

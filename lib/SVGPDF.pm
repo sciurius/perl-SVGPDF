@@ -125,6 +125,8 @@ field $defs         :accessor;
 # Defaults for rendering.
 field $pagesize     :accessor;
 field $fontsize     :accessor;
+field $pxpi         :mutator  = 96; # pixels per inch
+field $ptpi         :accessor = 72; # points per inch
 
 # For debugging/development.
 field $verbose      :accessor;
@@ -461,7 +463,8 @@ method handle_svg ( $e ) {
 	vbox    => [ @vb ],
 	width   => $vb[2],
 	height  => $vb[3],
-	diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
+	# See e.g. https://oreillymedia.github.io/Using_SVG/extras/ch05-percentages.html
+	diag    => sqrt( $vb[2]**2 + $vb[3]**2 ) / sqrt(2),
 	# bbox (PDF coordinates)
 	bbox    => [ @bb ],
       };
@@ -704,29 +707,26 @@ match is found, it is resolved and the font is set. If there is no
 appropriate CSS rule for this font, the callback is called with the
 following arguments:
 
-    ( $self, $pdf, $gfx, $style )
+    ( $self, $pdf, $style )
 
-where C<$pdf> is de PDF document, C<$gfx> the graphics context where
-the font must be set, and C<$style> a hash reference that contains
-values for C<font-family>, C<font-style>, C<font-weight>, and
+where C<$pdf> is de PDF document and C<$style> a hash reference that
+contains values for C<font-family>, C<font-style>, C<font-weight>, and
 C<font-size>. Don't touch C<$self>, it is undocumented for a reason.
 
 The callback function can use the contents of C<$style> to select an
-appropriate font, B<and set it on the graphics context>:
+appropriate font and return it.
 
-    $gfx->font( $font, $size );
-
-B<IMPORTANT:> The callback function must return a 'true' result when
-it did set the font. If it returns a 'false' result SVGPDF will
-fallback to default fonts.
+SVGPDF will try to call the font handler callback only once for each
+combination of family, style and weight. If the callback function
+returns a 'false' result SVGPDF will try other alternatives to find a
+font.
 
 Example of an (extremely simplified) callback:
 
     sub simple_font_handler {
-        my ( $self, $pdf, $gfx, $style ) = @_;
+        my ( $self, $pdf, $style ) = @_;
 
 	my $family = $style->{'font-family'};
-	my $size   = $style->{'font-size'};
 
 	my $font;
 	if ( $family eq 'sans' ) {
@@ -736,9 +736,7 @@ Example of an (extremely simplified) callback:
 	    $font = $pdf->font('Times-Roman');
 	}
 
-	$gfx->font( $font, $size );
-
-        return 1;
+        return $font;
     }
 
 If no callback function is set, SVGPDF will recognize the standard

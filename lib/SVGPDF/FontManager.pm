@@ -45,7 +45,7 @@ method set_font ( $xo, $style ) {
 		next unless $family eq $fam;
 
 		# Yeah! We have a match!
-		my $key = join( "|", $fam, $weight, $stl );
+		my $key = join( "|", $fam, $stl, $weight );
 		# Font in cache?
 		if ( my $f = $fc->{$key} ) {
 		    $xo->font( $f->{font},
@@ -109,17 +109,38 @@ method set_font ( $xo, $style ) {
 	}
     }
 
-    if ( my $fc = $svg->fc ) {
-	unless ( ref($fc) eq 'ARRAY' ) {
-	    $fc = [ $fc ];
+    my $key = join( "|", $style->{'font-family'}, $stl, $weight );
+    # Font in cache?
+    if ( my $f = $fc->{$key} ) {
+	$xo->font( $f->{font},
+		   $style->{'font-size'} || 12,
+		   $f->{src} );
+	return;
+    }
+
+    if ( my $cb = $svg->fc ) {
+	my $font;
+	unless ( ref($cb) eq 'ARRAY' ) {
+	    $cb = [ $cb ];
 	}
 	# Run callbacks.
-	for ( @$fc ) {
-	    return if $_->( $svg, $svg->pdf, $xo, $style );
+	for ( @$cb ) {
+	    eval { $font = $_->( $svg, $svg->pdf, $style ) };
+	    croak($@) if $@;
+	    last if $font;
+	}
+
+	if ( $font ) {
+	    my $src = "Callback($key)";
+	    $xo->font( $font,
+		       $style->{'font-size'} || 12,
+		       $src );
+	    $fc->{$key} = { font => $font, src => $src };
+	    return;
 	}
     }
 
-    # No @font-face, no (or failed) callback, we're on our own.
+    # No @font-face, no (or failed) callbacks, we're on our own.
 
     my $fn = $style->{'font-family'} // "Times-Roman";
     my $sz = $style->{'font-size'} || 12;

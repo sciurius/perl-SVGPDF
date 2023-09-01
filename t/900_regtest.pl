@@ -25,8 +25,10 @@ my $pdf = $api->new;
 my $page = $pdf->page;
 my $gfx = $page->gfx;
 
+my $fccalls = {};
+
 my $p = SVGPDF->new
-  ( pdf => $pdf, fc => \&fontcallback,
+  ( pdf => $pdf, fc => \&fonthandlercallback,
     atts => { debug    => 1, wstokens => 1 } );
 
 ok( $p, "Have SVGPDF object" );
@@ -67,6 +69,12 @@ foreach my $file ( sort @files ) {
 
 ok( $test == 2*@files+3, "Tested @{[0+@files]} files" );
 
+# Callback should be called at most once per fam/style/weight.
+for ( keys %$fccalls ) {
+    is( $fccalls->{$_}, 1, "$_ font handler callbacks" );
+    $test++;
+}
+
 return ++$test;
 
 use File::LoadLines qw( loadlines );
@@ -80,6 +88,8 @@ sub differ {
     my @lines2 = loadlines($file2);
     my $linesm = @lines1 > @lines2 ? @lines1 : @lines2;
     for ( my $line = 1; $line < $linesm; $line++ ) {
+	$lines1[$line] //= "***missing***1";
+	$lines2[$line] //= "***missing***2";
 	next if $lines1[$line] eq $lines2[$line];
 	Test::More::diag("Files $file1 and $file2 differ at line $line");
 	Test::More::diag("  <  $lines1[$line]");
@@ -89,14 +99,15 @@ sub differ {
     return 0 if @lines1 == @lines2;
     $linesm++;
     Test::More::diag("Files $file1 and $file2 differ at line $linesm" );
-    Test::More::diag("  <  ", $lines1[$linesm] // "***missing***");
-    Test::More::diag("  >  ", $lines2[$linesm] // "***missing***");
+    Test::More::diag("  <  ", $lines1[$linesm] // "***missing***1");
+    Test::More::diag("  >  ", $lines2[$linesm] // "***missing***2");
     1;
 }
 
 my $font;
-sub fontcallback {
-    my ( $self, $pdf, $xo, $style ) = @_;
+sub fonthandlercallback {
+    my ( $self, $pdf, $style ) = @_;
+    my $key = join("|", map { $_ // "normal" } @{$style}{qw(font-family font-style font-weight)});
+    $fccalls->{$key}++;
     $font //= $pdf->font('Times-Roman');
-    $xo->font($font,10);
 }

@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Thu Aug 31 14:20:21 2023
-# Update Count    : 221
+# Last Modified On: Fri Sep  1 21:45:25 2023
+# Update Count    : 225
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -107,14 +107,16 @@ foreach my $file ( @ARGV ) {
 	my @bb = @{$xo->{bbox}};
 	my $w = $bb[2]-$bb[0];
 	my $h = $bb[3]-$bb[1];
-	my $xscale = 1;
-	my $yscale = 1;
+
+	# SVG units are pixels.
+	my $xscale = 72/96;
+	my $yscale = 72/96;
 
 	if ( $xo->{vwidth} ) {
-	    $xscale = $xo->{vwidth} / $w;
+	    $xscale *= $xo->{vwidth} / $w;
 	}
 	if ( $xo->{vheight} ) {
-	    $yscale = $xo->{vheight} / $h;
+	    $yscale *= $xo->{vheight} / $h;
 	}
 	if ( $w*$xscale > $pgsz[0] ) {
 	    my $scale = $pgsz[0]/$w*$xscale;

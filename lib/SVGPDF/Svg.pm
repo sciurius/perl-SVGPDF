@@ -78,7 +78,7 @@ method process () {
 	    vbox    => [ @vb ],
 	    width   => $vb[2],
 	    height  => $vb[3],
-	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ),
+	    diag    => sqrt( $vb[2]**2 + $vb[3]**2 ) / sqrt(2),
 	    # bbox (PDF coordinates)
 	    bbox    => [ @bb ],
 	    yflip   => 0,

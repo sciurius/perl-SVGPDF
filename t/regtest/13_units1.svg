@@ -10,7 +10,7 @@
 
   <g fill="blue" stroke="red" font-family="Verdana" font-size="150">
     <!-- Absolute unit specifiers -->
-    <g omit="1" transform="translate(400,0)">
+    <g omit="0" transform="translate(400,0)">
       <text x="-50" y="300" fill="black" stroke="none">Abs. units:</text>
       <rect x="0" y="400" width="4in" height="2in" stroke-width=".4in"/>
       <rect x="0" y="750" width="384" height="192" stroke-width="38.4"/>

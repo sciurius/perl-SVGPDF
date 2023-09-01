@@ -19,9 +19,9 @@ xo fill_color black (initial)
         txt translate( 5.00, 15.00 )
           xo save
           xo restore
-        tspan moved to 24.99, 15
+        tspan moved to 44.98, 15
         xo restore
-      tspan moved to 149.71, 115
+      tspan moved to 169.7, 115
       xo restore
       xo save
       xo restore

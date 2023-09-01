@@ -298,24 +298,23 @@ method traverse () {
 method u ( $a, %args ) {
     confess("Undef in units") unless defined $a;
 
+    # Pixels per point. Usually 96/72.
+    my $pxpt = $self->root->pxpi / $self->root->ptpi;
+
     return undef unless $a =~ /^([-+]?[\d.]+)(.*)$/;
-    return $1 if $2 eq "pt";
+    return $1*$pxpt if $2 eq "pt";
 
-    # Default is pt?
-    return $1 if $2 eq "";
+    # default is px
+    return $1 if $2 eq "" || $2 eq "px";
 
-    # default is px?
-    # 1px = approx 0.75 pt.
-    return $1*72/96 if $2 eq "" || $2 eq "px";
-
-    # CSS defines 1 inch = 96 px.
-    return $1*96/2.54 if $2 eq "cm";
-    return $1*96/25.4 if $2 eq "mm";
-    return $1*96      if $2 eq "in";
+    # 1 inch = pxpi px.
+    return $1/2.54 * $self->root->pxpi if $2 eq "cm";
+    return $1/25.4 * $self->root->pxpi if $2 eq "mm";
+    return $1 * $self->root->pxpi      if $2 eq "in";
 
     if ( $2 eq '%' ) {
 	my $w = $args{width} || $self->root->xoforms->[-1]->{diag};
-	return $1/100 * $w;
+	return $1/100 * $w * $pxpt;
     }
     # Font dependent.
     # CSS defines em to be the font size.

@@ -21,6 +21,45 @@ xo fill_color black (initial)
   g ====
     xo save
       start handling g (SVGPDF::G)
+      g ====
+        xo save
+        transform translate(400.00,0.00)
+          start handling text (SVGPDF::Text)
+          text  x=-50 y=300
+            xo save
+            txt translate( -50.00, 300.00 ) scale( 1.00 -1.00 )
+              xo save
+              xo restore
+            xo restore
+          end handling text
+          start handling rect (SVGPDF::Rect)
+          rect x=0 y=400 w=384 h=192
+            xo save
+            rect stroke-width=38.4 stroke=red fill=blue
+            xo paint (red blue)
+            xo restore
+          end handling rect
+          start handling rect (SVGPDF::Rect)
+          rect x=0 y=750 w=384 h=192
+            xo save
+            rect stroke-width=38.4 stroke=red fill=blue
+            xo paint (red blue)
+            xo restore
+          end handling rect
+          start handling g (SVGPDF::G)
+          g ====
+            xo save
+            transform scale(2.00,2.00)
+              start handling rect (SVGPDF::Rect)
+              rect x=0 y=600 w=384 h=192
+                xo save
+                rect stroke-width=38.4 stroke=red fill=blue
+                xo paint (red blue)
+                xo restore
+              end handling rect
+            xo restore
+          end handling g
+        xo restore
       end handling g
       start handling g (SVGPDF::G)
       g ====
@@ -78,7 +117,7 @@ xo fill_color black (initial)
           start handling rect (SVGPDF::Rect)
           rect x=0 y=400 w=400 h=200
             xo save
-            rect stroke-width=44.7213595499958(1%@4472.13595499958) stroke=red fill=blue
+            rect stroke-width=42.1637021355784(1%@3162.27766016838) stroke=red fill=blue
             xo paint (red blue)
             xo restore
           end handling rect
@@ -96,7 +135,7 @@ xo fill_color black (initial)
               start handling rect (SVGPDF::Rect)
               rect x=0 y=600 w=400 h=200
                 xo save
-                rect stroke-width=44.7213595499958(1%@4472.13595499958) stroke=red fill=blue
+                rect stroke-width=42.1637021355784(1%@3162.27766016838) stroke=red fill=blue
                 xo paint (red blue)
                 xo restore
               end handling rect

@@ -43,7 +43,7 @@ xo fill_color black (initial)
       txt translate( 0.00, -1.00 )
         xo save
         xo restore
-      tspan moved to 82.8553, 88.6
+      tspan moved to 84.8404, 88.6
       xo restore
       xo save
       xo restore
@@ -52,7 +52,7 @@ xo fill_color black (initial)
       txt translate( 0.00, 1.00 )
         xo save
         xo restore
-      tspan moved to 90.9953, 89.6
+      tspan moved to 94.6084, 89.6
       xo restore
       xo save
       xo restore
