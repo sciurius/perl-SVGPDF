@@ -438,7 +438,8 @@ method handle_svg ( $e ) {
 
     $svg->nfi("disproportional vbox/width/height")
       if $vheight &&
-         sprintf("%.2f", $width/$height) ne sprintf("%.2f", $vwidth/$vheight);
+      ( (( $width/$height) / ($vwidth/$vheight) > 1.05)
+	|| (( $width/$height) / ($vwidth/$vheight) < 0.95) );
 
     # Get llx lly urx ury bounding box rectangle.
     @bb = $self->vb2bb(@vb);
