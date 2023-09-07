@@ -26,7 +26,7 @@ WriteMakefile(
     NAME                => 'SVGPDF',
     AUTHOR              => 'Johan Vromans <jvromans@squirrel.nl>',
     VERSION_FROM        => 'lib/SVGPDF.pm',
-    ABSTRACT            => 'SVG processor for PDF::API2',
+    ABSTRACT            => 'SVG renderer for PDF::API2',
     LICENSE             => 'perl_5',
     PL_FILES            => {},
     MIN_PERL_VERSION    => 5.026000,
@@ -39,7 +39,7 @@ WriteMakefile(
     ),
 
     PREREQ_PM      => {
-			@pdfapi,
+		        @pdfapi,
 			'File::LoadLines'	=> 1.021,
 			'Image::Info'           => 1.42,
 			'Object::Pad'           => 0.78,
