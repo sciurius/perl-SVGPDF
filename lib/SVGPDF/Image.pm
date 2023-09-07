@@ -46,12 +46,13 @@ method process () {
 	    $self->css_pop, return;
 	}
 
-	# Make the image.
-	$img = $self->root->pdf->image(IO::String->new($data));
+	# Make the image. Silence missing Image::PNG::Libpng warnings.
+	$img = $self->root->pdf->image( IO::String->new($data),
+					silent => 1 );
     }
     elsif ( $link =~ m!^.+\.(png|jpe?g)$! && -s $link ) {
-	# Make the image.
-	$img = $self->root->pdf->image($link);
+	# Make the image. Silence missing Image::PNG::Libpng warnings.
+	$img = $self->root->pdf->image($link, silent => 1 );
     }
     else {
 	warn("SVG: Unhandled or missing image link: ",
