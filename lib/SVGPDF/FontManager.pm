@@ -21,6 +21,11 @@ field $td       :accessor;
 # Otherwise, try builtin fonts.
 
 method set_font ( $xo, $style ) {
+    my ( $font, $size, $src ) = $self->find_font($style);
+    $xo->font( $font, $size );
+}
+
+method find_font ( $style ) {
 
     my $stl    = lc( $style->{'font-style'}  // "normal" );
     my $weight = lc( $style->{'font-weight'} // "normal" );
@@ -48,10 +53,9 @@ method set_font ( $xo, $style ) {
 		my $key = join( "|", $fam, $stl, $weight );
 		# Font in cache?
 		if ( my $f = $fc->{$key} ) {
-		    $xo->font( $f->{font},
-			       $style->{'font-size'} || 12,
-			       $f->{src} );
-		    return;
+		    return ( $f->{font},
+			     $style->{'font-size'} || 12,
+			     $f->{src} );
 		}
 
 		# Fetch font from source.
@@ -85,10 +89,9 @@ method set_font ( $xo, $style ) {
 		    my $f = $fc->{$key} =
 		      { font => $font,
 			src => 'data' };
-		    $xo->font( $f->{font},
-			       $style->{'font-size'} || 12,
-			       $f->{src} );
-		    return;
+		    return ( $f->{font},
+			     $style->{'font-size'} || 12,
+			     $f->{src} );
 		}
 		elsif ( $src =~ /^\s*url\s*\((["'])(.*?\.[ot]tf)\1\s*\)/is ) {
 		    my $fn = $2;
@@ -97,10 +100,9 @@ method set_font ( $xo, $style ) {
 		    my $f = $fc->{$key} =
 		      { font => $font,
 			src => $fn };
-		    $xo->font( $f->{font},
-			       $style->{'font-size'} || 12,
-			       $f->{src} );
-		    return;
+		    return ( $f->{font},
+			     $style->{'font-size'} || 12,
+			     $f->{src} );
 		}
 		else {
 		    croak("\@font-face: Unhandled src \"", substr($src,0,50), "...\"");
@@ -112,10 +114,9 @@ method set_font ( $xo, $style ) {
     my $key = join( "|", $style->{'font-family'}, $stl, $weight );
     # Font in cache?
     if ( my $f = $fc->{$key} ) {
-	$xo->font( $f->{font},
-		   $style->{'font-size'} || 12,
-		   $f->{src} );
-	return;
+	return ( $f->{font},
+		 $style->{'font-size'} || 12,
+		 $f->{src} );
     }
 
     if ( my $cb = $svg->fc ) {
@@ -132,11 +133,10 @@ method set_font ( $xo, $style ) {
 
 	if ( $font ) {
 	    my $src = "Callback($key)";
-	    $xo->font( $font,
-		       $style->{'font-size'} || 12,
-		       $src );
 	    $fc->{$key} = { font => $font, src => $src };
-	    return;
+	    return ( $font,
+		     $style->{'font-size'} || 12,
+		     $src );
 	}
     }
 
@@ -198,7 +198,7 @@ method set_font ( $xo, $style ) {
 	}
 	{ font => $svg->pdf->font($fn), src => $fn };
     };
-    $xo->font( $font->{font}, $sz, $font->{src} );
+    return ( $font->{font}, $sz, $font->{src} );
 }
 
 sub ffsplit ( $family ) {

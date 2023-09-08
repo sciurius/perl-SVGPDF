@@ -126,6 +126,8 @@ method process () {
 	$o{align} = $anchor eq "end"
 	  ? "right"
 	  : $anchor eq "middle" ? "center" : "left";
+	my $tc = $self->root->tc;
+	my $fc = $self->root->fc;
 	for my $c ( @c ) {
 	    if ( ref($c) eq 'SVGPDF::TextElement' ) {
 		$self->_dbg( "+ xo save" );
@@ -137,8 +139,14 @@ method process () {
 		$scalex = $scaley = 1; # no more scaling.
 
 		$xo->textstart;
-		$self->set_font( $xo, $style );
-		$x += $xo->text( $c->content, %o );
+		if ( $tc ) {
+		    $x += $tc->( $self, $xo, $self->root->pdf,
+				 $style, $c->content, %o );
+		}
+		else {
+		    $self->set_font( $xo, $style );
+		    $x += $xo->text( $c->content, %o );
+		}
 		$xo->textend;
 		if ( $style->{'outline-style'} ) {
 		    # BEEP BEEP TRICKERY.

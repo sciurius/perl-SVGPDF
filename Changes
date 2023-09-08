@@ -1,6 +1,10 @@
 Revision history for SVGPDF
 
-0.000
+0.070
+
+	- Add callback for text handling.
+
+0.062
 
 	- Internal: Flipped coordinates.
 	- Internal: Rework Path.

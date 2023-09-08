@@ -7,7 +7,7 @@ use utf8;
 
 class  SVGPDF;
 
-our $VERSION = '0.062';
+our $VERSION = '0.070';
 
 =head1 NAME
 
@@ -110,8 +110,9 @@ a key/value pair:
 field $pdf          :accessor :param;
 field $atts         :accessor :param = undef;
 
-# Callback for font handling.
+# Callback for font and text handling.
 field $fc           :accessor :param = undef;
+field $tc           :accessor :param = undef;
 
 # If an SVG file contains more than a single SVG, the CSS applies to all.
 field $css          :accessor;
@@ -180,7 +181,7 @@ sub BUILDARGS ( @args ) {
 
     my %args = @args;
     @args = ();
-    push( @args, $_, delete $args{$_} ) for qw( pdf fc );
+    push( @args, $_, delete $args{$_} ) for qw( pdf fc tc );
 
     # Flatten everything else into %atts.
     my %x = %{ delete($args{atts}) // {} };
