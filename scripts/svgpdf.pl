@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Fri Sep  1 21:45:25 2023
-# Update Count    : 225
+# Last Modified On: Mon Oct  2 10:23:24 2023
+# Update Count    : 229
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -32,11 +32,13 @@ use Getopt::Long 2.13;
 my $output = "__new__.pdf";
 my $api = "PDF::API2";		# or PDF::Builder
 my $pagesize;
+my $ppi = 96;			# pixels per inch
 my $fontsize = 12;		# design
 my $wstokens = 0;
 my $grid;			# add grid
 my $prog;			# generate program
 my $verbose = 1;		# verbose processing
+my $ident;			# show version
 
 # Development options (not shown with -help).
 my $debug = 0;			# debugging
@@ -56,6 +58,7 @@ $trace |= ($debug || $test);
 eval "require $api;"     || die($@);
 # SVGPDF may redefine some PDF:XXX modules.
 eval "require SVGPDF;" || die($@);
+app_ident() if $ident;
 
 my $pdf = $api->new;
 $api->add_to_font_path($ENV{HOME}."/.fonts");
@@ -109,8 +112,8 @@ foreach my $file ( @ARGV ) {
 	my $h = $bb[3]-$bb[1];
 
 	# SVG units are pixels.
-	my $xscale = 72/96;
-	my $yscale = 72/96;
+	my $xscale = 72/$ppi;
+	my $yscale = 72/$ppi;
 
 	if ( $xo->{vwidth} ) {
 	    $xscale *= $xo->{vwidth} / $w;
@@ -180,7 +183,6 @@ sub crosshairs ( $gfx, $x, $y, $col = "black" ) {
 
 sub app_options {
     my $help = 0;		# handled locally
-    my $ident = 0;		# handled locally
 
     # Process options, if any.
     # Make sure defaults are set before returning!
@@ -195,10 +197,11 @@ sub app_options {
 					 },
 		     'api=s'	=> \$api,
 		     'pagesize=s' => \$pagesize,
+		     'ppi=i'    => \$ppi,
 		     'fontsize=f' => \$fontsize,
 		     'ws!'	=> \$wstokens,
 		     'ident'	=> \$ident,
-		     'verbose+'	=> \$verbose,
+		     'verbose|v+'	=> \$verbose,
 		     'quiet'	=> sub { $verbose = 0 },
 		     'trace'	=> \$trace,
 		     'help|?'	=> \$help,
@@ -207,7 +210,6 @@ sub app_options {
     {
 	app_usage(2);
     }
-    app_ident() if $ident;
     $grid = 5 if defined($grid) && $grid < 5;
     if ( $pagesize ) {
 	die("--pagesize requires WIDTHxHEIGHT\n")
@@ -217,7 +219,8 @@ sub app_options {
 }
 
 sub app_ident {
-    print STDERR ("This is $my_package [$my_name $my_version]\n");
+    print STDERR ("This is $my_package [$my_name $my_version]",
+		  " using SVGPDF $SVGPDF::VERSION\n");
 }
 
 sub app_usage {
@@ -227,6 +230,7 @@ sub app_usage {
 Usage: $0 [options] [svg-file ...]
    --output=XXX		PDF output file name
    --pagesize=WWxHH	pagesize
+   --ppi=NN		pixels per inch (default: 96)
    --program=XXX	generates a perl program (single SVG only)
    --api=XXX		uses PDF API (PDF::API2 (default) or PDF::Builder)
    --builder		short for --api=PDF::Builder

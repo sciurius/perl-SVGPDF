@@ -1,5 +1,9 @@
 Revision history for SVGPDF
 
+0.000
+
+	- Add --ppi option for svgpdf script.
+
 0.070
 
 	- Add callback for text handling.
