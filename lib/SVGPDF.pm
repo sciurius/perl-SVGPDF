@@ -46,6 +46,16 @@ with L<PDF::Builder>, L<PDF::API2> and compatible PDF packages.
 The main method is process(). It takes the SVG from an input source, see
 L</INPUT>.
 
+=head1 COORDINATES & UNITS
+
+SVG coordinates run from top-left to bottom-right.
+
+Dimensions without units are B<pixels>, at 96 pixels / inch. E.g.,
+C<width="96"> means 96px (pixels) and is equal to 72pt (points) or 1in (inch).
+
+For font sizes, CSS defines C<em> to be equal to the font size, and
+C<ex> is half of the font size.
+
 =head1 CONSTRUCTOR
 
 In its most simple form, a new SVGPDF object can be created with a

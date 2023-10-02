@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Mon Oct  2 10:23:24 2023
-# Update Count    : 229
+# Last Modified On: Mon Oct  2 13:22:49 2023
+# Update Count    : 231
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -111,7 +111,7 @@ foreach my $file ( @ARGV ) {
 	my $w = $bb[2]-$bb[0];
 	my $h = $bb[3]-$bb[1];
 
-	# SVG units are pixels.
+	# SVG units are pixels @96ppi. 10cm = 378px = 283pt.
 	my $xscale = 72/$ppi;
 	my $yscale = 72/$ppi;
 
