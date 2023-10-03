@@ -7,7 +7,7 @@ use utf8;
 
 class  SVGPDF;
 
-our $VERSION = '0.070';
+our $VERSION = '0.080';
 
 =head1 NAME
 
@@ -63,7 +63,7 @@ single argument, the PDF document.
 
      $svg = SVGPDF->new($pdf);
 
-There are a few additional arguments, these must be specified as
+There are a few optional arguments, these can be specified as
 key/value pairs.
 
 =over 8
@@ -240,6 +240,27 @@ The font size to be used for dimensions in 'ex' and 'em' units.
 
 This value overrides the value set in the constructor.
 
+=item combine
+
+An SVG can produce multiple XObjects, but sometimes these should be
+kept as a single image.
+
+There are two ways to combine the image objects. This can be selected
+by setting $opts{combine} to either C<"stacked"> or C<"bbox">.
+
+Type C<"stacked"> (default) stacks the images on top of each other,
+left sides aligned. The bounding box of each object is only used to
+obtain the width and height.
+
+Type C<"bbox"> stacks the images using the bounding box details. The
+origins of the images are vertically aligned and images may protrude
+other images when the image extends below the origin.
+
+=item sep
+
+When combining images, add additional vertical space between the
+individual images.
+
 =back
 
 =cut
@@ -269,6 +290,13 @@ method process ( $data, %options ) {
 
     # Restore.
     $fontsize = $save_fontsize;
+
+    my $combine = $options{combine};
+    if ( $combine ne "none" ) {
+	my $sep = $options{sep} || 0;
+	$xoforms = $self->combine_svg( $xoforms,
+				       type => $combine, sep => $sep );
+    }
 
     # Return (hopefully a stack of XObjects).
     return $xoforms;
@@ -527,6 +555,68 @@ method handle_svg ( $e ) {
     $svg->css_pop;
 
     $self->_dbg( "==== end ", $e->{name}, " ====" );
+}
+
+sub min( $a, $b ) { $a < $b ? $a : $b }
+sub max( $a, $b ) { $a > $b ? $a : $b }
+
+method combine_svg( $forms, %opts ) {
+    my $type = $opts{type} // "stacked";
+    return $forms if $type eq "none";
+
+    my ( $xmin, $ymin, $xmax, $ymax );
+    my $y = 0;
+    my $x = 0;
+    my $sep = $opts{sep} || 0;
+    my $nx;
+
+    if ( $type eq "bbox" ) {
+	warn("Combining ", scalar(@$forms), " XObjects\n")
+	  if $verbose;
+	...;
+	$nx->bbox( $xmin, $ymax, $xmax, 0 );
+    }
+    else {
+	my $i = 0;
+	for my $xo ( @$forms ) {
+	    $xo = $xo->{xo};
+	    my @bb = $xo->bbox;
+	    my $w = abs( $bb[2] - $bb[0] );
+	    my $h = abs( $bb[3] - $bb[1] );
+
+	    $nx //= $pdf->xo_form;
+	    my @xy = ( $x - min($bb[0],$bb[2]), $y - max($bb[1],$bb[3]) );
+	    warn(sprintf("Stack obj %2d: %.2f %.2f %.2f %.2f \@ %.2f %.2f\n",
+			 ++$i, @bb, @xy ) ) if $verbose;
+	    $nx->object( $xo, @xy );
+	    $y -= $h;
+
+	    if ( defined $xmax ) {
+		$xmax = $w if $w > $xmax;
+	    }
+	    else {
+		$xmax = $w;
+		$xmin = 0;
+	    }
+	    $ymax = $y;
+	    $y -= $sep;
+	}
+	warn("Stacked ", scalar(@$forms), " XObjects => bb",
+	     ( map { sprintf(" %.2f", $_ ) } $xmin, $ymax, $xmax, 0 ),
+	     "\n")
+	  if $verbose;
+	$nx->bbox( $xmin, $ymax, $xmax, 0 );
+    }
+
+
+    return [ { xo      => $nx,
+	       width   => $xmax - $xmin,
+	       height  => -$ymax,
+	       vwidth  => $xmax - $xmin,
+	       vheight => -$ymax,
+	       bbox    => [ $xmin, $ymax, $xmax, 0 ],
+	       vbox    => [ $xmin, -$ymax, $xmax-$xmin, $ymax ],
+	     } ];
 }
 
 ################ Service ################
