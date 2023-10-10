@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Mon Oct  2 13:22:49 2023
-# Update Count    : 231
+# Last Modified On: Tue Oct 10 07:37:37 2023
+# Update Count    : 233
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -35,6 +35,7 @@ my $pagesize;
 my $ppi = 96;			# pixels per inch
 my $fontsize = 12;		# design
 my $wstokens = 0;
+my $combine = "none";		# combine multiple into one
 my $grid;			# add grid
 my $prog;			# generate program
 my $verbose = 1;		# verbose processing
@@ -80,7 +81,7 @@ foreach my $file ( @ARGV ) {
 		  wstokens => $wstokens,
 		  trace    => $trace } );
 
-    $p->process($file);
+    $p->process($file, combine => $combine );
     my $o = $p->xoforms;
     warn("$file: SVG objects: ", 0+@$o, "\n") if $verbose;
 
@@ -196,6 +197,7 @@ sub app_options {
 					 push( @INC, $ENV{HOME}."/src/PDF-Builder/lib" );
 					 },
 		     'api=s'	=> \$api,
+		     'combine=s' => \$combine,
 		     'pagesize=s' => \$pagesize,
 		     'ppi=i'    => \$ppi,
 		     'fontsize=f' => \$fontsize,
@@ -234,6 +236,7 @@ Usage: $0 [options] [svg-file ...]
    --program=XXX	generates a perl program (single SVG only)
    --api=XXX		uses PDF API (PDF::API2 (default) or PDF::Builder)
    --builder		short for --api=PDF::Builder
+   --combine=XXX	combine (none, stacked, bbox)
    --grid=N             provides a grid with spacing N
    --nows               ignore whitespace tokens
    --ident		shows identification
