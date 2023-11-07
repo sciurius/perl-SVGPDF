@@ -3,6 +3,7 @@ Revision history for SVGPDF
 0.000
 
 	- Add --ppi option for svgpdf script.
+	- Add matrix multiply method (unused).
 
 0.070
 
