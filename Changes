@@ -1,6 +1,9 @@
 Revision history for SVGPDF
 
-0.000
+0.081
+	- Add --notest for svpdg script to suppress page marks.
+
+0.080
 
 	- Add --ppi option for svgpdf script.
 	- Add matrix multiply method (unused).

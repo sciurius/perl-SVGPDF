@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Tue Oct 10 07:37:37 2023
-# Update Count    : 233
+# Last Modified On: Fri Dec 22 09:27:38 2023
+# Update Count    : 237
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -44,13 +44,14 @@ my $ident;			# show version
 # Development options (not shown with -help).
 my $debug = 0;			# debugging
 my $trace = 0;			# trace (show process)
-my $test = 0;			# test mode.
+my $test = 1;			# test mode.
 
 # Process command line options.
 app_options();
 
 # Post-processing.
-$trace |= ($debug || $test);
+$trace |= $debug;
+$test  |= $debug;
 
 ################ Presets ################
 
@@ -150,15 +151,16 @@ foreach my $file ( @ARGV ) {
 
 	$gfx->object( $xo->{xo}, $x-$bb[0]*$xscale,
 		      $y-($bb[1]+$h)*$yscale, $xscale, $yscale );
-	crosshairs( $gfx, $x, $y, "green" );
-	crosshairs( $gfx, $x+$bb[2]*$xscale, $y-$bb[3]*$yscale, "magenta" );
-	if ( $bb[0] || $bb[1] ) {
-	    crosshairs( $gfx, $x-$bb[0]*$xscale, $y-$bb[3]*$yscale, "red" );
+	if ( $test ) {
+	    crosshairs( $gfx, $x, $y, "green" );
+	    crosshairs( $gfx, $x+$bb[2]*$xscale, $y-$bb[3]*$yscale, "magenta" );
+	    if ( $bb[0] || $bb[1] ) {
+		crosshairs( $gfx, $x-$bb[0]*$xscale, $y-$bb[3]*$yscale, "red" );
+	    }
 	}
-
 	$y -= $h * $yscale;
     }
-    crosshairs( $gfx, $x, $y, "blue" );
+    crosshairs( $gfx, $x, $y, "blue" ) if $test;
 }
 
 $pdf->save($output);
@@ -207,6 +209,7 @@ sub app_options {
 		     'quiet'	=> sub { $verbose = 0 },
 		     'trace'	=> \$trace,
 		     'help|?'	=> \$help,
+		     'test!'	=> \$test,
 		     'debug+'	=> \$debug,
 		    ) or $help )
     {
