@@ -2,6 +2,7 @@ Revision history for SVGPDF
 
 0.081
 	- Add --notest for svpdg script to suppress page marks.
+	- Explicitly end paths that are not stroked/filled (Issue #2.2).
 
 0.080
 

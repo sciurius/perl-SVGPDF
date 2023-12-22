@@ -10,6 +10,7 @@ xo fill_color black (initial)
     path stroke=none fill=none
     xo move(20.00,20.00)
     xo curve(80.00,60.00 100.00,40.00 120.00,20.00)
+    xo end
     xo restore
   end handling path
   start handling text (SVGPDF::Text)

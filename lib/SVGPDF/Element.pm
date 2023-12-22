@@ -267,7 +267,10 @@ method _paintsub () {
 	};
     }
     else {
-	return sub {};
+	return sub {
+	    $self->_dbg("xo end");
+	    $xo->end;
+	}
     }
 }
 
