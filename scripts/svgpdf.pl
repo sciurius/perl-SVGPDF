@@ -3,8 +3,8 @@
 # Author          : Johan Vromans
 # Created On      : Wed Jul  5 09:14:28 2023
 # Last Modified By: 
-# Last Modified On: Fri Dec 22 09:27:38 2023
-# Update Count    : 237
+# Last Modified On: Fri Dec 22 10:41:37 2023
+# Update Count    : 238
 # Status          : Unknown, Use with caution!
 
 ################ Common stuff ################
@@ -15,9 +15,9 @@ no warnings qw(experimental::signatures);
 use utf8;
 
 # Package name.
-my $my_package = 'PDF-SVG';
+my $my_package = 'SVGPDF';
 # Program name and version.
-my ($my_name, $my_version) = qw( svgpdf 0.01 );
+my ($my_name, $my_version) = qw( svgpdf 0.081 );
 
 use FindBin;
 use lib "$FindBin::Bin/../lib";
