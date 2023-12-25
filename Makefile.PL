@@ -7,6 +7,8 @@ exit 0 if $ENV{AUTOMATED_TESTING} && $] < 5.026000;
 
 use ExtUtils::MakeMaker 7.24;	# comes with 5.26
 
+my $version = MM->parse_version("lib/SVGPDF.pm");
+
 # For binaries/scripts.
 my @bins; # = qw( prog );
 
@@ -25,7 +27,7 @@ if ( my $a = $ENV{SVGPDF_API} ) {
 WriteMakefile(
     NAME                => 'SVGPDF',
     AUTHOR              => 'Johan Vromans <jvromans@squirrel.nl>',
-    VERSION_FROM        => 'lib/SVGPDF.pm',
+    VERSION             => $version,
     ABSTRACT            => 'SVG renderer for PDF::API2',
     LICENSE             => 'perl_5',
     PL_FILES            => {},
@@ -57,6 +59,7 @@ WriteMakefile(
       },
       provides => {
 	 SVGPDF    => { file => "lib/SVGPDF.pm",
+			version => $version,
 		      },
       },
       no_index => {

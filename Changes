@@ -1,5 +1,11 @@
 Revision history for SVGPDF
 
+0.083
+	- Satisfy CPAN indexer.
+
+0.082
+	- Satisfy CPAN upload.
+
 0.081
 	- Add --notest for svpdg script to suppress page marks.
 	- Explicitly end paths that are not stroked/filled (Issue #2.2).
