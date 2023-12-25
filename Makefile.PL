@@ -55,6 +55,15 @@ WriteMakefile(
         bugtracker => "https://github.com/sciurius/perl-DVG-PDF/issues",
         license    => "https://dev.perl.org/licenses/",
       },
+      provides => {
+	 SVGPDF    => { file => "lib/SVGPDF.pm",
+		      },
+      },
+      no_index => {
+         directory => [
+	    "lib/SVGPDF",
+	 ],
+      },
       'meta-spec' => {
         version => '2',
         url     => 'https://metacpan.org/pod/CPAN::Meta::Spec',
