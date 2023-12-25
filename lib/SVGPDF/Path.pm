@@ -22,7 +22,8 @@ method process () {
 	# stroke, which results in fat glyphs on screen.
 	# To avoid this, disable stroke when drawing MathJax glyphs.
 	if ( $atts->{id} =~ /^MJX-/ ) {
-	    $atts->{stroke} = 'none';
+	    # Hmmm... This seems to have been solved accidentally.
+	    # $atts->{stroke} = 'none';
 	}
     }
 
