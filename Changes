@@ -1,27 +1,19 @@
 Revision history for SVGPDF
 
-0.000
-	- Remove MathJax tweak. This seems to have been solved accidentally.
-
-0.081	2023-12-22
-
+0.081
 	- Add --notest for svpdg script to suppress page marks.
 	- Explicitly end paths that are not stroked/filled (Issue #2.2).
 
-0.080	2023-11-07
+0.080
 
 	- Add --ppi option for svgpdf script.
 	- Add matrix multiply method (unused).
 
-0.070	2023-09-08
+0.070
 
 	- Add callback for text handling.
 
-0.062	2023-09-07
-
-	- Update tests.
-
-0.061	2023-09-07
+0.062
 
 	- Internal: Flipped coordinates.
 	- Internal: Rework Path.
