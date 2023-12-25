@@ -7,7 +7,7 @@ use utf8;
 
 class  SVGPDF;
 
-our $VERSION = '0.081';
+our $VERSION = '0.082';
 
 =head1 NAME
 
@@ -933,6 +933,10 @@ The following SVG features are not planned to be implemented.
 =item *
 
 Shades, gradients, patterns and animations.
+
+=item *
+
+Shape rendering attributes.
 
 =item *
 
