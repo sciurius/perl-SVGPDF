@@ -29,7 +29,7 @@ WriteMakefile(
     AUTHOR              => 'Johan Vromans <jvromans@squirrel.nl>',
     VERSION             => $version,
     ABSTRACT            => 'SVG renderer for PDF::API2',
-    LICENSE             => 'perl_5',
+    LICENSE             => 'freebsd',
     PL_FILES            => {},
     MIN_PERL_VERSION    => 5.026000,
 
