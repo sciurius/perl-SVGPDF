@@ -1,28 +1,32 @@
 Revision history for SVGPDF
 
-0.000
+0.084
 	- Change license info.
+	- Add gif, tif(f) and pnm to recognized image extensions.
 
-0.083
+0.083	2023-12-25
+
 	- Satisfy CPAN indexer.
 
-0.082
+0.082	2023-12-25
+
 	- Satisfy CPAN upload.
 
-0.081
+0.081	2023-12-22
+
 	- Add --notest for svpdg script to suppress page marks.
 	- Explicitly end paths that are not stroked/filled (Issue #2.2).
 
-0.080
+0.080	2023-11-07
 
 	- Add --ppi option for svgpdf script.
 	- Add matrix multiply method (unused).
 
-0.070
+0.070	2023-09-08
 
 	- Add callback for text handling.
 
-0.062
+0.062	2023-09-07
 
 	- Internal: Flipped coordinates.
 	- Internal: Rework Path.

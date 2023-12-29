@@ -47,12 +47,20 @@ method process () {
 	}
 
 	# Make the image. Silence missing Image::PNG::Libpng warnings.
-	$img = $self->root->pdf->image( IO::String->new($data),
+#	$img = $self->root->pdf->image( IO::String->new($data),
+	$img = $self->root->pdf->image( \$data,
 					silent => 1 );
     }
-    elsif ( $link =~ m!^.+\.(png|jpe?g)$! && -s $link ) {
+    elsif ( $link =~ m!^.+\.(png|jpe?g|gif)$!i && -s $link ) {
 	# Make the image. Silence missing Image::PNG::Libpng warnings.
-	$img = $self->root->pdf->image($link, silent => 1 );
+	$img = $self->root->pdf->image( $link, silent => 1 );
+    }
+    elsif ( $link =~ m!^.+\.(tiff?|pnm|pbm|pgm)$!i && -s $link ) {
+	my $format = lc $1;
+	$format .= 'f' if $format eq 'tif';
+	$format = 'pnm' if $format =~ /p?m/;
+	# Make the image. Silence missing Image::PNG::Libpng warnings.
+	$img = $self->root->pdf->image( $link, format => $format, silent => 1 );
     }
     else {
 	warn("SVG: Unhandled or missing image link: ",
