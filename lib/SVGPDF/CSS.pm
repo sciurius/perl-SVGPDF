@@ -236,9 +236,14 @@ method push ( @args ) {
 	}
     }
 
-    ## ID.
+    ## ID (generic).
     if ( $args->{id} && exists( $css->{ "#" . $args->{id} } ) ) {
 	$self->merge( $ret, $css->{ "#" . $args->{id} } );
+    }
+
+    ## ID (specific).
+    if ( $args->{id} && exists( $css->{ $args->{element} . "#" . $args->{id} } ) ) {
+	$self->merge( $ret, $css->{ $args->{element} . "#" . $args->{id} } );
     }
 
     ## Style attribute.
