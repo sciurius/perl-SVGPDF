@@ -106,7 +106,17 @@ t/regtest/12_image1.ref
 t/regtest/12_image1.svg
 t/regtest/12_image2.ref
 t/regtest/12_image2.svg
+t/regtest/12_image3.ref
+t/regtest/12_image3.svg
+t/regtest/squirrel.jpeg
+t/regtest/squirrel.jpg
+t/regtest/squirrel.pbm
+t/regtest/squirrel.pgm
 t/regtest/squirrel.png
+t/regtest/squirrel.pnm
+t/regtest/squirrel.ppm
+t/regtest/squirrel.tif
+t/regtest/squirrel.tiff
 xt/900_regtest.t
 xt/901_regtest.t
 xt/regtest/01_abc1.ref
