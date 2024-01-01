@@ -58,16 +58,10 @@ foreach my $file ( sort @files ) {
     open( STDERR, '>&', $errfd );
 
     my $ok = $o && @$o;
-    TODO: {
-	  local($TODO) = "Not yet implemented" if !$ok && $file =~ /12_image2.svg/;
-	  ok( $ok, "Have XO results" );
-    };
+    ok( $ok, "Have XO results" );
     $test++;
     $ok = -s $ref && !differ( $out, $ref );
-    TODO: {
-	  local($TODO) = "Not yet implemented" if !$ok && $file =~ /12_image2.svg/;
-	  ok( $ok, $file );
-    };
+    ok( $ok, $file );
     $test++;
     unlink($out), next if $ok;
     system( $ENV{SVGPDF_DIFF}, $out, $ref) if $ENV{SVGPDF_DIFF};
