@@ -18,8 +18,6 @@ BEGIN {
 
 my $test = 2;
 
-return $test unless -f ".testall";
-
 BAIL_OUT("Missing test data") unless -d "regtest";
 
 # Setup PDF context.
