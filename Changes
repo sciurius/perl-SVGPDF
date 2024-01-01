@@ -5,6 +5,7 @@ Revision history for SVGPDF
 	- Add gif, tif(f) and p[bgnp]m to recognized image extensions.
 	- Support CSS for element#id.
 	- Support CSS for element.class.
+	- Remove xt tests from MANIFEST.
 
 0.083	2023-12-25
 
