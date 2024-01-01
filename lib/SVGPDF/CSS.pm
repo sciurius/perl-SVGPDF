@@ -231,8 +231,10 @@ method push ( @args ) {
     ## Class style.
     if ( $args->{class} ) {
 	for ( split( ' ', $args->{class} ), "svg" ) {
-	    next unless exists( $css->{".$_"} );
-	    $self->merge( $ret, $css->{".$_"} );
+	    $self->merge( $ret, $css->{".$_"} )
+	      if exists( $css->{".$_"} );
+	    $self->merge( $ret, $css->{$args->{element}.".$_"} )
+	      if $args->{element} && exists( $css->{$args->{element}.".$_"} );
 	}
     }
 

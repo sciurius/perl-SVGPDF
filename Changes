@@ -4,6 +4,7 @@ Revision history for SVGPDF
 	- Change license info.
 	- Add gif, tif(f) and p[bgnp]m to recognized image extensions.
 	- Support CSS for element#id.
+	- Support CSS for element.class.
 
 0.083	2023-12-25
 
