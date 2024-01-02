@@ -26,7 +26,7 @@ method process () {
     $self->_dbg( $self->name, " x=$x y=$y w=$w h=$h" );
 
     my $img;
-    if ( $link =~ m!^data:image/(png|jpe?g);(base64),(.*)$!s ) {
+    if ( $link =~ m!^data:image/(\w+);(base64),(.*)$!s ) {
 	# In-line image asset.
 	require MIME::Base64;
 	require Image::Info;
@@ -46,18 +46,23 @@ method process () {
 	    $self->css_pop, return;
 	}
 
+	my $format = $info->{file_ext};
+	$format = "jpeg" if $format eq "jpg";
+	$format = "pnm"  if $format =~ /^p.m$/;
+	$format = "tiff" if $format eq "tif";
+
 	# Make the image. Silence missing library warnings.
-	# Note that not all tools/libraries can deal with scalar io.
-	# open( my $fh, '<:raw', \$data );
-	# So for the time being use IO::String.
-	my $fh = IO::String->new($data);
-	$img = $self->root->pdf->image( $fh, silent => 1 );
+	# Also, do not use the fast IPL module, it cannot read from scalar.
+	open( my $fh, '<:raw', \$data );
+	$img = $self->root->pdf->image( $fh, format => $format,
+					silent => 1, nouseIPL => 1 );
     }
     elsif ( $link =~ m!^.+\.(png|jpe?g|gif)$!i && -s $link ) {
-	# Make the image.
+	# Autodetected. Make the image.
 	$img = $self->root->pdf->image( $link, silent => 1 );
     }
     elsif ( $link =~ m!^.+\.(tiff?|pnm|pbm|pgm|ppm)$!i && -s $link ) {
+	# Not autodetected, need format.
 	my $format = lc $1;
 	$format = $format =~ /tif/ ? "tiff" : "pnm";
 	# Make the image.
