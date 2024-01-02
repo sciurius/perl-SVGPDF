@@ -47,7 +47,10 @@ method process () {
 	}
 
 	# Make the image. Silence missing library warnings.
-	open( my $fh, '<:raw', \$data );
+	# Note that not all tools/libraries can deal with scalar io.
+	# open( my $fh, '<:raw', \$data );
+	# So for the time being use IO::String.
+	my $fh = IO::String->new($data);
 	$img = $self->root->pdf->image( $fh, silent => 1 );
     }
     elsif ( $link =~ m!^.+\.(png|jpe?g|gif)$!i && -s $link ) {
