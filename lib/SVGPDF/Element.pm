@@ -491,6 +491,35 @@ method set_font ( $xo, $style ) {
 # }
 #
 
+################ Utility ################
+
+method data_inline($src) {
+
+    my %info;
+
+    unless ( $src =~ m! ^ data:
+			(?<mimetype> [^/]+ ) /
+			(?<subtype>  [^;]+ ) ;
+			(?<encoding> [^,]+ ) ,
+			(?<data>     .   + ) $
+		      !sx ) {
+	return { error => "Malformed inline data" };
+    }
+
+    if ( $+{encoding} eq "base64" ) {
+	require MIME::Base64;
+	$info{data} = MIME::Base64::decode($+{data});
+    }
+    else {
+	return { error => "Unhandled encoding \"$+{encoding}\" in inline data" };
+    }
+
+    $info{mimetype} = $+{mimetype};
+    $info{subtype}  = $+{subtype};
+
+    return \%info;
+}
+
 ################ TextElement ################
 
 class SVGPDF::TextElement;
