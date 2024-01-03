@@ -5,8 +5,8 @@
   <image href="regtest/squirrel.jpeg" x="100" y="0" height="50px" width="50px"/>
   <image href="regtest/squirrel.tif"  x="150" y="0" height="50px" width="50px"/>
   <image href="regtest/squirrel.tiff" x="200" y="0" height="50px" width="50px"/>
-  <image href="regtest/squirrel.pnm"  x="250" y="0" height="50px" width="50px"/>
-  <image href="regtest/squirrel.pbm"  x="300" y="0" height="50px" width="50px"/>
-  <image href="regtest/squirrel.pgm"  x="350" y="0" height="50px" width="50px"/>
-  <image href="regtest/squirrel.ppm"  x="400" y="0" height="50px" width="50px"/>
+  <image href="regtest/squirrel.pbm"  x="250" y="0" height="50px" width="50px"/>
+  <image href="regtest/squirrel.pgm"  x="300" y="0" height="50px" width="50px"/>
+  <image href="regtest/squirrel.ppm"  x="350" y="0" height="50px" width="50px"/>
+  <image href="regtest/squirrel.gif"  x="400" y="0" height="50px" width="50px"/>
 </svg>

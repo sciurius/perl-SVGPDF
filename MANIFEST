@@ -108,12 +108,13 @@ t/regtest/12_image2.ref
 t/regtest/12_image2.svg
 t/regtest/12_image3.ref
 t/regtest/12_image3.svg
+t/regtest/12_image4.ref
+t/regtest/12_image4.svg
 t/regtest/squirrel.jpeg
 t/regtest/squirrel.jpg
 t/regtest/squirrel.pbm
 t/regtest/squirrel.pgm
-t/regtest/squirrel.png
-t/regtest/squirrel.pnm
 t/regtest/squirrel.ppm
+t/regtest/squirrel.png
 t/regtest/squirrel.tif
 t/regtest/squirrel.tiff
