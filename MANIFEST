@@ -110,6 +110,7 @@ t/regtest/12_image3.ref
 t/regtest/12_image3.svg
 t/regtest/12_image4.ref
 t/regtest/12_image4.svg
+t/regtest/squirrel.gif
 t/regtest/squirrel.jpeg
 t/regtest/squirrel.jpg
 t/regtest/squirrel.pbm
