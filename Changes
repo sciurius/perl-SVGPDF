@@ -1,6 +1,6 @@
 Revision history for SVGPDF
 
-0.085	
+0.085	2024-01-29
 
 	- Fix some tests for longdouble perls.
 	- Update copyright years.
