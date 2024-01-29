@@ -10,7 +10,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="M0,50 a1,1 0 0,0 100..."
         xo save
-        path stroke-width=0 stroke=blue fill=blue
+        path stroke-width=0.00 stroke=blue fill=blue
         xo move(0.00,50.00)
         xo arc(1.00,1.00 0.00 0,0 100.00,50.00)
         circular_arc(0.00,50.00 100.00,50.00 1.00 move=0 large=0 dir=0 rot=0.00)

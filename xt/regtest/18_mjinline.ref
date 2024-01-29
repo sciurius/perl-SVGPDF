@@ -20,10 +20,10 @@ xo fill_color black (initial)
       start handling use (SVGPDF::Use)
       use "#MJX-1-TEX-N-31" (path), x=0, y=0
         xo save
-        use stroke-width=1 stroke=red fill=none
+        use stroke-width=1.00 stroke=red fill=none
         path d="M213 578L200 573Q186..."
           xo save
-          path stroke-width=1 stroke=none fill=none
+          path stroke-width=1.00 stroke=none fill=none
           xo move(213.00,578.00)
           xo line(200.00,573.00)
           xo spline(186.00,568.00 160.00,563.00)

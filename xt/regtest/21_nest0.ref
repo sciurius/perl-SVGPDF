@@ -25,7 +25,7 @@ xo fill_color black (initial)
     start handling path (SVGPDF::Path)
     path d="M110 10 l100 100"
       xo save
-      path stroke-width=2 stroke=red fill=(current) fill=black
+      path stroke-width=2.00 stroke=red fill=(current) fill=black
       xo move(110.00,10.00)
       xo line(210.00,110.00)
       xo paint (red currentColor)

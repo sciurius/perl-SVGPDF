@@ -7,7 +7,7 @@ use utf8;
 
 class  SVGPDF;
 
-our $VERSION = '0.084';
+our $VERSION = '0.085';
 
 =head1 NAME
 
@@ -472,7 +472,7 @@ method handle_svg ( $e ) {
 	    $self->_dbg("valign: ", $style->{'vertical-align'}, " ",
 			"\$vb[1] -> $vb[1]");
 	}
-	$vbox = "@vb (inferred)";
+	$vbox = sprintf("%.2f %.2f %.2f %.2f (inferred)", @vb);
     }
 
     $svg->nfi("disproportional vbox/width/height")
