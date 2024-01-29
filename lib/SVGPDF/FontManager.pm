@@ -61,7 +61,45 @@ method find_font ( $style ) {
 		# Fetch font from source.
 		my $src = $_->{src};
 		####TODO: Multiple sources
-		if ( $src =~ /^\s*url\s*\((["'])data:application\/octet-stream;base64,(.*?)\1\s*\)/is ) {
+		if ( $src =~ /^\s*url\s*\((["'])((?:data|https?|file):.*?)\1\s*\)/is ) {
+		    use File::LoadLines 1.044;
+		    my $opts = {};
+		    my $data = File::LoadLines::loadblob( $2, $opts );
+
+		    # To load font data from net and data urls.
+		    use File::Temp qw( tempfile tempdir );
+		    use MIME::Base64 qw( decode_base64 );
+		    $td //= tempdir( CLEANUP => 1 );
+
+		    my $sfx;	# suffix for font file name
+		    if ( $src =~ /\bformat\((["'])(.*?)\1\)/ ) {
+			$sfx =
+			  lc($2) eq "truetype" ? ".ttf" :
+			  lc($2) eq "opentype" ? ".otf" :
+			  '';
+		    }
+		    elsif ( $opts->{_filesource} =~ /\.(\w+)$/ ) {
+			$sfx = $2;
+		    }
+		    # No (or unknown) format, skip.
+		    next unless $sfx;
+
+		    my ($fh,$fn) = tempfile( "${td}SVGXXXX", SUFFIX => $sfx );
+		    binmode( $fh => ':raw' );
+		    print $fh $data;
+		    close($fh);
+		    my $font = eval { $svg->pdf->font($fn) };
+		    croak($@) if $@;
+		    my $f = $fc->{$key} =
+		      { font => $font,
+			src => $opts->{_filesource} };
+		    #warn("SRC: ", $opts->{_filesource}, "\n");
+		    return ( $f->{font},
+			     $style->{'font-size'} || 12,
+			     $f->{src} );
+		}
+		# Temp.
+		elsif ( $src =~ /^\s*url\s*\((["'])data:application\/octet-stream;base64,(.*?)\1\s*\)/is ) {
 
 		    my $data = $2;
 
