@@ -883,7 +883,7 @@ line,
 path,
 polygon,
 polyline,
-rect (no rounded corners),
+rect,
 text and tspan (no white-space styles).
 
 =item *
