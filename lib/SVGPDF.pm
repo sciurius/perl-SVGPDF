@@ -56,12 +56,12 @@ C<width="96"> means 96px (pixels) and is equal to 72pt (points) or 1in (inch).
 For font sizes, CSS defines C<em> to be equal to the font size, and
 C<ex> is half of the font size.
 
-=head1 CONSTRUCTOR
+=head1 CONSTRUCTORS
+
+=head2 SVGPDF->new($pdf)
 
 In its most simple form, a new SVGPDF object can be created with a
 single argument, the PDF document.
-
-     $svg = SVGPDF->new($pdf);
 
 There are a few optional arguments, these can be specified as
 key/value pairs.
@@ -823,7 +823,10 @@ combination of family, style and weight. If the callback function
 returns a 'false' result SVGPDF will try other alternatives to find a
 font.
 
-Example of an (extremely simplified) callback:
+Example of an (extremely simplified) callback.
+It yields the corefont Helvetica when the requested font-family is
+C<sans>, and Times-Roman for everything else. Styles and weights are
+ignored.
 
     sub simple_font_handler {
         my ( $self, $pdf, $style ) = @_;
