@@ -7,7 +7,7 @@ use utf8;
 
 class  SVGPDF;
 
-our $VERSION = '0.085';
+our $VERSION = '0.086';
 
 =head1 NAME
 
@@ -809,14 +809,27 @@ match is found, it is resolved and the font is set. If there is no
 appropriate CSS rule for this font, the callback is called with the
 following arguments:
 
-    ( $self, $pdf, $style )
+    ( $self, %args )
 
-where C<$pdf> is de PDF document and C<$style> a hash reference that
-contains values for C<font-family>, C<font-style>, C<font-weight>, and
-C<font-size>. Don't touch C<$self>, it is undocumented for a reason.
+where C<%args> contains at least:
 
-The callback function can use the contents of C<$style> to select an
-appropriate font and return it.
+=over
+
+=item pdf
+
+A reference to the current PDF document.
+
+=item style
+
+A hash reference that contains values for C<font-family>,
+C<font-style>, C<font-weight>, and C<font-size>.
+
+=back
+
+Do not touch C<$self>, it is undocumented for a reason.
+
+The callback function can use the contents of C<< $args->{style} >> to
+select an appropriate font and return it.
 
 SVGPDF will try to call the font handler callback only once for each
 combination of family, style and weight. If the callback function
@@ -829,9 +842,10 @@ C<sans>, and Times-Roman for everything else. Styles and weights are
 ignored.
 
     sub simple_font_handler {
-        my ( $self, $pdf, $style ) = @_;
+        my ( $self, %args ) = @_;
+        my $pdf = $args->{pdf};
 
-	my $family = $style->{'font-family'};
+	my $family = $args->{style}->{'font-family'};
 
 	my $font;
 	if ( $family eq 'sans' ) {
@@ -844,7 +858,7 @@ ignored.
         return $font;
     }
 
-If no callback function is set, SVGPDF will recognize the standard
+If no callback function is set, SVGPDF will recognize the 14 standard
 PDF corefonts, and aliases C<serif>, C<sans> and C<mono>.
 
 B<IMPORTANT: With the standard corefonts only characters of the

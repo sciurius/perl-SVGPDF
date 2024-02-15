@@ -67,9 +67,5 @@ WriteMakefile(
 	    "lib/SVGPDF",
 	 ],
       },
-      'meta-spec' => {
-        version => '2',
-        url     => 'https://metacpan.org/pod/CPAN::Meta::Spec',
-      },
     },
 );
