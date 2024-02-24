@@ -7,7 +7,7 @@ use utf8;
 
 class  SVGPDF;
 
-our $VERSION = '0.086';
+our $VERSION = '0.086.2';
 
 =head1 NAME
 
@@ -741,7 +741,7 @@ An SVG document on disk, specified as the name of the document.
 
 =item *
 
-A file handle, openened on a SVG document, specified as a glob
+A file handle, opened on a SVG document, specified as a glob
 reference. You can use C<\*DATA> to append the SVG data after a
 C<__DATA__> separator at the end of the program.
 

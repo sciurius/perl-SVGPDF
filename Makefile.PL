@@ -53,8 +53,8 @@ WriteMakefile(
 
     META_MERGE => {
       resources    => {
-        repository => 'https://github.com/sciurius/perl-DVG-PDF',
-        bugtracker => "https://github.com/sciurius/perl-DVG-PDF/issues",
+        repository => 'https://github.com/sciurius/perl-SVGPDF',
+        bugtracker => "https://github.com/sciurius/perl-SVGPDF/issues",
         license    => "https://dev.perl.org/licenses/",
       },
       provides => {
