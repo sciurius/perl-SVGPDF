@@ -2,6 +2,7 @@ Revision history for SVGPDF
 
 0.089
 
+	- Parse colour rgba(...), ignoring alpha.
 	- Fix issue #10.
 
 0.088.1	2024-06-28
