@@ -20,7 +20,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=0 y=0 w=60 h=30
     xo save
-    rect stroke=none fill=(current) fill=black
+    rect stroke=none fill=(current) fill=#000000
     xo fill (none)
     xo restore
   end handling rect
@@ -32,10 +32,10 @@ SVG: preserveAspectRatio - not fully implemented, expect strange results.
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
-      use stroke=none fill=(current) fill=black
+      use stroke=none fill=(current) fill=#000000
       path d="M50,10 A40,40,1,1,1,..."
         xo save
-        path stroke-width=8.00 linecap=1 linejoin=1 stroke=black fill=yellow
+        path stroke-width=8.00 linecap=1 linejoin=1 stroke=#000000 fill=#FFFF00
         xo move(50.00,10.00)
         xo arc(40.00,40.00 1.00 1,1 50.00,90.00)
         circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1 rot=1.00)
@@ -74,7 +74,7 @@ disp dx=15, dy=0
   start handling rect (SVGPDF::Rect)
   rect x=70 y=0 w=60 h=30
     xo save
-    rect stroke=none fill=(current) fill=black
+    rect stroke=none fill=(current) fill=#000000
     xo fill (none)
     xo restore
   end handling rect
@@ -85,10 +85,10 @@ disp dx=15, dy=0
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
-      use stroke=none fill=(current) fill=black
+      use stroke=none fill=(current) fill=#000000
       path d="M50,10 A40,40,1,1,1,..."
         xo save
-        path stroke-width=8.00 linecap=1 linejoin=1 stroke=black fill=yellow
+        path stroke-width=8.00 linecap=1 linejoin=1 stroke=#000000 fill=#FFFF00
         xo move(50.00,10.00)
         xo arc(40.00,40.00 1.00 1,1 50.00,90.00)
         circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1 rot=1.00)
@@ -127,7 +127,7 @@ disp dx=0, dy=0
   start handling rect (SVGPDF::Rect)
   rect x=140 y=0 w=60 h=30
     xo save
-    rect stroke=none fill=(current) fill=black
+    rect stroke=none fill=(current) fill=#000000
     xo fill (none)
     xo restore
   end handling rect
@@ -138,10 +138,10 @@ disp dx=0, dy=0
     start handling use (SVGPDF::Use)
     use "#smiley" (path), x=0, y=0
       xo save
-      use stroke=none fill=(current) fill=black
+      use stroke=none fill=(current) fill=#000000
       path d="M50,10 A40,40,1,1,1,..."
         xo save
-        path stroke-width=8.00 linecap=1 linejoin=1 stroke=black fill=yellow
+        path stroke-width=8.00 linecap=1 linejoin=1 stroke=#000000 fill=#FFFF00
         xo move(50.00,10.00)
         xo arc(40.00,40.00 1.00 1,1 50.00,90.00)
         circular_arc(50.00,10.00 50.00,90.00 40.00 move=0 large=1 dir=1 rot=1.00)

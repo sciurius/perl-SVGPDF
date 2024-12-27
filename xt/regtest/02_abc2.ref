@@ -29,7 +29,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m52.9 165.0v-82.0"
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(52.90,165.00)
     xo vline(83.00)
     xo stroke (currentColor)
@@ -39,10 +39,10 @@ xo fill_color black (initial)
   use "#stdef" (path), x=52.9, y=107.0
     xo save
     translate( 52.90 107.00 )
-    use stroke-width=0.70 stroke=none fill=(current) fill=black
+    use stroke-width=0.70 stroke=none fill=(current) fill=#000000
     path d="m0 0h686.0m-686.0 -6..."
       xo save
-      path stroke-width=0.70 stroke=(current) stroke=black fill=none
+      path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
       xo move(0.00,-6.00)
@@ -61,10 +61,10 @@ xo fill_color black (initial)
   use "#stdef" (path), x=52.9, y=165.0
     xo save
     translate( 52.90 165.00 )
-    use stroke-width=0.70 stroke=none fill=(current) fill=black
+    use stroke-width=0.70 stroke=none fill=(current) fill=#000000
     path d="m0 0h686.0m-686.0 -6..."
       xo save
-      path stroke-width=0.70 stroke=(current) stroke=black fill=none
+      path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
       xo move(0.00,-6.00)
@@ -82,7 +82,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M182.0 107.0v-24.0M1..."
     xo save
-    path stroke-width=1.00 stroke=(current) stroke=black fill=none
+    path stroke-width=1.00 stroke=(current) stroke=#000000 fill=none
     xo move(182.00,107.00)
     xo vline(83.00)
     xo move(182.00,165.00)
@@ -131,7 +131,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m113.8 117.3l34.8 -5..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(113.80,117.30)
     xo line(148.60,111.80)
     xo vline(108.60)
@@ -143,7 +143,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m254.4 106.4l61.1 4...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(254.40,106.40)
     xo line(315.50,111.30)
     xo vline(108.10)
@@ -155,7 +155,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m288.8 104.1l26.3 2...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(288.80,104.10)
     xo line(315.10,106.20)
     xo vline(103.00)
@@ -167,7 +167,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m413.4 104.2l34.8 2...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(413.40,104.20)
     xo line(448.20,106.70)
     xo vline(103.50)
@@ -179,7 +179,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m670.6 117.3l34.8 -5..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(670.60,117.30)
     xo line(705.40,111.80)
     xo vline(108.60)
@@ -213,7 +213,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m254.4 171.6l61.1 6...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(254.40,171.60)
     xo line(315.50,178.20)
     xo vline(175.00)
@@ -225,7 +225,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m288.8 170.3l26.3 2...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(288.80,170.30)
     xo line(315.10,173.20)
     xo vline(170.00)
@@ -237,7 +237,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m420.4 134.8l34.8 -2..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(420.40,134.80)
     xo line(455.20,132.30)
     xo vline(135.50)
@@ -249,7 +249,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m670.6 167.1l34.8 -4..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(670.60,167.10)
     xo line(705.40,162.80)
     xo vline(159.60)
@@ -299,7 +299,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M114.1 98.0v18.2M148..."
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(114.10,98.00)
     xo vline(116.20)
     xo move(148.30,89.00)
@@ -405,7 +405,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m52.9 105.0v-82.0"
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(52.90,105.00)
     xo vline(23.00)
     xo stroke (currentColor)
@@ -415,10 +415,10 @@ xo fill_color black (initial)
   use "#stdef" (path), x=52.9, y=47.0
     xo save
     translate( 52.90 47.00 )
-    use stroke-width=0.70 stroke=none fill=(current) fill=black
+    use stroke-width=0.70 stroke=none fill=(current) fill=#000000
     path d="m0 0h686.0m-686.0 -6..."
       xo save
-      path stroke-width=0.70 stroke=(current) stroke=black fill=none
+      path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
       xo move(0.00,-6.00)
@@ -437,10 +437,10 @@ xo fill_color black (initial)
   use "#stdef" (path), x=52.9, y=105.0
     xo save
     translate( 52.90 105.00 )
-    use stroke-width=0.70 stroke=none fill=(current) fill=black
+    use stroke-width=0.70 stroke=none fill=(current) fill=#000000
     path d="m0 0h686.0m-686.0 -6..."
       xo save
-      path stroke-width=0.70 stroke=(current) stroke=black fill=none
+      path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
       xo move(0.00,-6.00)
@@ -458,7 +458,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M481.6 17.0m-6.50 0h..."
     xo save
-    path stroke-width=1.00 stroke=(current) stroke=black fill=none
+    path stroke-width=1.00 stroke=(current) stroke=#000000 fill=none
     xo move(481.60,17.00)
     xo move(475.10,17.00)
     xo hline(488.10)
@@ -472,7 +472,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M292.6 47.0v-24.0M29..."
     xo save
-    path stroke-width=1.00 stroke=(current) stroke=black fill=none
+    path stroke-width=1.00 stroke=(current) stroke=#000000 fill=none
     xo move(292.60,47.00)
     xo vline(23.00)
     xo move(292.60,105.00)
@@ -499,7 +499,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m182.5 46.2l78.2 5.1..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(182.50,46.20)
     xo line(260.70,51.30)
     xo vline(48.10)
@@ -511,7 +511,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m226.6 44.0l33.7 2.2..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(226.60,44.00)
     xo line(260.30,46.20)
     xo vline(43.00)
@@ -523,7 +523,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m383.1 46.8l44.5 -2...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(383.10,46.80)
     xo line(427.60,44.20)
     xo vline(41.00)
@@ -535,7 +535,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m652.4 43.3l44.5 -4...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(652.40,43.30)
     xo line(696.90,38.80)
     xo vline(35.60)
@@ -547,7 +547,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m182.5 111.2l78.2 7...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(182.50,111.20)
     xo line(260.70,118.20)
     xo vline(115.00)
@@ -559,7 +559,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m226.6 110.2l33.7 3...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(226.60,110.20)
     xo line(260.30,113.20)
     xo vline(110.00)
@@ -571,7 +571,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m383.1 113.3l44.5 -4..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(383.10,113.30)
     xo line(427.60,108.80)
     xo vline(105.60)
@@ -583,7 +583,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m652.4 107.3l44.5 -4..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(652.40,107.30)
     xo line(696.90,102.80)
     xo vline(99.60)
@@ -630,7 +630,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M100.4 29.0v21.0M182..."
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(100.40,29.00)
     xo vline(50.00)
     xo move(182.80,23.00)
@@ -726,7 +726,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m52.9 105.0v-82.0"
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(52.90,105.00)
     xo vline(23.00)
     xo stroke (currentColor)
@@ -736,10 +736,10 @@ xo fill_color black (initial)
   use "#stdef" (path), x=52.9, y=47.0
     xo save
     translate( 52.90 47.00 )
-    use stroke-width=0.70 stroke=none fill=(current) fill=black
+    use stroke-width=0.70 stroke=none fill=(current) fill=#000000
     path d="m0 0h686.0m-686.0 -6..."
       xo save
-      path stroke-width=0.70 stroke=(current) stroke=black fill=none
+      path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
       xo move(0.00,-6.00)
@@ -758,10 +758,10 @@ xo fill_color black (initial)
   use "#stdef" (path), x=52.9, y=105.0
     xo save
     translate( 52.90 105.00 )
-    use stroke-width=0.70 stroke=none fill=(current) fill=black
+    use stroke-width=0.70 stroke=none fill=(current) fill=#000000
     path d="m0 0h686.0m-686.0 -6..."
       xo save
-      path stroke-width=0.70 stroke=(current) stroke=black fill=none
+      path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
       xo move(0.00,0.00)
       xo hline(686.00)
       xo move(0.00,-6.00)
@@ -779,7 +779,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M103.9 17.0m-6.50 0h..."
     xo save
-    path stroke-width=1.00 stroke=(current) stroke=black fill=none
+    path stroke-width=1.00 stroke=(current) stroke=#000000 fill=none
     xo move(103.90,17.00)
     xo move(97.40,17.00)
     xo hline(110.40)
@@ -789,7 +789,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M276.9 47.0v-24.0M27..."
     xo save
-    path stroke-width=1.00 stroke=(current) stroke=black fill=none
+    path stroke-width=1.00 stroke=(current) stroke=#000000 fill=none
     xo move(276.90,47.00)
     xo vline(23.00)
     xo move(276.90,105.00)
@@ -812,7 +812,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m175.6 46.2l71.8 5.0..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(175.60,46.20)
     xo line(247.40,51.20)
     xo vline(48.00)
@@ -824,7 +824,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m216.2 44.0l30.9 2.2..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(216.20,44.00)
     xo line(247.10,46.20)
     xo vline(43.00)
@@ -836,7 +836,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m360.7 44.2l40.9 2.6..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(360.70,44.20)
     xo line(401.60,46.80)
     xo vline(43.60)
@@ -848,7 +848,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m659.2 57.4l40.9 -5...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(659.20,57.40)
     xo line(700.10,51.50)
     xo vline(48.30)
@@ -860,7 +860,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m175.6 111.3l71.8 6...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(175.60,111.30)
     xo line(247.40,118.20)
     xo vline(115.00)
@@ -872,7 +872,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m216.2 110.2l30.9 3...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(216.20,110.20)
     xo line(247.10,113.20)
     xo vline(110.00)
@@ -884,7 +884,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m367.7 74.8l40.9 -2...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(367.70,74.80)
     xo line(408.60,72.20)
     xo vline(75.40)
@@ -896,7 +896,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m659.2 107.2l40.9 -4..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(659.20,107.20)
     xo line(700.10,102.80)
     xo vline(99.60)
@@ -943,7 +943,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M100.4 17.0v21.0M176..."
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(100.40,17.00)
     xo vline(38.00)
     xo move(176.00,23.00)
@@ -1043,7 +1043,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m52.9 105.0v-82.0"
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(52.90,105.00)
     xo vline(23.00)
     xo stroke (currentColor)
@@ -1056,7 +1056,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m0 0h460.0m-460.0 -6..."
         xo save
-        path stroke-width=0.70 stroke=(current) stroke=black fill=none
+        path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
         xo move(0.00,0.00)
         xo hline(460.00)
         xo move(0.00,-6.00)
@@ -1079,7 +1079,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m0 0h460.0m-460.0 -6..."
         xo save
-        path stroke-width=0.70 stroke=(current) stroke=black fill=none
+        path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
         xo move(0.00,0.00)
         xo hline(460.00)
         xo move(0.00,-6.00)
@@ -1098,7 +1098,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M256.7 47.0v-24.0M25..."
     xo save
-    path stroke-width=1.00 stroke=(current) stroke=black fill=none
+    path stroke-width=1.00 stroke=(current) stroke=#000000 fill=none
     xo move(256.70,47.00)
     xo vline(23.00)
     xo move(256.70,105.00)
@@ -1125,7 +1125,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m170.5 46.4l61.9 4.9..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(170.50,46.40)
     xo line(232.40,51.30)
     xo vline(48.10)
@@ -1137,7 +1137,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m206.0 44.2l26.0 2.0..."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(206.00,44.20)
     xo line(232.00,46.20)
     xo vline(43.00)
@@ -1149,7 +1149,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m170.5 111.6l61.9 6...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(170.50,111.60)
     xo line(232.40,118.30)
     xo vline(115.10)
@@ -1161,7 +1161,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="m206.0 110.4l26.0 2...."
     xo save
-    path stroke-width=0.70 stroke=none fill=(current) fill=black
+    path stroke-width=0.70 stroke=none fill=(current) fill=#000000
     xo move(206.00,110.40)
     xo line(232.00,113.20)
     xo vline(110.00)
@@ -1202,7 +1202,7 @@ xo fill_color black (initial)
   start handling path (SVGPDF::Path)
   path d="M100.4 29.0v21.0M170..."
     xo save
-    path stroke-width=0.70 stroke=(current) stroke=black fill=none
+    path stroke-width=0.70 stroke=(current) stroke=#000000 fill=none
     xo move(100.40,29.00)
     xo vline(50.00)
     xo move(170.80,23.00)

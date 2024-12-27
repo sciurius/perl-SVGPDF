@@ -7,7 +7,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=-50 y=-50 w=100 h=100
     xo save
-    rect stroke-width=5.00 stroke=black fill=none
+    rect stroke-width=5.00 stroke=#000000 fill=none
     xo stroke (black)
     xo restore
   end handling rect
@@ -18,7 +18,7 @@ xo fill_color black (initial)
       start handling rect (SVGPDF::Rect)
       rect x=-50 y=-50 w=100 h=100
         xo save
-        rect stroke-width=2.00 stroke=red fill=none
+        rect stroke-width=2.00 stroke=#FF0000 fill=none
         xo stroke (red)
         xo restore
       end handling rect

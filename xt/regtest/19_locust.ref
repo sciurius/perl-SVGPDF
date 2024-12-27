@@ -10,7 +10,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m346.06 41.527c-0.39..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(346.06,41.53)
         xo curve(345.66,41.33 345.26,41.13 345.17,40.63)
         xo curve(344.20,40.56 344.97,42.22 344.72,42.87)
@@ -23,7 +23,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m337.13 40.188c-0.56..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(337.13,40.19)
         xo curve(336.56,41.11 336.42,42.45 334.90,42.42)
         xo curve(335.61,41.18 332.97,41.19 333.11,41.97)
@@ -35,7 +35,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m231.3 49.118c-1.233..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(231.30,49.12)
         xo curve(230.07,50.12 227.76,50.04 225.50,50.01)
         xo curve(226.06,48.48 230.62,49.12 231.30,49.12)
@@ -46,7 +46,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m243.8 49.118c-3.028..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(243.80,49.12)
         xo curve(240.77,50.48 235.54,49.51 232.19,50.46)
         xo curve(232.11,48.20 236.12,48.17 237.10,49.56)
@@ -58,7 +58,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m224.16 49.564c-0.15..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(224.16,49.56)
         xo curve(224.00,51.05 221.59,50.27 220.14,50.46)
         xo curve(219.47,49.90 222.99,49.76 224.16,49.56)
@@ -69,7 +69,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m313.91 52.244c0.85 ..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(313.91,52.24)
         xo curve(314.76,53.08 315.03,52.29 316.14,52.24)
         xo curve(315.41,54.33 316.24,53.09 317.93,53.14)
@@ -81,7 +81,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m181.74 54.923c1.404..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(181.74,54.92)
         xo curve(183.14,54.71 183.49,55.56 184.42,55.82)
         xo curve(183.66,56.50 182.79,55.66 181.29,56.26)
@@ -93,7 +93,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m210.32 65.193c1.61-..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(210.32,65.19)
         xo curve(211.93,65.01 210.93,66.01 209.87,65.64)
         xo curve(201.50,62.85 193.30,59.88 184.42,57.60)
@@ -107,7 +107,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m141.1 59.388c-0.872..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(141.10,59.39)
         xo curve(140.23,60.93 139.32,58.84 138.42,58.94)
         xo curve(139.17,56.88 139.62,59.62 141.10,59.39)
@@ -118,7 +118,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m135.3 58.942c1.113 ..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(135.30,58.94)
         xo curve(136.41,59.17 137.99,58.93 137.98,60.28)
         xo curve(136.63,59.37 135.40,61.10 135.30,58.94)
@@ -129,7 +129,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m132.17 61.174c-0.00..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(132.17,61.17)
         xo curve(132.16,61.86 128.86,62.15 129.49,60.73)
         xo curve(130.19,59.99 131.23,60.88 132.17,61.17)
@@ -140,7 +140,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m360.8 60.728c1.363 ..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(360.80,60.73)
         xo curve(362.16,61.55 360.28,62.85 360.80,64.30)
         xo curve(359.87,63.92 360.32,61.19 360.80,60.73)
@@ -151,7 +151,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m136.64 62.514c1.065..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(136.64,62.51)
         xo curve(137.70,60.61 144.08,61.90 138.43,62.07)
         xo curve(137.62,62.09 137.48,62.55 136.64,62.51)
@@ -162,7 +162,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m211.66 65.193c0.012..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(211.66,65.19)
         xo curve(211.67,64.76 212.21,64.85 212.55,64.75)
         xo curve(216.97,66.55 222.25,66.45 226.84,68.32)
@@ -183,7 +183,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m89.306 66.533c0.064..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(89.31,66.53)
         xo curve(89.37,67.79 88.21,67.82 87.07,67.87)
         xo curve(86.45,67.30 86.88,65.69 85.73,65.64)
@@ -195,7 +195,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m311.68 66.979c1.036..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(311.68,66.98)
         xo curve(312.72,66.84 313.39,67.05 313.91,67.42)
         xo curve(313.10,67.81 312.68,68.58 311.68,68.77)
@@ -207,7 +207,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m312.57 71.445c1.359..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(312.57,71.44)
         xo curve(313.93,71.58 314.11,74.23 313.46,75.02)
         xo curve(312.76,74.23 312.87,72.64 312.57,71.44)
@@ -218,7 +218,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m350.08 75.017c0.522..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(350.08,75.02)
         xo curve(350.60,75.09 350.46,75.83 350.53,76.36)
         xo curve(351.33,76.41 351.47,75.81 352.31,75.91)
@@ -233,7 +233,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m291.14 78.589c1.86-..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(291.14,78.59)
         xo curve(293.00,78.10 293.00,81.76 291.14,81.27)
         xo curve(291.30,80.68 291.93,80.57 292.03,79.93)
@@ -247,7 +247,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m284.89 83.054c1.665..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(284.89,83.05)
         xo curve(286.56,82.58 285.60,84.73 287.12,84.39)
         xo curve(287.45,85.61 286.23,85.29 286.23,86.18)
@@ -259,7 +259,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m338.47 87.073c-0.73..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(338.47,87.07)
         xo curve(337.74,88.13 335.28,87.45 334.45,88.41)
         xo curve(333.64,87.14 337.14,86.56 338.47,87.07)
@@ -270,7 +270,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m71.892 87.966c-0.41..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(71.89,87.97)
         xo curve(71.48,88.75 70.50,88.95 69.21,88.86)
         xo curve(69.93,88.27 70.88,86.95 71.89,87.97)
@@ -281,7 +281,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m280.87 87.966c0.883..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(280.87,87.97)
         xo curve(281.75,88.27 282.06,89.16 282.21,90.20)
         xo curve(280.18,89.36 281.60,91.97 279.98,91.54)
@@ -293,7 +293,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m254.97 91.539c-0.04..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(254.97,91.54)
         xo curve(254.93,92.76 255.71,92.44 254.97,93.33)
         xo curve(253.25,93.68 253.25,91.19 254.97,91.54)
@@ -304,7 +304,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m311.23 91.985c1.728..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(311.23,91.98)
         xo curve(312.96,92.55 311.32,93.89 312.57,95.11)
         xo curve(311.01,94.59 310.13,93.39 308.10,93.33)
@@ -316,7 +316,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m276.85 95.11c0.942-..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(276.85,95.11)
         xo curve(277.79,94.71 277.62,93.21 279.08,93.33)
         xo curve(278.74,93.72 278.60,94.33 278.64,95.11)
@@ -328,7 +328,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m273.72 96.896c1.122..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(273.72,96.90)
         xo curve(274.84,95.10 276.70,98.62 274.17,98.24)
         xo curve(274.21,97.60 274.24,96.97 273.72,96.90)
@@ -339,7 +339,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m117.44 100.92c-0.05..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(117.44,100.92)
         xo curve(117.39,102.06 115.94,101.81 114.76,101.81)
         xo curve(114.34,100.20 116.52,101.19 117.44,100.92)
@@ -350,7 +350,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m305.43 101.81c0.776..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(305.43,101.81)
         xo curve(306.21,102.50 307.92,105.84 305.43,105.83)
         xo vline(101.81)
@@ -361,7 +361,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m225.94 106.72c0.246..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(225.94,106.72)
         xo curve(226.19,107.71 225.09,107.36 225.05,108.06)
         xo curve(221.93,108.22 221.46,106.43 220.58,105.38)
@@ -373,7 +373,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m195.13 112.08c0.555..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(195.13,112.08)
         xo curve(195.69,112.56 196.43,111.60 197.36,111.63)
         xo curve(197.04,110.27 197.82,110.01 197.81,108.95)
@@ -389,7 +389,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m165.22 116.99c-0.76..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(165.22,116.99)
         xo curve(164.46,114.43 166.12,110.46 166.11,107.17)
         xo curve(167.44,110.30 165.68,114.18 165.22,116.99)
@@ -400,7 +400,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m137.98 109.85c0.855..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(137.98,109.85)
         xo curve(138.83,111.61 138.60,116.12 137.09,116.99)
         xo curve(137.55,114.77 137.88,112.41 137.98,109.84)
@@ -411,7 +411,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m255.86 118.33c-0.08..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(255.86,118.33)
         xo curve(255.78,118.69 255.41,118.77 255.41,119.22)
         xo hline(256.75)
@@ -424,7 +424,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m258.99 121.46c0.474..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(258.99,121.46)
         xo curve(259.46,123.12 258.05,122.90 257.65,123.69)
         xo curve(257.25,122.53 256.17,121.51 258.99,121.46)
@@ -435,7 +435,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m379.55 35.722c4.151..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(379.55,35.72)
         xo curve(383.70,33.44 387.03,30.57 391.16,27.68)
         xo curve(397.33,23.38 405.91,19.24 414.38,16.52)
@@ -3706,7 +3706,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m117.44 12.949c-1.07..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(117.44,12.95)
         xo curve(116.37,13.52 117.60,16.38 115.65,16.07)
         xo curve(115.92,13.61 116.61,13.69 115.65,12.06)
@@ -3719,7 +3719,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m341.6 83.501c2.471 ..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(341.60,83.50)
         xo curve(344.07,83.68 344.49,79.45 347.41,80.38)
         xo curve(344.65,81.78 343.85,85.16 340.26,85.73)
@@ -3733,7 +3733,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m214.78 50.458c0.862..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(214.78,50.46)
         xo curve(215.64,50.64 214.82,52.50 216.57,51.80)
         xo curve(216.43,52.40 215.45,52.17 214.78,52.24)
@@ -3749,7 +3749,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m313.02 62.514c-0.08..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(313.02,62.51)
         xo curve(312.94,62.13 313.19,62.09 313.47,62.07)
         xo vline(61.17)
@@ -3771,7 +3771,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m314.8 68.319c-0.198..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(314.80,68.32)
         xo curve(314.60,70.30 315.05,71.64 317.03,71.45)
         xo curve(317.17,70.27 316.41,69.98 315.25,70.11)
@@ -3790,7 +3790,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m314.36 63.854c-0.19..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(314.36,63.85)
         xo curve(314.17,64.70 313.40,64.98 313.47,66.09)
         xo curve(311.08,66.21 309.32,63.61 311.23,62.07)
@@ -3804,7 +3804,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m316.59 73.677c0.107..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(316.59,73.68)
         xo curve(316.70,72.53 317.36,74.29 318.38,73.68)
         xo curve(318.71,75.05 317.15,74.54 317.48,75.91)
@@ -3819,7 +3819,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m287.56 78.589c-0.73..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(287.56,78.59)
         xo curve(286.82,77.87 288.38,79.41 289.79,78.59)
         xo curve(289.65,79.52 287.22,79.95 289.79,79.93)
@@ -3834,7 +3834,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m281.76 84.84c0.771-..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(281.76,84.84)
         xo curve(282.53,83.95 281.68,88.47 284.44,87.07)
         xo curve(284.40,87.71 284.37,88.34 284.89,88.41)
@@ -3846,7 +3846,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m254.97 96.004c0.764..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(254.97,96.00)
         xo curve(255.73,95.91 256.13,96.77 256.31,96.00)
         xo curve(257.54,98.13 257.71,100.23 257.20,103.15)
@@ -3862,7 +3862,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m178.17 116.99c0.897..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(178.17,116.99)
         xo curve(179.07,115.93 177.97,117.49 177.72,117.88)
         xo curve(177.77,118.74 179.22,117.36 180.40,117.88)
@@ -3877,7 +3877,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="m260.33 116.54c0.429..."
         xo save
-        path stroke=none fill=(current) fill=black
+        path stroke=none fill=(current) fill=#000000
         xo move(260.33,116.54)
         xo curve(260.76,118.76 257.51,117.29 256.76,118.33)
         xo curve(256.11,117.65 259.27,117.00 260.33,116.54)

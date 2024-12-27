@@ -1,5 +1,9 @@
 Revision history for SVGPDF
 
+0.000
+
+	- Improve colour parsing.
+
 0.090 2024-12-06
 
 	- Fix version numbering.

@@ -13,7 +13,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=5 y=5 w=3990 h=1990
     xo save
-    rect stroke-width=10.00 stroke=blue fill=none
+    rect stroke-width=10.00 stroke=#0000FF fill=none
     xo stroke (blue)
     xo restore
   end handling rect
@@ -35,14 +35,14 @@ xo fill_color black (initial)
           start handling rect (SVGPDF::Rect)
           rect x=0 y=400 w=384 h=192
             xo save
-            rect stroke-width=38.40 stroke=red fill=blue
+            rect stroke-width=38.40 stroke=#FF0000 fill=#0000FF
             xo paint (red blue)
             xo restore
           end handling rect
           start handling rect (SVGPDF::Rect)
           rect x=0 y=750 w=384 h=192
             xo save
-            rect stroke-width=38.40 stroke=red fill=blue
+            rect stroke-width=38.40 stroke=#FF0000 fill=#0000FF
             xo paint (red blue)
             xo restore
           end handling rect
@@ -53,7 +53,7 @@ xo fill_color black (initial)
               start handling rect (SVGPDF::Rect)
               rect x=0 y=600 w=384 h=192
                 xo save
-                rect stroke-width=38.40 stroke=red fill=blue
+                rect stroke-width=38.40 stroke=#FF0000 fill=#0000FF
                 xo paint (red blue)
                 xo restore
               end handling rect
@@ -76,14 +76,14 @@ xo fill_color black (initial)
           start handling rect (SVGPDF::Rect)
           rect x=0 y=400 w=375 h=187.5
             xo save
-            rect stroke-width=37.50(.25em@150.00) stroke=red fill=blue
+            rect stroke-width=37.50(.25em@150.00) stroke=#FF0000 fill=#0000FF
             xo paint (red blue)
             xo restore
           end handling rect
           start handling rect (SVGPDF::Rect)
           rect x=0 y=750 w=375 h=187.5
             xo save
-            rect stroke-width=37.50 stroke=red fill=blue
+            rect stroke-width=37.50 stroke=#FF0000 fill=#0000FF
             xo paint (red blue)
             xo restore
           end handling rect
@@ -94,7 +94,7 @@ xo fill_color black (initial)
               start handling rect (SVGPDF::Rect)
               rect x=0 y=600 w=375 h=187.5
                 xo save
-                rect stroke-width=37.50(.25em@150.00) stroke=red fill=blue
+                rect stroke-width=37.50(.25em@150.00) stroke=#FF0000 fill=#0000FF
                 xo paint (red blue)
                 xo restore
               end handling rect
@@ -117,14 +117,14 @@ xo fill_color black (initial)
           start handling rect (SVGPDF::Rect)
           rect x=0 y=400 w=400 h=200
             xo save
-            rect stroke-width=42.16(1%@3162.28) stroke=red fill=blue
+            rect stroke-width=42.16(1%@3162.28) stroke=#FF0000 fill=#0000FF
             xo paint (red blue)
             xo restore
           end handling rect
           start handling rect (SVGPDF::Rect)
           rect x=0 y=750 w=400 h=200
             xo save
-            rect stroke-width=31.62 stroke=red fill=blue
+            rect stroke-width=31.62 stroke=#FF0000 fill=#0000FF
             xo paint (red blue)
             xo restore
           end handling rect
@@ -135,7 +135,7 @@ xo fill_color black (initial)
               start handling rect (SVGPDF::Rect)
               rect x=0 y=600 w=400 h=200
                 xo save
-                rect stroke-width=42.16(1%@3162.28) stroke=red fill=blue
+                rect stroke-width=42.16(1%@3162.28) stroke=#FF0000 fill=#0000FF
                 xo paint (red blue)
                 xo restore
               end handling rect

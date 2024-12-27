@@ -7,7 +7,7 @@ xo fill_color black (initial)
   start handling rect (SVGPDF::Rect)
   rect x=10 y=10 w=100 h=100
     xo save
-    rect stroke=#ff0000 fill=#0000ff
+    rect stroke=#FF0000 fill=#0000FF
     xo paint (#ff0000 #0000ff)
     xo restore
   end handling rect
@@ -18,14 +18,14 @@ xo fill_color black (initial)
     start handling rect (SVGPDF::Rect)
     rect x=110 y=10 w=100 h=100
       xo save
-      rect stroke=#009900 fill=#00cc00
+      rect stroke=#009900 fill=#00CC00
       xo paint (#009900 #00cc00)
       xo restore
     end handling rect
     start handling path (SVGPDF::Path)
     path d="M110 10 l100 100"
       xo save
-      path stroke-width=2.00 stroke=red fill=(current) fill=black
+      path stroke-width=2.00 stroke=#FF0000 fill=(current) fill=#000000
       xo move(110.00,10.00)
       xo line(210.00,110.00)
       xo paint (red currentColor)

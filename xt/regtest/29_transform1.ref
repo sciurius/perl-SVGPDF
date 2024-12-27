@@ -16,7 +16,7 @@ xo fill_color black (initial)
       start handling path (SVGPDF::Path)
       path d="M 50,30 A 20,20 0,0,..."
         xo save
-        path stroke=none fill=grey
+        path stroke=none fill=#808080
         xo move(50.00,30.00)
         xo arc(20.00,20.00 0.00 0,1 90.00,30.00)
         circular_arc(50.00,30.00 90.00,30.00 20.00 move=0 large=0 dir=1 rot=0.00)
@@ -49,10 +49,10 @@ xo fill_color black (initial)
   start handling use (SVGPDF::Use)
   use "#heart" (path), x=0, y=0
     xo save
-    use stroke=red fill=none
+    use stroke=#FF0000 fill=none
     path d="M 50,30 A 20,20 0,0,..."
       xo save
-      path stroke=red fill=none
+      path stroke=#FF0000 fill=none
       xo move(50.00,30.00)
       xo arc(20.00,20.00 0.00 0,1 90.00,30.00)
       circular_arc(50.00,30.00 90.00,30.00 20.00 move=0 large=0 dir=1 rot=0.00)

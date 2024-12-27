@@ -20,7 +20,7 @@ xo fill_color black (initial)
       start handling use (SVGPDF::Use)
       use "#MJX-1-TEX-N-31" (path), x=0, y=0
         xo save
-        use stroke-width=1.00 stroke=red fill=none
+        use stroke-width=1.00 stroke=#FF0000 fill=none
         path d="M213 578L200 573Q186..."
           xo save
           path stroke-width=1.00 stroke=none fill=none
