@@ -13,6 +13,7 @@ xo fill_color black (initial)
     defs: "stdef" (path)
   end handling defs
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=395.9 y=44.0 anchor="middle"
     xo save
     txt translate( 395.90, 44.00 ) scale( 1.00 -1.00 )
@@ -21,6 +22,7 @@ xo fill_color black (initial)
     xo restore
   end handling text
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=738.9 y=65.2 anchor="end"
     xo save
     txt translate( 738.90, 65.20 ) scale( 1.00 -1.00 )
@@ -70,6 +72,7 @@ xo fill_color black (initial)
     xo save
     transform translate(100.90,115.00)
       start handling text (SVGPDF::Text)
+      text stroke-width=0.70 stroke=none fill=(current) fill=#000000
       text  y=-12 anchor="middle"
         xo save
         txt translate( 0.00, -12.00 ) scale( 1.00 -1.00 )
@@ -78,6 +81,7 @@ xo fill_color black (initial)
         xo restore
       end handling text
       start handling text (SVGPDF::Text)
+      text stroke-width=0.70 stroke=none fill=(current) fill=#000000
       text  anchor="middle"
         xo save
         txt translate( 0.00, 0.00 ) scale( 1.00 -1.00 )
@@ -184,6 +188,7 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=56.9,77.9,83.4,113.9,138.4,162.8,189.9,214.4,238.8,272.2,296.6,321.0,348.2,372.6,397.1,430.4,454.8,479.3,506.4,530.9,555.3,588.6,613.1,637.5,664.7,689.1,713.5 y=115.0,97.0,106.0,103.0,97.0,97.0,106.0,100.0,100.0,103.0,100.0,97.0,94.0,97.0,100.0,103.0,97.0,97.0,106.0,100.0,100.0,103.0,97.0,100.0,103.0,109.0,112.0
     xo save
     txt* translate( 56.90, 115.00 ) scale( 1.0, -1.0 ) e050
@@ -461,6 +466,7 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=599.0,56.9,77.9,83.4,99.9,119.5,139.0,160.7,180.2,199.8,228.8,248.3,267.8,289.5,309.1,328.6,357.6,377.1,396.6,418.4,437.9,457.4,486.4,505.9,525.5,547.2,566.7,586.2,618.0,637.6,657.1,678.8,698.3,717.9 y=47.0,41.0,23.0,32.0,29.0,23.0,23.0,32.0,26.0,26.0,29.0,26.0,23.0,20.0,23.0,26.0,23.0,17.0,23.0,20.0,23.0,26.0,29.0,23.0,26.0,29.0,35.0,38.0,29.0,23.0,26.0,29.0,32.0,35.0
     xo save
     txt* translate( 599.00, 47.00 ) scale( 1.0, -1.0 ) e043
@@ -571,6 +577,7 @@ xo fill_color black (initial)
     xo save
     transform translate(0.00,47.00)
       start handling text (SVGPDF::Text)
+      text stroke-width=0.70 stroke=none fill=(current) fill=#000000
       text  x=482.4 y=-29.8
         xo save
         txt translate( 482.40, -29.80 ) scale( 1.00 -1.00 )
@@ -591,6 +598,7 @@ xo fill_color black (initial)
         xo restore
       end handling path
       start handling text (SVGPDF::Text)
+      text stroke-width=0.70 stroke=none fill=(current) fill=#000000
       text  x=614.0 y=-29.8
         xo save
         txt translate( 614.00, -29.80 ) scale( 1.00 -1.00 )
@@ -717,6 +725,7 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=56.9,77.9,83.4,99.9,110.3,148.6,159.0,200.9,230.2,259.5,292.0,321.3,350.6,388.3,417.6,446.9,479.4,521.7,521.8,559.5,588.8,618.1,650.6,679.9,709.2,101.6 y=41.0,23.0,32.0,38.0,38.0,35.0,32.0,20.0,23.0,26.0,23.0,29.0,35.0,38.0,44.0,38.0,35.0,53.0,32.0,29.0,23.0,26.0,29.0,32.0,35.0,15.0
     xo save
     txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
@@ -956,6 +965,7 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=585.8,56.9,77.9,83.4,99.9,110.3,136.1,146.5,177.8,199.6,221.3,245.4,267.2,288.9,319.9,341.6,363.3,387.5,409.2,431.0,461.9,483.7,505.4,529.6,551.3,573.0,604.8,626.6,648.3,672.5,694.2,715.9,101.6,137.8 y=47.0,41.0,23.0,32.0,38.0,38.0,35.0,32.0,26.0,23.0,26.0,26.0,23.0,20.0,23.0,17.0,23.0,20.0,23.0,26.0,29.0,23.0,26.0,29.0,32.0,35.0,29.0,23.0,26.0,29.0,35.0,38.0,15.0,12.0
     xo save
     txt* translate( 585.80, 47.00 ) scale( 1.0, -1.0 ) e043
@@ -1058,6 +1068,7 @@ xo fill_color black (initial)
     xo save
     transform translate(0.00,47.00)
       start handling text (SVGPDF::Text)
+      text stroke-width=0.70 stroke=none fill=(current) fill=#000000
       text  x=457.9 y=-29.8
         xo save
         txt translate( 457.90, -29.80 ) scale( 1.00 -1.00 )
@@ -1078,6 +1089,7 @@ xo fill_color black (initial)
         xo restore
       end handling path
       start handling text (SVGPDF::Text)
+      text stroke-width=0.70 stroke=none fill=(current) fill=#000000
       text  x=600.8 y=-29.8
         xo save
         txt translate( 600.80, -29.80 ) scale( 1.00 -1.00 )
@@ -1240,6 +1252,7 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=56.9,77.9,83.4,99.9,124.9,150.0,177.8,202.8,227.8,261.7,286.7,311.7,339.5,364.5,389.5,423.4,448.4,473.4,501.2,526.3,551.3,585.1,610.2,635.2,663.0,688.0,713.0 y=41.0,23.0,32.0,23.0,38.0,38.0,26.0,38.0,38.0,29.0,26.0,23.0,20.0,23.0,26.0,23.0,38.0,38.0,26.0,38.0,38.0,29.0,23.0,26.0,29.0,35.0,38.0
     xo save
     txt* translate( 56.90, 41.00 ) scale( 1.0, -1.0 ) e050
@@ -1486,6 +1499,7 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke-width=0.70 stroke=none fill=(current) fill=#000000
   text  x=727.9,56.9,77.9,83.4,99.9,125.0,150.1,178.0,203.1,228.3,262.2,287.3,312.4,340.3,365.4,390.5,424.5,449.6,474.7,502.6,527.7,552.8,586.7,611.9,637.0,664.9,690.0,715.1 y=47.0,41.0,23.0,32.0,23.0,38.0,38.0,26.0,38.0,38.0,29.0,26.0,23.0,20.0,23.0,26.0,23.0,17.0,23.0,20.0,23.0,26.0,29.0,23.0,26.0,29.0,35.0,38.0
     xo save
     txt* translate( 727.90, 47.00 ) scale( 1.0, -1.0 ) e043

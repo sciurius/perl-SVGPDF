@@ -52,6 +52,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling ellipse
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=35 y=70
                       xo save
                       txt translate( 35.00, 70.00 ) scale( 1.00 -1.00 )
@@ -60,6 +61,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling text
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=225 y=145
                       xo save
                       txt translate( 225.00, 145.00 ) scale( 1.00 -1.00 )
@@ -77,6 +79,7 @@ xo fill_color black (initial)
             xo save
             transform translate(400.00,0.00)
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=210
                 xo save
                 txt translate( 50.00, 210.00 ) scale( 1.00 -1.00 )
@@ -85,6 +88,7 @@ xo fill_color black (initial)
                 xo restore
               end handling text
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=250
                 xo save
                 txt translate( 50.00, 250.00 ) scale( 1.00 -1.00 )
@@ -113,6 +117,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling ellipse
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=35 y=70
                       xo save
                       txt translate( 35.00, 70.00 ) scale( 1.00 -1.00 )
@@ -121,6 +126,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling text
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=225 y=145
                       xo save
                       txt translate( 225.00, 145.00 ) scale( 1.00 -1.00 )
@@ -152,6 +158,7 @@ xo fill_color black (initial)
             xo save
             transform translate(800.00,0.00)
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=210
                 xo save
                 txt translate( 50.00, 210.00 ) scale( 1.00 -1.00 )
@@ -160,6 +167,7 @@ xo fill_color black (initial)
                 xo restore
               end handling text
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=250
                 xo save
                 txt translate( 50.00, 250.00 ) scale( 1.00 -1.00 )
@@ -188,6 +196,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling ellipse
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=35 y=70
                       xo save
                       txt translate( 35.00, 70.00 ) scale( 1.00 -1.00 )
@@ -196,6 +205,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling text
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=225 y=145
                       xo save
                       txt translate( 225.00, 145.00 ) scale( 1.00 -1.00 )
@@ -227,6 +237,7 @@ xo fill_color black (initial)
             xo save
             transform translate(400.00,250.00)
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=210
                 xo save
                 txt translate( 50.00, 210.00 ) scale( 1.00 -1.00 )
@@ -235,6 +246,7 @@ xo fill_color black (initial)
                 xo restore
               end handling text
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=250
                 xo save
                 txt translate( 50.00, 250.00 ) scale( 1.00 -1.00 )
@@ -263,6 +275,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling ellipse
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=35 y=70
                       xo save
                       txt translate( 35.00, 70.00 ) scale( 1.00 -1.00 )
@@ -271,6 +284,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling text
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=225 y=145
                       xo save
                       txt translate( 225.00, 145.00 ) scale( 1.00 -1.00 )
@@ -314,6 +328,7 @@ xo fill_color black (initial)
             xo save
             transform translate(800.00,250.00)
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=210
                 xo save
                 txt translate( 50.00, 210.00 ) scale( 1.00 -1.00 )
@@ -322,6 +337,7 @@ xo fill_color black (initial)
                 xo restore
               end handling text
               start handling text (SVGPDF::Text)
+              text stroke=none fill=(current) fill=#000000
               text  x=50 y=250
                 xo save
                 txt translate( 50.00, 250.00 ) scale( 1.00 -1.00 )
@@ -350,6 +366,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling ellipse
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=35 y=70
                       xo save
                       txt translate( 35.00, 70.00 ) scale( 1.00 -1.00 )
@@ -358,6 +375,7 @@ xo fill_color black (initial)
                       xo restore
                     end handling text
                     start handling text (SVGPDF::Text)
+                    text stroke=none fill=(current) fill=#000000
                     text  x=225 y=145
                       xo save
                       txt translate( 225.00, 145.00 ) scale( 1.00 -1.00 )

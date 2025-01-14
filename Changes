@@ -3,6 +3,7 @@ Revision history for SVGPDF
 0.000
 
 	- Improve colour parsing.
+	- Handle global color styles for text/tspan.
 
 0.090 2024-12-06
 

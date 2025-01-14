@@ -9,6 +9,7 @@ xo fill_color black (initial)
     xo save
     transform translate(50.00,350.00)
       start handling text (SVGPDF::Text)
+      text stroke=none fill=(current) fill=#000000
       text  y=100
         xo save
         txt translate( 0.00, 100.00 ) scale( 1.00 -1.00 )
@@ -34,6 +35,7 @@ xo fill_color black (initial)
     xo save
     transform translate(50.00,50.00)
       start handling text (SVGPDF::Text)
+      text stroke=none fill=(current) fill=#000000
       text  y=100
         xo save
         txt translate( 0.00, 100.00 ) scale( 1.00 -1.00 )

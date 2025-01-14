@@ -5,6 +5,7 @@ matrix( 1 0 0 -1 0 0)
 vb rect( 0.00 0.00 500.00 600.00)
 xo fill_color black (initial)
   start handling text (SVGPDF::Text)
+  text stroke=none fill=(current) fill=#000000
   text  x=50 y=100
     xo save
     txt translate( 50.00, 100.00 ) scale( 1.00 -1.00 )
@@ -17,6 +18,7 @@ xo fill_color black (initial)
     xo save
     transform scale(2.00,2.00)
       start handling text (SVGPDF::Text)
+      text stroke=none fill=(current) fill=#000000
       text  x=50 y=50
         xo save
         txt translate( 50.00, 50.00 ) scale( 1.00 -1.00 )
@@ -27,6 +29,7 @@ xo fill_color black (initial)
     xo restore
   end handling g
   start handling text (SVGPDF::Text)
+  text stroke=none fill=(current) fill=#000000
   text  x=50 y=200
     xo save
     txt translate( 50.00, 200.00 ) scale( 1.00 -1.00 )
@@ -39,6 +42,7 @@ xo fill_color black (initial)
     xo save
     transform scale(2.00,2.00)
       start handling text (SVGPDF::Text)
+      text stroke=none fill=(current) fill=#000000
       text  x=50 y=100
         xo save
         txt translate( 50.00, 100.00 ) scale( 1.00 -1.00 )

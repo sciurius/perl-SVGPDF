@@ -169,12 +169,14 @@ xo fill_color black (initial)
     xo restore
   end handling path
   start handling text (SVGPDF::Text)
+  text stroke=none fill=(current) fill=#000000
   text  x=100 y=20 anchor="middle"
     xo save
     txt translate( 100.00, 20.00 ) scale( 1.00 -1.00 )
       xo save
       xo restore
       xo save
+      tspan stroke=none fill=(current) fill=#000000
       tspan  x=100 dy=20 anchor="middle"
       txt translate( 100.00, 20.00 )
         xo save
@@ -186,12 +188,14 @@ xo fill_color black (initial)
     xo restore
   end handling text
   start handling text (SVGPDF::Text)
+  text stroke=none fill=(current) fill=#000000
   text  x=300 y=20 anchor="middle"
     xo save
     txt translate( 300.00, 20.00 ) scale( 1.00 -1.00 )
       xo save
       xo restore
       xo save
+      tspan stroke=none fill=(current) fill=#000000
       tspan  x=300 dy=20 anchor="middle"
       txt translate( 300.00, 20.00 )
         xo save
@@ -203,12 +207,14 @@ xo fill_color black (initial)
     xo restore
   end handling text
   start handling text (SVGPDF::Text)
+  text stroke=none fill=(current) fill=#000000
   text  x=100 y=220 anchor="middle"
     xo save
     txt translate( 100.00, 220.00 ) scale( 1.00 -1.00 )
       xo save
       xo restore
       xo save
+      tspan stroke=none fill=(current) fill=#000000
       tspan  x=100 dy=20 anchor="middle"
       txt translate( 100.00, 20.00 )
         xo save
@@ -220,12 +226,14 @@ xo fill_color black (initial)
     xo restore
   end handling text
   start handling text (SVGPDF::Text)
+  text stroke=none fill=(current) fill=#000000
   text  x=300 y=220 anchor="middle"
     xo save
     txt translate( 300.00, 220.00 ) scale( 1.00 -1.00 )
       xo save
       xo restore
       xo save
+      tspan stroke=none fill=(current) fill=#000000
       tspan  x=300 dy=20 anchor="middle"
       txt translate( 300.00, 20.00 )
         xo save

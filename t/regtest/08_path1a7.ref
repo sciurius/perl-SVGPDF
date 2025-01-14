@@ -70,6 +70,7 @@ xo fill_color black (initial)
   g ====
     xo save
       start handling text (SVGPDF::Text)
+      text stroke=none fill=#000000
       text  x=100 y=350 dx=-30 anchor="middle"
         xo save
         txt translate( 70.00, 350.00 ) scale( 1.00 -1.00 )
@@ -78,6 +79,7 @@ xo fill_color black (initial)
         xo restore
       end handling text
       start handling text (SVGPDF::Text)
+      text stroke=none fill=#000000
       text  x=250 y=50 dy=-10 anchor="middle"
         xo save
         txt translate( 250.00, 40.00 ) scale( 1.00 -1.00 )
@@ -86,6 +88,7 @@ xo fill_color black (initial)
         xo restore
       end handling text
       start handling text (SVGPDF::Text)
+      text stroke=none fill=#000000
       text  x=400 y=350 dx=30 anchor="middle"
         xo save
         txt translate( 430.00, 350.00 ) scale( 1.00 -1.00 )
