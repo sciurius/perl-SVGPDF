@@ -1,5 +1,11 @@
 Revision history for SVGPDF
 
+0.092
+
+	- Allow a document to be parsed into a series of SVG elements.
+          This elminates the need for enclosing the document in
+          useless <div> .. </div>.
+
 0.091.1	2025-07-11
 
 	- Fix failing test for perls compiled with -Duselongdouble.
