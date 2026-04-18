@@ -2,7 +2,7 @@ Revision history for SVGPDF
 
 0.092
 
-	- Allow a document to be parsed into a series of SVG elements.
+	- Allow a document to be parsed into a series of similar elements.
           This elminates the need for enclosing the document in
           useless <div> .. </div>.
 
