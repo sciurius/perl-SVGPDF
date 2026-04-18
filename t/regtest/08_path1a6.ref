@@ -142,7 +142,6 @@ xo fill_color black (initial)
       xo curve( 75.20,306.32 80.71,310.00 85.36,314.64 )
       xo curve( 90.00,319.29 93.68,324.80 96.19,330.87 )
       xo curve( 98.71,336.93 100.00,343.43 100.00,350.00 )
-      xo curve( 100.00,350.00 100.00,350.00 100.00,350.00 )
     xo stroke (black)
     xo restore
   end handling path
