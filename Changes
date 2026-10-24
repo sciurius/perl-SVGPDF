@@ -1,5 +1,10 @@
 Revision history for SVGPDF
 
+1.001	2026-10-24
+
+	- Fix issue when the x and y properties in a text element did
+          not have the same number of values.
+
 1.000	2025-04-26
 
 	- Release 1.000.
